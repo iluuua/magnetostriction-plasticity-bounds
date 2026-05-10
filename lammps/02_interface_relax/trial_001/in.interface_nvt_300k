@@ -1,0 +1,32 @@
+units           metal
+dimension       3
+boundary        p p f
+atom_style      atomic
+
+read_data       data.interface_minimized
+
+mass            1 26.9815385
+mass            2 55.845
+
+pair_style      meam
+pair_coeff      * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+reset_timestep  0
+thermo          100
+thermo_style    custom step temp pe ke etotal press vol lx ly lz xy xz yz
+
+velocity        all create 300.0 13579 mom yes rot no dist gaussian
+fix             nvt_all all nvt temp 300.0 300.0 0.1
+
+dump            d1 all custom 100 dump.interface_nvt_300k.lammpstrj id type x y z
+dump_modify     d1 sort id
+
+run             5000
+
+unfix           nvt_all
+undump          d1
+write_dump      all custom dump.interface_nvt_300k_final.lammpstrj id type x y z modify sort id
+write_data      data.interface_nvt_300k

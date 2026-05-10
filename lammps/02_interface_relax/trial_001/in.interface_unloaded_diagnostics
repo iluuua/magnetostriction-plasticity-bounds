@@ -1,0 +1,35 @@
+units           metal
+dimension       3
+boundary        p p f
+atom_style      atomic
+
+read_data       data.interface_nvt_300k
+
+mass            1 26.9815385
+mass            2 55.845
+
+pair_style      meam
+pair_coeff      * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+compute         pe_atom all pe/atom
+compute         stress_atom all stress/atom NULL virial
+compute         stress_sum all reduce sum c_stress_atom[1] c_stress_atom[2] c_stress_atom[3] c_stress_atom[4] c_stress_atom[5] c_stress_atom[6]
+
+variable        sigma_xx_bar equal -c_stress_sum[1]/vol
+variable        sigma_yy_bar equal -c_stress_sum[2]/vol
+variable        sigma_zz_bar equal -c_stress_sum[3]/vol
+variable        pressure_like_bar equal -(c_stress_sum[1]+c_stress_sum[2]+c_stress_sum[3])/(3.0*vol)
+
+reset_timestep  0
+thermo          1
+thermo_style    custom step temp pe ke etotal press vol lx ly lz xy xz yz v_sigma_xx_bar v_sigma_yy_bar v_sigma_zz_bar v_pressure_like_bar
+
+dump            d1 all custom 1 dump.interface_unloaded_stress_run0.lammpstrj id type x y z c_pe_atom c_stress_atom[1] c_stress_atom[2] c_stress_atom[3] c_stress_atom[4] c_stress_atom[5] c_stress_atom[6]
+dump_modify     d1 sort id
+
+run             0
+
+undump          d1

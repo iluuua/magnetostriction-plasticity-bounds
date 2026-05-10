@@ -1,0 +1,47 @@
+{
+  "trial": "trial_001",
+  "created_by": "analysis/python/build_unloaded_interface_trial.py",
+  "stress_applied": false,
+  "candidate": {
+    "al_hkl": "(111)",
+    "fe_hkl": "(100)",
+    "source_max_length_mismatch_percent": 0.9434288068775897,
+    "source_angle_delta_deg": 0.1144388402026486,
+    "source_estimated_atoms": 652,
+    "al_matrix": "[[-5,-3],[-2,-4]]",
+    "fe_matrix": "[[-2,-1],[-1,-1]]"
+  },
+  "actual_atoms": {
+    "total": 618,
+    "Al_type_1": 522,
+    "Fe_type_2": 96,
+    "Al_slab_atoms": 210,
+    "Fe4Al13_slab_atoms": 408
+  },
+  "box": {
+    "lx_A": 15.315253639464007,
+    "ly_A": 6.670272350047926,
+    "lz_A": 109.21147561319708,
+    "xy_A": 4.002516727832912,
+    "xz_A": 0.0,
+    "yz_A": 0.0
+  },
+  "build_parameters": {
+    "al_normal_repeats": 5,
+    "fe_normal_repeats": 2,
+    "interface_gap_A": 2.25,
+    "fe_lateral_shift_fractional": [
+      0.0,
+      0.8
+    ],
+    "bottom_vacuum_A": 5.0,
+    "top_vacuum_A": 5.0,
+    "z_boundary_for_lammps_input": "fixed/nonperiodic",
+    "triclinic_tilt_reduction_v2_minus_n_v1": 1
+  },
+  "limitations": [
+    "Initial geometry only; not a validated physical interface.",
+    "Fe4Al13 slab uses relaxed conventional triclinic cell surface basis without primitive centered-lattice reduction.",
+    "No 120 MPa loading was applied."
+  ]
+}

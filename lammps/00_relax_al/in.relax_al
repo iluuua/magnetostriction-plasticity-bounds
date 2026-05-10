@@ -1,0 +1,32 @@
+units           metal
+dimension       3
+boundary        p p p
+atom_style      atomic
+
+read_data       ../../structures/converted/Al/al_fcc.data
+
+mass            1 26.9815385
+
+pair_style      eam/alloy
+pair_coeff      * * ../../potentials/eam/Al_zhou.eam.alloy Al
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+thermo          100
+thermo_style    custom step temp pe ke etotal press
+
+min_style       cg
+minimize        1.0e-8 1.0e-10 10000 100000
+
+velocity        all create 300.0 12345 mom yes rot no
+
+fix             nvt_all all nvt temp 300.0 300.0 0.1
+
+dump            d1 all custom 100 dump.al_relax.lammpstrj id type x y z
+run             5000
+
+unfix           nvt_all
+undump          d1
+
+write_data      data.al_relaxed

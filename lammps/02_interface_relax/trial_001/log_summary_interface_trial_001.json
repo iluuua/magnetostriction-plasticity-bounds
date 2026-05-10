@@ -1,0 +1,85 @@
+{
+  "log_path": "lammps/02_interface_relax/trial_001/log.lammps",
+  "has_error": false,
+  "has_nan": false,
+  "has_lost_atoms": false,
+  "dangerous_builds": [
+    0
+  ],
+  "dangerous_builds_max": 0,
+  "loop_times": [
+    {
+      "seconds": 18.6819,
+      "steps": 510,
+      "atoms": 618
+    }
+  ],
+  "total_wall_time": "0:00:18",
+  "n_thermo_tables": 1,
+  "thermo_tables": [
+    {
+      "columns": [
+        "Step",
+        "Temp",
+        "PotEng",
+        "KinEng",
+        "TotEng",
+        "Press",
+        "Volume",
+        "Lx",
+        "Ly",
+        "Lz",
+        "Xy",
+        "Xz",
+        "Yz"
+      ],
+      "n_rows": 52,
+      "first": {
+        "Step": 0,
+        "Temp": 0.0,
+        "PotEng": -2106.9824,
+        "KinEng": 0.0,
+        "TotEng": -2106.9824,
+        "Press": -11429.925,
+        "Volume": 11156.707,
+        "Lx": 15.315254,
+        "Ly": 6.6702724,
+        "Lz": 109.21148,
+        "Xy": 4.0025167,
+        "Xz": 0.0,
+        "Yz": 0.0
+      },
+      "last": {
+        "Step": 510,
+        "Temp": 0.0,
+        "PotEng": -2143.9047,
+        "KinEng": 0.0,
+        "TotEng": -2143.9047,
+        "Press": -7271.804,
+        "Volume": 11156.707,
+        "Lx": 15.315254,
+        "Ly": 6.6702724,
+        "Lz": 109.21148,
+        "Xy": 4.0025167,
+        "Xz": 0.0,
+        "Yz": 0.0
+      }
+    }
+  ],
+  "last_thermo": {
+    "Step": 510,
+    "Temp": 0.0,
+    "PotEng": -2143.9047,
+    "KinEng": 0.0,
+    "TotEng": -2143.9047,
+    "Press": -7271.804,
+    "Volume": 11156.707,
+    "Lx": 15.315254,
+    "Ly": 6.6702724,
+    "Lz": 109.21148,
+    "Xy": 4.0025167,
+    "Xz": 0.0,
+    "Yz": 0.0
+  },
+  "ok_basic": true
+}

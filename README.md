@@ -957,10 +957,22 @@ Al-матрица + эллипсоидное Fe₄Al₁₃-включение
 ## 30. Текущий статус
 
 ```text
-Постановка согласована.
-Фаза включения выбрана: Fe₄Al₁₃ / Al₁₃Fe₄ / FeAl₃.
-Первый сценарий выбран: плоская граница.
-Базовое воздействие выбрано: 120 МПа.
-Внешняя нагрузка и ползучесть пока исключены.
-Главный следующий шаг: собрать и проверить атомистический расчётный каркас.
+Обновлено: 2026-05-10.
+Baseline чистого Al подтверждён на Al_zhou.eam.alloy.
+Структура Al₁₃Fe₄ скачана из COD 1571554 и сконвертирована в LAMMPS data.
+Выбран baseline Al-Fe потенциал: Jelinek/Groh/Horstemeyer et al. 2012 MEAM.
+Standalone Fe₄Al₁₃ прошёл minimization, triclinic box/relax и NPT 300 K / 0 bar на 5000 steps.
+OVITO conda package установлен, но GUI падает с dyld, Python module ovito не импортируется.
+Mismatch-анализ плоского интерфейса выполнен.
+Лучший численный кандидат: Al(111) / Fe₄Al₁₃(100), max length mismatch около 0.943%.
+Создан первый маленький unloaded interface trial_001: 618 atoms, без Al-Fe overlaps ниже 2.1 Å.
+LAMMPS minimization для trial_001 прошла: no ERROR/nan/lost atoms, Dangerous builds = 0.
+Короткий unloaded NVT 300 K на 5000 steps для trial_001 прошёл: final T≈300.86 K, no ERROR/nan/lost atoms, Dangerous builds = 0.
+Post-NVT distance check безопасен: min Al-Fe≈2.283 Å, pairs <1.8 Å = 0, Al-Fe pairs <2.1 Å = 0.
+Unloaded local stress/strain diagnostics выполнены через LAMMPS run 0 + Python: interface z≈39.695 Å, interface-near hydrostatic proxy Al-side≈-1.978 GPa, Fe₄Al₁₃-side≈-1.248 GPa.
+Long unloaded NVT на 20000 steps прошёл: no ERROR/nan/lost atoms, Dangerous builds = 0, stress dump 21 frames × 618 atoms.
+Time-averaged unloaded stress profile: interface z≈40.164 Å, hydrostatic proxy Al-side≈-1.283±0.727 GPa, Fe₄Al₁₃-side≈-0.879±0.519 GPa.
+Warning-pair inspection после long NVT выполнен: пара 232-260 является внутренней Al-Fe парой Fe₄Al₁₃_slab, не cross-slab; min distance≈2.027 Å, frames <1.8 Å = 0, монотонного схлопывания нет.
+120 MPa не применялось, stress-сценарии не запускались.
+Главный следующий шаг: визуальная проверка пары 232-260 и unloaded geometry после установки OVITO Basic; 120 MPa пока не готовить.
 ```
