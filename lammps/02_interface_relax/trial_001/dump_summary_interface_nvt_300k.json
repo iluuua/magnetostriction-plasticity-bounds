@@ -1,0 +1,7 @@
+{
+  "dump_path": "lammps/02_interface_relax/trial_001/dump.interface_nvt_300k.lammpstrj",
+  "reader": "fallback_header_parser",
+  "ovito_python_available": false,
+  "frames": 51,
+  "atoms_per_frame": 618
+}

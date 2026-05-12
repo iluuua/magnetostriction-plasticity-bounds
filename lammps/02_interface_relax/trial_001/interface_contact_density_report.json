@@ -1,0 +1,336 @@
+{
+  "input": {
+    "data": "/Users/ilua/Documents/ilua-system/projects/physics_md_al_fe/lammps/02_interface_relax/trial_001/data.interface_nvt_300k_long",
+    "metadata": "/Users/ilua/Documents/ilua-system/projects/physics_md_al_fe/structures/interface/flat_interface/trial_001/interface_metadata.json",
+    "stress_summary": "/Users/ilua/Documents/ilua-system/projects/physics_md_al_fe/lammps/02_interface_relax/trial_001/interface_time_averaged_stress_summary.json"
+  },
+  "interface_z_A": 40.16445,
+  "interface_z_source": "/Users/ilua/Documents/ilua-system/projects/physics_md_al_fe/lammps/02_interface_relax/trial_001/interface_time_averaged_stress_summary.json",
+  "window_A": 8.0,
+  "phase_assignment": "atom_id<=Al_slab_atoms (210)",
+  "box": {
+    "xy": 4.002516727832912,
+    "xz": 0.0,
+    "yz": 0.0,
+    "xlo": 0.0,
+    "xhi": 15.315253639464007,
+    "ylo": 0.0,
+    "yhi": 6.670272350047926,
+    "zlo": 0.0,
+    "zhi": 109.21147561319708
+  },
+  "total_atoms": 618,
+  "phase_counts": {
+    "Al_slab": 210,
+    "Fe4Al13_slab": 408
+  },
+  "type_counts": {
+    "Al_type_1": 522,
+    "Fe_type_2": 96
+  },
+  "cross_slab_contact": {
+    "interface_window_A": [
+      32.16445,
+      48.16445
+    ],
+    "Al_slab_atoms_near_interface": 42,
+    "Fe4Al13_slab_atoms_near_interface": 52,
+    "cross_slab_pairs_tested": 2184,
+    "minimum_cross_slab_distance_A": 2.5924655274192756,
+    "mean_10_smallest_cross_slab_distances_A": 2.662030784474786,
+    "threshold_counts": {
+      "pairs_within_2.3_A": 0,
+      "pairs_within_2.5_A": 0,
+      "pairs_within_2.8_A": 20,
+      "pairs_within_3.0_A": 33,
+      "pairs_within_3.5_A": 48
+    },
+    "ten_smallest_cross_slab_pairs": [
+      {
+        "distance_A": 2.5924655274192756,
+        "atom_i": {
+          "atom_id": 155,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 15.67557901826195,
+          "y_A": 0.6558140162729832,
+          "z_A": 38.89057223070361
+        },
+        "atom_j": {
+          "atom_id": 581,
+          "type": 2,
+          "species": "Fe",
+          "phase": "Fe4Al13_slab",
+          "x_A": 0.29667929772086904,
+          "y_A": 0.4499694140184222,
+          "z_A": 41.47406883161941
+        },
+        "mid_z_A": 40.18232053116151
+      },
+      {
+        "distance_A": 2.6046556215026033,
+        "atom_i": {
+          "atom_id": 114,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 11.250437294144296,
+          "y_A": 2.9941355623772505,
+          "z_A": 38.77227685613743
+        },
+        "atom_j": {
+          "atom_id": 615,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 9.674527732299635,
+          "y_A": 4.017003133342949,
+          "z_A": 40.57629511873302
+        },
+        "mid_z_A": 39.674285987435226
+      },
+      {
+        "distance_A": 2.6501862238001146,
+        "atom_i": {
+          "atom_id": 136,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 13.519378363800902,
+          "y_A": 1.8660481202504602,
+          "z_A": 38.42139055316336
+        },
+        "atom_j": {
+          "atom_id": 584,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 14.360973007789601,
+          "y_A": 2.723999750640532,
+          "z_A": 40.78340758865241
+        },
+        "mid_z_A": 39.602399070907886
+      },
+      {
+        "distance_A": 2.6542752598173176,
+        "atom_i": {
+          "atom_id": 173,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 3.228021769698096,
+          "y_A": 1.9994084878416232,
+          "z_A": 39.01284713120229
+        },
+        "atom_j": {
+          "atom_id": 610,
+          "type": 2,
+          "species": "Fe",
+          "phase": "Fe4Al13_slab",
+          "x_A": 2.5031078522582284,
+          "y_A": 3.838271935552537,
+          "z_A": 40.78436009696151
+        },
+        "mid_z_A": 39.8986036140819
+      },
+      {
+        "distance_A": 2.669320094374655,
+        "atom_i": {
+          "atom_id": 156,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 15.92828986953584,
+          "y_A": 3.5000936858086,
+          "z_A": 38.766859591476646
+        },
+        "atom_j": {
+          "atom_id": 584,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 14.360973007789601,
+          "y_A": 2.723999750640532,
+          "z_A": 40.78340758865241
+        },
+        "mid_z_A": 39.77513359006453
+      },
+      {
+        "distance_A": 2.670746263463561,
+        "atom_i": {
+          "atom_id": 91,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 8.832581592149005,
+          "y_A": 1.4710904325619365,
+          "z_A": 39.28090933428051
+        },
+        "atom_j": {
+          "atom_id": 555,
+          "type": 2,
+          "species": "Fe",
+          "phase": "Fe4Al13_slab",
+          "x_A": 13.626800407011457,
+          "y_A": 6.5386460365137165,
+          "z_A": 41.26519571506848
+        },
+        "mid_z_A": 40.2730525246745
+      },
+      {
+        "distance_A": 2.6830788612007734,
+        "atom_i": {
+          "atom_id": 51,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 6.382507469943773,
+          "y_A": 6.004525251174591,
+          "z_A": 40.042154628273195
+        },
+        "atom_j": {
+          "atom_id": 533,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 4.937192522039693,
+          "y_A": 0.005028458811205404,
+          "z_A": 40.50007534560781
+        },
+        "mid_z_A": 40.2711149869405
+      },
+      {
+        "distance_A": 2.6955039036012813,
+        "atom_i": {
+          "atom_id": 114,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 11.250437294144296,
+          "y_A": 2.9941355623772505,
+          "z_A": 38.77227685613743
+        },
+        "atom_j": {
+          "atom_id": 614,
+          "type": 2,
+          "species": "Fe",
+          "phase": "Fe4Al13_slab",
+          "x_A": 11.762619174890268,
+          "y_A": 2.887111582984846,
+          "z_A": 41.416507724121594
+        },
+        "mid_z_A": 40.09439229012951
+      },
+      {
+        "distance_A": 2.6979127094608026,
+        "atom_i": {
+          "atom_id": 91,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 8.832581592149005,
+          "y_A": 1.4710904325619365,
+          "z_A": 39.28090933428051
+        },
+        "atom_j": {
+          "atom_id": 618,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 7.358360154439864,
+          "y_A": 0.8075108123651559,
+          "z_A": 41.44078577244275
+        },
+        "mid_z_A": 40.36084755336163
+      },
+      {
+        "distance_A": 2.70216338010748,
+        "atom_i": {
+          "atom_id": 186,
+          "type": 1,
+          "species": "Al",
+          "phase": "Al_slab",
+          "x_A": 6.105655204931284,
+          "y_A": 1.7782843190474238,
+          "z_A": 38.57748980531338
+        },
+        "atom_j": {
+          "atom_id": 606,
+          "type": 1,
+          "species": "Al",
+          "phase": "Fe4Al13_slab",
+          "x_A": 7.006102244243733,
+          "y_A": 3.3679870924848707,
+          "z_A": 40.568400942032596
+        },
+        "mid_z_A": 39.57294537367299
+      }
+    ]
+  },
+  "density_profile": {
+    "bin_width_A": 1.0,
+    "in_plane_area_A2": 102.15691288528764,
+    "bin_volume_A3": 102.15691288528764
+  },
+  "largest_empty_z_gap_between_occupied_bins": {
+    "z_lo_A": 7.0,
+    "z_hi_A": 8.0,
+    "width_A": 1.0,
+    "bin_count": 1,
+    "intersects_interface_window": false
+  },
+  "density_drop": {
+    "bulk_region_definition": {
+      "Al_slab_bulk_z_A": [
+        13.709919949401659,
+        32.16445
+      ],
+      "Fe4Al13_slab_bulk_z_A": [
+        48.16445,
+        95.44147214545163
+      ],
+      "surface_buffer_A": 8.0
+    },
+    "Al_slab_interface_density_atoms_per_A3": 0.06689056217866046,
+    "Al_slab_bulk_density_atoms_per_A3": 0.10963526288795081,
+    "Al_slab_density_drop_percent": 38.988095238095234,
+    "Fe4Al13_slab_interface_density_atoms_per_A3": 0.0611803922365797,
+    "Fe4Al13_slab_bulk_density_atoms_per_A3": 0.06310692373679538,
+    "Fe4Al13_slab_density_drop_percent": 3.0528052805280255,
+    "empty_bins_in_interface_window": 2,
+    "empty_interface_bin_ranges_A": [
+      [
+        32.0,
+        33.0
+      ],
+      [
+        37.0,
+        38.0
+      ]
+    ]
+  },
+  "verdict": {
+    "status": "contact_present_visible_gaps_likely_visualization_or_structure_artifact",
+    "recommendation": "Keep trial_001 as unloaded baseline candidate, but still inspect visually before any loading.",
+    "notes": [
+      "minimum cross-slab distance is 2.592 A",
+      "cross-slab pairs within 3.0/3.5 A: 33/48",
+      "empty 1 A bins in interface window: 2"
+    ]
+  },
+  "ovito": {
+    "app_paths": [
+      "/Applications/Ovito.app"
+    ],
+    "python_module_available": false,
+    "note": "OVITO Basic GUI can be used externally; this script does not require OVITO Python."
+  },
+  "hard_rules": {
+    "applied_120_mpa": false,
+    "used_fix_addforce": false,
+    "created_stress_scenario": false,
+    "used_npt": false,
+    "claims_physical_validation": false
+  }
+}

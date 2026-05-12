@@ -1,0 +1,77 @@
+{
+  "data_path": "lammps/02_interface_relax/trial_001/data.interface_nvt_300k",
+  "metadata_path": "structures/interface/flat_interface/trial_001/interface_metadata.json",
+  "total_atoms": 618,
+  "Al_type_1": 522,
+  "Fe_type_2": 96,
+  "counts_by_phase": {
+    "Al_slab": 210,
+    "Fe4Al13_slab": 408
+  },
+  "phase_assignment": "atom_id<=Al_slab_atoms (210)",
+  "box": {
+    "xy": 4.002516727832912,
+    "xz": 0.0,
+    "yz": 0.0,
+    "xlo": 0.0,
+    "xhi": 15.315253639464007,
+    "ylo": 0.0,
+    "yhi": 6.670272350047926,
+    "zlo": 0.0,
+    "zhi": 109.21147561319708
+  },
+  "minimum_Al_Al_distance_A": {
+    "distance_A": 2.4954410534290377,
+    "atom_i": 615,
+    "atom_j": 613,
+    "type_i": 1,
+    "type_j": 1,
+    "phase_i": "Fe4Al13_slab",
+    "phase_j": "Fe4Al13_slab"
+  },
+  "minimum_Fe_Fe_distance_A": {
+    "distance_A": 2.6499727731895004,
+    "atom_i": 456,
+    "atom_j": 515,
+    "type_i": 2,
+    "type_j": 2,
+    "phase_i": "Fe4Al13_slab",
+    "phase_j": "Fe4Al13_slab"
+  },
+  "minimum_Al_Fe_distance_A": {
+    "distance_A": 2.2834059099057114,
+    "atom_i": 342,
+    "atom_j": 403,
+    "type_i": 2,
+    "type_j": 1,
+    "phase_i": "Fe4Al13_slab",
+    "phase_j": "Fe4Al13_slab"
+  },
+  "minimum_cross_slab_distance_A": {
+    "distance_A": 2.534898445930031,
+    "atom_i": 615,
+    "atom_j": 114,
+    "type_i": 1,
+    "type_j": 1,
+    "phase_i": "Fe4Al13_slab",
+    "phase_j": "Al_slab"
+  },
+  "minimum_cross_slab_Al_Fe_distance_A": {
+    "distance_A": 2.6466769427073733,
+    "atom_i": 91,
+    "atom_j": 555,
+    "type_i": 1,
+    "type_j": 2,
+    "phase_i": "Al_slab",
+    "phase_j": "Fe4Al13_slab"
+  },
+  "pairs_below_hard_overlap_threshold": 0,
+  "Al_Fe_pairs_below_warning_threshold": 0,
+  "cross_slab_pairs_below_hard_overlap_threshold": 0,
+  "cross_slab_Al_Fe_pairs_below_warning_threshold": 0,
+  "thresholds": {
+    "hard_overlap_A": 1.8,
+    "al_fe_warning_A": 2.1
+  },
+  "safe_basic": true
+}

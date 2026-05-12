@@ -1,0 +1,22 @@
+pair_index,timestep,atom_i,atom_j,classification,distance_A,below_2p1_A,below_1p8_A
+1,0,232,260,internal Fe4Al13 pair,2.3390767785816684,False,False
+1,1000,232,260,internal Fe4Al13 pair,2.1457762214173197,False,False
+1,2000,232,260,internal Fe4Al13 pair,2.353091312805352,False,False
+1,3000,232,260,internal Fe4Al13 pair,2.2095595483263204,False,False
+1,4000,232,260,internal Fe4Al13 pair,2.0624295914285202,True,False
+1,5000,232,260,internal Fe4Al13 pair,2.10926647382449,False,False
+1,6000,232,260,internal Fe4Al13 pair,2.1072523935210032,False,False
+1,7000,232,260,internal Fe4Al13 pair,2.0992820076397543,True,False
+1,8000,232,260,internal Fe4Al13 pair,2.1148757189017044,False,False
+1,9000,232,260,internal Fe4Al13 pair,2.0705207804801185,True,False
+1,10000,232,260,internal Fe4Al13 pair,2.0389006964538554,True,False
+1,11000,232,260,internal Fe4Al13 pair,2.0677997184447037,True,False
+1,12000,232,260,internal Fe4Al13 pair,2.064551983385254,True,False
+1,13000,232,260,internal Fe4Al13 pair,2.0453267118238085,True,False
+1,14000,232,260,internal Fe4Al13 pair,2.1400730717431116,False,False
+1,15000,232,260,internal Fe4Al13 pair,2.099322631255141,True,False
+1,16000,232,260,internal Fe4Al13 pair,2.123262250971368,False,False
+1,17000,232,260,internal Fe4Al13 pair,2.109579363878017,False,False
+1,18000,232,260,internal Fe4Al13 pair,2.0845765564257857,True,False
+1,19000,232,260,internal Fe4Al13 pair,2.045205291309407,True,False
+1,20000,232,260,internal Fe4Al13 pair,2.0267974114104237,True,False

@@ -1,0 +1,118 @@
+{
+  "log_path": "lammps/00_relax_al/log.lammps",
+  "has_error": false,
+  "has_nan": false,
+  "has_lost_atoms": false,
+  "dangerous_builds": [
+    0,
+    0
+  ],
+  "dangerous_builds_max": 0,
+  "loop_times": [
+    {
+      "seconds": 0.506299,
+      "steps": 9,
+      "atoms": 4000
+    },
+    {
+      "seconds": 225.452,
+      "steps": 5000,
+      "atoms": 4000
+    }
+  ],
+  "total_wall_time": "0:03:46",
+  "n_thermo_tables": 2,
+  "thermo_tables": [
+    {
+      "columns": [
+        "Step",
+        "Temp",
+        "PotEng",
+        "KinEng",
+        "TotEng",
+        "Press",
+        "Volume",
+        "Lx",
+        "Ly",
+        "Lz"
+      ],
+      "n_rows": 2,
+      "first": {
+        "Step": 0,
+        "Temp": 0.0,
+        "PotEng": -14308.637,
+        "KinEng": 0.0,
+        "TotEng": -14308.637,
+        "Press": 23601.197,
+        "Volume": 66430.125,
+        "Lx": 40.5,
+        "Ly": 40.5,
+        "Lz": 40.5
+      },
+      "last": {
+        "Step": 9,
+        "Temp": 0.0,
+        "PotEng": -14319.995,
+        "KinEng": 0.0,
+        "TotEng": -14319.995,
+        "Press": -0.010539098,
+        "Volume": 67999.991,
+        "Lx": 40.816549,
+        "Ly": 40.816549,
+        "Lz": 40.816549
+      }
+    },
+    {
+      "columns": [
+        "Step",
+        "Temp",
+        "PotEng",
+        "KinEng",
+        "TotEng",
+        "Press",
+        "Volume",
+        "Lx",
+        "Ly",
+        "Lz"
+      ],
+      "n_rows": 52,
+      "first": {
+        "Step": 9,
+        "Temp": 300.0,
+        "PotEng": -14319.995,
+        "KinEng": 155.0734,
+        "TotEng": -14164.921,
+        "Press": 2435.8226,
+        "Volume": 67999.991,
+        "Lx": 40.816549,
+        "Ly": 40.816549,
+        "Lz": 40.816549
+      },
+      "last": {
+        "Step": 5009,
+        "Temp": 293.99817,
+        "PotEng": -14143.881,
+        "KinEng": 151.97098,
+        "TotEng": -13991.91,
+        "Press": 433.66867,
+        "Volume": 69552.375,
+        "Lx": 41.124818,
+        "Ly": 41.124818,
+        "Lz": 41.124818
+      }
+    }
+  ],
+  "last_thermo": {
+    "Step": 5009,
+    "Temp": 293.99817,
+    "PotEng": -14143.881,
+    "KinEng": 151.97098,
+    "TotEng": -13991.91,
+    "Press": 433.66867,
+    "Volume": 69552.375,
+    "Lx": 41.124818,
+    "Ly": 41.124818,
+    "Lz": 41.124818
+  },
+  "ok_basic": true
+}

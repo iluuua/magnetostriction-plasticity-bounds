@@ -1,0 +1,139 @@
+{
+  "log_path": "lammps/01_relax_al13fe4/log.lammps",
+  "has_error": false,
+  "has_nan": false,
+  "has_lost_atoms": false,
+  "dangerous_builds": [
+    0,
+    0
+  ],
+  "dangerous_builds_max": 0,
+  "loop_times": [
+    {
+      "seconds": 3.33403,
+      "steps": 937,
+      "atoms": 102
+    },
+    {
+      "seconds": 12.5157,
+      "steps": 5000,
+      "atoms": 102
+    }
+  ],
+  "total_wall_time": "0:00:15",
+  "n_thermo_tables": 2,
+  "thermo_tables": [
+    {
+      "columns": [
+        "Step",
+        "Temp",
+        "PotEng",
+        "KinEng",
+        "TotEng",
+        "Press",
+        "Volume",
+        "Lx",
+        "Ly",
+        "Lz",
+        "Xy",
+        "Xz",
+        "Yz"
+      ],
+      "n_rows": 11,
+      "first": {
+        "Step": 0,
+        "Temp": 0.0,
+        "PotEng": -350.6328,
+        "KinEng": 0.0,
+        "TotEng": -350.6328,
+        "Press": 89312.163,
+        "Volume": 1489.2769,
+        "Lx": 15.498,
+        "Ly": 8.0814,
+        "Lz": 11.890858,
+        "Xy": -6.2236995e-16,
+        "Xz": -3.8154477,
+        "Yz": 4.7083176e-16
+      },
+      "last": {
+        "Step": 937,
+        "Temp": 0.0,
+        "PotEng": -363.6425,
+        "KinEng": 0.0,
+        "TotEng": -363.6425,
+        "Press": -9.4271286,
+        "Volume": 1607.2936,
+        "Lx": 16.654113,
+        "Ly": 7.8782955,
+        "Lz": 12.250151,
+        "Xy": 0.058671463,
+        "Xz": -3.9851083,
+        "Yz": 0.05555093
+      }
+    },
+    {
+      "columns": [
+        "Step",
+        "Temp",
+        "PotEng",
+        "KinEng",
+        "TotEng",
+        "Press",
+        "Volume",
+        "Lx",
+        "Ly",
+        "Lz",
+        "Xy",
+        "Xz",
+        "Yz"
+      ],
+      "n_rows": 51,
+      "first": {
+        "Step": 0,
+        "Temp": 300.0,
+        "PotEng": -363.6425,
+        "KinEng": 3.9165824,
+        "TotEng": -359.72592,
+        "Press": 2593.3151,
+        "Volume": 1607.2936,
+        "Lx": 16.654113,
+        "Ly": 7.8782955,
+        "Lz": 12.250151,
+        "Xy": 0.058671463,
+        "Xz": -3.9851083,
+        "Yz": 0.05555093
+      },
+      "last": {
+        "Step": 5000,
+        "Temp": 308.50522,
+        "PotEng": -359.63936,
+        "KinEng": 4.0276204,
+        "TotEng": -355.61174,
+        "Press": -61.795361,
+        "Volume": 1624.4052,
+        "Lx": 16.801682,
+        "Ly": 7.8662659,
+        "Lz": 12.290597,
+        "Xy": -0.011582344,
+        "Xz": -4.0457051,
+        "Yz": 0.18537866
+      }
+    }
+  ],
+  "last_thermo": {
+    "Step": 5000,
+    "Temp": 308.50522,
+    "PotEng": -359.63936,
+    "KinEng": 4.0276204,
+    "TotEng": -355.61174,
+    "Press": -61.795361,
+    "Volume": 1624.4052,
+    "Lx": 16.801682,
+    "Ly": 7.8662659,
+    "Lz": 12.290597,
+    "Xy": -0.011582344,
+    "Xz": -4.0457051,
+    "Yz": 0.18537866
+  },
+  "ok_basic": true
+}

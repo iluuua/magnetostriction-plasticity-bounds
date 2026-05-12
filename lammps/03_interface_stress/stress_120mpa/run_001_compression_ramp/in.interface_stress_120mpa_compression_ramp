@@ -1,0 +1,75 @@
+# 120 MPa compression-ramp controlled sanity run for Al/Fe4Al13 trial_001.
+# DO NOT USE NPT. DO NOT RUN 147/200 MPa from this input.
+# Reference: 60 MPa passed visual sanity check; this is still not physical validation.
+
+units           metal
+dimension       3
+boundary        p p f
+atom_style      atomic
+
+read_data       ../../../02_interface_relax/trial_001/data.interface_nvt_300k_long
+
+mass            1 26.9815385
+mass            2 55.845
+
+pair_style      meam
+pair_coeff      * * ../../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check yes
+
+variable interface_z equal 40.16445
+variable region_width equal 8.0
+variable z_bottom_fixed_hi equal 9.709919949401659
+variable z_fe_load_lo equal ${interface_z}
+variable z_fe_load_hi equal ${interface_z}+${region_width}
+variable z_al_monitor_lo equal ${interface_z}-${region_width}
+variable z_al_monitor_hi equal ${interface_z}
+
+group al_slab id 1:210
+group fe4al13_slab id 211:618
+
+region bottom_fixed_region block INF INF INF INF INF ${z_bottom_fixed_hi} units box
+region fe_load_region block INF INF INF INF ${z_fe_load_lo} ${z_fe_load_hi} units box
+region al_monitor_region block INF INF INF INF ${z_al_monitor_lo} ${z_al_monitor_hi} units box
+
+group bottom_fixed_region_group region bottom_fixed_region
+group fe_load_region_group region fe_load_region
+group al_monitor_region_group region al_monitor_region
+group fixed_bottom intersect al_slab bottom_fixed_region_group
+group fe_load intersect fe4al13_slab fe_load_region_group
+group al_monitor intersect al_slab al_monitor_region_group
+group mobile subtract all fixed_bottom
+
+velocity mobile create 300.0 24680 mom yes rot no dist gaussian
+velocity fixed_bottom set 0.0 0.0 0.0
+
+fix hold_bottom fixed_bottom setforce 0.0 0.0 0.0
+compute temp_mobile mobile temp
+fix nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix_modify nvt_mobile temp temp_mobile
+
+compute pe_atom all pe/atom
+compute stress_atom all stress/atom NULL virial
+
+# 120 MPa equivalent compression toward Al side (-z).
+variable f_atom_final equal -0.0014714153049055854
+variable fz_ramp equal ramp(0.0,v_f_atom_final)
+
+dump d1 all custom 100 dump.interface_stress_120mpa_compression_ramp.lammpstrj id type x y z c_pe_atom c_stress_atom[1] c_stress_atom[2] c_stress_atom[3] c_stress_atom[4] c_stress_atom[5] c_stress_atom[6]
+dump_modify d1 sort id
+
+thermo 100
+thermo_style custom step temp c_temp_mobile pe ke etotal press vol lx ly lz xy xz yz v_fz_ramp
+
+# Ramp to full 120 MPa-equivalent force over 5000 steps.
+fix load_fe_ramp fe_load addforce 0.0 0.0 v_fz_ramp
+run 5000
+unfix load_fe_ramp
+
+# Hold final 120 MPa-equivalent force for 10000 steps.
+fix load_fe_hold fe_load addforce 0.0 0.0 ${f_atom_final}
+run 10000
+
+write_data data.interface_stress_120mpa_compression_ramp
+write_dump all custom dump.interface_stress_120mpa_compression_ramp_final.lammpstrj id type x y z modify sort id

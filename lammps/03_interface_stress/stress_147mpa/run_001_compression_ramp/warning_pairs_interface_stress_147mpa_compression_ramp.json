@@ -1,0 +1,54 @@
+{
+  "data": "lammps/03_interface_stress/stress_147mpa/run_001_compression_ramp/data.interface_stress_147mpa_compression_ramp",
+  "dump": "lammps/03_interface_stress/stress_147mpa/run_001_compression_ramp/dump.interface_stress_147mpa_compression_ramp.lammpstrj",
+  "metadata": "structures/interface/flat_interface/trial_001/interface_metadata.json",
+  "warning_threshold_A": 2.1,
+  "hard_overlap_threshold_A": 1.8,
+  "neighborhood_radius_A": 4.0,
+  "n_warning_pairs": 1,
+  "warning_pairs": [
+    {
+      "atom_i": 232,
+      "atom_j": 260,
+      "type_i": 1,
+      "type_j": 2,
+      "species_i": "Al",
+      "species_j": "Fe",
+      "phase_i": "Fe4Al13_slab",
+      "phase_j": "Fe4Al13_slab",
+      "classification": "internal Fe4Al13 pair",
+      "distance_A": 2.0241841646744603,
+      "coords_i_A": [
+        11.661130339653932,
+        5.150682730248405,
+        103.39086316430881
+      ],
+      "coords_j_A": [
+        10.859349546655185,
+        3.6465192853203687,
+        102.2990933060331
+      ]
+    }
+  ],
+  "trajectory_frame_count": 151,
+  "pair_time_summaries": [
+    {
+      "min_distance_A": 1.9561508179330207,
+      "max_distance_A": 2.2168108489449434,
+      "mean_distance_A": 2.0731584728332924,
+      "std_distance_A": 0.05173320842224987,
+      "frames_below_2p1_A": 104,
+      "frames_below_1p8_A": 0,
+      "monotonically_decreases": false,
+      "contact_type": "intermittent short contact",
+      "pair_index": 1,
+      "atom_i": 232,
+      "atom_j": 260,
+      "classification": "internal Fe4Al13 pair"
+    }
+  ],
+  "distance_csv": "results/tables/interface_trial_001_stress_147mpa_warning_pair_distance_over_time.csv",
+  "distance_png": "results/figures/interface_trial_001_stress_147mpa_warning_pair_distance_over_time.png",
+  "neighborhood_csv": "results/tables/interface_trial_001_stress_147mpa_warning_pair_neighborhood.csv",
+  "verdict": "warning_to_monitor_not_loading_blocker"
+}

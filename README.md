@@ -954,13 +954,35 @@ Al-матрица + эллипсоидное Fe₄Al₁₃-включение
 
 ---
 
-## 30. Текущий статус
+## Current status
 
-```text
-Постановка согласована.
-Фаза включения выбрана: Fe₄Al₁₃ / Al₁₃Fe₄ / FeAl₃.
-Первый сценарий выбран: плоская граница.
-Базовое воздействие выбрано: 120 МПа.
-Внешняя нагрузка и ползучесть пока исключены.
-Главный следующий шаг: собрать и проверить атомистический расчётный каркас.
-```
+The project currently has a working MD pipeline for the simplified Al / Fe4Al13 flat-interface model.
+
+Completed:
+
+- Al baseline relaxation.
+- Fe4Al13 standalone sanity-check.
+- Interface candidate scan.
+- Interface trial_001 construction.
+- Interface minimization.
+- Short and long unloaded NVT.
+- Unloaded local stress-profile diagnostics.
+- Contact-density check.
+- 0 MPa control run.
+- 60 MPa compression-ramp sanity-run.
+- 120 MPa compression-ramp sanity-run.
+- 147 MPa compression-ramp sanity-run after manual OVITO review.
+
+The 147 MPa scenario completed without ERROR/nan/lost atoms, without hard overlaps below 1.8 A, and without cross-slab Al-Fe contacts below 2.1 A. The warning pair 232-260 remains an internal Fe4Al13 pair and does not collapse monotonically. Manual OVITO review passed: no visible interface detachment, empty interface gap, atom ejection, or whole-block drift was observed.
+
+Not yet done:
+
+- 200 MPa scenario.
+- Alternative interface trials.
+- Ellipsoidal inclusion.
+- Physically validated defect/dislocation analysis.
+- Final comparison with experimental microscopy.
+
+Important caveat:
+
+Current stress profiles are comparative virial proxies. They should not be interpreted as absolute experimentally validated stress values without further validation.

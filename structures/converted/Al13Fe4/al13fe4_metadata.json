@@ -1,0 +1,40 @@
+{
+  "source": "structures/raw/Al13Fe4/al13fe4.cif",
+  "formula": "Al13Fe4",
+  "full_formula": "Al78 Fe24",
+  "n_atoms": 102,
+  "cell": {
+    "matrix_angstrom": [
+      [
+        14.756927982642221,
+        0.0,
+        -4.735090338643072
+      ],
+      [
+        -4.94843032131471e-16,
+        8.0814,
+        4.94843032131471e-16
+      ],
+      [
+        0.0,
+        0.0,
+        12.488
+      ]
+    ],
+    "lengths_angstrom": [
+      15.498,
+      8.0814,
+      12.488
+    ],
+    "angles_degree": [
+      90.0,
+      107.79,
+      90.0
+    ],
+    "volume_angstrom3": 1489.2768928329735
+  },
+  "species_to_lammps_type": {
+    "Al": 1,
+    "Fe": 2
+  }
+}

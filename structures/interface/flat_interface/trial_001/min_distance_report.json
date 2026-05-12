@@ -1,0 +1,24 @@
+{
+  "minimum_Al_Al_distance_A": 2.3551235284824075,
+  "minimum_Fe_Fe_distance_A": 2.609414981367479,
+  "minimum_Al_Fe_distance_A": 2.27795990170914,
+  "minimum_cross_slab_distance_A": 2.3551235284824075,
+  "Al_Fe_pairs_below_warning_threshold": 0,
+  "cross_slab_pairs_below_warning_threshold": 0,
+  "any_pairs_below_hard_overlap_threshold": 0,
+  "cross_slab_pairs_below_hard_overlap_threshold": 0,
+  "closest_pair": {
+    "distance_A": 2.27795990170914,
+    "atom_i": 334,
+    "atom_j": 381,
+    "type_i": 2,
+    "type_j": 1,
+    "phase_i": "Fe4Al13_slab",
+    "phase_j": "Fe4Al13_slab"
+  },
+  "safe_to_write_lammps_data": true,
+  "thresholds": {
+    "hard_overlap_A": 1.8,
+    "al_fe_warning_A": 2.1
+  }
+}

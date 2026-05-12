@@ -1,0 +1,39 @@
+units           metal
+dimension       3
+boundary        p p p
+atom_style      atomic
+
+read_data       ../../structures/converted/Al/al_fcc.data
+
+mass            1 26.9815385
+
+pair_style      eam/alloy
+pair_coeff      * * ../../potentials/eam/Al_zhou.eam.alloy Al
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+thermo          100
+thermo_style    custom step temp pe ke etotal press vol lx ly lz
+
+# 1) Static relaxation with box relaxation to ~0 bar
+fix             boxrelax all box/relax iso 0.0 vmax 0.001
+min_style       cg
+minimize        1.0e-8 1.0e-10 10000 100000
+unfix           boxrelax
+
+write_data      data.al_boxrelaxed
+
+# 2) Thermal equilibration at 300 K and 0 bar
+velocity        all create 300.0 12345 mom yes rot no
+
+fix             npt_all all npt temp 300.0 300.0 0.1 iso 0.0 0.0 1.0
+
+dump            d1 all custom 100 dump.al_npt.lammpstrj id type x y z
+run             5000
+
+unfix           npt_all
+undump          d1
+
+write_data      data.al_npt_relaxed
+

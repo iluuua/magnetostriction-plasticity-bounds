@@ -1,0 +1,40 @@
+units           metal
+dimension       3
+boundary        p p p
+atom_style      atomic
+
+read_data       ../../structures/converted/Al13Fe4/al13fe4.data
+
+mass            1 26.9815385
+mass            2 55.845
+
+pair_style      meam
+pair_coeff      * * ../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+thermo          100
+thermo_style    custom step temp pe ke etotal press vol lx ly lz xy xz yz
+
+# 1) Static relaxation with triclinic cell relaxation to ~0 bar.
+fix             boxrelax all box/relax tri 0.0 vmax 0.001
+min_style       cg
+minimize        1.0e-8 1.0e-10 10000 100000
+unfix           boxrelax
+
+write_data      data.al13fe4_boxrelaxed
+
+# 2) NPT run at 300 K and 0 bar.
+reset_timestep  0
+velocity        all create 300.0 24680 mom yes rot no dist gaussian
+
+fix             npt_all all npt temp 300.0 300.0 0.1 tri 0.0 0.0 1.0
+
+dump            d1 all custom 100 dump.al13fe4_npt.lammpstrj id type x y z
+run             5000
+
+unfix           npt_all
+undump          d1
+
+write_data      data.al13fe4_npt_relaxed

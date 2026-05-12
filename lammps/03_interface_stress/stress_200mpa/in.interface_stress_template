@@ -1,0 +1,60 @@
+# TEMPLATE ONLY: controlled interface stress setup for trial_001.
+# Do not run as a production loading scenario without copying and reviewing.
+# No active fix addforce, no active dynamics run, no NPT, no 120 MPa applied here.
+
+units metal
+dimension 3
+boundary p p f
+atom_style atomic
+
+read_data ../../02_interface_relax/trial_001/data.interface_nvt_300k_long
+
+mass 1 26.9815385
+mass 2 55.845
+
+pair_style meam
+pair_coeff * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor 2.0 bin
+neigh_modify delay 0 every 1 check yes
+
+variable interface_z equal 40.16445
+variable region_width equal 8.0
+variable z_fe_load_lo equal ${interface_z}
+variable z_fe_load_hi equal ${interface_z}+${region_width}
+variable z_al_monitor_lo equal ${interface_z}-${region_width}
+variable z_al_monitor_hi equal ${interface_z}
+
+# Phase assignment from structures/interface/flat_interface/trial_001/interface_metadata.json:
+# atom ids 1:210 = Al_slab, atom ids 211:618 = Fe4Al13_slab.
+group al_slab id 1:210
+group fe4al13_slab id 211:618
+
+region fe_load_region block INF INF INF INF ${z_fe_load_lo} ${z_fe_load_hi} units box
+region al_monitor_region block INF INF INF INF ${z_al_monitor_lo} ${z_al_monitor_hi} units box
+group fe_load_region_group region fe_load_region
+group al_monitor_region_group region al_monitor_region
+group fe_load intersect fe4al13_slab fe_load_region_group
+group al_monitor intersect al_slab al_monitor_region_group
+
+compute pe_atom all pe/atom
+compute stress_atom all stress/atom NULL virial
+compute temp_all all temp
+
+variable sigma_mpa equal 200.0
+variable interface_area_A2 equal 102.15691288528764
+variable target_atoms equal 52
+variable f_total_N equal 2.0431382577057524e-10
+variable f_atom_N equal 3.929112034049524e-12
+variable f_atom_evA equal 0.002452358841509309
+
+# Future loading placeholder only. Keep commented until the unloaded baseline is accepted.
+# Compression toward Al side would use negative z:
+# fix load_fe fe_load addforce 0.0 0.0 -${f_atom_evA}
+# Tension away from Al side would use positive z:
+# fix load_fe fe_load addforce 0.0 0.0 ${f_atom_evA}
+
+thermo 100
+thermo_style custom step temp pe ke etotal press vol lx ly lz xy xz yz
+
+print "TEMPLATE ONLY stress_200mpa: groups/regions/computes defined; no run executed; no fix addforce active."

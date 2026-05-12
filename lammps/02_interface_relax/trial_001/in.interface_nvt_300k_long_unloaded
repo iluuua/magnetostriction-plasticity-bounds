@@ -1,0 +1,42 @@
+# Longer unloaded NVT for trial_001.
+# 20000 steps are used instead of 50000 because the measured 5000-step
+# trial took ~69 s on this Mac, making 50000 steps too slow for a local sanity-run.
+
+units           metal
+dimension       3
+boundary        p p f
+atom_style      atomic
+
+read_data       data.interface_nvt_300k
+
+mass            1 26.9815385
+mass            2 55.845
+
+pair_style      meam
+pair_coeff      * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 10 check yes
+
+compute         pe_atom all pe/atom
+compute         stress_atom all stress/atom NULL virial
+
+reset_timestep  0
+thermo          500
+thermo_style    custom step temp pe ke etotal press vol lx ly lz xy xz yz
+
+fix             nvt_all all nvt temp 300.0 300.0 0.1
+
+dump            dtraj all custom 1000 dump.interface_nvt_300k_long.lammpstrj id type x y z
+dump_modify     dtraj sort id
+
+dump            dstress all custom 1000 dump.interface_nvt_300k_long_stress.lammpstrj id type x y z c_pe_atom c_stress_atom[1] c_stress_atom[2] c_stress_atom[3] c_stress_atom[4] c_stress_atom[5] c_stress_atom[6]
+dump_modify     dstress sort id
+
+run             20000
+
+unfix           nvt_all
+undump          dtraj
+undump          dstress
+write_dump      all custom dump.interface_nvt_300k_long_final.lammpstrj id type x y z modify sort id
+write_data      data.interface_nvt_300k_long
