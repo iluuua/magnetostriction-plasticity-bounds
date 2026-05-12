@@ -1,0 +1,7 @@
+{
+  "dump_path": "lammps/03_interface_stress/stress_000mpa/run_001_control/dump.interface_stress_000mpa_control.lammpstrj",
+  "reader": "fallback_header_parser",
+  "ovito_python_available": false,
+  "frames": 51,
+  "atoms_per_frame": 618
+}

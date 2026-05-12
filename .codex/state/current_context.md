@@ -1,9 +1,11 @@
-Objective: inspect unloaded long-NVT geometry before any Al/Fe4Al13 loading.
-Verified: OVITO app is not installed in /Applications; ovito Python module missing; conda ovito fails with dyld Gui.so.
-Verified: warning pair 232-260 is Al-Fe, internal Fe4Al13_slab, not cross-slab interface.
-Verified: pair distance over 21 frames min/max/mean = 2.0268/2.3531/2.1170 A; below 2.1 A in 11 frames; below 1.8 A in 0 frames.
-Verified: distance is not monotonic collapse; contact type is intermittent short contact.
-Current hypothesis: warning is monitor-only for unloaded baseline, but geometry still needs visual/refinement before loading.
-Files touched: inspect_warning_pairs.py, warning_pairs_long_nvt.json, warning-pair CSV/PNG/neighborhood, docs/reports.
-Blockers: OVITO unavailable, internal warning pair unvisualized, negative pressure/skew remain; no physical validation claimed.
-Exact next step: install official OVITO Basic for macOS or run further unloaded refinement; do not prepare/apply 120 MPa.
+Objective: package completed 147 MPa controlled sanity-run for interface trial_001 after OVITO review.
+Verified: 147 MPa compression-ramp ran 15000 steps (5000 ramp + 10000 hold), fixed-bottom support, mobile NVT, no NPT.
+Verified: no ERROR/nan/lost atoms; Dangerous builds=0/0; 151 frames x 618 atoms.
+Verified: pairs <1.8 A = 0; cross-slab Al-Fe <2.1 A = 0; min cross-slab Al-Fe=2.59304 A.
+Warning: pair 232-260 is internal Fe4Al13; intermittent short contact; min=1.95615 A; no monotonic collapse.
+Hypothesis: highest hydrostatic proxy at z=5..10 A is fixed-bottom support artifact, not interface maximum.
+Verified: manual OVITO review passed; no detachment, empty interface gap, atom ejection, whole-block drift, or pair collapse observed.
+Files changed: 147 MPa check doc, milestone, 0/60/120/147 comparison CSV, README, run_report, DOC_INDEX.
+Blockers: no final physical validation; stress/atom is virial proxy; highest hydrostatic proxy remains fixed-bottom artifact.
+Do not run 200 MPa without explicit user approval and separate controlled-run plan.
+Exact next step: decide whether 200 MPa is scientifically useful or stop and write up 0/60/120/147 MPa results.

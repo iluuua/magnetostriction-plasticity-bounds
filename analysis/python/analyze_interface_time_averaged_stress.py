@@ -151,6 +151,8 @@ def summarize_time_average(
     output_png: Path,
     previous_single_frame_csv: Path,
     bin_width_a: float,
+    plot_title: str,
+    scenario_note: str,
 ) -> dict[str, Any]:
     metadata = json.loads(metadata_path.read_text())
     al_slab_atoms = int(metadata["actual_atoms"]["Al_slab_atoms"])
@@ -286,7 +288,7 @@ def summarize_time_average(
         },
         "highest_abs_hydrostatic_bin": max_abs_hydro,
         "notes": [
-            "This is an unloaded baseline; no 120 MPa, fix addforce, stress scenario, or NPT was used.",
+            scenario_note,
             "Stress is a virial proxy from compute stress/atom NULL virial.",
             "Bin volume is in-plane cell area times 5 A bin width; free-surface bins are approximate.",
             "Values are not claimed as experimentally validated absolute stresses.",
@@ -308,7 +310,7 @@ def summarize_time_average(
     axis.axvline(interface_z, color="black", linestyle="--", linewidth=1, label="interface")
     axis.set_xlabel("z, A")
     axis.set_ylabel("Time-averaged stress proxy, GPa")
-    axis.set_title("trial_001 unloaded time-averaged local stress")
+    axis.set_title(plot_title)
     axis.grid(True, alpha=0.3)
     axis.legend()
     fig.tight_layout()
@@ -327,6 +329,11 @@ def main() -> int:
     parser.add_argument("--output-json", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--output-png", type=Path, default=DEFAULT_PNG)
     parser.add_argument("--bin-width-a", type=float, default=5.0)
+    parser.add_argument("--plot-title", default="trial_001 time-averaged local stress")
+    parser.add_argument(
+        "--scenario-note",
+        default="This is a diagnostic stress profile; check the run-specific input for loading details.",
+    )
     args = parser.parse_args()
 
     summary = summarize_time_average(
@@ -337,6 +344,8 @@ def main() -> int:
         output_png=args.output_png,
         previous_single_frame_csv=args.previous_single_frame_csv,
         bin_width_a=args.bin_width_a,
+        plot_title=args.plot_title,
+        scenario_note=args.scenario_note,
     )
     print(f"frames: {summary['frame_count']}")
     print(f"interface z A: {summary['interface_z_A']}")

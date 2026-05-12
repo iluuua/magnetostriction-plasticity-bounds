@@ -100,6 +100,16 @@ Follow-up inspection:
 
 The warning pair is not at the Al/Fe4Al13 cross-slab interface. It remains a warning to monitor and a reason to avoid rushing into loading before visual or additional unloaded geometry checks.
 
+Additional contact-density inspection for visible OVITO gaps:
+
+- Script: `analysis/python/check_interface_contact_density.py`
+- Report: `docs/interface_trial_001_contact_density_check.md`
+- Minimum cross-slab distance: 2.5924655274192756 A
+- Cross-slab pairs within 2.8 / 3.0 / 3.5 A: 20 / 33 / 48
+- Largest empty z-gap between occupied bins: 1 A and not intersecting the interface window
+
+This check does not confirm a large physical interface void. The apparent gaps remain a visual/geometric inspection item, not a loading clearance.
+
 ## 5. Time-averaged stress analysis
 
 - Script: `analysis/python/analyze_interface_time_averaged_stress.py`
