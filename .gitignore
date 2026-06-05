@@ -1,0 +1,15 @@
+# --- OS / editor noise ---
+.DS_Store
+
+# --- Python bytecode ---
+__pycache__/
+*.pyc
+
+# --- Heavy raw MD artifacts: kept LOCAL by project decision (2026-06-04), never committed ---
+# Raw trajectories, structure dumps, and XYZ visual-debug slices stay on disk only.
+*.lammpstrj
+*.xyz
+data.*
+
+# --- Private working notes (e.g. supervisor questions) — not for the public repo ---
+docs/_local/
