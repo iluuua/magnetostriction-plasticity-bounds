@@ -1,0 +1,6 @@
+case,eps_z,matrix_atoms,fcc_pct,hcp_pct,other_pct,dislocation_segments,dislocation_length_A,dislocation_density_per_m2
+baseline_B0_unloaded_NVT,0.0,23263,95.259,0.0,4.741,0,0.0,0.000e+00
+eps_z_0.0010,0.001,23263,95.512,0.0086,4.479,0,0.0,0.000e+00
+eps_z_0.0025,0.0025,23263,95.499,0.0086,4.492,0,0.0,0.000e+00
+eps_z_0.0050,0.005,23263,95.504,0.0086,4.488,0,0.0,0.000e+00
+eps_z_0.0100_overload,0.01,23263,95.516,0.0043,4.479,0,0.0,0.000e+00
