@@ -1,0 +1,35 @@
+{
+  "total_atoms": 24259,
+  "al_atoms": 24027,
+  "fe_atoms": 232,
+  "matrix_atoms": 23263,
+  "inclusion_atoms": 996,
+  "box_A": [
+    64.8,
+    64.8,
+    97.19999999999999
+  ],
+  "center_A": [
+    32.4,
+    32.4,
+    48.599999999999994
+  ],
+  "ellipsoid_axes_A": [
+    12.0,
+    12.0,
+    24.0
+  ],
+  "clearance_A": 2.2,
+  "pairs_below_2p1_A": 0,
+  "pairs_below_1p8_A": 0,
+  "cross_source_pairs_below_2p1_A": 0,
+  "min_pair_distance_A": null,
+  "warning_pairs_preview": [],
+  "removed_matrix_atoms_near_inclusion": 0,
+  "safe_basic": true,
+  "notes": [
+    "Corrected trial_001 builder: custom LAMMPS writer, no atom type 0.",
+    "Box dimensions are exact multiples of Al FCC lattice constant to avoid periodic boundary hard overlaps.",
+    "This is geometry/sanity prototype, not final physical validation."
+  ]
+}

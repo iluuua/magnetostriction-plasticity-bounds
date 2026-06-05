@@ -83,3 +83,48 @@
 - `results/figures/interface_trial_001_stress_147mpa_compression_ramp_stress_profile.png`
 - `results/figures/interface_trial_001_stress_147mpa_warning_pair_distance_over_time.png`
 - `results/figures/ovito_review_147mpa/`
+
+## 200 MPa loading
+
+- `docs/interface_trial_001_stress_200mpa_check.md`
+- `docs/60_milestones/2026-05-12_interface_trial_001_stress_200mpa_upper_bound.md`
+- `results/tables/interface_trial_001_stress_000_060_120_147_200mpa_comparison.csv`
+- `results/tables/interface_trial_001_stress_200mpa_compression_ramp_stress_profile.csv`
+- `results/tables/interface_trial_001_stress_200mpa_warning_pair_distance_over_time.csv`
+- `results/tables/interface_trial_001_stress_200mpa_warning_pair_neighborhood.csv`
+- `results/figures/interface_trial_001_stress_200mpa_compression_ramp_stress_profile.png`
+- `results/figures/interface_trial_001_stress_200mpa_warning_pair_distance_over_time.png`
+- `results/figures/ovito_review_200mpa/`
+
+## Ellipsoid inclusion baseline
+
+- `structures/interface/ellipsoid_inclusion/trial_001/data.ellipsoid_trial_001`
+- `lammps/04_ellipsoid_inclusion/trial_001/00_minimize/data.ellipsoid_minimized`
+- `lammps/04_ellipsoid_inclusion/trial_001/01_nvt_300k/data.ellipsoid_nvt_300k`
+- `lammps/04_ellipsoid_inclusion/trial_001/01_nvt_300k/dump.ellipsoid_nvt_300k.lammpstrj`
+- `results/tables/ellipsoid_inclusion/ellipsoid_trial_001_nvt_300k_distance_report.json`
+- `docs/ellipsoid_inclusion/ellipsoid_trial_001_nvt_300k_baseline.md`
+
+## Ellipsoid inclusion eigenstrain series
+
+- `docs/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_series_check.md`
+- `results/tables/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_series_summary.csv`
+- `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_energy_final.png`
+- `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_min_pair_distance.png`
+- `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_alfe_warning_pairs.png`
+- `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_force_two_norm_final.png`
+
+## Article-ready checkpoint
+
+- `docs/article/article_results_draft.md`
+- `docs/article/figure_plan.md`
+- `docs/article/article_checklist.md`
+- `results/tables/article/article_key_results_summary.csv`
+- `docs/60_milestones/2026-05-14_article_ready_checkpoint.md`
+
+## Final article draft pack
+
+- `docs/article/final_manuscript_v1.md`
+- `docs/article/references.md`
+- `docs/article/eigenstrain_model.md`
+- `results/tables/article/simulation_parameters_summary.csv`

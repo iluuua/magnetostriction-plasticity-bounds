@@ -1,0 +1,43 @@
+{
+  "tag": "epsz_p0p00500",
+  "data_file": "lammps/04_ellipsoid_inclusion/trial_001/02_eigenstrain_relax/epsz_p0p00500_minimize/data.ellipsoid_eigenstrain_epsz_p0p00500_minimized",
+  "total_atoms": 24259,
+  "type_1_Al_atoms": 24027,
+  "type_2_Fe_atoms": 232,
+  "min_pair_distance_A": 1.9518806269765512,
+  "pairs_below_2p1_A": 4,
+  "pairs_below_1p8_A": 0,
+  "Al_Fe_pairs_below_2p1_A": 4,
+  "hard_pairs_preview": [],
+  "Al_Fe_warning_pairs_preview": [
+    {
+      "id_i": 24030,
+      "id_j": 23288,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0981054574218216
+    },
+    {
+      "id_i": 24176,
+      "id_j": 23643,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0888157399114693
+    },
+    {
+      "id_i": 24253,
+      "id_j": 24027,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 1.9518806269765512
+    },
+    {
+      "id_i": 24099,
+      "id_j": 23638,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0188450635731483
+    }
+  ],
+  "safe_basic": true
+}

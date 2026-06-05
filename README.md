@@ -986,3 +986,17 @@ Not yet done:
 Important caveat:
 
 Current stress profiles are comparative virial proxies. They should not be interpreted as absolute experimentally validated stress values without further validation.
+
+## Final loading-series checkpoint
+
+Completed loading scenarios for interface `trial_001`:
+
+- 0 MPa control
+- 60 MPa compression-ramp
+- 120 MPa compression-ramp
+- 147 MPa compression-ramp
+- 200 MPa compression-ramp as upper-bound / failure-probe
+
+The 200 MPa scenario completed without ERROR/nan/lost atoms, without hard overlaps below 1.8 A, and without cross-slab Al-Fe contacts below 2.1 A. Manual OVITO review passed: no visible interface detachment, empty interface gap, atom ejection, whole-block drift, or warning-pair collapse was observed.
+
+This is not final physical validation. The current model is a simplified flat-interface MD setup with fixed-bottom support and comparative virial stress diagnostics.

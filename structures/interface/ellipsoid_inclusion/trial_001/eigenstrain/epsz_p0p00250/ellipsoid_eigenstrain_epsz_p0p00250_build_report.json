@@ -1,0 +1,85 @@
+{
+  "source": "lammps/04_ellipsoid_inclusion/trial_001/01_nvt_300k/data.ellipsoid_nvt_300k",
+  "output": "structures/interface/ellipsoid_inclusion/trial_001/eigenstrain/epsz_p0p00250/data.ellipsoid_eigenstrain_epsz_p0p00250",
+  "strain_model": "inclusion eigenstrain relative to original center",
+  "inclusion_id_min": 23264,
+  "inclusion_id_max": 24259,
+  "inclusion_atoms": 996,
+  "eps_x": -0.00125,
+  "eps_y": -0.00125,
+  "eps_z": 0.0025,
+  "box_A": [
+    64.8,
+    64.8,
+    97.2
+  ],
+  "center_A": [
+    32.4,
+    32.4,
+    48.6
+  ],
+  "min_pair_distance_A": 1.9894813232200677,
+  "pairs_below_2p1_A": 8,
+  "pairs_below_1p8_A": 0,
+  "Al_Fe_pairs_below_2p1_A": 8,
+  "hard_pairs_preview": [],
+  "Al_Fe_warning_pairs_preview": [
+    {
+      "id_i": 24248,
+      "id_j": 16769,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0449559048592056
+    },
+    {
+      "id_i": 24176,
+      "id_j": 23643,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0424600232932546
+    },
+    {
+      "id_i": 23974,
+      "id_j": 24257,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0565278805525
+    },
+    {
+      "id_i": 23822,
+      "id_j": 24217,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0845945864211246
+    },
+    {
+      "id_i": 23337,
+      "id_j": 24078,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.098844413677994
+    },
+    {
+      "id_i": 24257,
+      "id_j": 16016,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.099916785004383
+    },
+    {
+      "id_i": 24099,
+      "id_j": 23638,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 1.9894813232200677
+    },
+    {
+      "id_i": 24166,
+      "id_j": 23648,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.051318180083672
+    }
+  ],
+  "safe_basic": true
+}

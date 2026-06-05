@@ -1,0 +1,70 @@
+{
+  "data_file": "lammps/04_ellipsoid_inclusion/trial_001/01_nvt_300k/data.ellipsoid_nvt_300k",
+  "total_atoms": 24259,
+  "type_1_Al_atoms": 24027,
+  "type_2_Fe_atoms": 232,
+  "min_pair_distance_A": 1.9902919970875637,
+  "pairs_below_2p1_A": 8,
+  "pairs_below_1p8_A": 0,
+  "Al_Fe_pairs_below_2p1_A": 8,
+  "hard_pairs_preview": [],
+  "Al_Fe_warning_pairs_preview": [
+    {
+      "id_i": 24248,
+      "id_j": 16769,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.039440952534496
+    },
+    {
+      "id_i": 24176,
+      "id_j": 23643,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.042272747950178
+    },
+    {
+      "id_i": 23974,
+      "id_j": 24257,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.055857081525699
+    },
+    {
+      "id_i": 23822,
+      "id_j": 24217,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.082891220444593
+    },
+    {
+      "id_i": 23337,
+      "id_j": 24078,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.098411046315651
+    },
+    {
+      "id_i": 24257,
+      "id_j": 16016,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0955254148230806
+    },
+    {
+      "id_i": 24099,
+      "id_j": 23638,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 1.9902919970875637
+    },
+    {
+      "id_i": 24166,
+      "id_j": 23648,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0499370094877767
+    }
+  ],
+  "safe_basic": true
+}

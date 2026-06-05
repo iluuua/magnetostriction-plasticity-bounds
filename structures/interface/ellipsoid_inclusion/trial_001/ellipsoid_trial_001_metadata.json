@@ -1,0 +1,27 @@
+{
+  "model": "Al matrix with Fe4Al13 ellipsoidal inclusion",
+  "trial": "ellipsoid_trial_001",
+  "box_A": [
+    64.8,
+    64.8,
+    97.19999999999999
+  ],
+  "center_A": [
+    32.4,
+    32.4,
+    48.599999999999994
+  ],
+  "ellipsoid_axes_A": [
+    12.0,
+    12.0,
+    24.0
+  ],
+  "al_lattice_A": 4.05,
+  "type_mapping": {
+    "1": "Al",
+    "2": "Fe"
+  },
+  "source_fe4al13": "structures/converted/Al13Fe4/al13fe4.data",
+  "boundary_recommendation": "p p p",
+  "status": "rebuilt with corrected type mapping and periodic-compatible Al box"
+}

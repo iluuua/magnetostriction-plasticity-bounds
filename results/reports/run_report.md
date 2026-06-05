@@ -439,3 +439,60 @@ Manual OVITO review of frames 0, 50, 100, and 150 passed: pair 232-260 remains i
 1. Решить, нужен ли 200 MPa научно, или лучше остановиться и оформлять результаты 0/60/120/147 MPa.
 2. Если 200 MPa всё-таки нужен, запускать только как отдельный controlled run, не batch-режимом.
 3. Перед higher-load run сохранить 147 MPa как reference/checkpoint и не перезаписывать unloaded, 0 MPa, 60 MPa, 120 MPa или 147 MPa outputs.
+
+## Interface trial_001 — final loading series status
+
+| Scenario | Status | Verdict |
+|---|---|---|
+| 0 MPa control | completed | baseline passed |
+| 60 MPa compression-ramp | completed | controlled sanity-run passed |
+| 120 MPa compression-ramp | completed + OVITO review | controlled sanity-run passed |
+| 147 MPa compression-ramp | completed + OVITO review | controlled sanity-run passed |
+| 200 MPa compression-ramp | completed + OVITO review | controlled upper-bound / failure-probe passed |
+
+Final loading-series conclusion:
+
+The simplified flat-interface `trial_001` model remained numerically stable through 0 / 60 / 120 / 147 / 200 MPa controlled loading scenarios. No hard overlaps below 1.8 A, no cross-slab Al-Fe contacts below 2.1 A, no warning-pair monotonic collapse, and no visible OVITO interface detachment were detected.
+
+Important caveat:
+
+This is not final physical validation. The model uses a simplified flat interface, fixed-bottom support, and stress/atom is interpreted as a comparative virial proxy. The highest absolute hydrostatic proxy remains near the fixed-bottom support, indicating a boundary-condition artifact.
+
+## Ellipsoid inclusion eigenstrain series
+
+The simplified ellipsoidal Fe4Al13 inclusion in Al matrix was tested with controlled inclusion eigenstrain cases:
+
+- eps_z = 0.0010
+- eps_z = 0.0025
+- eps_z = 0.0050
+- eps_z = 0.0100
+
+All four minimized cases passed script-level sanity checks:
+
+- no ERROR / nan / lost atoms / fatal error;
+- Dangerous builds = 0;
+- no hard overlaps below 1.8 A;
+- output minimized data and final dumps exist;
+- accepted_script_sanity = true.
+
+Main summary table:
+
+- `results/tables/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_series_summary.csv`
+
+Main check document:
+
+- `docs/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_series_check.md`
+
+Caveat: this is not final physical validation. The ellipsoid model is a simplified numerical surrogate and stress/force diagnostics should be treated comparatively.
+
+## Article-ready checkpoint
+
+The project now includes article-ready computational artifacts:
+
+- flat-interface loading series through 200 MPa upper-bound / failure-probe;
+- ellipsoidal Fe4Al13 inclusion NVT 300 K baseline;
+- ellipsoid eigenstrain series for eps_z = 0.0010 / 0.0025 / 0.0050 / 0.0100;
+- summary CSV and figures for eigenstrain response;
+- article draft, figure plan, and article checklist.
+
+Important caveat: this is not final physical validation. The results are controlled numerical sanity-runs and should be presented as workflow validation and comparative atomistic diagnostics.
