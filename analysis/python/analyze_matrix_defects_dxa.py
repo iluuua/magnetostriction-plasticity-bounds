@@ -12,10 +12,12 @@ Requires the scriptable OVITO python module (`pip install ovito`, Python <=3.12)
 Run:  /path/to/venv/bin/python analysis/python/analyze_matrix_defects_dxa.py
 """
 import os, csv, numpy as np
+from pathlib import Path
 from ovito.io import import_file
 from ovito.modifiers import CommonNeighborAnalysisModifier, DislocationAnalysisModifier
 
-ROOT = "/Users/ilua/Documents/ilua-system/projects/physics_md_al_fe"
+# Portable repo root (script lives in analysis/python/), so this works on Mac and PC/WSL alike.
+ROOT = str(Path(__file__).resolve().parents[2])
 BASE = f"{ROOT}/lammps/04_ellipsoid_inclusion/trial_001"
 ER = f"{BASE}/02_eigenstrain_relax"
 OUT = f"{ROOT}/results/tables/ellipsoid_inclusion/ellipsoid_trial_001_matrix_defect_dxa.csv"

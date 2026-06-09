@@ -1,0 +1,51 @@
+# Stage A0 finite-T NVT — Al matrix + Fe4Al13 ellipsoidal inclusion (24,259 atoms), eps_z tag=0050
+# Protocol: HELD INCLUSION. Inclusion atoms (ids 23264-24259) are frozen in their eigenstrained
+# shape; only the Al matrix is time-integrated at 300 K. This imposes a SUSTAINED
+# magnetostriction-equivalent push and tests dislocation nucleation in the matrix at finite T
+# (the ingredient missing from the minimize-only series, which gave zero dislocations).
+# Run FROM this directory. Requires a LAMMPS build with the MEAM package (CPU; MEAM is not
+# GPU-accelerated). Outputs (*.lammpstrj, data.*) are gitignored -> stay local on the PC.
+
+units           metal
+dimension       3
+boundary        p p p
+atom_style      atomic
+
+read_data       ../../../structures/interface/ellipsoid_inclusion/trial_001/eigenstrain/epsz_p0p00500/data.ellipsoid_eigenstrain_epsz_p0p00500
+
+mass            1 26.9815385    # Al
+mass            2 55.845        # Fe
+
+pair_style      meam
+pair_coeff      * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 10 every 1 check yes
+timestep        0.001
+
+group           inclusion id 23264:24259
+group           matrix subtract all inclusion
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz lx ly lz
+thermo_modify   lost warn flush yes
+
+# Only the matrix integrates; the eigenstrained inclusion is held (sustained push).
+velocity        matrix create 300.0 49031 mom yes rot no dist gaussian
+velocity        inclusion set 0.0 0.0 0.0
+fix             nvt_matrix matrix nvt temp 300.0 300.0 0.1
+
+# Trajectory for OVITO DXA/CNA post-processing (every 2000 steps).
+dump            d1 all custom 2000 dump.nvt_eps_0050.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3]
+dump_modify     d1 sort id
+
+# PRODUCTION: 100 ps (100000 steps). SMOKE TEST: set this to 2000 first to confirm it runs.
+run             100000
+
+unfix           nvt_matrix
+undump          d1
+write_data      data.nvt_eps_0050_final
+write_dump      all custom dump.nvt_eps_0050_final.lammpstrj id type x y z modify sort id

@@ -1,15 +1,31 @@
-# --- OS / editor noise ---
+# macOS
 .DS_Store
 
-# --- Python bytecode ---
+# Python
 __pycache__/
+*.py[cod]
+*$py.class
 *.pyc
 
-# --- Heavy raw MD artifacts: kept LOCAL by project decision (2026-06-04), never committed ---
-# Raw trajectories, structure dumps, and XYZ visual-debug slices stay on disk only.
+# Local editor / temp
+*.tmp
+*.temp
+*.swp
+*.swo
+.cache/
+
+# Large raw MD trajectories — kept LOCAL, never committed
 *.lammpstrj
+
+# Heavy visual-debug artifacts — regenerable, kept local
 *.xyz
+
+# Large raw structure data — kept local. Specific small starting structures needed to
+# continue Stage A0 on another machine are force-added explicitly (`git add -f <path>`).
 data.*
 
-# --- Private working notes (e.g. supervisor questions) — not for the public repo ---
+# Local/private notes (supervisor questions, assessment, drafts) — not for the public repo
 docs/_local/
+
+# Supervisor source materials (copyrighted PDFs + unpublished manuscript) — do not publish
+pshonkin_materials_ishodniki/
