@@ -1,0 +1,200 @@
+# Trimmed A1 size-effect config: A1_custom_100k only, smoke -> production.
+# Decision lineage: A0 24k completed 5/5 production (runs/stage_sweep_gpu_grid/20260611-175339);
+# A1_small_80000_prep failed on GPU minimize (see A1_prep_failure_diagnosis.md in that run root);
+# user decision: skip 80k/120k and short fidelity, go straight to ~100k smoke -> production.
+#
+# Sections `target`, `fidelity`, `eps_policy`, `gpu`, `disabled`,
+# `manual_approval_required` are the experiment specification (per task prompt).
+# Sections `gpu_profile`, `io_policy`, `resources`, `stages`, `analysis`,
+# `science_gates`, `production_reliability` are the operational mapping consumed
+# by analysis/python/stage_runner/gpu_grid.py. Keep both in sync.
+
+experiment:
+  name: stage_sweep_gpu_A1_100k_smoke_production
+  mode: production_ready_trimmed
+  depends_on:
+    - completed A0 24k sweep
+  description: "A1_custom_100k trimmed gate: fast size-effect signal at ~100k atoms"
+  output_root: "runs/stage_sweep_gpu_A1_100k"
+  temperature_K: 300
+  potential_track: "MEAM_Jelinek_2012"
+  magnetic_surrogate: "inclusion_eigenstrain"
+  physical_eps_z: 0.0025
+  overload_eps_z: [0.0100]
+
+target:
+  stage: A1_custom_100k
+  atom_targets: [100000]
+  note: "exact 100000 impossible with integer fcc replication; nearest safe lattice-commensurate count (~104.8k, nx=26) is used and recorded as actual_atom_count"
+
+fidelity:
+  smoke_enabled: true
+  smoke_steps: 2000
+  short_enabled: false
+  short_steps: 0
+  production_enabled: true
+  production_steps: 100000
+
+eps_policy:
+  priority_eps_z: [0.0025, 0.0100]
+  optional_manual_eps_z: [0.0, 0.0010, 0.0050]
+  physical_main: 0.0025
+  overload: 0.0100
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 25
+  watchdog_poll_seconds: 30
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+
+gpu:
+  binary: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  args: ["-k", "on", "g", "1", "-sf", "kk", "-pk", "kokkos", "newton", "on", "neigh", "half", "gpu/aware", "off"]
+  required_input_rewrite:
+    - "neigh_modify    delay 0 every 10 check no"
+
+disabled:
+  stage_B: true
+  A1_medium: true
+  A2_large: true
+  direct_spin_lattice_field: true
+  short_fidelity: true
+
+manual_approval_required:
+  - A1_medium_200k_250k_300k
+  - A2_500k_700k
+  - Stage_B
+  - direct_magnetic_field_SPIN
+  - FeAl_or_Fe3Al_composition_sweep
+
+# ---------------------------------------------------------------------------
+# Operational mapping for stage_runner.gpu_grid (same semantics as above).
+# ---------------------------------------------------------------------------
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args:
+    - "-k"
+    - "on"
+    - "g"
+    - "1"
+    - "-sf"
+    - "kk"
+    - "-pk"
+    - "kokkos"
+    - "newton"
+    - "on"
+    - "neigh"
+    - "half"
+    - "gpu/aware"
+    - "off"
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+  notes:
+    - "Dangerous builds are not checked with check no; report explicitly."
+    - "Prep must never contain minimize: LAMMPS overrides neigh_modify to 'every 1 check yes' during minimization, which crashes meam/kk CUDA (cudaErrorIllegalAddress). See A1_prep_failure_diagnosis.md."
+
+io_policy:
+  thermo_every:
+    smoke: 100
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 1000
+    short: 5000
+    production: 10000
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 20
+  min_free_disk_gb_before_large_stage: 60
+  max_run_hours:
+    smoke: 3              # also caps the prep settle+equil run (~8k steps)
+    short: 10
+    production_A0: 5
+    production_A1_custom_100k: 18
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+
+stages:
+  A0_24k:
+    enabled: false
+    note: "COMPLETED 5/5 production in runs/stage_sweep_gpu_grid/20260611-175339. Do not rerun, do not overwrite."
+
+  A1_custom_100k:
+    enabled: true
+    atom_targets: [100000]
+    structure_mode: "build_scaled_ellipsoid"
+    eps_z: [0.0025, 0.0100]          # production order: physical_main first, overload second
+    optional_eps_after_stable: []     # 0.0/0.0010/0.0050 are manual-only (eps_policy.optional_manual_eps_z)
+    smoke_steps: 2000
+    short_steps: 0                    # short fidelity disabled by user decision
+    production_steps: 100000
+    run_short_after_smoke_pass: false
+    run_production_after_gate_pass: true
+    gate_required_before_each_production: false
+    analyze_after_production: true
+    # GPU-safe no-minimize prep (thermal settle replaces minimize; see diagnosis):
+    prep_t_start_K: 50.0
+    prep_ramp_steps: 3000             # timestep 0.0005, NVT ramp prep_t_start_K -> 300 K
+    prep_steps: 5000                  # timestep 0.001, NVT 300 K equilibration
+
+  A1_medium:
+    enabled: false
+    atom_targets: [200000, 250000, 300000]
+    note: "Manual approval required (manual_approval_required). Do not enable automatically."
+
+  A2_large:
+    enabled: false
+    atom_targets: [500000, 700000]
+    note: "Manual approval required. Do not enable automatically."
+
+analysis:
+  enabled: true
+  tools:
+    - ovito_dxa
+    - cna_ptm_if_available
+  metrics:
+    - dislocation_count
+    - total_line_length
+    - dislocation_density
+    - fcc_fraction
+    - hcp_fraction
+    - other_fraction
+    - stacking_fault_indicators
+    - plastic_zone_extent
+  compare_to_stage_baseline: true
+
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+      - "ERROR"
+      - "nan"
+      - "lost atoms"
+      - "cudaError"
+      - "illegal memory"
+  production_signal:
+    interesting_if_any:
+      - dislocation_count_gt_0
+      - hcp_fraction_increase_gt_0.05_percent
+      - other_fraction_increase_gt_0.5_percent
+      - plastic_zone_detected
+      - clear_size_effect_between_stages
+  escalation_rules:
+    - "If eps=0.0025 at 100k has signal: recommend A1_medium 200k/250k or 500k confirmation after manual approval."
+    - "If eps=0.0100 has signal but eps=0.0025 does not: recommend eps=0.0050 at 100k OR A1_medium overload after manual approval."
+    - "If neither has signal: pivot to realism (near_grain_boundary, vacancies_medium, seed_dislocation_if_available, polycrystal_future); do not recommend blind 700k ideal monocrystal."

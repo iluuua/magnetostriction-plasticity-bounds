@@ -1,0 +1,172 @@
+experiment:
+  name: al_fe4al13_gpu_grid_sweep
+  description: "GPU MEAM/KOKKOS CUDA progressive finite-T eigenstrain sweep"
+  output_root: "runs/stage_sweep_gpu_grid"
+  temperature_K: 300
+  potential_track: "MEAM_Jelinek_2012"
+  magnetic_surrogate: "inclusion_eigenstrain"
+  physical_eps_z: 0.0025
+  overload_eps_z: [0.0050, 0.0100]
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args:
+    - "-k"
+    - "on"
+    - "g"
+    - "1"
+    - "-sf"
+    - "kk"
+    - "-pk"
+    - "kokkos"
+    - "newton"
+    - "on"
+    - "neigh"
+    - "half"
+    - "gpu/aware"
+    - "off"
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+  notes:
+    - "Dangerous builds are not checked with check no; report explicitly."
+    - "This is a validated run-local workaround, not an upstream source fix."
+
+io_policy:
+  thermo_every:
+    smoke: 100
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 1000
+    short: 5000
+    production: 10000
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 25
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  watchdog_poll_seconds: 30
+
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 25
+  min_free_disk_gb_before_large_stage: 60
+  max_run_hours:
+    smoke: 2
+    short: 10
+    production_A0: 5
+    production_A1_small: 12
+    production_A1_medium: 24
+    production_A2_large: 36
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+
+stages:
+  A0_24k:
+    enabled: true
+    atom_targets: [24259]
+    structure_mode: "existing_A0"
+    eps_z: [0.0, 0.0010, 0.0025, 0.0050, 0.0100]
+    smoke_steps: 2000
+    short_steps: 20000
+    production_steps: 100000
+    run_smoke: true
+    run_short: false
+    run_production_after_smoke_pass: true
+    analyze_after_production: true
+
+  A1_small:
+    enabled: true
+    atom_targets: [80000, 100000, 120000]
+    structure_mode: "build_scaled_ellipsoid"
+    select_first_stable_for_full_production: true
+    eps_z: [0.0025, 0.0100]
+    optional_eps_after_stable: [0.0050]
+    smoke_steps: 2000
+    short_steps: 20000
+    production_steps: 100000
+    run_smoke: true
+    run_short_after_smoke_pass: true
+    run_production_after_short_pass: true
+    analyze_after_production: true
+
+  A1_medium:
+    enabled: true
+    atom_targets: [200000, 250000, 300000]
+    structure_mode: "build_scaled_ellipsoid"
+    eps_z: [0.0025, 0.0100]
+    optional_eps_after_stable: [0.0050]
+    smoke_steps: 2000
+    short_steps: 20000
+    production_steps: 100000
+    run_smoke_after_A1_small_pass: true
+    run_short_after_smoke_pass: true
+    run_production_after_gate_pass: true
+    gate_required_before_each_production: true
+    analyze_after_production: true
+
+  A2_large:
+    enabled: true
+    atom_targets: [500000, 700000]
+    structure_mode: "build_scaled_ellipsoid"
+    eps_z: [0.0025]
+    overload_eps_only_if_previous_signal: [0.0100]
+    smoke_steps: 2000
+    short_steps: 10000
+    production_steps: 100000
+    run_smoke_after_A1_medium_pass: true
+    run_short_after_smoke_pass: true
+    run_production_after_gate_pass: true
+    gate_required_before_each_production: true
+    manual_override_required_if_no_signal_at_300k: true
+    analyze_after_production: true
+
+analysis:
+  enabled: true
+  tools:
+    - ovito_dxa
+    - cna_ptm_if_available
+  metrics:
+    - dislocation_count
+    - total_line_length
+    - dislocation_density
+    - fcc_fraction
+    - hcp_fraction
+    - other_fraction
+    - stacking_fault_indicators
+    - plastic_zone_extent
+  compare_to_stage_baseline: true
+
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+      - "ERROR"
+      - "nan"
+      - "lost atoms"
+      - "cudaError"
+      - "illegal memory"
+  production_signal:
+    interesting_if_any:
+      - dislocation_count_gt_0
+      - hcp_fraction_increase_gt_0.05_percent
+      - other_fraction_increase_gt_0.5_percent
+      - plastic_zone_detected
+      - clear_size_effect_between_stages
+  escalation_rules:
+    - "Run A2 500k smoke only after A1_medium smoke+short pass."
+    - "Run A2 500k production only if A1_medium production is stable and science signal exists OR size-effect question remains explicitly unresolved."
+    - "Run 700k smoke only after 500k smoke+short pass."
+    - "Run 700k production only if 500k is stable and produces signal or clear need for larger size."
+    - "If A1_medium 250k/300k production shows zero dislocations and no HCP/OTHER/plastic-zone growth, do not blindly scale to 700k; recommend GB/predefects/polycrystal pivot."

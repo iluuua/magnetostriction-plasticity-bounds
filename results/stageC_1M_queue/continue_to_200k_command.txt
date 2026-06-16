@@ -1,0 +1,3 @@
+# TEMPLATE ONLY - do not run until the 100k decision report approves continuation.
+# Create/review the referenced continuation config first; it must preserve the same one case.
+.venv\Scripts\python.exe scripts\run_stage_sweep.py --config runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\effective_config.continue_to_200k.yaml --run-dir runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123 --run-stage C1_1M_scaleup_100k --gpu --force-rerun C1_1M_nearGB_vacancies_medium_eps0100_production

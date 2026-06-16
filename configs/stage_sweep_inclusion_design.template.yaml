@@ -1,0 +1,111 @@
+# Template only. Do not run directly.
+# Copy this file to a runtime config after the A0/A1/A2 size sweep has been reviewed.
+# Every stage is disabled by default and must be manually enabled.
+
+experiment:
+  name: stage_B_inclusion_design_grid
+  depends_on:
+    - A0/A1/A2 size sweep results
+  mode: template_only
+  description: "Future Stage B design-space sweep for inclusion geometry and material realism."
+
+production_policy:
+  use_gpu_profile_from_stage_A_if_validated: true
+  chunked_production_required: true
+  restart_resume_required: true
+  run_local_inputs_only: true
+  forbid_environment:
+    - CUDA_LAUNCH_BLOCKING
+  forbid_tools:
+    - compute-sanitizer
+  do_not_modify:
+    - tracked_lammps_templates
+    - potentials
+    - baseline_structures
+    - active_stage_A_run_roots
+
+stages:
+  B1_size:
+    enabled: false
+    atom_targets: [120000, 250000]
+    inclusion_sizes_nm: [2, 4, 6]
+    shapes: ["ellipsoid_1_1_2"]
+    positions: ["grain_interior"]
+    eps_z: [0.0025, 0.0100]
+    purpose: "Find whether inclusion size controls defect signal strength."
+
+  B2_shape:
+    enabled: false
+    atom_targets: [120000, 250000]
+    inclusion_sizes_nm: ["from_B1_best_or_signal"]
+    shapes: ["sphere", "ellipsoid_1_1_2", "platelet"]
+    positions: ["grain_interior"]
+    eps_z: [0.0025, 0.0100]
+    purpose: "Compare stress concentration from shape after B1 identifies a useful size."
+
+  B3_position:
+    enabled: false
+    inclusion_sizes_nm: ["from_B1_or_A_stage_review"]
+    shapes: ["from_B2_best_or_ellipsoid_1_1_2"]
+    positions: ["grain_interior", "near_grain_boundary"]
+    eps_z: [0.0025, 0.0100]
+    purpose: "Test whether grain-boundary proximity controls nucleation."
+
+  B4_predefects:
+    enabled: false
+    variants: ["perfect", "vacancies_low", "vacancies_medium", "seed_dislocation_if_available"]
+    eps_z: [0.0025, 0.0100]
+    purpose: "Test whether realistic initial defects lower the threshold."
+
+  B5_multi_inclusion:
+    enabled: false
+    inclusion_counts: [1, 2, 4]
+    eps_z: [0.0025, 0.0100]
+    requires:
+      - B1_B4_signal_exists
+    purpose: "Test interacting stress fields only after a single-inclusion signal exists."
+
+  B6_composition:
+    enabled: false
+    compositions: ["Fe4Al13", "FeAl", "Fe3Al"]
+    requires:
+      - validated_structure
+      - validated_potential
+      - interface_orientation_search
+    purpose: "Compare phases only after structure and potential validity are established."
+
+gates:
+  require_A1_medium_review: true
+  do_not_run_full_factorial: true
+  prioritize_grain_boundary_if_no_signal: true
+  require_manual_enable_for_each_stage: true
+  if_A1_medium_no_signal:
+    prioritize:
+      - B3_position
+      - B4_predefects
+    deprioritize:
+      - blind_700k_ideal_monocrystal_scaling
+  if_A1_medium_signal:
+    prioritize:
+      - B1_size
+      - B2_shape
+  A2_large_use:
+    policy: "Use 500k/700k only for size-effect confirmation after a clear gate decision."
+
+metrics:
+  - dislocation_count
+  - total_line_length
+  - dislocation_density
+  - fcc_fraction
+  - hcp_fraction
+  - other_fraction
+  - stacking_fault_indicators
+  - plastic_zone_radius
+  - stress_summary
+  - thermo_summary
+  - runtime_cost
+
+notes:
+  - "This template is intentionally not connected to the current Stage A runner."
+  - "Copy and adapt only after Stage A reports are reviewed."
+  - "Do not enable more than one new design axis at a time unless the gate report justifies it."

@@ -1,0 +1,155 @@
+{
+  "source": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0100\\prep\\data.a1_baseline_equil",
+  "output": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\structures\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0100\\eps_0100\\data.ellipsoid_eigenstrain_epsz_p0p01000",
+  "strain_model": "inclusion eigenstrain relative to original center",
+  "inclusion_id_min": 98789,
+  "inclusion_id_max": 103037,
+  "inclusion_atoms": 4249,
+  "eps_x": -0.005,
+  "eps_y": -0.005,
+  "eps_z": 0.01,
+  "box_A": [
+    105.3,
+    105.3,
+    157.95
+  ],
+  "center_A": [
+    79.35000000000001,
+    52.65,
+    78.975
+  ],
+  "min_pair_distance_A": 1.9410634057597616,
+  "pairs_below_2p1_A": 18,
+  "pairs_below_1p8_A": 0,
+  "Al_Fe_pairs_below_2p1_A": 18,
+  "hard_pairs_preview": [],
+  "Al_Fe_warning_pairs_preview": [
+    {
+      "id_i": 102705,
+      "id_j": 100967,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.070665566225409
+    },
+    {
+      "id_i": 82571,
+      "id_j": 102756,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.009065669307083
+    },
+    {
+      "id_i": 65368,
+      "id_j": 102157,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 1.9816698531832495
+    },
+    {
+      "id_i": 102904,
+      "id_j": 101759,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.032020515968877
+    },
+    {
+      "id_i": 102414,
+      "id_j": 73562,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.024179437634267
+    },
+    {
+      "id_i": 67127,
+      "id_j": 102214,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 1.9606064909100624
+    },
+    {
+      "id_i": 101534,
+      "id_j": 102953,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0702997701298695
+    },
+    {
+      "id_i": 102748,
+      "id_j": 81573,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.082198141967217
+    },
+    {
+      "id_i": 102170,
+      "id_j": 99115,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0906862773257338
+    },
+    {
+      "id_i": 99318,
+      "id_j": 102158,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0486117174280425
+    },
+    {
+      "id_i": 102454,
+      "id_j": 72625,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0762182795319575
+    },
+    {
+      "id_i": 100265,
+      "id_j": 102551,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.076215702576203
+    },
+    {
+      "id_i": 102747,
+      "id_j": 82616,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 1.9410634057597616
+    },
+    {
+      "id_i": 102414,
+      "id_j": 99862,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.047584380808452
+    },
+    {
+      "id_i": 99315,
+      "id_j": 102157,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0947823728423534
+    },
+    {
+      "id_i": 101820,
+      "id_j": 102999,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0219585156562516
+    },
+    {
+      "id_i": 102403,
+      "id_j": 99852,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0903180183992083
+    },
+    {
+      "id_i": 88179,
+      "id_j": 102907,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0571458720250035
+    }
+  ],
+  "safe_basic": true
+}

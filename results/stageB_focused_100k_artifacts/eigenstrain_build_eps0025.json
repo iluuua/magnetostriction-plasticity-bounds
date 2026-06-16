@@ -1,0 +1,85 @@
+{
+  "source": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\prep\\data.a1_baseline_equil",
+  "output": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\structures\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\eps_0025\\data.ellipsoid_eigenstrain_epsz_p0p00250",
+  "strain_model": "inclusion eigenstrain relative to original center",
+  "inclusion_id_min": 98789,
+  "inclusion_id_max": 103037,
+  "inclusion_atoms": 4249,
+  "eps_x": -0.00125,
+  "eps_y": -0.00125,
+  "eps_z": 0.0025,
+  "box_A": [
+    105.3,
+    105.3,
+    157.95
+  ],
+  "center_A": [
+    79.35000000000001,
+    52.65,
+    78.975
+  ],
+  "min_pair_distance_A": 1.9675838107890395,
+  "pairs_below_2p1_A": 8,
+  "pairs_below_1p8_A": 0,
+  "Al_Fe_pairs_below_2p1_A": 8,
+  "hard_pairs_preview": [],
+  "Al_Fe_warning_pairs_preview": [
+    {
+      "id_i": 102992,
+      "id_j": 101993,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.076745961016706
+    },
+    {
+      "id_i": 101295,
+      "id_j": 102756,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0491612565633366
+    },
+    {
+      "id_i": 102165,
+      "id_j": 99406,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0523361469677552
+    },
+    {
+      "id_i": 102294,
+      "id_j": 99766,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 1.9675838107890395
+    },
+    {
+      "id_i": 101746,
+      "id_j": 102992,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0884350372549036
+    },
+    {
+      "id_i": 99459,
+      "id_j": 102296,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 2.0707387050388775
+    },
+    {
+      "id_i": 99742,
+      "id_j": 102338,
+      "type_i": 1,
+      "type_j": 2,
+      "distance_A": 1.9684021978379858
+    },
+    {
+      "id_i": 102285,
+      "id_j": 99730,
+      "type_i": 2,
+      "type_j": 1,
+      "distance_A": 2.0971439556865503
+    }
+  ],
+  "safe_basic": true
+}

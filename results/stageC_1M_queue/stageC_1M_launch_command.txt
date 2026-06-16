@@ -1,0 +1,1 @@
+.venv\Scripts\python.exe scripts\run_stage_sweep.py --config runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\effective_config.yaml --run-dir runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123 --run-stage C1_1M_scaleup_100k --gpu

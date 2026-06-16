@@ -1,0 +1,215 @@
+# Template only. Do not run directly. NEVER executed by any runner.
+# Stage B-aware optimization pipeline v2 policy (R&D planner layer).
+# Consumed only by scripts/run_pipeline_rnd_stageB_v2.py, which is a
+# planner/cost-model CLI: it never launches LAMMPS, never spawns MD,
+# and never touches active run roots:
+#   runs/stage_sweep_gpu_grid/20260611-175339
+#   runs/stage_sweep_gpu_A1_100k_*
+# Successor of configs/layered_optimizer_policy.yaml (v1, Stage A-centric):
+# v2 adds the Stage B design axes (inclusion size / shape / position /
+# predefects / concentration) as first-class staged waves.
+
+experiment:
+  name: pipeline_rnd_stageB_v2_policy
+  mode: template_only
+  no_md_execution: true
+  depends_on:
+    - A1_custom_100k smoke -> production (active execution lane, NOT this tool)
+    - layered_multifidelity_optimizer v1 (planner-only layer)
+    - stage_B_inclusion_design_grid_plan.md (axis definitions)
+  description: >
+    Staged adaptive Stage B-aware pipeline: two lanes (Lane A size/eigenstrain
+    confirmation, Lane B inclusion-design realism), one-axis-at-a-time waves
+    B1..B5, successive-halving-like racing with smoke ->
+    early_production_gate -> production, science_utility objective.
+    No full factorial. Composition and direct magnetic field stay gated.
+
+policy:
+  stage_A:
+    current_next_target: A1_custom_100k
+    short_enabled: false
+    smoke_steps: 2000
+    production_steps: 100000
+    priority_eps: [0.0025, 0.0100]
+    optional_eps: [0.0, 0.0010, 0.0050]
+
+  stage_B:
+    enabled_after_stage_A_gate: true
+    no_full_factorial: true
+    atom_targets:
+      default: [100000]
+      confirmation: [250000]
+      expensive_manual: [500000, 700000]
+    eps:
+      priority: [0.0025, 0.0100]
+      threshold_refinement: [0.0050, 0.0075]
+    axes:
+      inclusion_size_nm: [2, 4, 6]
+      shapes: ["sphere", "ellipsoid_1_1_2", "platelet"]
+      positions: ["grain_interior", "near_grain_boundary"]
+      predefects: ["perfect", "vacancies_low", "vacancies_medium", "seed_dislocation_if_available"]
+      inclusion_counts: [1, 2, 4]
+      compositions_enabled: ["Fe4Al13"]
+      compositions_disabled_until_validated: ["FeAl", "Fe3Al"]
+    # Why these axes are first-class (criticality from the Stage B plan):
+    axis_criticality:
+      position: 10        # grain boundaries may dominate dislocation nucleation
+      inclusion_size_nm: 9 # controls local stress field and plastic-zone scale
+      predefects: 9        # real material is not a perfect monocrystal
+      shape: 8             # sharp/elongated shapes concentrate stress
+      inclusion_count: 8   # overlapping stress fields, collective damage
+
+# Stage B0: baseline design lock. Frozen from the best available Stage A
+# result BEFORE any Stage B wave starts; every wave varies exactly one axis
+# against this lock.
+stage_B0_baseline_lock:
+  atom_target_rule: "100000 default; 250000 only if the Stage A gate demands confirmation scale"
+  eps: [0.0025, 0.0100]
+  inclusion_size_nm: 4   # ASSUMED current/baseline; verify against the A1_custom_100k builder before locking
+  shape: "ellipsoid_1_1_2"
+  position: "grain_interior"
+  predefect: "perfect"
+  inclusion_count: 1
+  composition: "Fe4Al13"
+
+stage_B_waves:
+  B1_size:
+    vary: ["inclusion_size_nm"]
+    fixed:
+      shape: "ellipsoid_1_1_2"
+      position: "grain_interior"
+      predefect: "perfect"
+      inclusion_count: 1
+    eps: [0.0025, 0.0100]
+    run_policy: "smoke_all_then_top2_production"
+
+  B2_shape:
+    vary: ["shape"]
+    depends_on: "B1_size_best_or_informative"
+    eps: [0.0025, 0.0100]
+    run_policy: "smoke_all_then_top2_production"
+
+  B3_position_predefects:
+    vary: ["position", "predefect"]
+    depends_on: "B1_B2_best_or_no_signal_pivot"
+    # realism subset: vacancies_low is kept in the axis pool but B3 races the
+    # stronger variants first; seed_dislocation only if a seeding tool exists
+    predefect_subset: ["perfect", "vacancies_medium", "seed_dislocation_if_available"]
+    eps: [0.0025, 0.0100]
+    run_policy: "smoke_all_then_top2_production"
+    priority_if: "A1_medium_or_100k_no_signal"
+
+  B4_concentration:
+    vary: ["inclusion_count"]
+    depends_on: "single_inclusion_signal_or_manual_approval"
+    eps: [0.0025, 0.0100]
+    run_policy: "smoke_all_then_top1_production"
+    builder_gate: "reject if inclusions cannot be placed with clearance and non-overlap"
+
+  B5_eps_threshold:
+    vary: ["eps"]
+    eps: [0.0050, 0.0075]
+    depends_on: "overload_signal_but_physical_eps_no_signal"
+    run_policy: "production_only_if_prior_smoke_stable"
+
+# Fidelity ladder. early_production_gate REPLACES the old short stage:
+# it is NOT a separate run but an analysis checkpoint after the first two
+# production chunks, with resumable continuation to full production
+# (zero extra MD cost for winners; ~80% of production cost saved for losers).
+fidelity:
+  smoke:
+    steps: 2000
+    purpose: "stability + early signal"
+  early_production_gate:
+    first_chunks: 2
+    chunk_steps: 10000
+    total_steps: 20000
+    purpose: "replacement for the disabled short stage, only after smoke; resumable continuation"
+  production:
+    steps: 100000
+    chunk_steps: 10000
+    purpose: "final metrics"
+  large_confirmation:
+    atom_targets: [250000, 500000, 700000]
+    approval: manual_only
+
+racing:
+  method: successive_halving_like
+  resource_unit: atom_steps
+  first_gate: smoke
+  second_gate: early_production_first_2_chunks
+  final_gate: production_100k
+  reject_on:
+    - failed
+    - hung_twice
+    - cuda_error
+    - lost_atoms
+    - nan
+    - no_signal_high_cost
+
+# Cost model anchored to the observed A0 GPU rate (RTX 3060, meam/kk):
+# estimated_hours = steps / (ref_steps_per_s * ref_atoms / atom_count) / 3600
+#                   * overhead_factor
+costs:
+  runtime_model:
+    ref_steps_per_s: 9.46
+    ref_atoms: 24259
+  overhead_factors:
+    atoms_100k: 1.15
+    atoms_250k: 1.3
+    atoms_500k_700k: 1.5
+    stage_B_small_variant: 1.2   # unless builder/analysis suggests otherwise
+  budget_guards:
+    max_wave_gpu_hours_without_review: 40
+    min_free_disk_gb_before_wave: 25
+    min_free_disk_gb_before_large: 60
+
+promotion_criteria:
+  - dislocation_count > 0
+  - total_line_length grows
+  - HCP/OTHER fraction increases vs baseline
+  - plastic_zone detected
+  - signal appears at physical eps=0.0025
+  - overload eps=0.0100 reveals a threshold worth refining (B5)
+
+kill_criteria:
+  - no defect signal at 100k AND 250k ideal monocrystal -> stop size escalation, pivot to B3 realism
+  - repeated hang (second hang in the same branch)
+  - unstable thermo
+  - no HCP/OTHER growth where the wave question requires it
+  - runtime exceeds budget with low science_utility
+
+manual_approval_gates:
+  - 250k confirmation when expensive (over ~40 GPU-hours)
+  - any 500k run
+  - any 700k run
+  - multi-inclusion count > 1 if builder placement risk is high
+  - composition FeAl / Fe3Al (validated structure + potential + interface orientation required first)
+  - direct magnetic field / LAMMPS SPIN
+
+bayesian_future:
+  enabled: false
+  reason: "not enough completed Stage B observations yet"
+  enable_after_min_completed_cases: 20
+
+replicate_policy:
+  enabled: gated
+  replicate_only:
+    - near_threshold_cases
+    - surprising_defect_signal
+    - reviewer_critical_case
+
+direct_magnetic_field:
+  status: disabled_future_track
+  required_data:
+    - magnetic_moments_muB
+    - exchange_constants_Jij_meV
+    - spin_lattice_coupling
+    - magnetostriction_tensor
+    - anisotropy_constants
+    - field_orientation
+    - domain_structure
+    - validated_spin_lattice_potential
+
+output:
+  root: runs/pipeline_rnd_stageB

@@ -26,6 +26,22 @@
 | `docs/60_milestones/2026-05-10_interface_trial_001_stress_000_060mpa_sanity.md` | Milestone-артефакт по 0/60 MPa sanity runs. |
 | `docs/60_milestones/2026-05-11_interface_trial_001_stress_120mpa_sanity.md` | Milestone-артефакт по 120 MPa sanity run. |
 | `docs/60_milestones/2026-05-11_interface_trial_001_stress_147mpa_sanity.md` | Milestone-артефакт по 147 MPa sanity run. |
+| `docs/60_milestones/2026-06-11_gpu_meam_kokkos_cuda_neighbor_check_workaround.md` | GPU MEAM/KOKKOS CUDA debug milestone: sanitizer root cause and approved neighbor-check workaround. |
+| `docs/60_milestones/2026-06-11_gpu_grid_runner_started.md` | GPU grid runner milestone: config-driven production sweep runner started under `runs/stage_sweep_gpu_grid/20260611-175339`. |
+| `docs/60_milestones/2026-06-14_stageB_postrun_branching_pipeline.md` | Stage B post-run decision, 500k confirmation, and no-dislocation branch milestone. |
+| `docs/60_milestones/2026-06-15_visualization_event_pipeline.md` | Stage B event timeline, event-window, OVITO render manifest, static figure, and 30 FPS video pipeline milestone. |
+| `docs/60_milestones/2026-06-15_focus_5_6_transition.md` | Safe transition milestone for preserving completed Stage B cases and preparing the focused nearGB vacancies 5-6 run. |
+| `docs/60_milestones/2026-06-15_focus_5_6_operator_stop_and_launch.md` | Operator stop-and-launch milestone for stopping the old Stage B queue and starting the focused nearGB vacancies 5-6 run. |
+| `docs/60_milestones/2026-06-16_stageC_1M_queue_plan.md` | Stage C 1M-class nearGB vacancies eps0100 queue plan, preflight, launch-after-focus command, and validation. |
+| `docs/run_plans/stageB_postrun_decision_tree.md` | Operator decision tree for Stage B realism 100k post-run branching and dry-run commands. |
+| `docs/paper/visualization_event_pipeline.md` | Operator and paper-traceability documentation for event detection, window selection, OVITO rendering, figures, video, and manifests. |
+| `configs/stageB_nearGB_vacancies_focus_100k.template.yaml` | Focused Stage B config template for only `B3_nearGB_vacancies_medium_eps0025` and `B3_nearGB_vacancies_medium_eps0100`. |
+| `configs/stageC_1M_nearGB_vacancies_eps0100_100k.template.yaml` | Stage C 1M-class config template for exactly one nearGB vacancies eps0100 case with 100k checkpoint. |
+| `scripts/prepare_focus_5_6_transition.py` | Safe transition helper that writes completed-case manifests, safe-stop plan, focused run setup, and preflight artifacts without launching MD. |
+| `scripts/prepare_stageC_1M_queue_plan.py` | Stage C 1M queue-preparation helper that writes effective config, preflight, volume estimate, command files, README, and report without launching MD. |
+| `scripts/launch_stageC_1M_after_focus.py` | Stage C launch-after-focus guard that rechecks no active LAMMPS/focused runner before launching the prepared 1M command. |
+| `agent_report_focus_5_6_operator_stop_and_launch.md` | Operator handoff report for the old queue stop, focused launch, initial runtime check, focused event dry-run, and validation. |
+| `agent_report_stageC_1M_queue_plan.md` | Operator handoff report for the Stage C 1M queue root, blockers, launch command, continuation plan, event dry-run, and tests. |
 | `results/tables/interface_mismatch_candidates.csv` | CSV-таблица mismatch-кандидатов. |
 | `results/tables/interface_trial_001_unloaded_stress_profile.csv` | z-профиль unloaded virial stress для trial_001. |
 | `results/tables/interface_trial_001_unloaded_strain_profile.csv` | z-профиль unloaded strain/displacement proxy для trial_001. |
@@ -113,6 +129,31 @@
 - `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_min_pair_distance.png`
 - `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_alfe_warning_pairs.png`
 - `results/figures/ellipsoid_inclusion/ellipsoid_trial_001_eigenstrain_force_two_norm_final.png`
+
+## GPU MEAM/KOKKOS CUDA runtime
+
+- `docs/60_milestones/2026-06-11_gpu_meam_kokkos_cuda_neighbor_check_workaround.md`
+- `docs/60_milestones/2026-06-11_gpu_grid_runner_started.md`
+- `docs/60_milestones/2026-06-14_stageB_postrun_branching_pipeline.md`
+- `docs/60_milestones/2026-06-15_visualization_event_pipeline.md`
+- `docs/60_milestones/2026-06-15_focus_5_6_transition.md`
+- `docs/60_milestones/2026-06-15_focus_5_6_operator_stop_and_launch.md`
+- `docs/60_milestones/2026-06-16_stageC_1M_queue_plan.md`
+- `docs/run_plans/stageB_postrun_decision_tree.md`
+- `docs/paper/visualization_event_pipeline.md`
+- `configs/stageB_nearGB_vacancies_focus_100k.template.yaml`
+- `configs/stageC_1M_nearGB_vacancies_eps0100_100k.template.yaml`
+- `scripts/prepare_focus_5_6_transition.py`
+- `scripts/prepare_stageC_1M_queue_plan.py`
+- `scripts/launch_stageC_1M_after_focus.py`
+- `agent_report_focus_5_6_transition.md`
+- `agent_report_focus_5_6_operator_stop_and_launch.md`
+- `agent_report_stageC_1M_queue_plan.md`
+- `runs/gpu_debug/20260611-151634/debug_report.md`
+- `runs/gpu_debug/20260611-151634/gpu_fix_success_report.md`
+- `runs/gpu_debug/20260611-151634/gpu_debug_decision.json`
+- `runs/stage_sweep_gpu_grid/20260611-175339/final_report.md`
+- `runs/stage_sweep_gpu_grid/20260611-175339/state.json`
 
 ## Article-ready checkpoint
 

@@ -1,0 +1,91 @@
+# Layered multi-fidelity optimizer policy (planner/scheduler layer).
+# PLANNER ONLY: this config never launches LAMMPS and never touches the
+# active run root runs/stage_sweep_gpu_grid/20260611-175339.
+# Consumed by scripts/run_layered_optimizer.py + analysis/python/science_optimizer.
+
+experiment:
+  name: layered_multifidelity_optimizer
+  mode: planner_only
+  depends_on:
+    - Stage A size sweep
+    - Stage B inclusion design template
+
+optimizer:
+  method: rule_based_layered_multifidelity_v1
+  future_methods:
+    - adaptive_multifidelity_racing
+    - bayesian_optimization
+    - hyperband
+  no_md_execution: true
+  seed: 42   # reserved for v2 samplers; v1 is fully deterministic
+
+layers:
+  fidelity:
+    smoke_steps: 2000
+    short_steps: 20000
+    production_steps: 100000
+    # size-effect confirmation rung (atom counts, not steps)
+    large_confirmation_atom_targets: [250000, 500000, 700000]
+  size_scale:
+    A0: [24259]
+    A1_small: [80000, 120000]
+    A1_medium: [200000, 250000, 300000]
+    A2_large: [500000, 700000]
+  eps:
+    values: [0.0, 0.0010, 0.0025, 0.0050, 0.0100]
+    physical_main: 0.0025
+    overload: [0.0050, 0.0100]
+  inclusion_design:
+    sizes_nm: [2, 4, 6]
+    shapes: ["sphere", "ellipsoid_1_1_2", "platelet"]
+    positions: ["grain_interior", "near_grain_boundary"]
+    predefects: ["perfect", "vacancies_low", "vacancies_medium", "seed_dislocation_if_available"]
+    inclusion_counts: [1, 2, 4]
+    compositions: ["Fe4Al13", "FeAl", "Fe3Al"]
+
+thresholds:
+  min_science_utility_for_production: 0.5
+  min_science_utility_for_large_confirmation: 1.0
+  max_failure_rate_per_branch: 0.25
+  max_hangs_per_branch: 1
+
+policy:
+  if_A1_medium_no_signal:
+    decision: pivot_to_realism
+    prioritize:
+      - near_grain_boundary
+      - vacancies_medium
+      - seed_dislocation_if_available
+      - polycrystal_future
+    deprioritize:
+      - blind_700k_ideal_monocrystal
+  if_A1_medium_signal:
+    decision: confirm_size_effect
+    prioritize:
+      - 500k
+      - inclusion_size
+      - shape
+  if_large_confirmation_too_expensive:
+    decision: targeted_stageB_smaller_cases
+
+# Cost model for expected_runtime_class labels and budget guards.
+# Anchor: observed A0 GPU rate ~9.4 steps/s @ 24259 atoms (RTX 3060),
+# runs/stage_sweep_gpu_grid/20260611-175339. Linear-in-atoms scaling: rough,
+# for planning labels only. Budgets mirror stage_sweep_gpu_grid.yaml
+# resources.max_run_hours (per-session; chunked runner can span sessions).
+costs:
+  runtime_model:
+    ref_steps_per_s: 9.4
+    ref_atoms: 24259
+  max_run_hours:
+    smoke: 2
+    short: 10
+    production_A0_24k: 5
+    production_A1_small: 12
+    production_A1_medium: 24
+    production_A2_large: 36
+  min_free_disk_gb_before_stage: 25
+  min_free_disk_gb_before_large_stage: 60
+
+output:
+  root: runs/science_optimizer

@@ -1,0 +1,9 @@
+{
+  "launched": false,
+  "reason": "preflight_blocked",
+  "blocked_by": [
+    "active_focused_100k_lammps"
+  ],
+  "queue_ready": true,
+  "stageC_run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123"
+}

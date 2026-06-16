@@ -1,0 +1,79 @@
+# Stage B no-dislocation branch template.
+# This is proposal-ready but not auto-launched. The launcher refuses all launch
+# modes until the matching builder/runtime support exists.
+
+experiment:
+  name: stageB_no_dislocation_branch_template
+  mode: manual_gated_proposals
+  output_root: "runs/stageB_no_dislocation_branch"
+  allowed_source_branches:
+    - B_no_dislocation_validation
+  forbidden_source_branches:
+    - A_500k_confirmation
+    - C_fix_geometry_or_protocol
+    - wait
+
+hard_gates:
+  no_active_lammps: true
+  no_500k_from_no_signal_branch: true
+  no_250k: true
+  no_700k: true
+  no_full_factorial: true
+  one_experiment_at_a_time: true
+  positive_control_first: true
+
+experiments:
+  - id: B6_positive_control_shear_30k
+    priority: 1
+    enabled_by_default: false
+    launch_supported: false
+    purpose: "prove DXA/analysis can detect dislocations when they should appear"
+    design:
+      atom_target: 30000
+      material: "pure Al or GB Al"
+      loading: "controlled shear/tension via fix deform or existing equivalent"
+      smoke_first: true
+    blocker: "no pure-Al/GB shear runner is implemented in stage_runner.gpu_grid.py"
+
+  - id: B6_seed_dislocation_nearGB_100k
+    priority: 2
+    enabled_by_default: false
+    launch_supported: false
+    purpose: "test whether eigenstrain moves or amplifies existing defects"
+    design:
+      atom_target: 100000
+      position: near_grain_boundary
+      predefect: seed_dislocation_if_available
+    blocker: "seed_dislocation_if_available is explicitly unsupported until a real seeding tool exists"
+
+  - id: B6_cyclic_eigenstrain_100k
+    priority: 3
+    enabled_by_default: false
+    launch_supported: false
+    purpose: "dynamic loading instead of static eigenstrain hold"
+    design:
+      atom_target: 100000
+      eps_cycle: [0.0, 0.0100, 0.0]
+      repeats: 3
+    blocker: "cyclic eigenstrain schedule is not implemented in the current input generator"
+
+  - id: B6_platelet_or_faceted_inclusion_nearGB_100k
+    priority: 4
+    enabled_by_default: false
+    launch_supported: false
+    purpose: "stress concentration from sharper inclusion geometry"
+    design:
+      atom_target: 100000
+      position: near_grain_boundary
+      shape: platelet_or_faceted
+    blocker: "Stage B runtime builder currently supports ellipsoid_1_1_2 only"
+
+  - id: B6_high_temperature_assist_100k
+    priority: 5
+    enabled_by_default: false
+    launch_supported: false
+    purpose: "optional barrier-lowering check after physics and stability review"
+    design:
+      temperature_K: [400, 500, 600]
+    blocker: "temperature branch requires separate approval and stability preflight"
+

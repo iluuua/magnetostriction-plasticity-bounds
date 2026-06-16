@@ -1,0 +1,84 @@
+{
+  "generated_at": "2026-06-16T17:31:25",
+  "target_atoms_requested": 1000000,
+  "case_atom_target": 950000,
+  "estimated_atoms": 944812,
+  "estimated_memory_gb": 11.64,
+  "feasible_under_configured_memory_limit": true,
+  "production_steps": 100000,
+  "dump_every": 5000,
+  "planned_dump_frames": 20,
+  "planned_final_dump_frames": 1,
+  "restart_every": 10000,
+  "planned_restart_files": 10,
+  "estimated_dump_gb": 1.2,
+  "estimated_restart_gb": 0.77,
+  "estimated_overhead_gb": 2.0,
+  "estimated_total_storage_gb": 3.98,
+  "dump_basis": "observed focused Stage B dump byte density",
+  "restart_basis": "observed focused Stage B restart byte density",
+  "dump_samples": [
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0000000_0010000.lammpstrj",
+      "size_bytes": 73838382,
+      "atoms": 103037,
+      "frames": 11,
+      "bytes_per_atom_frame": 65.147
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0010000_0020000.lammpstrj",
+      "size_bytes": 73825446,
+      "atoms": 103037,
+      "frames": 11,
+      "bytes_per_atom_frame": 65.136
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0020000_0030000.lammpstrj",
+      "size_bytes": 73817454,
+      "atoms": 103037,
+      "frames": 11,
+      "bytes_per_atom_frame": 65.129
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0030000_0040000.lammpstrj",
+      "size_bytes": 73817340,
+      "atoms": 103037,
+      "frames": 11,
+      "bytes_per_atom_frame": 65.129
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0090000_0100000.lammpstrj",
+      "size_bytes": 73817267,
+      "atoms": 103037,
+      "frames": 11,
+      "bytes_per_atom_frame": 65.129
+    }
+  ],
+  "restart_samples": [
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.10000",
+      "size_bytes": 9068286,
+      "bytes_per_atom": 88.01
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.100000",
+      "size_bytes": 9068286,
+      "bytes_per_atom": 88.01
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.20000",
+      "size_bytes": 9068286,
+      "bytes_per_atom": 88.01
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.30000",
+      "size_bytes": 9068286,
+      "bytes_per_atom": 88.01
+    },
+    {
+      "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.40000",
+      "size_bytes": 9068286,
+      "bytes_per_atom": 88.01
+    }
+  ]
+}

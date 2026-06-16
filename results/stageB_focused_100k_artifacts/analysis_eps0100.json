@@ -1,0 +1,47 @@
+{
+  "dump": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0100\\production\\dump.final.lammpstrj",
+  "matrix_max_id": 98788,
+  "matrix_atoms": 98788,
+  "fcc_atoms": 82643,
+  "hcp_atoms": 1,
+  "other_atoms": 16144,
+  "fcc_pct": 83.657,
+  "hcp_pct": 0.001,
+  "other_pct": 16.342,
+  "dislocation_segments": 0,
+  "dislocation_length_A": 0.0,
+  "dislocation_density_per_m2": 0.0,
+  "cell_volume_A3": 1751363.8154999998,
+  "dxa_attributes": {
+    "DislocationAnalysis.counts.OTHER": 20392.0,
+    "DislocationAnalysis.counts.FCC": 82643.0,
+    "DislocationAnalysis.counts.HCP": 2.0,
+    "DislocationAnalysis.counts.BCC": 0.0,
+    "DislocationAnalysis.counts.CubicDiamond": 0.0,
+    "DislocationAnalysis.counts.HexagonalDiamond": 0.0,
+    "DislocationAnalysis.cell_volume": 1751363.8154999998,
+    "DislocationAnalysis.total_line_length": 0.0,
+    "DislocationAnalysis.length.1/6<110>": 0.0,
+    "DislocationAnalysis.length.1/2<110>": 0.0,
+    "DislocationAnalysis.length.1/6<112>": 0.0,
+    "DislocationAnalysis.length.1/3<100>": 0.0,
+    "DislocationAnalysis.length.other": 0.0,
+    "DislocationAnalysis.length.1/3<111>": 0.0
+  },
+  "stacking_fault_indicator": {
+    "hcp_atoms_in_matrix": 1,
+    "note": "HCP-classified atoms inside the fcc Al matrix indicate stacking faults / partial dislocation traces"
+  },
+  "plastic_zone": {
+    "matrix_defect_atoms_total": 16145,
+    "defect_atoms_beyond_1p3_shell": 12517,
+    "hcp_atoms_beyond_1p3_shell": 0,
+    "max_normalized_ellipsoid_distance": 3.645220576630537,
+    "median_normalized_ellipsoid_distance": 1.9597108709314492,
+    "note": "normalized distance 1.0 = inclusion interface shell (axes + clearance); defects at <=1.3 are interface atoms, defects well beyond 1.3 suggest a plastic zone in the matrix"
+  },
+  "case": "B3_nearGB_vacancies_medium_eps0100_production",
+  "stage": "B3_nearGB_vacancies_focus_100k",
+  "atom_target": 100000,
+  "eps_z": 0.01
+}

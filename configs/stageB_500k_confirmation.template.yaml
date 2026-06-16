@@ -1,0 +1,62 @@
+# Stage B 500k confirmation template.
+# Consumed by scripts/launch_stageB_500k_confirmation.py after a completed
+# Stage B 100k postrun_decision.json with branch=A_500k_confirmation.
+# This template is not directly runnable; the launcher writes a one-case
+# effective_config.yaml with the concrete winner_case.
+
+experiment:
+  name: stageB_500k_confirmation_template
+  mode: manual_gated_template
+  output_root: "runs/stageB_500k_confirmation"
+  source_required:
+    - "runs/stageB_realism_100k/<timestamp>/postrun_decision.json"
+    - "branch == A_500k_confirmation"
+    - "winner_case has confirmed DXA line signal"
+  manual_approval:
+    approval_file: "APPROVE_500K_CONFIRMATION.txt"
+    approval_text: "APPROVE_500K_CONFIRMATION"
+    cli_flag: "--approve-500k-confirmation"
+
+hard_gates:
+  current_stageB_100k_complete: true
+  production_logs_clean: true
+  no_active_lammps: true
+  min_disk_free_gb: 60
+  exactly_one_case: true
+  atom_count_range: [450000, 600000]
+  forbidden_scope:
+    - full_factorial
+    - 250k
+    - 700k
+    - A2
+    - multiple_cases
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 25
+  watchdog_poll_seconds: 30
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args: ["-k", "on", "g", "1", "-sf", "kk", "-pk", "kokkos", "newton", "on", "neigh", "half", "gpu/aware", "off"]
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+
+winner_case_overrides:
+  atom_target: 500000
+  production_steps: 100000
+  chunk_steps: 10000
+  dump_every: 10000
+  deterministic_seed_policy: "winner_seed_plus_500000"
+  optional_repeat_seed:
+    enabled_by_default: false
+    manual_only: true
+

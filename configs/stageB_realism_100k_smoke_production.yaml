@@ -1,0 +1,177 @@
+# Bounded Stage B realism sprint: 100k-class B3 only.
+# This is a runtime config for stage_runner.gpu_grid.py.
+
+experiment:
+  name: stageB_realism_100k_smoke_production
+  mode: production_ready_bounded
+  depends_on:
+    - corrected A1_custom_100k no-signal gate
+  description: "B3 realism 100k: near grain boundary and vacancies_medium, smoke before bounded production"
+  output_root: "runs/stageB_realism_100k"
+  temperature_K: 300
+  potential_track: "MEAM_Jelinek_2012"
+  magnetic_surrogate: "inclusion_eigenstrain"
+  physical_eps_z: 0.0025
+  overload_eps_z: [0.0100]
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 25
+  watchdog_poll_seconds: 30
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args:
+    - "-k"
+    - "on"
+    - "g"
+    - "1"
+    - "-sf"
+    - "kk"
+    - "-pk"
+    - "kokkos"
+    - "newton"
+    - "on"
+    - "neigh"
+    - "half"
+    - "gpu/aware"
+    - "off"
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+
+io_policy:
+  thermo_every:
+    smoke: 100
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 1000
+    short: 5000
+    production: 10000
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 25
+  min_free_disk_gb_before_large_stage: 60
+  max_run_hours:
+    smoke: 4
+    short: 10
+    production_B3_realism_100k: 20
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+
+stages:
+  B3_realism_100k:
+    enabled: true
+    structure_mode: "build_stageB_realism_100k"
+    atom_targets: [100000]
+    eps_z: [0.0025, 0.0100]
+    smoke_steps: 2000
+    short_steps: 0
+    production_steps: 100000
+    prep_t_start_K: 50.0
+    prep_ramp_steps: 3000
+    prep_steps: 5000
+    run_short_after_smoke_pass: false
+    run_production_after_smoke_pass: true
+    gate_required_before_each_production: false
+    analyze_after_production: true
+    max_smoke_cases: 6
+    max_production_cases: 6
+    production_case_ids:
+      - B3_nearGB_perfect_eps0025
+      - B3_nearGB_perfect_eps0100
+      - B3_interior_vacancies_medium_eps0025
+      - B3_interior_vacancies_medium_eps0100
+      - B3_nearGB_vacancies_medium_eps0025
+      - B3_nearGB_vacancies_medium_eps0100
+    cases:
+      - case_id: B3_nearGB_perfect_eps0025
+        atom_target: 100000
+        position: near_grain_boundary
+        predefect: perfect
+        eps_z: 0.0025
+        deterministic_seed: 73001
+      - case_id: B3_nearGB_perfect_eps0100
+        atom_target: 100000
+        position: near_grain_boundary
+        predefect: perfect
+        eps_z: 0.0100
+        deterministic_seed: 73002
+      - case_id: B3_interior_vacancies_medium_eps0025
+        atom_target: 100000
+        position: grain_interior
+        predefect: vacancies_medium
+        eps_z: 0.0025
+        deterministic_seed: 73003
+        vacancy_count: 200
+      - case_id: B3_interior_vacancies_medium_eps0100
+        atom_target: 100000
+        position: grain_interior
+        predefect: vacancies_medium
+        eps_z: 0.0100
+        deterministic_seed: 73004
+        vacancy_count: 200
+      - case_id: B3_nearGB_vacancies_medium_eps0025
+        atom_target: 100000
+        position: near_grain_boundary
+        predefect: vacancies_medium
+        eps_z: 0.0025
+        deterministic_seed: 73005
+        vacancy_count: 200
+      - case_id: B3_nearGB_vacancies_medium_eps0100
+        atom_target: 100000
+        position: near_grain_boundary
+        predefect: vacancies_medium
+        eps_z: 0.0100
+        deterministic_seed: 73006
+        vacancy_count: 200
+
+analysis:
+  enabled: true
+  tools:
+    - ovito_dxa
+    - cna_ptm_if_available
+  metrics:
+    - dislocation_count
+    - total_line_length
+    - dislocation_density
+    - fcc_fraction
+    - hcp_fraction
+    - other_fraction
+    - stacking_fault_indicators
+    - plastic_zone_extent
+  compare_to_stage_baseline: true
+
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+      - "ERROR"
+      - "nan"
+      - "lost atoms"
+      - "cudaError"
+      - "illegal memory"
+  production_signal:
+    interesting_if_any:
+      - dislocation_count_gt_0
+      - hcp_fraction_increase_gt_0.05_percent
+      - other_fraction_increase_gt_0.5_percent
+      - plastic_zone_detected
+  escalation_rules:
+    - "If any B3 case has strong signal, write a manual review recommendation only."
+    - "If all B3 cases have no signal, recommend stronger realism or loading-protocol review."

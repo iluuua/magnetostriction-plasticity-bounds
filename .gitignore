@@ -29,3 +29,15 @@ docs/_local/
 
 # Supervisor source materials (copyrighted PDFs + unpublished manuscript) — do not publish
 pshonkin_materials_ishodniki/
+
+# Heavy / temporary MD run artifacts — kept LOCAL.
+# The whole runs/ tree is also excluded via .git/info/exclude; these patterns make the
+# intent explicit and also cover any stray copies outside runs/.
+dump.*
+restart.*
+monitor_snapshots/
+status_dump_*.txt
+
+# Python tooling caches and local virtual environment
+.pytest_cache/
+.venv/

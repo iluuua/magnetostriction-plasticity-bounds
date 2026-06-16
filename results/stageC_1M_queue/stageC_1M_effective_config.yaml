@@ -1,0 +1,181 @@
+run_stage: C1_1M_scaleup_100k
+case_ids:
+- C1_1M_nearGB_vacancies_medium_eps0100
+target_atoms: 1000000
+production_steps: 100000
+chunk_steps: 10000
+restart_every: 10000
+thermo_every: 1000
+dump_every:
+  production: 5000
+experiment:
+  name: stageC_1M_nearGB_vacancies_eps0100_100k
+  mode: production_ready_bounded
+  depends_on:
+  - stageB_nearGB_vacancies_focus_100k_completed_or_stopped
+  description: Stage C 1M-class scale-up for the strongest near-GB vacancies eps0100
+    candidate
+  output_root: runs/stageC_1M_nearGB_vacancies_eps0100_100k
+  temperature_K: 300
+  potential_track: MEAM_Jelinek_2012
+  magnetic_surrogate: inclusion_eigenstrain
+  physical_eps_z: 0.01
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 60
+  watchdog_poll_seconds: 60
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe
+  command_args:
+  - -k
+  - 'on'
+  - g
+  - '1'
+  - -sf
+  - kk
+  - -pk
+  - kokkos
+  - newton
+  - 'on'
+  - neigh
+  - half
+  - gpu/aware
+  - 'off'
+  required_input_rewrites:
+    neighbor_policy: neigh_modify    delay 0 every 10 check no
+  forbidden_environment:
+  - CUDA_LAUNCH_BLOCKING
+io_policy:
+  thermo_every:
+    smoke: 100
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 5000
+    short: 5000
+    production: 5000
+  dump_fields:
+  - id
+  - type
+  - x
+  - y
+  - z
+  - c_pe_atom
+  - c_st[1]
+  - c_st[2]
+  - c_st[3]
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 20
+  min_free_disk_gb_before_large_stage: 100
+  max_run_hours:
+    smoke: 8
+    short: 0
+    production_C1_1M_scaleup_100k: 160
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+  no_parallel_lammps: true
+stages:
+  C1_1M_scaleup_100k:
+    enabled: true
+    structure_mode: build_stageB_realism_100k
+    atom_targets:
+    - 950000
+    eps_z:
+    - 0.01
+    smoke_steps: 2000
+    short_steps: 0
+    production_steps: 100000
+    prep_t_start_K: 50.0
+    prep_ramp_steps: 3000
+    prep_steps: 5000
+    run_short_after_smoke_pass: false
+    run_production_after_smoke_pass: true
+    gate_required_before_each_production: false
+    analyze_after_production: true
+    max_smoke_cases: 1
+    max_production_cases: 1
+    production_case_ids:
+    - C1_1M_nearGB_vacancies_medium_eps0100
+    cases:
+    - case_id: C1_1M_nearGB_vacancies_medium_eps0100
+      atom_target: 950000
+      position: near_grain_boundary
+      predefect: vacancies_medium
+      eps_z: 0.01
+      deterministic_seed: 73100
+      vacancy_count: 1900
+      boundary_surface_gap_A: 5.0
+analysis:
+  enabled: true
+  tools:
+  - ovito_dxa
+  - cna_ptm_if_available
+  metrics:
+  - dislocation_count
+  - total_line_length
+  - dislocation_density
+  - fcc_fraction
+  - hcp_fraction
+  - other_fraction
+  - stacking_fault_indicators
+  - plastic_zone_extent
+  compare_to_stage_baseline: true
+event_pipeline:
+  enabled: true
+  focus_cases:
+  - C1_1M_nearGB_vacancies_medium_eps0100
+  manifest_schema_version: event_frame_manifest_v1
+  render_ready: true
+  video_fps: 30
+  camera_presets:
+  - overview
+  - inclusion_gb_zoom
+  - dxa_event
+  coloring_modes:
+  - structure_type
+  - displacement
+  - atomic_strain
+  - Dmin2
+  - dxa_overlay
+  decision_gates:
+    confirmed_DXA: event-window high-frequency rerun, not blind continuation
+    weak_hcp_or_deformation_only: continue from restart.100000 to 200k or 250k only
+      after review
+    structural_background_only: stop scaling; prepare positive-control/seeded/cyclic
+      branch
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+    - ERROR
+    - nan
+    - lost atoms
+    - cudaError
+    - illegal memory
+  production_signal:
+    interesting_if_any:
+    - dislocation_count_gt_0
+    - hcp_fraction_increase_gt_0.05_percent
+    - other_fraction_increase_gt_0.5_percent
+    - plastic_zone_detected
+  escalation_rules:
+  - Stop at 100k and run analysis/DXA/event dry-run before any continuation.
+  - If confirmed DXA exists, prepare event-window high-frequency rerun instead of
+    blind continuation.
+  - If only a strong precursor exists, continuation to 200k or 250k requires manual
+    approval.
+  - If no DXA and no precursor exist, stop scaling and prepare positive-control/seeded/cyclic
+    branch.

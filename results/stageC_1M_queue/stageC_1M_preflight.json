@@ -1,0 +1,157 @@
+{
+  "generated_at": "2026-06-16T17:31:25",
+  "run_stage": "C1_1M_scaleup_100k",
+  "selected_case": "C1_1M_nearGB_vacancies_medium_eps0100",
+  "focus_run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533",
+  "stageC_run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123",
+  "config": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123\\effective_config.yaml",
+  "allowed_to_launch_now": false,
+  "queue_ready": true,
+  "blocked_by": [
+    "active_focused_100k_lammps"
+  ],
+  "can_launch_after_current_focus_finishes": true,
+  "launch_policy": "manual_after_focused_run_only",
+  "launch_command": ".venv\\Scripts\\python.exe scripts\\run_stage_sweep.py --config runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123\\effective_config.yaml --run-dir runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123 --run-stage C1_1M_scaleup_100k --gpu",
+  "launch_after_focus_command": ".venv\\Scripts\\python.exe scripts\\launch_stageC_1M_after_focus.py --focus-run-root runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533 --stageC-run-root runs\\stageC_1M_nearGB_vacancies_eps0100_100k\\20260616-173123",
+  "checks": {
+    "active_lammps_processes": [
+      {
+        "ProcessId": 7148,
+        "ParentProcessId": 15252,
+        "Name": "lmp_kokkos_cuda.exe",
+        "CommandLine": "B:\\builds\\lammps-kokkos-cuda-cuda124-msvc1439\\build\\lmp_kokkos_cuda.exe -k on g 1 -sf kk -pk kokkos newton on neigh half gpu/aware off -in in.chunk0040000_0050000 -log log.chunk0040000_0050000.lammps"
+      }
+    ],
+    "active_focus_processes": [
+      {
+        "ProcessId": 9440,
+        "ParentProcessId": 3472,
+        "Name": "python.exe",
+        "CommandLine": "\"C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\.venv\\Scripts\\python.exe\" scripts\\run_stage_sweep.py --config runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\effective_config.yaml --run-dir runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533 --run-stage B3_nearGB_vacancies_focus_100k --gpu "
+      },
+      {
+        "ProcessId": 15252,
+        "ParentProcessId": 9440,
+        "Name": "python.exe",
+        "CommandLine": "\"C:\\Users\\dille\\AppData\\Local\\Programs\\Python\\Python312\\python.exe\" scripts\\run_stage_sweep.py --config runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\effective_config.yaml --run-dir runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533 --run-stage B3_nearGB_vacancies_focus_100k --gpu "
+      }
+    ],
+    "stagec_run_root_under_output_root": true,
+    "stagec_run_root_differs_from_focus_root": true,
+    "stagec_config_reasons": [],
+    "plan_only_validates": true,
+    "plan_only_lines": [
+      "experiment: stageC_1M_nearGB_vacancies_eps0100_100k",
+      "output_root: C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageC_1M_nearGB_vacancies_eps0100_100k",
+      "OK lammps_executable: B:\\builds\\lammps-kokkos-cuda-cuda124-msvc1439\\build\\lmp_kokkos_cuda.exe",
+      "OK neighbor rewrite: neigh_modify    delay 0 every 10 check no",
+      "OK production child env will remove CUDA_LAUNCH_BLOCKING",
+      "OK A0 baseline data: C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\lammps\\04_ellipsoid_inclusion\\trial_001\\01_nvt_300k\\data.ellipsoid_nvt_300k",
+      "OK MEAM library: C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\potentials\\meam\\Jelinek_2012\\Jelinek_2012_meamf",
+      "OK MEAM params: C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\potentials\\meam\\Jelinek_2012\\Jelinek_2012_meam.alsimgcufe",
+      "OK Fe4Al13 source data: C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\converted\\Al13Fe4\\al13fe4.data",
+      "",
+      "Configured stages and cases:",
+      "- C1_1M_scaleup_100k: mode=build_stageB_realism_100k targets=[950000] eps=[0.01] optional=[]",
+      "  steps smoke/short/production=2000/0/100000",
+      "  Stage B realism cases: 1",
+      "  case C1_1M_nearGB_vacancies_medium_eps0100: position=near_grain_boundary predefect=vacancies_medium eps=0.01 target=950000 est_atoms=944812 est_gpu_mem_gb=11.64 feasible=True"
+    ],
+    "forbidden_tokens_in_launch_command": [],
+    "disk_free_gb": {
+      "C": 28.132,
+      "B": 267.363
+    },
+    "estimated_total_storage_gb": 3.98,
+    "b_disk_post_estimate_free_gb": 263.38,
+    "external_render_processes": {
+      "ovito": false,
+      "ffmpeg": false
+    }
+  },
+  "volume_estimate": {
+    "generated_at": "2026-06-16T17:31:25",
+    "target_atoms_requested": 1000000,
+    "case_atom_target": 950000,
+    "estimated_atoms": 944812,
+    "estimated_memory_gb": 11.64,
+    "feasible_under_configured_memory_limit": true,
+    "production_steps": 100000,
+    "dump_every": 5000,
+    "planned_dump_frames": 20,
+    "planned_final_dump_frames": 1,
+    "restart_every": 10000,
+    "planned_restart_files": 10,
+    "estimated_dump_gb": 1.2,
+    "estimated_restart_gb": 0.77,
+    "estimated_overhead_gb": 2.0,
+    "estimated_total_storage_gb": 3.98,
+    "dump_basis": "observed focused Stage B dump byte density",
+    "restart_basis": "observed focused Stage B restart byte density",
+    "dump_samples": [
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0000000_0010000.lammpstrj",
+        "size_bytes": 73838382,
+        "atoms": 103037,
+        "frames": 11,
+        "bytes_per_atom_frame": 65.147
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0010000_0020000.lammpstrj",
+        "size_bytes": 73825446,
+        "atoms": 103037,
+        "frames": 11,
+        "bytes_per_atom_frame": 65.136
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0020000_0030000.lammpstrj",
+        "size_bytes": 73817454,
+        "atoms": 103037,
+        "frames": 11,
+        "bytes_per_atom_frame": 65.129
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0030000_0040000.lammpstrj",
+        "size_bytes": 73817340,
+        "atoms": 103037,
+        "frames": 11,
+        "bytes_per_atom_frame": 65.129
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\dump.chunk0090000_0100000.lammpstrj",
+        "size_bytes": 73817267,
+        "atoms": 103037,
+        "frames": 11,
+        "bytes_per_atom_frame": 65.129
+      }
+    ],
+    "restart_samples": [
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.10000",
+        "size_bytes": 9068286,
+        "bytes_per_atom": 88.01
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.100000",
+        "size_bytes": 9068286,
+        "bytes_per_atom": 88.01
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.20000",
+        "size_bytes": 9068286,
+        "bytes_per_atom": 88.01
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.30000",
+        "size_bytes": 9068286,
+        "bytes_per_atom": 88.01
+      },
+      {
+        "path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageB_nearGB_vacancies_focus_100k\\20260615-215533\\cases\\B3_nearGB_vacancies_focus_100k\\B3_nearGB_vacancies_medium_eps0025\\production\\restart.40000",
+        "size_bytes": 9068286,
+        "bytes_per_atom": 88.01
+      }
+    ]
+  }
+}

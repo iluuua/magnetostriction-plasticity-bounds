@@ -1,0 +1,56 @@
+# Stage sweep config: A0 (24k, protocol-validated production) + A1-small (80-120k)
+# finite-T NVT, held-inclusion eigenstrain protocol, MEAM Jelinek 2012.
+# A1_medium / A2 are intentionally disabled: do not enable without manual review.
+
+A0:
+  atoms_target: 24259
+  structure_source: existing
+  eps_z: [0.0, 0.0010, 0.0025, 0.0050, 0.0100]
+  temperatures_K: [300]
+  smoke_steps: 2000
+  production_steps: 100000
+  run_smoke: true
+  run_production_after_smoke_pass: true
+
+A1_small:
+  atoms_target_candidates: [80000, 100000, 120000]
+  select_first_buildable_under_memory_limit: true
+  inclusion_axis_ratio: [1, 1, 2]
+  eps_z: [0.0025, 0.0100]
+  temperatures_K: [300]
+  smoke_steps: 2000
+  production_steps: 100000
+  run_smoke_after_A0_production_pass: true
+  run_production_after_gate_pass: true
+  # prep run (minimize + all-atom NVT equilibration) before eigenstrain:
+  equil_minimize_etol: 1.0e-6
+  equil_minimize_ftol: 1.0e-8
+  equil_minimize_maxiter: 4000
+  equil_minimize_maxeval: 8000
+  equil_nvt_steps: 5000
+
+A1_medium:
+  enabled: false
+  atoms_target_candidates: [200000, 250000, 300000]
+  reason: "Disabled in this run. Enable only after reviewing A1-small production."
+
+A2_optional:
+  enabled: false
+  atoms_target_candidates: [500000]
+  reason: "Disabled in this run. Do not run 500k automatically."
+
+resources:
+  cpu_mpi_ranks: 6
+  openmp_threads: 6
+  max_memory_gb: 14
+  min_free_disk_gb_before_start: 15
+  min_free_disk_gb_before_production: 10
+  dump_every_smoke: 1000
+  dump_every_production: 10000
+  restart_every: 10000
+  max_walltime_smoke_minutes: 30
+  max_walltime_A0_production_hours: 4
+  max_walltime_A1_production_hours: 12
+  gpu_mode: auto_detect_first
+  lammps_executable: auto
+  python_executable: .venv\Scripts\python.exe
