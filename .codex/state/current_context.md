@@ -1,82 +1,90 @@
-Objective: Stage C 1M-class nearGB vacancies eps0100 queue plan prepared, blocked until focused 100k finishes.
+Objective: Stage C 1M nearGB vacancies eps0100 safe-prep retry is running in a corrected fresh root after pagefile remediation.
 
-Current checkpoint, 2026-06-16 17:31 +03:00:
+Current checkpoint, 2026-06-17 06:42 +03:00:
 - target repo: `C:\Users\dille\Documents\ilua-system\projects\physics_md_al_fe`
-- branch: `feat/autopilot-A0-A1-production`
+- branch: `fix/stagec-safe-prep-retry`
 - project-local `AGENTS.md` / `AGENTS.override.md`: not present
 - global `C:\Users\dille\.codex\AGENTS.md`: attempted, missing on disk
-- active focused root: `runs\stageB_nearGB_vacancies_focus_100k\20260615-215533`
-- active focused runner PID at Stage C preflight: `9440`
-- active focused child Python PID at Stage C preflight: `15252`
-- active focused LAMMPS PID at Stage C preflight: `7148`
-- active focused LAMMPS chunk at Stage C preflight: `in.chunk0040000_0050000`
-- no Stage C MD launch was performed
-- no 500k, no 700k, no full factorial, no OVITO render execution, no ffmpeg, no commit, and no `git add -A`
+- old failed root preserved: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123`
+- superseded safe-prep root stopped: `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-060251`
+- active corrected safe-prep root: `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915`
+- background launch PID recorded: `22776`
+- worker child Python PID observed: `24088`
+- active LAMMPS PID observed: `22468`
+- production was not launched
 
-Stage C prepared:
-- selected case: `C1_1M_nearGB_vacancies_medium_eps0100`
-- target class: requested `1000000` atoms; configured geometry target `950000`
-- estimated atom count: `944812`
-- estimated GPU memory: `11.64 GB`
-- Stage C run root: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123`
-- effective config: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\effective_config.yaml`
-- preflight JSON: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\stageC_1M_preflight.json`
-- preflight MD: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\stageC_1M_preflight.md`
-- launch command file: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\stageC_1M_launch_command.txt`
-- launch-after-focus command file: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\launch_after_focus_command.txt`
-- continuation templates: `continue_to_200k_command.txt`, `continue_to_250k_command.txt`
+Why the previous safe-prep root was stopped:
+- `20260617-060251` was still early in prep and had not passed the first segment.
+- Its generated `hold_300K` segment used timestep `0.00025`.
+- `prompt.txt` requires the safe config to keep the 50->150, 150->300, and 300 K hold segments at timestep `0.0001`; `0.00025` is only acceptable as a later optional smoke step after a stable hold.
+- The root was preserved for diagnostics and was not deleted or resumed.
 
-Preflight result:
-- `allowed_to_launch_now`: `false`
-- `queue_ready`: `true`
-- `blocked_by`: `active_focused_100k_lammps`
-- `can_launch_after_current_focus_finishes`: `true`
-- disk free at preflight: C `28.132 GB`, B `267.363 GB`
-- estimated Stage C storage: dump `1.2 GB`, restart `0.77 GB`, total `3.98 GB`
-- expected runtime for 100k Stage C steps: optimistic `~4 days`, expected `~5 days`, pessimistic `~6.5 days`
+Pagefile/runtime preflight for active corrected root:
+- diagnostics before pagefile change: `diagnostics\pagefile_before_stageC_safe_retry_20260617-055349.txt`
+- active `C:\pagefile.sys` setting: 24576/32768 MB
+- active `C:\pagefile.sys` allocation at launch preflight: 24576 MB
+- C: free at corrected launch preflight: `12.52 GB`
+- C: free at latest runtime check: about `12.43 GB`
+- RAM: `17079402496` bytes physical
+- GPU: RTX 3060 12 GB, about `509 MiB` used at launch preflight
+- no active MD process was present before corrected launch
 
-Implementation changes:
+Geometry gate:
+- case: `C1_1M_nearGB_vacancies_medium_eps0100`
+- actual atoms: `938344`
+- matrix atoms: `900256`
+- inclusion atoms: `38088`
+- vacancy count: `1900`
+- min pair distance: `1.8112150514616776 A`
+- pairs below `1.8 A`: `0`
+- cross-source pairs below `2.1 A`: `0`
+- geometry gate: pass
+
+Corrected safe-prep plan:
+- direct LAMMPS relaxation/minimization remains disabled on this KOKKOS CUDA path because local runner policy forbids it for the validated MEAM neighbor workaround
+- ramp 50 -> 150 K: timestep `0.0001`, `10000` steps, tdamp `0.1`
+- ramp 150 -> 300 K: timestep `0.0001`, `20000` steps, tdamp `0.1`
+- hold 300 K: timestep `0.0001`, `20000` steps, tdamp `0.1`
+- total prep steps: `50000`
+- restart/dump cadence: `2000` steps
+- production disabled
+- launcher now has a post-run temperature guard for `Temp > 1000 K` and adjacent thermo-row order-of-magnitude jumps
+
+Current runtime observation:
+- `lmp_kokkos_cuda.exe` active at PID `22468`
+- GPU utilization observed at `100%`
+- GPU memory observed around `3306 MiB`
+- log exists at `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\cases\C1_1M_scaleup_100k\C1_1M_nearGB_vacancies_medium_eps0100\prep\log.C1_1M_nearGB_vacancies_medium_eps0100_prep.lammps`
+- latest thermo rows include step `0`, atoms `938344`, temp `50 K`
+- latest thermo rows include step `100`, atoms `938344`, temp `205.7817 K`
+- no runaway, LAMMPS error, or lost atoms marker observed at the checkpoint
+
+Files changed:
+- `analysis\python\stage_runner\builder.py`
 - `analysis\python\stage_runner\gpu_grid.py`
-  - registered `stageC_1M_nearGB_vacancies_eps0100_100k` as a GPU-grid config
-  - made Stage B realism geometry validation target-relative instead of hard-coded 100k-class only
-  - added config-driven `io_policy.dump_fields` for trajectory and final dumps
-  - made Stage B realism stage reports use the configured atom target label
-- `analysis\python\stage_runner\stagec_1m.py`
-  - added Stage C config validation, live process preflight, volume estimation from focused dump/restart samples, command writers, and report helpers
-- `configs\stageC_1M_nearGB_vacancies_eps0100_100k.template.yaml`
-  - single-case Stage C 1M-class config with dump_every.production `5000`, restart_every `10000`, production_steps `100000`, chunk_steps `10000`, and event gates
-- `scripts\prepare_stageC_1M_queue_plan.py`
-  - writes the queue root and preflight artifacts without launching MD
-- `scripts\launch_stageC_1M_after_focus.py`
-  - rechecks no active LAMMPS/focused runner before launching Stage C and refuses if blocked
+- `scripts\launch_stageC_1M_safe_prep_retry.py`
 - `tests\test_stagec_1m_queue.py`
-  - covers config scope, atom estimate, dump fields, preflight blockers/root guard, plan-only, and incomplete event dry-run
-
-Event pipeline:
-- command run:
-  `.venv\Scripts\python.exe scripts\run_event_pipeline_dry_run.py --run-root runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123 --allow-incomplete`
-- result: `external_execution: not_run`, frame count `0`, event window `blocked_no_frames`, video `blocked_no_frames`
-- manifests and render/video plans were written under `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123\event_pipeline`
-
-Docs/reports updated:
-- `agent_report_stageC_1M_queue_plan.md`
-- `docs\60_milestones\2026-06-16_stageC_1M_queue_plan.md`
+- `docs\60_milestones\2026-06-17_stageC_1M_safe_prep_retry.md`
 - `docs\00_index\DOC_INDEX.md`
-- `docs\paper\visualization_event_pipeline.md`
 - `.codex\state\current_context.md`
+- runtime artifacts under `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\`
+- diagnostic artifact `diagnostics\pagefile_before_stageC_safe_retry_20260617-055349.txt`
 
 Validation:
-- `.venv\Scripts\python.exe -m compileall analysis scripts tests` passed
-- `.venv\Scripts\python.exe -m unittest discover tests` passed, 81 tests
-- launch-after-focus guard was executed during active focused LAMMPS and refused as expected: `launched: false`, `blocked_by: active_focused_100k_lammps`, `queue_ready: true`
+- `.venv\Scripts\python.exe -m compileall analysis\python\stage_runner scripts tests` passed
+- `.venv\Scripts\python.exe -m unittest tests.test_stagec_1m_queue` passed, 12 tests
+- corrected launch preflight passed and wrote `pagefile_preflight.json`
+- corrected background launch record written to `launch_record.json`
+- generated corrected input contains three `timestep 0.0001` segments, `neigh_modify delay 0 every 10 check no`, periodic dump/restart, `write_restart`, `write_data`, and `write_dump`
 
-Remaining risks:
-- Stage C has not launched and must not launch while the focused Stage B run or any LAMMPS process is active.
-- The prepared Stage C root is queue-ready, but runtime feasibility still depends on the fresh launch-after-focus preflight and actual GPU availability.
-- A previously generated superseded Stage C queue root also exists at `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173059`; it was not deleted.
+Pending blockers/risks:
+- corrected safe-prep is still running and has reached only the first post-step thermo row at this checkpoint
+- C: free space is above the prompt minimum but limited; monitor dump/restart growth
+- production must not be launched automatically after prep success
+- if temperature exceeds `1000 K`, jumps sharply, or the log shows `ERROR`, `FATAL`, `Lost atoms`, `NaN`, `cudaError`, or out-of-memory, stop the pipeline and record failure
 
 Exact next step:
-After the focused run finishes or stops, run:
-`.venv\Scripts\python.exe scripts\launch_stageC_1M_after_focus.py --focus-run-root runs\stageB_nearGB_vacancies_focus_100k\20260615-215533 --stageC-run-root runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123`
+Monitor:
+`Get-Content -Wait 'runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\cases\C1_1M_scaleup_100k\C1_1M_nearGB_vacancies_medium_eps0100\prep\log.C1_1M_nearGB_vacancies_medium_eps0100_prep.lammps'`
 
-The launch guard must re-run preflight and refuse if any `lmp_kokkos_cuda.exe` or focused runner is active.
+After safe-prep exits, inspect `safe_prep_result.json`, `state.json`, and `final_report.md`. If the gate is successful, report first and prepare a separate production command only with explicit approval.

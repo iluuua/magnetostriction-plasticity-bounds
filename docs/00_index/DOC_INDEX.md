@@ -33,6 +33,7 @@
 | `docs/60_milestones/2026-06-15_focus_5_6_transition.md` | Safe transition milestone for preserving completed Stage B cases and preparing the focused nearGB vacancies 5-6 run. |
 | `docs/60_milestones/2026-06-15_focus_5_6_operator_stop_and_launch.md` | Operator stop-and-launch milestone for stopping the old Stage B queue and starting the focused nearGB vacancies 5-6 run. |
 | `docs/60_milestones/2026-06-16_stageC_1M_queue_plan.md` | Stage C 1M-class nearGB vacancies eps0100 queue plan, preflight, launch-after-focus command, and validation. |
+| `docs/60_milestones/2026-06-17_stageC_1M_safe_prep_retry.md` | Stage C 1M safe-prep retry pagefile setup, preflight, prep-only launch, and monitoring handoff. |
 | `docs/run_plans/stageB_postrun_decision_tree.md` | Operator decision tree for Stage B realism 100k post-run branching and dry-run commands. |
 | `docs/paper/visualization_event_pipeline.md` | Operator and paper-traceability documentation for event detection, window selection, OVITO rendering, figures, video, and manifests. |
 | `configs/stageB_nearGB_vacancies_focus_100k.template.yaml` | Focused Stage B config template for only `B3_nearGB_vacancies_medium_eps0025` and `B3_nearGB_vacancies_medium_eps0100`. |
@@ -40,6 +41,7 @@
 | `scripts/prepare_focus_5_6_transition.py` | Safe transition helper that writes completed-case manifests, safe-stop plan, focused run setup, and preflight artifacts without launching MD. |
 | `scripts/prepare_stageC_1M_queue_plan.py` | Stage C 1M queue-preparation helper that writes effective config, preflight, volume estimate, command files, README, and report without launching MD. |
 | `scripts/launch_stageC_1M_after_focus.py` | Stage C launch-after-focus guard that rechecks no active LAMMPS/focused runner before launching the prepared 1M command. |
+| `scripts/launch_stageC_1M_safe_prep_retry.py` | Stage C safe-prep retry helper that records pagefile/resource/geometry preflight and launches only prep in a fresh root. |
 | `agent_report_focus_5_6_operator_stop_and_launch.md` | Operator handoff report for the old queue stop, focused launch, initial runtime check, focused event dry-run, and validation. |
 | `agent_report_stageC_1M_queue_plan.md` | Operator handoff report for the Stage C 1M queue root, blockers, launch command, continuation plan, event dry-run, and tests. |
 | `results/tables/interface_mismatch_candidates.csv` | CSV-таблица mismatch-кандидатов. |
@@ -139,6 +141,7 @@
 - `docs/60_milestones/2026-06-15_focus_5_6_transition.md`
 - `docs/60_milestones/2026-06-15_focus_5_6_operator_stop_and_launch.md`
 - `docs/60_milestones/2026-06-16_stageC_1M_queue_plan.md`
+- `docs/60_milestones/2026-06-17_stageC_1M_safe_prep_retry.md`
 - `docs/run_plans/stageB_postrun_decision_tree.md`
 - `docs/paper/visualization_event_pipeline.md`
 - `configs/stageB_nearGB_vacancies_focus_100k.template.yaml`
@@ -146,6 +149,7 @@
 - `scripts/prepare_focus_5_6_transition.py`
 - `scripts/prepare_stageC_1M_queue_plan.py`
 - `scripts/launch_stageC_1M_after_focus.py`
+- `scripts/launch_stageC_1M_safe_prep_retry.py`
 - `agent_report_focus_5_6_transition.md`
 - `agent_report_focus_5_6_operator_stop_and_launch.md`
 - `agent_report_stageC_1M_queue_plan.md`

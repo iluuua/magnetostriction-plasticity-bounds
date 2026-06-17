@@ -4,6 +4,7 @@ import json
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 import yaml
@@ -17,6 +18,8 @@ for _sub in ("analysis/python", "scripts"):
 
 from run_event_pipeline_dry_run import main as event_dry_run_main  # noqa: E402
 from run_stage_sweep import main as stage_sweep_main  # noqa: E402
+import launch_stageC_1M_safe_prep_retry as safe_prep_retry  # noqa: E402
+from stage_runner import builder  # noqa: E402
 from stage_runner.gpu_grid import GpuGridRunner, load_grid_config  # noqa: E402
 from stage_runner.stagec_1m import (  # noqa: E402
     BLOCKER_ACTIVE_FOCUS,
@@ -98,6 +101,123 @@ class StageC1MQueueTests(unittest.TestCase):
         self.assertIn("restart         10000 restart.", text)
         self.assertNotRegex(text, r"(?mi)^\s*minimize\b")
         self.assertNotRegex(text, r"(?mi)^\s*thermo\s+1\s*$")
+
+    def test_segmented_safe_prep_uses_small_timesteps(self):
+        text = builder.make_prep_input_gpu_safe(
+            {"data_file": str(REPO_ROOT / "dummy.data")},
+            segments=[
+                {
+                    "label": "ramp_50_to_150",
+                    "timestep": 0.0001,
+                    "temp_start_K": 50,
+                    "temp_end_K": 150,
+                    "steps": 10000,
+                    "tdamp": 0.1,
+                },
+                {
+                    "label": "ramp_150_to_300",
+                    "timestep": 0.0001,
+                    "temp_start_K": 150,
+                    "temp_end_K": 300,
+                    "steps": 20000,
+                    "tdamp": 0.1,
+                },
+                {
+                    "label": "hold_300",
+                    "timestep": 0.0001,
+                    "temp_start_K": 300,
+                    "temp_end_K": 300,
+                    "steps": 20000,
+                    "tdamp": 0.1,
+                },
+            ],
+            restart_every=2000,
+            restart_prefix="case_prep",
+            dump_every=2000,
+        )
+        self.assertEqual(text.count("timestep        0.0001"), 3)
+        self.assertIn("# Segment 1: ramp_50_to_150.", text)
+        self.assertIn("fix             prep_1 all nvt temp 50.0 150.0 0.1", text)
+        self.assertIn("# Segment 2: ramp_150_to_300.", text)
+        self.assertIn("fix             prep_2 all nvt temp 150.0 300.0 0.1", text)
+        self.assertIn("# Segment 3: hold_300.", text)
+        self.assertIn("fix             prep_3 all nvt temp 300.0 300.0 0.1", text)
+        self.assertNotIn("timestep        0.00025", text)
+        self.assertNotIn("timestep        0.001", text)
+        self.assertIn("restart         2000 restart.case_prep.*", text)
+        self.assertIn("dump            prep_dump all custom 2000", text)
+        self.assertIn("write_restart   restart.case_prep.final", text)
+        self.assertIn("write_data      data.a1_baseline_equil", text)
+        self.assertIn("write_dump      all custom dump.a1_baseline_equil.lammpstrj", text)
+        self.assertNotRegex(text, r"(?mi)^\s*minimize\b")
+
+    def test_safe_prep_retry_config_is_prep_only(self):
+        cfg = safe_prep_retry.safe_config(CONFIG_PATH)
+        stage = cfg["stages"][safe_prep_retry.TARGET_STAGE]
+        segments = stage["prep_segments"]
+        self.assertEqual([seg["label"] for seg in segments], ["ramp_50_to_150K", "ramp_150_to_300K", "hold_300K"])
+        self.assertEqual([seg["steps"] for seg in segments], [10000, 20000, 20000])
+        self.assertTrue(all(float(seg["timestep"]) == 0.0001 for seg in segments))
+        self.assertTrue(all(float(seg["tdamp"]) == 0.1 for seg in segments))
+        self.assertEqual(stage["prep_restart_every"], 2000)
+        self.assertEqual(stage["prep_dump_every"], 2000)
+        self.assertEqual(stage["prep_dump_fields"], ["id", "type", "x", "y", "z"])
+        self.assertTrue(stage["safe_prep_only"])
+        self.assertFalse(stage["run_short_after_smoke_pass"])
+        self.assertFalse(stage["run_production_after_smoke_pass"])
+        self.assertFalse(stage["run_production_after_gate_pass"])
+        self.assertEqual(cfg["experiment"]["output_root"], "runs/stageC_1M_nearGB_vacancies_eps0100_safe_prep")
+        self.assertNotEqual(safe_prep_retry.SAFE_OUTPUT_ROOT.resolve(), safe_prep_retry.OLD_FAILED_ROOT.parent.resolve())
+
+    def test_safe_prep_worker_runs_only_baseline(self):
+        calls = []
+
+        class FakeState:
+            def mark_stage(self, stage, payload):
+                calls.append(("mark_stage", stage, payload))
+
+        class FakeRunner:
+            def __init__(self, cfg, run_dir):
+                self.cfg = cfg
+                self.run_dir = run_dir
+                self.state = FakeState()
+
+            def ensure_stageb_baseline(self, stage, case):
+                calls.append(("ensure_stageb_baseline", stage, case["case_id"]))
+                return {"success": True, "final_temp": 299.8}
+
+            def write_final_report(self):
+                calls.append(("write_final_report",))
+
+        cfg = {"stages": {safe_prep_retry.TARGET_STAGE: {"cases": [{"case_id": safe_prep_retry.TARGET_CASE}]}}}
+        with tempfile.TemporaryDirectory(prefix="safe_prep_worker_") as tmp:
+            root = Path(tmp)
+            with (
+                mock.patch.object(safe_prep_retry, "load_grid_config", return_value=cfg),
+                mock.patch.object(safe_prep_retry, "active_md_processes", return_value=[]),
+                mock.patch.object(safe_prep_retry, "GpuGridRunner", FakeRunner),
+                mock.patch.object(safe_prep_retry, "write_json"),
+                mock.patch.object(safe_prep_retry, "write_safe_final_report"),
+            ):
+                rc = safe_prep_retry.worker_run_prep("unused.yaml", root)
+        self.assertEqual(rc, 0)
+        self.assertEqual(calls[0], ("ensure_stageb_baseline", safe_prep_retry.TARGET_STAGE, safe_prep_retry.TARGET_CASE))
+        self.assertFalse(any("production" in str(call).lower() for call in calls))
+
+    def test_safe_prep_temperature_guard_catches_runaway(self):
+        log_text = """LAMMPS
+   Step        Atoms         Temp          PotEng
+       4300      938344   305.0         -1.0
+       4400      938344   368.0         -1.0
+       4500      938344   3792.0        -1.0
+Loop time of 1.0 on 1 procs for 100 steps with 938344 atoms
+"""
+        with tempfile.TemporaryDirectory(prefix="safe_prep_guard_") as tmp:
+            log_path = Path(tmp) / "log.lammps"
+            log_path.write_text(log_text, encoding="utf-8")
+            blockers = safe_prep_retry.prep_temperature_blockers({"log": str(log_path)})
+        self.assertTrue(any("max Temp 3792" in blocker for blocker in blockers))
+        self.assertTrue(any("jumped 368 -> 3792" in blocker for blocker in blockers))
 
     def test_preflight_blocks_when_focused_lammps_is_active(self):
         root = STAGEC_OUTPUT_ROOT / "unit-test-preflight"

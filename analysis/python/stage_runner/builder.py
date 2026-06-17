@@ -772,11 +772,14 @@ def make_prep_input_gpu_safe(
     t_target_K: float = 300.0,
     ramp_steps: int = 3000,
     equil_steps: int = 5000,
+    segments: list[dict[str, Any]] | None = None,
     seed: int = 52001,
     thermo_every: int = 100,
     neighbor_policy: str = "neigh_modify    delay 0 every 10 check no",
     restart_every: int = 10000,
     restart_prefix: str = "a1_prep",
+    dump_every: int | None = None,
+    dump_fields: list[str] | str | None = None,
 ) -> str:
     """GPU-safe prep: thermal settle + NVT equilibration -> data.a1_baseline_equil.
 
@@ -795,6 +798,11 @@ def make_prep_input_gpu_safe(
     Stage 2: timestep 0.001, NVT at t_target_K, then write the baseline data.
     The text is final and must NOT be passed through the generic phase rewriter
     (it would clobber the ramp and the two run sections).
+
+    When `segments` is supplied, it replaces the legacy two-stage schedule with
+    explicit NVT segments. This is used for large safe-prep retries that need
+    smaller timesteps while retaining the same CUDA-safe no-direct-relaxation
+    constraint.
     """
     data_path = Path(meta["data_file"]).resolve().as_posix()
     meam_lib = paths.MEAM_LIBRARY.as_posix()
@@ -802,6 +810,83 @@ def make_prep_input_gpu_safe(
     # NOTE: this text is echoed verbatim into the LAMMPS log, which the runner
     # scans for forbidden substrings (case-insensitive). Comments below must not
     # contain marker words from science_gates.stability_pass.forbid_patterns.
+    header = f"""# Scaled-stage prep (GPU-safe, stage_runner.builder): thermal settle + NVT equilibration.
+# Direct energy relaxation is not used here: LAMMPS changes the neighbor policy during that command,
+# bypassing the validated check-no workaround on meam/kk KOKKOS CUDA. The settle ramp replaces it.
+# Baseline equivalence: ends in a {t_target_K:.0f} K NVT state like the A0 trial_001 lineage.
+
+units           metal
+dimension       3
+boundary        p p p
+atom_style      atomic
+
+read_data       {data_path}
+
+mass            1 26.9815385    # Al
+mass            2 55.845        # Fe
+
+pair_style      meam
+pair_coeff      * * {meam_lib} AlS SiS MgS CuS FeS {meam_par} AlS FeS
+
+neighbor        2.0 bin
+{neighbor_policy}
+
+thermo          {thermo_every}
+thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz lx ly lz
+thermo_modify   lost warn flush yes
+"""
+    if segments is not None:
+        if not segments:
+            raise BuildError("prep segments must not be empty")
+        body: list[str] = []
+        if dump_every:
+            if dump_fields is None:
+                fields = "id type x y z"
+            elif isinstance(dump_fields, list):
+                fields = " ".join(str(x) for x in dump_fields)
+            else:
+                fields = str(dump_fields)
+            body += [
+                "",
+                f"dump            prep_dump all custom {int(dump_every)} dump.{restart_prefix}.prep.lammpstrj {fields}",
+                "dump_modify     prep_dump sort id",
+            ]
+        for idx, raw in enumerate(segments, start=1):
+            steps = int(raw["steps"])
+            if steps <= 0:
+                raise BuildError(f"prep segment {idx} has non-positive steps: {steps}")
+            timestep = float(raw["timestep"])
+            if timestep <= 0.0:
+                raise BuildError(f"prep segment {idx} has non-positive timestep: {timestep}")
+            label = str(raw.get("label") or f"segment_{idx}")
+            t0 = float(raw.get("temp_start_K", t_start_K if idx == 1 else t_target_K))
+            t1 = float(raw.get("temp_end_K", t_target_K))
+            tdamp = float(raw.get("tdamp", 0.1))
+            fix_id = f"prep_{idx}"
+            body += [
+                "",
+                f"# Segment {idx}: {label}.",
+                f"timestep        {timestep:g}",
+            ]
+            if idx == 1:
+                body.append(f"velocity        all create {t0:.1f} {seed} mom yes rot no dist gaussian")
+            body += [
+                f"fix             {fix_id} all nvt temp {t0:.1f} {t1:.1f} {tdamp:g}",
+                f"restart         {int(restart_every)} restart.{restart_prefix}.*",
+                f"run             {steps}",
+                f"unfix           {fix_id}",
+            ]
+        if dump_every:
+            body += ["", "undump          prep_dump"]
+        body += [
+            "",
+            f"write_restart   restart.{restart_prefix}.final",
+            "write_data      data.a1_baseline_equil",
+            "write_dump      all custom dump.a1_baseline_equil.lammpstrj id type x y z modify sort id",
+            "",
+        ]
+        return header + "\n".join(body)
+
     return f"""# Scaled-stage prep (GPU-safe, stage_runner.builder): thermal settle + NVT equilibration.
 # Direct energy relaxation is not used here: LAMMPS changes the neighbor policy during that command,
 # bypassing the validated check-no workaround on meam/kk KOKKOS CUDA. The settle ramp replaces it.

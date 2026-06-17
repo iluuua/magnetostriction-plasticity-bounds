@@ -1007,6 +1007,12 @@ class GpuGridRunner:
         stage_cfg = self.cfg["stages"][stage]
         prep_equil_steps = int(stage_cfg.get("prep_steps", stage_cfg["smoke_steps"]))
         prep_ramp_steps = int(stage_cfg.get("prep_ramp_steps", 3000))
+        prep_segments = stage_cfg.get("prep_segments")
+        if prep_segments is not None:
+            prep_total_steps = sum(int(seg["steps"]) for seg in prep_segments)
+        else:
+            prep_total_steps = prep_ramp_steps + prep_equil_steps
+        prep_restart_every = int(stage_cfg.get("prep_restart_every", self.cfg["io_policy"].get("restart_every", 10000)))
         # GPU-safe prep: no minimize (LAMMPS would override neigh_modify to
         # 'every 1 delay 0 check yes' during minimization and crash meam/kk CUDA
         # with cudaErrorIllegalAddress; see A1_prep_failure_diagnosis.md). The
@@ -1021,8 +1027,11 @@ class GpuGridRunner:
             seed=deterministic_seed(prep_case),
             thermo_every=int(self.cfg["io_policy"]["thermo_every"]["smoke"]),
             neighbor_policy=self.cfg["gpu_profile"]["required_input_rewrites"]["neighbor_policy"],
-            restart_every=int(self.cfg["io_policy"].get("restart_every", 10000)),
+            restart_every=prep_restart_every,
             restart_prefix=prep_case,
+            segments=prep_segments,
+            dump_every=stage_cfg.get("prep_dump_every"),
+            dump_fields=stage_cfg.get("prep_dump_fields"),
         )
         self._assert_prep_input_safe(prep_input, prep_case)
         meta.setdefault("atom_count", int(meta["total_atoms"]))
@@ -1032,7 +1041,7 @@ class GpuGridRunner:
             atom_target=int(atom_target),
             eps_z=None,
             phase="prep",
-            steps=prep_ramp_steps + prep_equil_steps,
+            steps=prep_total_steps,
             input_text=prep_input,
             work_dir=prep_dir,
             structure_meta=meta,
@@ -1291,6 +1300,15 @@ class GpuGridRunner:
         stage_cfg = self.cfg["stages"][stage]
         prep_equil_steps = int(case_cfg.get("prep_steps", stage_cfg.get("prep_steps", stage_cfg["smoke_steps"])))
         prep_ramp_steps = int(case_cfg.get("prep_ramp_steps", stage_cfg.get("prep_ramp_steps", 3000)))
+        prep_segments = case_cfg.get("prep_segments", stage_cfg.get("prep_segments"))
+        if prep_segments is not None:
+            prep_total_steps = sum(int(seg["steps"]) for seg in prep_segments)
+        else:
+            prep_total_steps = prep_ramp_steps + prep_equil_steps
+        prep_restart_every = int(case_cfg.get(
+            "prep_restart_every",
+            stage_cfg.get("prep_restart_every", self.cfg["io_policy"].get("restart_every", 10000)),
+        ))
         prep_input = builder.make_prep_input_gpu_safe(
             meta,
             t_start_K=float(stage_cfg.get("prep_t_start_K", 50.0)),
@@ -1300,8 +1318,11 @@ class GpuGridRunner:
             seed=int(case_cfg["deterministic_seed"]),
             thermo_every=int(self.cfg["io_policy"]["thermo_every"]["smoke"]),
             neighbor_policy=self.cfg["gpu_profile"]["required_input_rewrites"]["neighbor_policy"],
-            restart_every=int(self.cfg["io_policy"].get("restart_every", 10000)),
+            restart_every=prep_restart_every,
             restart_prefix=prep_case,
+            segments=prep_segments,
+            dump_every=case_cfg.get("prep_dump_every", stage_cfg.get("prep_dump_every")),
+            dump_fields=case_cfg.get("prep_dump_fields", stage_cfg.get("prep_dump_fields")),
         )
         self._assert_prep_input_safe(prep_input, prep_case)
         self.assert_generated_input_safe(prep_input, prep_case)
@@ -1311,7 +1332,7 @@ class GpuGridRunner:
             atom_target=int(case_cfg["atom_target"]),
             eps_z=None,
             phase="prep",
-            steps=prep_ramp_steps + prep_equil_steps,
+            steps=prep_total_steps,
             input_text=prep_input,
             work_dir=prep_dir,
             structure_meta=meta,
