@@ -1,0 +1,86 @@
+{
+  "case_id": "G1_ridge_dipole_eps00194",
+  "geometry_id": "G1_ridge_dipole",
+  "geometry_type": "ridge_cylinder_plus_edge_dipole",
+  "created_at": "2026-08-13T01:59:26+03:00",
+  "git_head_at_generation": "d5ae4c2efc4aa4daca04cc4ded36803986acb3ce",
+  "al_orientation": {
+    "x": "[1-10]",
+    "y": "[11-2]",
+    "z": "[111]"
+  },
+  "box_A": {
+    "lx": 186.1458601473586,
+    "ly": 89.28390112444683,
+    "z_lo": -1.0,
+    "z_hi": 315.59223082615813
+  },
+  "al_lattice_A": 4.05,
+  "interface_plane_z_A": 20.0,
+  "al_depth_A": 280.59223082615813,
+  "fe_support_A": 20.0,
+  "ridge": {
+    "center_x_A": 93.0729300736793,
+    "rx_A": 45.0,
+    "h_A": 25.0,
+    "right_edge_x_A": 138.0729300736793,
+    "axis": "y"
+  },
+  "dipole": {
+    "burgers_A": 2.863782463805517,
+    "line_axis": "y",
+    "glide_plane": "(111) parallel to interface",
+    "partner_plus": {
+      "x": 165.0,
+      "z": 49.228357377724805
+    },
+    "partner_minus": {
+      "x": 141.6,
+      "z": 72.61104327990465
+    },
+    "n_x_images": 3,
+    "poisson_nu": 0.347,
+    "note": "isotropic Volterra field, x-periodic images summed"
+  },
+  "eigenstrain_axis": "Z",
+  "eps_z": 0.00194,
+  "eps_application": "Fe-block z scaled about z=0 AFTER cuts; atom sets identical across cases",
+  "counts": {
+    "total": 300124,
+    "al_matrix": 268488,
+    "fe_block_total": 31636,
+    "fe_block_species_fe": 7348,
+    "fe_block_species_al": 24288
+  },
+  "cleanup": {
+    "removed_al_near_fe": 972,
+    "min_cross_A": 0.1959705371206745,
+    "hard_cross_lt_1p8": 783,
+    "warn_cross_lt_2p1": 953,
+    "fe_seam_dedup_removed": 692
+  },
+  "seam_check": {
+    "n_atoms": 300124,
+    "scipy_available": true,
+    "intra_cell_min_nn_A": 2.0304028660336644,
+    "seam_min_nn_A": 2.1241588939640446,
+    "overall_min_nn_A": 2.0304028660336644,
+    "seam_pairs_lt_1p8_A": 0,
+    "seam_pairs_lt_2p1_A": 0,
+    "intra_pairs_lt_1p8_A": 0,
+    "seam_clean": true
+  },
+  "commensurate_misfit": {
+    "commensurate": true,
+    "fe_cell_a_x_A": 15.498,
+    "fe_cell_b_y_A": 8.0814,
+    "n_fe_cells_x": 12,
+    "n_fe_cells_y": 11,
+    "inplane_scale_x": 1.000913344449599,
+    "inplane_scale_y": 1.004370317524268,
+    "inplane_misfit_x_pct": 0.09133444495990073,
+    "inplane_misfit_y_pct": 0.4370317524267975
+  },
+  "boundary_conditions": "p p f",
+  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG1_ridge_dipole\\G1_ridge_dipole_eps00194\\data.G1_ridge_dipole_eps00194"
+}

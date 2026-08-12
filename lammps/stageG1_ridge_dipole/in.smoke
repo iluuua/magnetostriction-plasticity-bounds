@@ -1,0 +1,42 @@
+# Stage G1 ridge+dipole smoke: minimize + 3000-step NVT gate.
+# Variables (pass via -var): DATA_FILE, POT_DIR, OUT_PREFIX
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+# Rebuild every step during minimization; the distance-check kernel stays OFF
+# (KOKKOS check_distance_kokkos illegal-address workaround, milestone 2026-06-11).
+neigh_modify    delay 0 every 1 check no
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+thermo          100
+thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz
+
+min_style       cg
+minimize        1.0e-8 1.0e-10 2000 20000
+
+reset_timestep  0
+# Validated GPU dynamics neighbor policy (Stage A0/E production + F eps0000 GPU smoke).
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+velocity        mobile create 300.0 88004 mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+
+run             3000
+
+write_data      ${OUT_PREFIX}.smoke.final.data
+write_dump      all custom ${OUT_PREFIX}.smoke.final.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

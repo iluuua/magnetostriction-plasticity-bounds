@@ -1,0 +1,42 @@
+# Stage G1 ridge+dipole production: 60000-step NVT, dumps every 1500.
+# Run only after the matching smoke passed its gates.
+# Variables (pass via -var): DATA_FILE (= smoke final data, carries velocities),
+# POT_DIR, OUT_PREFIX, NSTEPS (default 60000)
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        NSTEPS index 60000
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+# Validated GPU dynamics neighbor policy (Stage A0/E production + F eps0000 GPU smoke);
+# identical for control and physical so it cancels in Delta-Q.
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+
+thermo          500
+thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz
+
+dump            d1 all custom 1500 ${OUT_PREFIX}.production.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         10000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.production.final.data
+write_dump      all custom ${OUT_PREFIX}.production.final.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
