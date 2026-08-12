@@ -1,0 +1,197 @@
+# Stage E4 700k DXA confirmation run.
+# Scope: one physical eps_z=0.001942 case, no control, no 250k/500k/1M grid.
+
+experiment:
+  name: stageE_homogeneous_inclusion_scaleup
+  mode: stageE_700k_dxa_confirm
+  description: "Stage E4 700k single physical eps001942 DXA confirmation"
+  output_root: "runs/stageE_700k_dxa_confirm"
+  temperature_K: 300
+  potential_track: "MEAM_Jelinek_2012"
+  magnetic_surrogate: "single_inclusion_eigenstrain_z_only"
+  physical_eps_formula: "sigma_m / E_Al = 147 MPa / 75.7 GPa = 0.001942"
+  physical_eps_z_formula: 0.001942
+  physical_eps_z: 0.001942
+  selected_atom_target: 700000
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 45
+  watchdog_poll_seconds: 30
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args:
+    - "-k"
+    - "on"
+    - "g"
+    - "1"
+    - "-sf"
+    - "kk"
+    - "-pk"
+    - "kokkos"
+    - "newton"
+    - "on"
+    - "neigh"
+    - "half"
+    - "gpu/aware"
+    - "off"
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+
+io_policy:
+  thermo_every:
+    smoke: 50
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 1000
+    short: 10000
+    production: 10000
+  dump_fields:
+    - id
+    - type
+    - x
+    - y
+    - z
+    - c_pe_atom
+    - c_st[1]
+    - c_st[2]
+    - c_st[3]
+    - c_st[4]
+    - c_st[5]
+    - c_st[6]
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 22
+  min_free_disk_gb_before_large_stage: 22
+  max_run_hours:
+    smoke: 24
+    short: 0
+    production_E4_700k_dxa_confirm: 96
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+  no_parallel_lammps: true
+
+stages:
+  E4_700k_dxa_confirm:
+    enabled: true
+    structure_mode: "build_stageB_realism_100k"
+    atom_targets: [700000]
+    eps_z: [0.001942]
+    smoke_steps: 500
+    short_steps: 0
+    production_steps: 80000
+    phase_timesteps:
+      smoke: 0.0002
+      production: 0.0002
+    prep_t_start_K: 10.0
+    prep_ramp_steps: 0
+    prep_steps: 0
+    prep_restart_every: 10000
+    prep_dump_every: 10000
+    prep_dump_fields:
+      - id
+      - type
+      - x
+      - y
+      - z
+    prep_segments:
+      - label: cold_settle_10K
+        steps: 500
+        timestep: 0.0001
+        temp_start_K: 10
+        temp_end_K: 10
+        tdamp: 0.05
+      - label: ramp_10_100K
+        steps: 500
+        timestep: 0.0001
+        temp_start_K: 10
+        temp_end_K: 100
+        tdamp: 0.10
+      - label: ramp_100_200K
+        steps: 500
+        timestep: 0.0001
+        temp_start_K: 100
+        temp_end_K: 200
+        tdamp: 0.10
+      - label: ramp_200_300K
+        steps: 500
+        timestep: 0.0001
+        temp_start_K: 200
+        temp_end_K: 300
+        tdamp: 0.10
+      - label: hold_300K_low_dt
+        steps: 1000
+        timestep: 0.0001
+        temp_start_K: 300
+        temp_end_K: 300
+        tdamp: 0.10
+    run_short_after_smoke_pass: false
+    run_production_after_smoke_pass: true
+    gate_required_before_each_production: false
+    analyze_after_production: true
+    max_smoke_cases: 1
+    max_production_cases: 1
+    production_case_ids:
+      - E4_phys001942_700k_80k
+    cases:
+      - case_id: E4_phys001942_700k_80k
+        atom_target: 700000
+        position: grain_interior
+        predefect: perfect
+        eps_z: 0.001942
+        deterministic_seed: 88004
+
+analysis:
+  enabled: true
+  tools:
+    - ovito_dxa
+    - cna_ptm_if_available
+  metrics:
+    - dislocation_count
+    - total_line_length
+    - dislocation_density
+    - fcc_fraction
+    - hcp_fraction
+    - other_fraction
+    - stacking_fault_indicators
+    - radial_stress_profile
+    - z_axis_stress_profile
+    - matrix_vs_inclusion_stress
+  compare_to_stage_baseline: true
+
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+      - "ERROR"
+      - "nan"
+      - "lost atoms"
+      - "cudaError"
+      - "illegal memory"
+  production_signal:
+    interesting_if_any:
+      - dislocation_count_gt_0
+      - hcp_fraction_increase_gt_0.05_percent
+      - matrix_von_mises_near_yield
+      - plastic_zone_detected
+  escalation_rules:
+    - "Run only physical eps001942 at 700k for this task."
+    - "Do not run control, 250k, 500k, 1M, eps0025, eps0100, grain boundary, vacancies, polycrystal, or mechanical loading."
+    - "The neighbor policy is a run-local workaround, not an upstream LAMMPS/KOKKOS fix."

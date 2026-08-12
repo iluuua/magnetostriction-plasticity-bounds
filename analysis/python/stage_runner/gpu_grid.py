@@ -39,6 +39,8 @@ GRID_EXPERIMENT_NAMES = (
     STAGEB_REALISM_EXPERIMENT_NAME,
     "stageB_nearGB_vacancies_focus_100k",
     "stageC_1M_nearGB_vacancies_eps0100_100k",
+    "stageD_local_interface_100k_mechanics",
+    "stageE_homogeneous_inclusion_scaleup",
 )
 PRODUCTION_NEIGHBOR_POLICY = "neigh_modify    delay 0 every 10 check no"
 LARGE_STAGE_PREFIXES = ("A2",)
@@ -843,6 +845,9 @@ class GpuGridRunner:
         neighbor_policy = self.cfg["gpu_profile"]["required_input_rewrites"]["neighbor_policy"]
         thermo_every = int(io["thermo_every"].get(phase, io["thermo_every"]["smoke"]))
         dump_every = int(io["dump_every"].get(phase, io["dump_every"]["smoke"]))
+        stage_cfg = self.cfg["stages"][stage]
+        phase_timesteps = stage_cfg.get("phase_timesteps") or {}
+        phase_timestep = stage_cfg.get(f"{phase}_timestep", phase_timesteps.get(phase))
         configured_dump_fields = io.get("dump_fields")
         if isinstance(configured_dump_fields, list):
             configured_dump_fields = " ".join(str(x) for x in configured_dump_fields)
@@ -880,6 +885,8 @@ class GpuGridRunner:
                 found_neigh = True
             elif re.match(r"^thermo\s+\d+", stripped):
                 out.append(f"thermo          {thermo_every}")
+            elif phase_timestep is not None and re.match(r"^timestep\s+", stripped):
+                out.append(f"timestep        {float(phase_timestep):g}")
             elif stripped.startswith("group") and "inclusion id" in stripped and inclusion_id_min and inclusion_id_max:
                 out.append(f"group           inclusion id {int(inclusion_id_min)}:{int(inclusion_id_max)}")
             elif stripped.startswith("velocity") and "create" in stripped:
@@ -2643,6 +2650,7 @@ class GpuGridRunner:
             write_json(out_path, result)
             rec["analysis"] = str(out_path)
             rec["science_signal"] = self.analysis_has_signal(result)
+            rec.pop("analysis_error", None)
             self.state.mark_case(rec["case_id"], rec)
             self.write_defect_summary()
             return True

@@ -1,0 +1,174 @@
+# Stage E homogeneous inclusion scale-up.
+# Scope: single-crystal Al matrix, centered Fe4Al13 ellipsoid inclusion,
+# no grain boundary, no vacancies, control + physical eps only.
+
+experiment:
+  name: stageE_homogeneous_inclusion_scaleup
+  mode: homogeneous_inclusion_scaleup_smoke_then_production
+  depends_on:
+    - stageD_local_interface_100k_postrun_analysis
+  description: "Stage E scale-up of homogeneous Al matrix with Fe4Al13 inclusion"
+  output_root: "runs/stageE_homogeneous_inclusion_scaleup"
+  temperature_K: 300
+  potential_track: "MEAM_Jelinek_2012"
+  magnetic_surrogate: "inclusion_eigenstrain_z_only"
+  physical_eps_formula: "sigma_m / E_Al = 147 MPa / 75.7 GPa = 0.001942"
+  physical_eps_z_formula: 0.001942
+  physical_eps_z: 0.0025
+  physical_eps_note: "Use eps_z=0.0025 as conservative close physical upper estimate; eps0100 is forbidden for Stage E."
+
+production_reliability:
+  production_chunk_steps: 10000
+  max_no_progress_minutes: 35
+  watchdog_poll_seconds: 30
+  resume_from_latest_restart: true
+  retry_hung_chunk_once: true
+  update_state_after_each_chunk: true
+  write_restart_after_each_chunk: true
+
+gpu_profile:
+  name: kokkos_cuda_meam_neighbor_check_no
+  enabled: true
+  lammps_executable: 'B:\builds\lammps-kokkos-cuda-cuda124-msvc1439\build\lmp_kokkos_cuda.exe'
+  command_args:
+    - "-k"
+    - "on"
+    - "g"
+    - "1"
+    - "-sf"
+    - "kk"
+    - "-pk"
+    - "kokkos"
+    - "newton"
+    - "on"
+    - "neigh"
+    - "half"
+    - "gpu/aware"
+    - "off"
+  required_input_rewrites:
+    neighbor_policy: "neigh_modify    delay 0 every 10 check no"
+  forbidden_environment:
+    - CUDA_LAUNCH_BLOCKING
+
+io_policy:
+  thermo_every:
+    smoke: 100
+    short: 500
+    production: 1000
+  dump_every:
+    smoke: 1000
+    short: 5000
+    production: 5000
+  dump_fields:
+    - id
+    - type
+    - x
+    - y
+    - z
+    - c_pe_atom
+    - c_st[1]
+    - c_st[2]
+    - c_st[3]
+    - c_st[4]
+    - c_st[5]
+    - c_st[6]
+  restart_every: 10000
+  write_final_data: true
+  write_final_dump: true
+  compress_large_dumps: false
+
+resources:
+  gpu_count: 1
+  gpu_memory_gb: 12
+  cpu_helper_threads: 6
+  min_free_disk_gb_before_stage: 3
+  min_free_disk_gb_before_large_stage: 3
+  max_run_hours:
+    smoke: 16
+    short: 0
+    production_E1_homogeneous_inclusion_scaleup: 48
+  stop_if_gpu_memory_error: true
+  stop_if_disk_below_threshold: true
+  no_parallel_lammps: true
+
+stages:
+  E1_homogeneous_inclusion_scaleup:
+    enabled: true
+    structure_mode: "build_stageB_realism_100k"
+    atom_targets: [500000]
+    eps_z: [0.0, 0.0025]
+    smoke_steps: 1000
+    short_steps: 0
+    production_steps: 10000
+    prep_t_start_K: 50.0
+    prep_ramp_steps: 3000
+    prep_steps: 5000
+    prep_restart_every: 10000
+    prep_dump_every: 5000
+    prep_dump_fields:
+      - id
+      - type
+      - x
+      - y
+      - z
+    run_short_after_smoke_pass: false
+    run_production_after_smoke_pass: true
+    gate_required_before_each_production: false
+    analyze_after_production: true
+    max_smoke_cases: 2
+    max_production_cases: 2
+    production_case_ids:
+      - E1_homogeneous_control_eps0000
+      - E1_homogeneous_physical_eps0025
+    cases:
+      - case_id: E1_homogeneous_control_eps0000
+        atom_target: 500000
+        position: grain_interior
+        predefect: perfect
+        eps_z: 0.0
+        deterministic_seed: 85001
+      - case_id: E1_homogeneous_physical_eps0025
+        atom_target: 500000
+        position: grain_interior
+        predefect: perfect
+        eps_z: 0.0025
+        deterministic_seed: 85002
+
+analysis:
+  enabled: true
+  tools:
+    - ovito_dxa
+    - cna_ptm_if_available
+  metrics:
+    - dislocation_count
+    - total_line_length
+    - dislocation_density
+    - fcc_fraction
+    - hcp_fraction
+    - other_fraction
+    - stacking_fault_indicators
+    - radial_stress_profile
+    - z_axis_stress_profile
+    - matrix_vs_inclusion_stress
+    - unload_residual_defects
+  compare_to_stage_baseline: true
+
+science_gates:
+  stability_pass:
+    require_exit_code_zero: true
+    forbid_patterns:
+      - "ERROR"
+      - "nan"
+      - "lost atoms"
+      - "cudaError"
+      - "illegal memory"
+  production_signal:
+    interesting_if_any:
+      - dislocation_count_gt_0
+      - hcp_fraction_increase_gt_0.05_percent
+      - matrix_von_mises_near_yield
+      - plastic_zone_detected
+  escalation_rules:
+    - "Try 1M first by preflight, fall back to 500k, then 250k."
+    - "Run only control eps0000 and physical eps0025 for Stage E."
+    - "Do not run eps0100, grain-boundary, polycrystal, or vacancy cases."
