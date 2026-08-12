@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-07-02T08:03:43+03:00",
+  "figures": [
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_delta_sigma_vm_last20.png",
+      "exists": true,
+      "length": 76410,
+      "shows": "Delta sigma_vm(r), last 20% mean",
+      "supports": "Main stress-transfer and decay figure.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_zz_last20.png",
+      "exists": true,
+      "length": 126194,
+      "shows": "sigma_zz profiles, last 20% mean",
+      "supports": "Shows Z-component profile and why Z does not dominate the main VM peak.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_vm_last20.png",
+      "exists": true,
+      "length": 85741,
+      "shows": "total sigma_vm profiles",
+      "supports": "Shows total local virial stress remains above the 120 MPa reference.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_vm_p95_last20.png",
+      "exists": true,
+      "length": 93958,
+      "shows": "p95 sigma_vm profile",
+      "supports": "Documents atom-level virial proxy noise/upper envelope.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_delta_defect_nonfcc_final.png",
+      "exists": true,
+      "length": 51677,
+      "shows": "Delta non-FCC final",
+      "supports": "Shows defect baseline delta is small/local.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_defect_other_final.png",
+      "exists": true,
+      "length": 57386,
+      "shows": "OTHER fraction final",
+      "supports": "Supports interface-shell/background interpretation.",
+      "include": true,
+      "blocker": null
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_above_yield_fraction.png",
+      "exists": false,
+      "length": null,
+      "shows": "above_yield_fraction(r)",
+      "supports": "Requested minimum figure is absent; values are available in CSV.",
+      "include": false,
+      "blocker": "figure_absent"
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_dxa_timeline.png",
+      "exists": false,
+      "length": null,
+      "shows": "DXA timeline",
+      "supports": "No dedicated CPU DXA timeline figure exists; final DXA is in JSON/MD tables.",
+      "include": false,
+      "blocker": "figure_absent"
+    },
+    {
+      "path": "docs/reports/figures/stageF_cpu_results_stressed_layer_thickness.png",
+      "exists": false,
+      "length": null,
+      "shows": "stressed layer thickness",
+      "supports": "No dedicated thickness figure exists; thickness is in key stress JSON/MD.",
+      "include": false,
+      "blocker": "figure_absent"
+    }
+  ]
+}

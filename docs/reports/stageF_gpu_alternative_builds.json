@@ -1,0 +1,132 @@
+{
+  "timestamp": "2026-07-01T16:29:35+03:00",
+  "build_root": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855",
+  "source": "C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\cmake",
+  "vsdevcmd": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\Common7\\Tools\\VsDevCmd.bat",
+  "builds": [
+    {
+      "name": "Build 1 - KOKKOS CUDA RelWithDebInfo Ampere86 debug symbols",
+      "status": "build_succeeded_probe_failed",
+      "root": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86",
+      "build_dir": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build",
+      "binary": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build\\lmp.exe",
+      "binary_inventory": {
+        "path": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build\\lmp.exe",
+        "exists": true,
+        "support": {
+          "kokkos_cuda": true,
+          "style_meam": true,
+          "style_meam_kk": true,
+          "installed_meam": true
+        },
+        "classification": "GPU KOKKOS + MEAM/KK present",
+        "help_returncode": 0
+      },
+      "configure_build": {
+        "returncode": 0,
+        "timed_out": false,
+        "elapsed_s": 1012.759,
+        "stdout_tail": "             ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                       ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                 ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                           ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                                     ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                                               ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3336): warning #27-D: character value is out of range\n           U\"\\x800001ae\\x8000002b\"[index];\n             ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3336): warning #27-D: character value is out of range\n           U\"\\x800001ae\\x8000002b\"[index];\n                       ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n             ^\n\nRemark: The warnings can be suppressed with \"-diag-suppress <warning-number>\"\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                       ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                 ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                           ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                                     ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3335): warning #27-D: character value is out of range\n    return U\"\\x9999999a\\x828f5c29\\x80418938\\x80068db9\\x8000a7c6\\x800010c7\"\n                                                               ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3336): warning #27-D: character value is out of range\n           U\"\\x800001ae\\x8000002b\"[index];\n             ^\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\fmt/format.h(3336): warning #27-D: character value is out of range\n           U\"\\x800001ae\\x8000002b\"[index];\n                       ^\n\npair_meam_kokkos.cpp\ntmpxft_000052c0_00000000-10_pair_meam_kokkos.cudafe1.cpp\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortImpl.hpp(35): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortImpl.hpp(36): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortImpl.hpp(37): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortImpl.hpp(64): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortByKeyImpl.hpp(31): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortByKeyImpl.hpp(32): warning C4068: unknown pragma 'GCC'\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortByKeyImpl.hpp(33): warning C4068: unknown pragma 'GCC'\n\nC:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\algorithms\\src\\sorting\\./impl/Kokkos_SortByKeyImpl.hpp(60): warning C4068: unknown pragma 'GCC'\n\n[574/576] Linking CXX static library liblammps.lib\n[575/576] Linking CXX executable lmp.exe",
+        "stderr_tail": "      Options:       $<$<COMPILE_LANGUAGE:C,CXX>:/Zc:__cplusplus>;$<$<COMPILE_LANGUAGE:C,CXX>:/wd4244>;$<$<COMPILE_LANGUAGE:C,CXX>:/wd4267>;$<$<COMPILE_LANGUAGE:C,CXX>:/wd4250>;$<$<COMPILE_LANGUAGE:C,CXX>:/EHsc>;$<$<COMPILE_LANGUAGE:C,CXX>:/utf-8>"
+      },
+      "post_build_probe": {
+        "folder": "runs/stageF_gpu_production_recovery_20260701-162855/source_diagnostics/build1_relwithdebinfo_run10_nve",
+        "returncode": 3221226505,
+        "fatal": true,
+        "fatal_matches": [
+          {
+            "line": 162,
+            "pattern": "cudaError",
+            "text": "(cuda_instance->cuda_event_record_wrapper( CudaInternal::constantMemReusablePerDevice[cuda_device])) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda/Kokkos_Cuda_KernelLaunch.hpp:609"
+          }
+        ],
+        "max_step": 0,
+        "last_thermo": {
+          "Step": 0,
+          "Atoms": 113295,
+          "Temp": 286.81307,
+          "PotEng": -382693.1,
+          "KinEng": 4200.205,
+          "TotEng": -378492.89,
+          "Press": -1989.0424,
+          "Pxx": -2606.1063,
+          "Pyy": -5881.8638,
+          "Pzz": 2520.8428,
+          "Lx": 94.452928,
+          "Ly": 122.04881,
+          "Lz": 200.0
+        },
+        "loop_time": true,
+        "total_wall_time": false,
+        "stdout_tail": "  Unit style    : metal\n  Current step  : 0\n  Time step     : 0.001\nPer MPI rank memory allocation (min/avg/max) = 180.8 | 180.8 | 180.8 Mbytes\n   Step        Atoms         Temp          PotEng         KinEng         TotEng         Press           Pxx            Pyy            Pzz             Lx             Ly             Lz      \n         0      113295   286.81307     -382693.1       4200.205      -378492.89     -1989.0424     -2606.1063     -5881.8638      2520.8428      94.452928      122.04881      200          \nLoop time of 0.0005622 on 1 procs for 0 steps with 113295 atoms\n\n0.0% CPU use with 1 MPI tasks x 1 OpenMP threads\n\nMPI task timing breakdown:\nSection |  min time  |  avg time  |  max time  |%varavg| %total\n---------------------------------------------------------------\nPair    | 0          | 0          | 0          |   0.0 |  0.00\nNeigh   | 0          | 0          | 0          |   0.0 |  0.00\nComm    | 0          | 0          | 0          |   0.0 |  0.00\nOutput  | 0          | 0          | 0          |   0.0 |  0.00\nModify  | 0          | 0          | 0          |   0.0 |  0.00\nOther   |            | 0.0005622  |            |       |100.00\n\nNlocal:         113295 ave      113295 max      113295 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nNghost:          30687 ave       30687 max       30687 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nNeighs:    4.58357e+06 ave 4.58357e+06 max 4.58357e+06 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nFullNghs:  9.16714e+06 ave 9.16714e+06 max 9.16714e+06 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\n\nTotal # of neighbors = 9167136\nAve neighs/atom = 80.913862\nNeighbor list builds = 0\nDangerous builds = 0\nSetting up Verlet run ...\n  Unit style    : metal\n  Current step  : 0\n  Time step     : 0.001\nPer MPI rank memory allocation (min/avg/max) = 180.8 | 180.8 | 180.8 Mbytes\n   Step        Atoms         Temp          PotEng         KinEng         TotEng         Press           Pxx            Pyy            Pzz             Lx             Ly             Lz      \n         0      113295   286.81307     -382693.1       4200.205      -378492.89     -1989.0424     -2606.1063     -5881.8638      2520.8428      94.452928      122.04881      200          ",
+        "stderr_tail": "(cuda_instance->cuda_event_record_wrapper( CudaInternal::constantMemReusablePerDevice[cuda_device])) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda/Kokkos_Cuda_KernelLaunch.hpp:609\nTraceback functionality not available",
+        "log_tail": "108315 atoms in group mobile\nfix             hold bottom setforce 0.0 0.0 0.0\nvelocity        mobile create 300 88004 mom yes rot yes dist gaussian\nfix             nve_mobile mobile nve\n\nthermo          10\nthermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz lx ly lz\nthermo_modify   flush yes\nrun             0\nNeighbor list info ...\n  update: every = 1 steps, delay = 0 steps, check = yes\n  max neighbors/atom: 2000, page size: 100000\n  master list distance cutoff = 7\n  ghost atom cutoff = 7\n  binsize = 7, bins = 14 18 29\n  2 neighbor lists, perpetual/occasional/extra = 2 0 0\n  (1) pair meam/kk, perpetual\n      attributes: full, newton on, kokkos_device\n      pair build: full/bin/kk/device\n      stencil: full/bin/3d\n      bin: kk/device\n  (2) pair meam/kk, perpetual, half/full from (1)\n      attributes: half, newton on, kokkos_device\n      pair build: halffull/newton/kk/device\n      stencil: none\n      bin: none\nPer MPI rank memory allocation (min/avg/max) = 180.8 | 180.8 | 180.8 Mbytes\n   Step        Atoms         Temp          PotEng         KinEng         TotEng         Press           Pxx            Pyy            Pzz             Lx             Ly             Lz      \n         0      113295   286.81307     -382693.1       4200.205      -378492.89     -1989.0424     -2606.1063     -5881.8638      2520.8428      94.452928      122.04881      200          \nLoop time of 0.0005622 on 1 procs for 0 steps with 113295 atoms\n\n0.0% CPU use with 1 MPI tasks x 1 OpenMP threads\n\nMPI task timing breakdown:\nSection |  min time  |  avg time  |  max time  |%varavg| %total\n---------------------------------------------------------------\nPair    | 0          | 0          | 0          |   0.0 |  0.00\nNeigh   | 0          | 0          | 0          |   0.0 |  0.00\nComm    | 0          | 0          | 0          |   0.0 |  0.00\nOutput  | 0          | 0          | 0          |   0.0 |  0.00\nModify  | 0          | 0          | 0          |   0.0 |  0.00\nOther   |            | 0.0005622  |            |       |100.00\n\nNlocal:         113295 ave      113295 max      113295 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nNghost:          30687 ave       30687 max       30687 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nNeighs:    4.58357e+06 ave 4.58357e+06 max 4.58357e+06 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\nFullNghs:  9.16714e+06 ave 9.16714e+06 max 9.16714e+06 min\nHistogram: 1 0 0 0 0 0 0 0 0 0\n\nTotal # of neighbors = 9167136\nAve neighs/atom = 80.913862\nNeighbor list builds = 0\nDangerous builds = 0\nrun             10\nPer MPI rank memory allocation (min/avg/max) = 180.8 | 180.8 | 180.8 Mbytes\n   Step        Atoms         Temp          PotEng         KinEng         TotEng         Press           Pxx            Pyy            Pzz             Lx             Ly             Lz      \n         0      113295   286.81307     -382693.1       4200.205      -378492.89     -1989.0424     -2606.1063     -5881.8638      2520.8428      94.452928      122.04881      200          ",
+        "key": "build1_relwithdebinfo_run10_nve",
+        "title": "Build1 RelWithDebInfo no-MPI run10 NVE",
+        "status": "failed",
+        "command": [
+          "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build\\lmp.exe",
+          "-k",
+          "on",
+          "g",
+          "1",
+          "-sf",
+          "kk",
+          "-pk",
+          "kokkos",
+          "newton",
+          "on",
+          "neigh",
+          "half",
+          "gpu/aware",
+          "off",
+          "-in",
+          "in.run10_nve",
+          "-log",
+          "log.lammps"
+        ],
+        "command_label": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build\\lmp.exe -k on g 1 -sf kk -pk kokkos newton on neigh half gpu/aware off",
+        "input": "runs/stageF_gpu_production_recovery_20260701-162855/source_diagnostics/build1_relwithdebinfo_run10_nve/in.run10_nve",
+        "binary": "B:\\builds\\lammps-stageF-gpu-production-recovery-20260701-162855\\build1_relwithdebinfo_ampere86\\build\\lmp.exe",
+        "kokkos_args": [
+          "-k",
+          "on",
+          "g",
+          "1",
+          "-sf",
+          "kk",
+          "-pk",
+          "kokkos",
+          "newton",
+          "on",
+          "neigh",
+          "half",
+          "gpu/aware",
+          "off"
+        ],
+        "env_overrides": {
+          "CUDA_LAUNCH_BLOCKING": "1"
+        },
+        "target_step": 10,
+        "timed_out": false,
+        "elapsed_s": 5.336
+      }
+    },
+    {
+      "name": "Build 2 - Serial/no-MPI KOKKOS CUDA",
+      "status": "covered_by_build1",
+      "reason": "Build 1 was configured with BUILD_MPI=no and direct single-rank executable; this removes MSMPI from the failing probe."
+    },
+    {
+      "name": "Build 3 - Older/newer local source",
+      "status": "not_attempted",
+      "reason": "No alternate local source was selected for this timeboxed pass; no internet fetch was performed."
+    },
+    {
+      "name": "Build 4 - CPU pair + GPU neighbor",
+      "status": "not_production_candidate",
+      "reason": "Not acceptable as production replacement in this task; recorded only as experimental option."
+    }
+  ],
+  "status": "build_succeeded_probe_failed"
+}

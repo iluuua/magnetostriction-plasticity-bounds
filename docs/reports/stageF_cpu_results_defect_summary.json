@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-07-02T07:38:26+03:00",
+  "status": "completed",
+  "ovito_version": "3.15.4",
+  "frames_analyzed": [
+    {
+      "case": "eps0000",
+      "case_id": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "step": 0,
+      "frame_index": 0,
+      "matrix_atoms": 81645,
+      "fcc_atoms": 78735,
+      "hcp_atoms": 0,
+      "other_atoms": 2910,
+      "non_fcc_atoms": 2910,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "dmin2_status": "unavailable_not_stored_in_dump_not_computed"
+    },
+    {
+      "case": "eps0000",
+      "case_id": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "step": 50000,
+      "frame_index": 50,
+      "matrix_atoms": 82509,
+      "fcc_atoms": 79480,
+      "hcp_atoms": 1,
+      "other_atoms": 3028,
+      "non_fcc_atoms": 3029,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "dmin2_status": "unavailable_not_stored_in_dump_not_computed"
+    },
+    {
+      "case": "eps00194",
+      "case_id": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "step": 0,
+      "frame_index": 0,
+      "matrix_atoms": 82125,
+      "fcc_atoms": 79590,
+      "hcp_atoms": 0,
+      "other_atoms": 2535,
+      "non_fcc_atoms": 2535,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "dmin2_status": "unavailable_not_stored_in_dump_not_computed"
+    },
+    {
+      "case": "eps00194",
+      "case_id": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "step": 50000,
+      "frame_index": 50,
+      "matrix_atoms": 82573,
+      "fcc_atoms": 79447,
+      "hcp_atoms": 0,
+      "other_atoms": 3126,
+      "non_fcc_atoms": 3126,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "dmin2_status": "unavailable_not_stored_in_dump_not_computed"
+    }
+  ],
+  "dmin2_status": "unavailable_not_stored_in_dump_not_computed_for_this_report",
+  "interpretation_guardrail": "CNA/DXA are secondary indicators; no developed-dislocation/plasticity claim is made from short or non-persistent signals.",
+  "figures": [
+    "docs\\reports\\figures\\stageF_cpu_results_defect_other_final.png",
+    "docs\\reports\\figures\\stageF_cpu_results_defect_hcp_final.png",
+    "docs\\reports\\figures\\stageF_cpu_results_defect_nonfcc_final.png",
+    "docs\\reports\\figures\\stageF_cpu_results_delta_defect_nonfcc_final.png"
+  ]
+}

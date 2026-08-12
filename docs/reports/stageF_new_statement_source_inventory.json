@@ -1,0 +1,85 @@
+{
+  "generated_at": "2026-07-06",
+  "purpose": "Инвентаризация источников для отчёта по новой постановке Stage F (F0 planar boundary patch, CPU comparable pair).",
+  "production_root": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918",
+  "cases": ["F0_planar_100A_comm_eps0000_cpu_zhi200", "F0_planar_100A_comm_eps00194_cpu_zhi200"],
+  "md_reports_read": [
+    "docs/reports/stageF_cpu_results_sigma_report_ru.md",
+    "docs/reports/stageF_cpu_results_plasticity_report_ru.md",
+    "docs/reports/stageF_cpu_results_residual_plasticity_check_ru.md",
+    "docs/reports/stageF_cpu_results_next_step_decision_ru.md",
+    "docs/reports/stageF_cpu_results_dump_inventory.md",
+    "docs/reports/stageF_cpu_results_key_stress_numbers.md",
+    "docs/reports/stageF_cpu_results_key_plasticity_numbers.md",
+    "docs/reports/stageF_cpu_results_production_verification.md"
+  ],
+  "previous_meeting_oriented_reports": [
+    "docs/reports/stageF_cpu_results_pshonkin_report_ru.md",
+    "docs/reports/stageF_cpu_results_pshonkin_criteria_answers_ru.md",
+    "docs/reports/stageF_cpu_results_pshonkin_criteria_map_ru.md",
+    "docs/reports/stageF_cpu_results_pshonkin_executive_brief_ru.md",
+    "docs/reports/stageF_cpu_results_pshonkin_meeting_brief_ru.md",
+    "docs/reports/stageF_cpu_results_pshonkin_talk_track_ru.md",
+    "docs/reports/stageF_cpu_results_best_figures_for_pshonkin.md",
+    "docs/reports/stageF_cpu_results_safe_wording_ru.md",
+    "docs/reports/stageF_cpu_results_executive_extraction_inventory.md"
+  ],
+  "csv_read": [
+    {"path": "docs/reports/stageF_cpu_results_delta_sigma_profile.csv", "role": "Δσ(r) profile, verified with pandas", "windows": ["initial", "final", "last20_mean"], "rows": 114},
+    {"path": "docs/reports/stageF_cpu_results_delta_defect_profile.csv", "role": "Δf_defect(r) profile, verified with pandas"},
+    {"path": "docs/reports/stageF_cpu_results_eps0000_sigma_profile.csv", "role": "baseline σ(r)"},
+    {"path": "docs/reports/stageF_cpu_results_eps00194_sigma_profile.csv", "role": "physical case σ(r)"},
+    {"path": "docs/reports/stageF_cpu_results_eps0000_defect_profile.csv", "role": "baseline defect(r)"},
+    {"path": "docs/reports/stageF_cpu_results_eps00194_defect_profile.csv", "role": "physical case defect(r)"}
+  ],
+  "json_read": [
+    "docs/reports/stageF_cpu_results_key_stress_numbers.json",
+    "docs/reports/stageF_cpu_results_key_plasticity_numbers.json",
+    "docs/reports/stageF_cpu_results_sigma_summary.json",
+    "docs/reports/stageF_cpu_results_defect_summary.json",
+    "docs/reports/stageF_cpu_results_residual_plasticity_check.json",
+    "docs/reports/stageF_cpu_results_next_step_decision.json",
+    "docs/reports/stageF_cpu_results_pshonkin_criteria_answers.json",
+    "docs/reports/stageF_cpu_results_production_verification.json",
+    "docs/reports/stageF_cpu_results_dump_inventory.json"
+  ],
+  "figures_found_current": [
+    "docs/reports/figures/stageF_cpu_results_sigma_vm_last20.png",
+    "docs/reports/figures/stageF_cpu_results_sigma_zz_last20.png",
+    "docs/reports/figures/stageF_cpu_results_sigma_vm_p95_last20.png",
+    "docs/reports/figures/stageF_cpu_results_delta_sigma_vm_last20.png",
+    "docs/reports/figures/stageF_cpu_results_defect_other_final.png",
+    "docs/reports/figures/stageF_cpu_results_defect_hcp_final.png",
+    "docs/reports/figures/stageF_cpu_results_defect_nonfcc_final.png",
+    "docs/reports/figures/stageF_cpu_results_delta_defect_nonfcc_final.png"
+  ],
+  "figures_found_older_context_only": [
+    "docs/reports/figures/stageF_above_yield_layer.png",
+    "docs/reports/figures/stageF_hcp_other_by_distance.png",
+    "docs/reports/figures/stageF_sigma_decay_components.png",
+    "docs/reports/figures/stageF_sigma_decay_vm.png",
+    "docs/reports/figures/stageF_temporal_plastic_layer.png"
+  ],
+  "expected_files_absent": [
+    {"item": "Dmin2 / atomic-strain reference field", "status": "не сохранён в CPU dump, не вычислялся; отдельно не заявляется"},
+    {"item": "GPU production comparable pair", "status": "отсутствует (backend blocker); в физический результат не входит"},
+    {"item": "eps005 / F1 / F0_300A production", "status": "не запускались; данных нет"}
+  ],
+  "primary_number_sources": {
+    "stress": [
+      "docs/reports/stageF_cpu_results_key_stress_numbers.json",
+      "docs/reports/stageF_cpu_results_sigma_summary.json",
+      "docs/reports/stageF_cpu_results_delta_sigma_profile.csv"
+    ],
+    "plasticity_defects": [
+      "docs/reports/stageF_cpu_results_key_plasticity_numbers.json",
+      "docs/reports/stageF_cpu_results_defect_summary.json",
+      "docs/reports/stageF_cpu_results_residual_plasticity_check.json",
+      "docs/reports/stageF_cpu_results_delta_defect_profile.csv"
+    ],
+    "protocol_geometry": [
+      "docs/reports/stageF_cpu_results_production_verification.json",
+      "docs/reports/stageF_cpu_results_dump_inventory.md"
+    ]
+  }
+}

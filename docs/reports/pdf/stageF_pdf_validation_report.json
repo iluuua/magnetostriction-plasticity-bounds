@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-07-06",
+  "tools": {
+    "pdfinfo": "B:\\latex\\miktex\\bin\\x64\\pdfinfo.exe",
+    "pdftotext": "B:\\latex\\miktex\\bin\\x64\\pdftotext.exe",
+    "pdftoppm": "B:\\latex\\miktex\\bin\\x64\\pdftoppm.exe"
+  },
+  "pdfs": {
+    "full": {
+      "path": "docs/reports/pdf/stageF_new_problem_statement_report_ru.pdf",
+      "pages": 14, "size_bytes": 932475, "size_gt_50kb": true,
+      "text_extraction": true, "text_chars": 19571, "cyrillic": true
+    },
+    "short": {
+      "path": "docs/reports/pdf/stageF_new_problem_statement_short_ru.pdf",
+      "pages": 2, "size_bytes": 149628, "size_gt_50kb": true,
+      "text_extraction": true, "text_chars": 2575, "cyrillic": true
+    },
+    "appendix": {
+      "path": "docs/reports/pdf/stageF_new_problem_statement_figures_appendix_ru.pdf",
+      "pages": 4, "size_bytes": 587076, "size_gt_50kb": true,
+      "text_extraction": true, "cyrillic": true
+    }
+  },
+  "content_checks_full": {
+    "Отчёт по новой постановке": true,
+    "Peak Δσ_vm": true,
+    "578.422": true,
+    "пластическая деформация не подтверждена": true,
+    "DXA": true
+  },
+  "figures_embedded": true,
+  "formulas_included": true,
+  "render_previews": {
+    "preview_full_page_1.png": true,
+    "preview_full_page_2.png": true,
+    "preview_short_page_1.png": true,
+    "visual_check": "title/subtitle/date/status, TOC (single numbering), 5-numbers table, formulas block, warning, figures with captions — all within A4 margins; no cut lines, no overlaps, no garbage; page-number footer present"
+  },
+  "forbidden_wording_scan": {
+    "targets": "generated HTML sources (full, short, appendix)",
+    "phrases_checked": ["Пшонкин", "pshonkin", "пластическая деформация доказана", "дислокации подтверждены", "stable dislocation confirmed", "developed dislocation proven", "plastic deformation proven", "full 20 micron MD", "full 5 micron inclusion modeled", "смоделировали 5 мкм", "полная микронная модель"],
+    "hits": 0, "status": "clean"
+  },
+  "no_lammps_or_mpiexec_running": true,
+  "verdict": "pass"
+}

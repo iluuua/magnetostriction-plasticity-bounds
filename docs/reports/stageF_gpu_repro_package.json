@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-07-01T16:28:56+03:00",
+  "root": "runs/stageF_gpu_production_recovery_20260701-162855",
+  "eps00194": {
+    "folder": "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200",
+    "source_data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps00194.cpu_zhi200",
+    "local_data": "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/data.eps00194_zhi200",
+    "inputs": [
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/in.run0",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/in.run10_nve",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/in.run10_nvt",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/in.run100_nvt",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps00194_stabilized_zhi200/in.run100_nve"
+    ]
+  },
+  "eps0000": {
+    "folder": "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200",
+    "source_data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps0000.cpu_zhi200",
+    "local_data": "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/data.eps0000_zhi200",
+    "inputs": [
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/in.run0",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/in.run10_nve",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/in.run10_nvt",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/in.run100_nvt",
+      "runs/stageF_gpu_production_recovery_20260701-162855/repro_eps0000_zhi200/in.run100_nve"
+    ]
+  },
+  "potential_files": [
+    "potentials/meam/Jelinek_2012/Jelinek_2012_meamf",
+    "potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe"
+  ]
+}

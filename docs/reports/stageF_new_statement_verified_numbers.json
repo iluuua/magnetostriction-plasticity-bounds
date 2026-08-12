@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-07-06",
+  "window_primary": "last20_mean",
+  "yield_threshold_mpa": 120.0,
+  "interface_z_A": 50.0,
+  "noise_floor_mpa": 133.527,
+  "stress_conversion": "sigma_mpa = -sum(c_st)/(Lx*Ly*bin_width)*0.1 (LAMMPS stress/atom virial proxy)",
+  "stress": {
+    "peak_delta_sigma_vm_mean_mpa": {"value": 578.422, "r_center_A": 1.0, "r_bin_A": "0-2", "window": "last20_mean", "source": "docs/reports/stageF_cpu_results_key_stress_numbers.json"},
+    "peak_total_sigma_vm_eps00194_mean_mpa": {"value": 2860.344, "r_center_A": 1.0, "window": "last20_mean", "source": "docs/reports/stageF_cpu_results_sigma_summary.json"},
+    "peak_total_sigma_vm_eps0000_mean_mpa": {"value": 2281.921, "r_center_A": 1.0, "window": "last20_mean", "source": "docs/reports/stageF_cpu_results_sigma_summary.json"},
+    "peak_delta_sigma_zz_mean_mpa_final_farfield": {"value": -327.157, "r_center_A": 92.5, "window": "final", "note": "far-field/edge, шумная зона, не interface peak", "source": "docs/reports/stageF_cpu_results_key_stress_numbers.json"},
+    "layer_total_sigma_vm_mean_gt_120_A": {"value": 121.068, "note": "достигает края доступного Al slab; НЕ толщина пластической зоны", "source": "docs/reports/stageF_cpu_results_sigma_summary.json"},
+    "meaningful_delta_sigma_vm_above_noise_A": {"value": 4.0, "first_below_noise_bin_A": "4-6", "delta_at_first_below_noise_mpa": 1.673, "source": "docs/reports/stageF_cpu_results_key_stress_numbers.json"},
+    "directional_at_peak_vm_bin_r1": {"delta_sigma_xx_mean_mpa": -160.130, "delta_sigma_yy_mean_mpa": -607.587, "delta_sigma_zz_mean_mpa": 52.308, "dominant_component": "delta_sigma_yy_mean_mpa", "z_component_dominates": false, "source": "docs/reports/stageF_cpu_results_key_stress_numbers.json"},
+    "checkpoints_delta_sigma_vm_mean_mpa": {
+      "0-5A_r2.5": 161.264,
+      "10A_r9": -1.149,
+      "20A_r19": -12.454,
+      "50A_r49": -20.441,
+      "100A_r97.5": 30.160
+    },
+    "checkpoints_delta_sigma_zz_mean_mpa": {
+      "0-5A_r2.5": -42.178,
+      "10A_r9": 8.274,
+      "20A_r19": 6.966,
+      "50A_r49": -69.071,
+      "100A_r97.5": 24.070
+    }
+  },
+  "plasticity": {
+    "dxa_final_line_length_A": {"eps0000": 0.0, "eps00194": 0.0, "source": "docs/reports/stageF_cpu_results_defect_summary.json"},
+    "hcp_final": {"eps0000_max_fraction": 0.0008620689655172, "eps00194_max_fraction": 0.0, "max_abs_delta": 0.0008620689655172, "r_center_A": 1.0, "note": "1 атом HCP в baseline; practically absent", "source": "docs/reports/stageF_cpu_results_key_plasticity_numbers.json"},
+    "other_final": {"eps0000_max_fraction": 0.9362068965517242, "eps00194_max_fraction": 0.9658119658119658, "r_center_A": 1.0, "note": "OTHER доминирует у interface/free surface (топология границы), не доказательство пластичности"},
+    "max_abs_delta_other_nonfcc_final": {"value": 0.035964, "r_center_A": 3.0, "r_bin_A": "2-4", "source": "docs/reports/stageF_cpu_results_key_plasticity_numbers.json (verified via delta_defect CSV)"},
+    "residual_plasticity_verdict": {"value": "not_confirmed", "source": "docs/reports/stageF_cpu_results_residual_plasticity_check.json"}
+  },
+  "protocol": {
+    "boundary": "p p f",
+    "zhi_A": 200.0,
+    "Lx_A": 94.452928,
+    "Ly_A": 122.04881,
+    "Lz_A": 200.0,
+    "atoms": 113295,
+    "matrix_atoms_proxy": "~82000",
+    "timestep_ps": 0.001,
+    "thermostat": "mobile NVT 300 K, damping 0.1",
+    "velocity_seed": 88004,
+    "production_steps": 50000,
+    "returncode": 0,
+    "status": "completed_clean",
+    "mpi_ranks": 6,
+    "omp_threads": 2,
+    "box_relax": false,
+    "wall": false,
+    "ovito_version": "3.15.4",
+    "source": "docs/reports/stageF_cpu_results_production_verification.json"
+  }
+}

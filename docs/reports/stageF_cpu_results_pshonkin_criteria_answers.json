@@ -1,0 +1,89 @@
+{
+  "generated_at": "2026-07-02T08:03:43+03:00",
+  "criteria": [
+    {
+      "criterion": "Есть ли передача напряжения от границы в Al?",
+      "checked": "CPU-only Delta sigma(r), eps00194 - eps0000",
+      "numeric_result": "Peak Delta sigma_vm = 578.422 MPa at 1 A",
+      "conclusion": "Передача local virial stress proxy подтверждена около interface.",
+      "status": "confirmed"
+    },
+    {
+      "criterion": "Есть ли локальный напряженный слой у interface?",
+      "checked": "total sigma_vm and Delta sigma_vm",
+      "numeric_result": "Total VM >120 MPa to 121.068 A; Delta above noise to 4 A",
+      "conclusion": "Есть сильный near-interface Delta layer; total VM cutoff не чистый из-за baseline/local virial noise.",
+      "status": "confirmed"
+    },
+    {
+      "criterion": "Превышает ли напряжение 120 MPa?",
+      "checked": "eps00194 total sigma_vm_mean/p95",
+      "numeric_result": "Peak eps00194 VM = 2860.3 MPa",
+      "conclusion": "Да по local virial proxy; абсолютные MPa не являются continuum-calibrated stress.",
+      "status": "confirmed"
+    },
+    {
+      "criterion": "Какова толщина слоя?",
+      "checked": "contiguous bins from r=0",
+      "numeric_result": "Total VM mean layer 121.068 A; Delta meaningful layer 4 A",
+      "conclusion": "Для разговора важнее Delta layer 0-4 A; total layer reaches available slab edge.",
+      "status": "confirmed"
+    },
+    {
+      "criterion": "Затухает ли эффект внутри 100 A?",
+      "checked": "Delta sigma_vm at checkpoints and noise floor",
+      "numeric_result": "Delta VM at 100 A = 30.16 MPa; noise floor 133.527 MPa",
+      "conclusion": "Baseline-subtracted near-interface effect decays below noise well before 100 A.",
+      "status": "confirmed"
+    },
+    {
+      "criterion": "Доминирует ли sigma_zz из-за eigenstrain Z?",
+      "checked": "Delta xx/yy/zz at peak VM bin",
+      "numeric_result": "Dominant = delta_sigma_yy_mean_mpa",
+      "conclusion": "Peak is mixed/interface VM stress; sigma_zz does not dominate.",
+      "status": "not_confirmed"
+    },
+    {
+      "criterion": "Есть ли признаки пластической деформации?",
+      "checked": "CNA/DXA final and residual verdict",
+      "numeric_result": "Residual verdict = not_confirmed",
+      "conclusion": "Пластичность не подтверждена.",
+      "status": "not_confirmed"
+    },
+    {
+      "criterion": "Есть ли HCP/OTHER рост сверх baseline?",
+      "checked": "final delta defect profile",
+      "numeric_result": "Max Delta OTHER/non-FCC = 0.036",
+      "conclusion": "Есть слабая local interface-shell разница, не самостоятельное доказательство пластичности.",
+      "status": "inconclusive"
+    },
+    {
+      "criterion": "Есть ли DXA/dislocations?",
+      "checked": "OVITO DXA final",
+      "numeric_result": "DXA line length = 0 A for eps0000 and eps00194 final",
+      "conclusion": "DXA-сигнала в CPU final нет.",
+      "status": "not_confirmed"
+    },
+    {
+      "criterion": "Есть ли остаточная/необратимая пластичность?",
+      "checked": "residual plasticity check",
+      "numeric_result": "not_confirmed",
+      "conclusion": "Не подтверждена; нет unload/quench/Dmin2 proof.",
+      "status": "not_confirmed"
+    },
+    {
+      "criterion": "Достаточен ли F0_planar для вывода?",
+      "checked": "geometry scope",
+      "numeric_result": "F0 planar answers local flat-boundary stress transfer only",
+      "conclusion": "Достаточен для локального planar stress answer; не заменяет curved/micron inclusion.",
+      "status": "technical_limitation"
+    },
+    {
+      "criterion": "Что логично запускать дальше?",
+      "checked": "decision logic",
+      "numeric_result": "primary: stop/no new MD until supervisor feedback; secondary: F1 curved cap if requested",
+      "conclusion": "Сначала показать числа Пшонкину; следующий MD должен быть motivated by feedback.",
+      "status": "next_step_required"
+    }
+  ]
+}

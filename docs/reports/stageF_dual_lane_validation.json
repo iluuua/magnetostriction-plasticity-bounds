@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-07-01T00:19:22+03:00",
+  "py_compile": {
+    "command": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\.venv\\Scripts\\python.exe",
+      "-m",
+      "py_compile",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\scripts\\stageF_dual_lane_cpu_production_gpu_repair.py"
+    ],
+    "cwd": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "",
+    "timed_out": false,
+    "elapsed_s": 0.076
+  },
+  "json_parse": [
+    {
+      "path": "docs/reports/stageF_dual_lane_cpu_production_gpu_repair_start.json",
+      "exists": true,
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_dual_lane_preflight.json",
+      "exists": true,
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_dual_lane_cpu_setup.json",
+      "exists": true,
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_dual_lane_cpu_worker_launch.json",
+      "exists": true,
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_parallel_gpu_repair_status.json",
+      "exists": true,
+      "ok": true
+    }
+  ]
+}

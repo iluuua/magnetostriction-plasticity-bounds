@@ -1,0 +1,74 @@
+{
+  "generated_at": "2026-07-02T07:38:17+03:00",
+  "status": "completed_clean_cpu_pair",
+  "analysis_scope": "CPU fallback production results only",
+  "no_new_production_launched_by_this_analysis": true,
+  "no_gpu_cpu_mixing": true,
+  "protocol": {
+    "boundary": "p p f",
+    "zhi_A": 200.0,
+    "timestep_ps": 0.001,
+    "thermostat": "mobile NVT 300 K to 300 K, damping 0.1",
+    "velocity_seed": 88004,
+    "neighbor": "delay 0 every 1 check yes",
+    "dump_every": 1000,
+    "restart_every": 5000,
+    "box_relax": false,
+    "wall": false,
+    "thermo_modify_lost_ignore": false
+  },
+  "cpu_policy": {
+    "mpi_ranks": 6,
+    "omp_threads": 2
+  },
+  "cases": [
+    {
+      "case": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "status": "completed_clean",
+      "returncode": 0,
+      "max_step": 50000,
+      "fatal": false,
+      "final_data_exists": true,
+      "final_restart_exists": true,
+      "last_thermo": {
+        "Step": 50000,
+        "Atoms": 113295,
+        "Temp": 285.73488,
+        "PotEng": -379072.65,
+        "KinEng": 4184.4155,
+        "TotEng": -374888.24,
+        "Press": 1347.3971,
+        "Pxx": 275.75846,
+        "Pyy": -1518.5297,
+        "Pzz": 5284.9626,
+        "Lx": 94.452928,
+        "Ly": 122.04881,
+        "Lz": 200.0
+      }
+    },
+    {
+      "case": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "status": "completed_clean",
+      "returncode": 0,
+      "max_step": 50000,
+      "fatal": false,
+      "final_data_exists": true,
+      "final_restart_exists": true,
+      "last_thermo": {
+        "Step": 50000,
+        "Atoms": 113295,
+        "Temp": 286.43468,
+        "PotEng": -379049.69,
+        "KinEng": 4194.6637,
+        "TotEng": -374855.02,
+        "Press": 857.12779,
+        "Pxx": 91.084028,
+        "Pyy": -2227.3329,
+        "Pzz": 4707.6323,
+        "Lx": 94.452928,
+        "Ly": 122.04881,
+        "Lz": 200.0
+      }
+    }
+  ]
+}

@@ -1,0 +1,373 @@
+{
+  "generated_at": "2026-07-02T07:38:17+03:00",
+  "status": "completed",
+  "production_root": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918",
+  "protocol": {
+    "boundary": "p p f",
+    "zhi_A": 200.0,
+    "timestep_ps": 0.001,
+    "thermostat": "mobile NVT 300 K to 300 K, damping 0.1",
+    "velocity_seed": 88004,
+    "neighbor": "delay 0 every 1 check yes",
+    "dump_every": 1000,
+    "restart_every": 5000,
+    "box_relax": false,
+    "wall": false,
+    "thermo_modify_lost_ignore": false
+  },
+  "worker_status": "completed_clean_cpu_pair",
+  "cases": [
+    {
+      "case": "eps0000",
+      "case_id": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "production_dir": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k",
+      "dump_steps": [
+        0,
+        1000,
+        2000,
+        3000,
+        4000,
+        5000,
+        6000,
+        7000,
+        8000,
+        9000,
+        10000,
+        11000,
+        12000,
+        13000,
+        14000,
+        15000,
+        16000,
+        17000,
+        18000,
+        19000,
+        20000,
+        21000,
+        22000,
+        23000,
+        24000,
+        25000,
+        26000,
+        27000,
+        28000,
+        29000,
+        30000,
+        31000,
+        32000,
+        33000,
+        34000,
+        35000,
+        36000,
+        37000,
+        38000,
+        39000,
+        40000,
+        41000,
+        42000,
+        43000,
+        44000,
+        45000,
+        46000,
+        47000,
+        48000,
+        49000,
+        50000
+      ],
+      "dump_frame_count": 51,
+      "dump_cadence_steps": 1000,
+      "files": [
+        {
+          "name": "command.json",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\command.json",
+          "size_bytes": 320,
+          "last_write_time": "2026-07-01T02:11:25+03:00"
+        },
+        {
+          "name": "data.final",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\data.final",
+          "size_bytes": 14949198,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        },
+        {
+          "name": "dump.lammpstrj",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\dump.lammpstrj",
+          "size_bytes": 519716234,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        },
+        {
+          "name": "in.cpu_production50k",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\in.cpu_production50k",
+          "size_bytes": 1595,
+          "last_write_time": "2026-07-01T00:19:22+03:00"
+        },
+        {
+          "name": "log.lammps",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\log.lammps",
+          "size_bytes": 51933,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        },
+        {
+          "name": "restart.10000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.10000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T03:11:23+03:00"
+        },
+        {
+          "name": "restart.15000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.15000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T03:41:20+03:00"
+        },
+        {
+          "name": "restart.20000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.20000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T04:11:25+03:00"
+        },
+        {
+          "name": "restart.25000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.25000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T04:41:21+03:00"
+        },
+        {
+          "name": "restart.30000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.30000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T05:11:17+03:00"
+        },
+        {
+          "name": "restart.35000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.35000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T05:41:11+03:00"
+        },
+        {
+          "name": "restart.40000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.40000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T06:11:06+03:00"
+        },
+        {
+          "name": "restart.45000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.45000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T06:41:12+03:00"
+        },
+        {
+          "name": "restart.5000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.5000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T02:41:17+03:00"
+        },
+        {
+          "name": "restart.50000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.50000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        },
+        {
+          "name": "restart.final",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\restart.final",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        },
+        {
+          "name": "returncode.txt",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\returncode.txt",
+          "size_bytes": 3,
+          "last_write_time": "2026-07-01T07:11:33+03:00"
+        },
+        {
+          "name": "stderr.log",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\stderr.log",
+          "size_bytes": 0,
+          "last_write_time": "2026-07-01T02:11:25+03:00"
+        },
+        {
+          "name": "stdout.log",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps0000_cpu_zhi200\\production50k\\stdout.log",
+          "size_bytes": 50436,
+          "last_write_time": "2026-07-01T07:10:59+03:00"
+        }
+      ]
+    },
+    {
+      "case": "eps00194",
+      "case_id": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "production_dir": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k",
+      "dump_steps": [
+        0,
+        1000,
+        2000,
+        3000,
+        4000,
+        5000,
+        6000,
+        7000,
+        8000,
+        9000,
+        10000,
+        11000,
+        12000,
+        13000,
+        14000,
+        15000,
+        16000,
+        17000,
+        18000,
+        19000,
+        20000,
+        21000,
+        22000,
+        23000,
+        24000,
+        25000,
+        26000,
+        27000,
+        28000,
+        29000,
+        30000,
+        31000,
+        32000,
+        33000,
+        34000,
+        35000,
+        36000,
+        37000,
+        38000,
+        39000,
+        40000,
+        41000,
+        42000,
+        43000,
+        44000,
+        45000,
+        46000,
+        47000,
+        48000,
+        49000,
+        50000
+      ],
+      "dump_frame_count": 51,
+      "dump_cadence_steps": 1000,
+      "files": [
+        {
+          "name": "command.json",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\command.json",
+          "size_bytes": 320,
+          "last_write_time": "2026-07-01T07:11:33+03:00"
+        },
+        {
+          "name": "data.final",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\data.final",
+          "size_bytes": 14955747,
+          "last_write_time": "2026-07-01T12:11:44+03:00"
+        },
+        {
+          "name": "dump.lammpstrj",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\dump.lammpstrj",
+          "size_bytes": 518880966,
+          "last_write_time": "2026-07-01T12:11:43+03:00"
+        },
+        {
+          "name": "in.cpu_production50k",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\in.cpu_production50k",
+          "size_bytes": 1597,
+          "last_write_time": "2026-07-01T00:19:22+03:00"
+        },
+        {
+          "name": "log.lammps",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\log.lammps",
+          "size_bytes": 51936,
+          "last_write_time": "2026-07-01T12:11:44+03:00"
+        },
+        {
+          "name": "restart.10000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.10000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T08:11:24+03:00"
+        },
+        {
+          "name": "restart.15000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.15000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T08:41:24+03:00"
+        },
+        {
+          "name": "restart.20000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.20000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T09:11:26+03:00"
+        },
+        {
+          "name": "restart.25000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.25000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T09:41:29+03:00"
+        },
+        {
+          "name": "restart.30000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.30000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T10:11:34+03:00"
+        },
+        {
+          "name": "restart.35000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.35000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T10:41:38+03:00"
+        },
+        {
+          "name": "restart.40000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.40000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T11:11:37+03:00"
+        },
+        {
+          "name": "restart.45000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.45000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T11:41:48+03:00"
+        },
+        {
+          "name": "restart.5000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.5000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T07:41:24+03:00"
+        },
+        {
+          "name": "restart.50000",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.50000",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T12:11:43+03:00"
+        },
+        {
+          "name": "restart.final",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\restart.final",
+          "size_bytes": 9971027,
+          "last_write_time": "2026-07-01T12:11:43+03:00"
+        },
+        {
+          "name": "returncode.txt",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\returncode.txt",
+          "size_bytes": 3,
+          "last_write_time": "2026-07-01T12:12:40+03:00"
+        },
+        {
+          "name": "stderr.log",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\stderr.log",
+          "size_bytes": 0,
+          "last_write_time": "2026-07-01T07:11:33+03:00"
+        },
+        {
+          "name": "stdout.log",
+          "path": "runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_production_20260701-001918\\F0_planar_100A_comm_eps00194_cpu_zhi200\\production50k\\stdout.log",
+          "size_bytes": 50437,
+          "last_write_time": "2026-07-01T12:11:44+03:00"
+        }
+      ]
+    }
+  ]
+}

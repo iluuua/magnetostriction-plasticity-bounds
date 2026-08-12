@@ -1,0 +1,295 @@
+{
+  "status": "completed",
+  "generated_at": "2026-06-29T17:43:53+03:00",
+  "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200",
+  "metadata": {
+    "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200",
+    "production_dir": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production",
+    "case_id": "E4_phys001942_700k_80k",
+    "matrix_max_id": 681763,
+    "center": [
+      99.225,
+      99.225,
+      149.85
+    ],
+    "axes": [
+      36.75,
+      36.75,
+      73.5
+    ],
+    "box_A": [
+      198.45,
+      198.45,
+      299.7
+    ],
+    "actual_atoms": 710216,
+    "matrix_atoms": 681763,
+    "inclusion_atoms": 28453,
+    "eps_z": 0.001942,
+    "temperature_K": 300.0,
+    "production_steps": 80000,
+    "production_status": "analysis_completed",
+    "production_returncode": 0,
+    "max_temp_K": 292.46617,
+    "timestep_ps": 0.0002
+  },
+  "distance_mode_used": "surface-distance",
+  "yield_threshold_mpa": 120.0,
+  "frame_summary": [
+    {
+      "timestep": 0,
+      "time_ps": 0.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.8545097717273,
+      "plastic_layer_thickness_A": 157.8545097717273,
+      "max_above_yield_distance_A": 157.8545097717273,
+      "max_sigma_vm_mean_mpa": 794.2105863882646,
+      "max_sigma_vm_p95_mpa": 28611.373427322418,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 0,
+      "other_atoms": 6160,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "no_event",
+      "physical_interpretation_flag": "no_persistent_plasticity"
+    },
+    {
+      "timestep": 10000,
+      "time_ps": 2.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.63581189186596,
+      "plastic_layer_thickness_A": 157.63581189186596,
+      "max_above_yield_distance_A": 157.63581189186596,
+      "max_sigma_vm_mean_mpa": 1523.8454515167637,
+      "max_sigma_vm_p95_mpa": 22750.77462619788,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 4,
+      "other_atoms": 7490,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 20000,
+      "time_ps": 4.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.75136551076184,
+      "plastic_layer_thickness_A": 157.75136551076184,
+      "max_above_yield_distance_A": 157.75136551076184,
+      "max_sigma_vm_mean_mpa": 1475.9219015002873,
+      "max_sigma_vm_p95_mpa": 23198.034459692088,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 3,
+      "other_atoms": 7512,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 30000,
+      "time_ps": 6.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.80153788152887,
+      "plastic_layer_thickness_A": 157.80153788152887,
+      "max_above_yield_distance_A": 157.80153788152887,
+      "max_sigma_vm_mean_mpa": 1555.222024899358,
+      "max_sigma_vm_p95_mpa": 23376.365329048516,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 0,
+      "other_atoms": 7714,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 40000,
+      "time_ps": 8.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.66754782649832,
+      "plastic_layer_thickness_A": 157.66754782649832,
+      "max_above_yield_distance_A": 157.66754782649832,
+      "max_sigma_vm_mean_mpa": 1923.3435538841484,
+      "max_sigma_vm_p95_mpa": 22352.114018147793,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 1,
+      "other_atoms": 7745,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 50000,
+      "time_ps": 10.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.8388308162298,
+      "plastic_layer_thickness_A": 157.8388308162298,
+      "max_above_yield_distance_A": 157.8388308162298,
+      "max_sigma_vm_mean_mpa": 1418.5230967727814,
+      "max_sigma_vm_p95_mpa": 22158.539667413657,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 5,
+      "other_atoms": 7781,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 60000,
+      "time_ps": 12.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.6558101324835,
+      "plastic_layer_thickness_A": 157.6558101324835,
+      "max_above_yield_distance_A": 157.6558101324835,
+      "max_sigma_vm_mean_mpa": 1846.198861492983,
+      "max_sigma_vm_p95_mpa": 24500.24704823129,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 6,
+      "other_atoms": 7844,
+      "dislocation_segments": 2,
+      "dislocation_line_length_A": 17.45135037842975,
+      "event_class": "confirmed_DXA",
+      "physical_interpretation_flag": "short_transient_dxa / not_developed_dislocation"
+    },
+    {
+      "timestep": 70000,
+      "time_ps": 14.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.74935827492058,
+      "plastic_layer_thickness_A": 157.74935827492058,
+      "max_above_yield_distance_A": 157.74935827492058,
+      "max_sigma_vm_mean_mpa": 1575.2981103047034,
+      "max_sigma_vm_p95_mpa": 22817.757452524485,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 1,
+      "other_atoms": 7935,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    },
+    {
+      "timestep": 80000,
+      "time_ps": 16.0,
+      "distance_mode": "surface-distance",
+      "available_distance_max_A": 157.6896654664086,
+      "plastic_layer_thickness_A": 157.6896654664086,
+      "max_above_yield_distance_A": 157.6896654664086,
+      "max_sigma_vm_mean_mpa": 1527.11888684915,
+      "max_sigma_vm_p95_mpa": 22258.549013321583,
+      "max_above_yield_fraction": 1.0,
+      "hcp_atoms": 3,
+      "other_atoms": 7889,
+      "dislocation_segments": 0,
+      "dislocation_line_length_A": 0.0,
+      "event_class": "weak_hcp",
+      "physical_interpretation_flag": "local_lattice_disturbance_no_DXA"
+    }
+  ],
+  "max_plastic_layer_timestep": 0,
+  "max_plastic_layer_thickness_A": 157.8545097717273,
+  "max_above_yield_distance_A": 157.8545097717273,
+  "dxa_positive_steps": [
+    60000
+  ],
+  "short_transient_dxa_steps": [
+    60000
+  ],
+  "figure_paths": [
+    "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_sigma_decay_components.png",
+    "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_sigma_decay_vm.png",
+    "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_above_yield_layer.png",
+    "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_temporal_plastic_layer.png",
+    "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_hcp_other_by_distance.png"
+  ],
+  "render_status": {
+    "status": "completed",
+    "files": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_before_event_type.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_at_event_60000_type.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_after_event_70000_type.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_final_80000_type.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_geometry_interface_view.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_cna_at_event_60000.png",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_stress_layer_view.png"
+    ],
+    "blockers": []
+  },
+  "source_map": {
+    "prompt": "C:\\Users\\dille\\Documents\\ilua-system\\prompt.txt",
+    "physicist_transcript": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\Phonkin_discussion_m4a.txt",
+    "visual_photos": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (1).jpg",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (2).jpg",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (3).jpg",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (4).jpg",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (5).jpg",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\pshonkin_materials_ishodniki\\visual (6).jpg"
+    ],
+    "stageE_reports": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_700k_full_analysis_with_temporal_evolution_ru.md",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_700k_temporal_evolution_report_ru.md",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_700k_temporal_evolution_table.csv",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_700k_temporal_evolution_summary.json",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\agent_report_stageE_700k_temporal_evolution_analysis.md"
+    ],
+    "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200",
+    "dumps_used": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0000000_0010000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0000000_0010000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0010000_0020000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0020000_0030000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0030000_0040000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0040000_0050000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0050000_0060000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.chunk0060000_0070000.lammpstrj",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\dump.final.lammpstrj"
+    ],
+    "restart_files_used_as_metadata": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.10000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.20000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.30000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.40000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.50000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.60000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.70000",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageE_700k_dxa_confirm\\20260625-102200\\cases\\E4_700k_dxa_confirm\\E4_phys001942_700k_80k\\production\\restart.80000"
+    ],
+    "limitations": [
+      "surface distance is analytic ellipsoid radial approximation for the existing Stage E geometry",
+      "virial stress is a local proxy using mean atomic volume, not a calibrated continuum stress",
+      "atomic strain and Dmin2 are unavailable in existing dump columns",
+      "dump cadence is 10000 steps",
+      "existing 700k ellipsoid domain cannot answer full micron-scale stress decay"
+    ],
+    "safe_claims": [
+      "short transient DXA at timestep 60000",
+      "no persistent dislocation evidence in sampled 700k frames",
+      "Stage F should use boundary-patch sigma(r)"
+    ],
+    "unsafe_claims": [
+      "claims that a stable dislocation was confirmed",
+      "claims of a mature dislocation line",
+      "claims that a physical dislocation was proven",
+      "claims that a 20-micron atomistic domain was run",
+      "claims that a full 5 micron inclusion was modeled"
+    ],
+    "render_status": {
+      "status": "completed",
+      "files": [
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_before_event_type.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_at_event_60000_type.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_after_event_70000_type.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_final_80000_type.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_geometry_interface_view.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_cna_at_event_60000.png",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\renders\\stageF_stress_layer_view.png"
+      ],
+      "blockers": []
+    }
+  }
+}

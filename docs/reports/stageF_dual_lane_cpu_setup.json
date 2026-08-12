@@ -1,0 +1,176 @@
+{
+  "timestamp": "2026-07-01T00:19:22+03:00",
+  "run_id": "20260701-001918",
+  "comparable_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918",
+  "production_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918",
+  "cpu_binary": "C:\\Users\\dille\\AppData\\Local\\LAMMPS 64-bit 22Jul2025-MSMPI\\bin\\lmp.exe",
+  "mpiexec": "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+  "cpu_policy": {
+    "mpi_ranks": 6,
+    "omp_threads": 2
+  },
+  "protocol": {
+    "boundary": "p p f",
+    "zhi_A": 200.0,
+    "timestep_ps": 0.001,
+    "thermostat": "mobile NVT 300 K to 300 K, damping 0.1",
+    "velocity_seed": 88004,
+    "neighbor": "delay 0 every 1 check yes",
+    "dump_every": 1000,
+    "restart_every": 5000,
+    "box_relax": false,
+    "wall": false,
+    "thermo_modify_lost_ignore": false
+  },
+  "data": {
+    "eps0000": {
+      "source": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/data.F0_planar_100A_comm_eps0000.relaxed",
+      "target": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps0000.cpu_zhi200",
+      "operation": "changed only zhi to 200.0 A; atom coordinates unchanged",
+      "original": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/data.F0_planar_100A_comm_eps0000.relaxed",
+        "exists": true,
+        "atoms_total": 113295,
+        "atom_types": 2,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 170.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 170.0,
+        "min_z": 0.0,
+        "max_z": 169.48318145395854
+      },
+      "updated": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps0000.cpu_zhi200",
+        "exists": true,
+        "atoms_total": 113295,
+        "atom_types": 2,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 200.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 200.0,
+        "min_z": 0.0,
+        "max_z": 169.48318145395854
+      }
+    },
+    "eps00194": {
+      "source": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/debug_fix1_z_headroom_cpu/data.F0_planar_100A_comm_eps00194.zheadroom30",
+      "target": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps00194.cpu_zhi200",
+      "operation": "copied stabilized zhi=200 data for comparable CPU lane",
+      "updated": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps00194.cpu_zhi200",
+        "exists": true,
+        "atoms_total": 113295,
+        "atom_types": 2,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 200.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 200.0,
+        "min_z": 0.0,
+        "max_z": 169.36761963461598
+      }
+    }
+  },
+  "smoke_cases": [
+    {
+      "case": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "stage": "smoke10k",
+      "steps": 10000,
+      "data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps0000.cpu_zhi200",
+      "folder": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/F0_planar_100A_comm_eps0000_cpu_zhi200/smoke10k",
+      "input": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/F0_planar_100A_comm_eps0000_cpu_zhi200/smoke10k/in.cpu_smoke10k",
+      "command": [
+        "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+        "-np",
+        "6",
+        "C:\\Users\\dille\\AppData\\Local\\LAMMPS 64-bit 22Jul2025-MSMPI\\bin\\lmp.exe",
+        "-in",
+        "in.cpu_smoke10k",
+        "-log",
+        "log.lammps"
+      ]
+    },
+    {
+      "case": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "stage": "smoke10k",
+      "steps": 10000,
+      "data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps00194.cpu_zhi200",
+      "folder": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/F0_planar_100A_comm_eps00194_cpu_zhi200/smoke10k",
+      "input": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/F0_planar_100A_comm_eps00194_cpu_zhi200/smoke10k/in.cpu_smoke10k",
+      "command": [
+        "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+        "-np",
+        "6",
+        "C:\\Users\\dille\\AppData\\Local\\LAMMPS 64-bit 22Jul2025-MSMPI\\bin\\lmp.exe",
+        "-in",
+        "in.cpu_smoke10k",
+        "-log",
+        "log.lammps"
+      ]
+    }
+  ],
+  "production_cases": [
+    {
+      "case": "F0_planar_100A_comm_eps0000_cpu_zhi200",
+      "stage": "production50k",
+      "steps": 50000,
+      "data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps0000.cpu_zhi200",
+      "folder": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918/F0_planar_100A_comm_eps0000_cpu_zhi200/production50k",
+      "input": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918/F0_planar_100A_comm_eps0000_cpu_zhi200/production50k/in.cpu_production50k",
+      "command": [
+        "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+        "-np",
+        "6",
+        "C:\\Users\\dille\\AppData\\Local\\LAMMPS 64-bit 22Jul2025-MSMPI\\bin\\lmp.exe",
+        "-in",
+        "in.cpu_production50k",
+        "-log",
+        "log.lammps"
+      ]
+    },
+    {
+      "case": "F0_planar_100A_comm_eps00194_cpu_zhi200",
+      "stage": "production50k",
+      "steps": 50000,
+      "data": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/data/data.F0_planar_100A_comm_eps00194.cpu_zhi200",
+      "folder": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918/F0_planar_100A_comm_eps00194_cpu_zhi200/production50k",
+      "input": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918/F0_planar_100A_comm_eps00194_cpu_zhi200/production50k/in.cpu_production50k",
+      "command": [
+        "C:\\Program Files\\Microsoft MPI\\Bin\\mpiexec.exe",
+        "-np",
+        "6",
+        "C:\\Users\\dille\\AppData\\Local\\LAMMPS 64-bit 22Jul2025-MSMPI\\bin\\lmp.exe",
+        "-in",
+        "in.cpu_production50k",
+        "-log",
+        "log.lammps"
+      ]
+    }
+  ]
+}

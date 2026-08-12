@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-01T00:19:22+03:00",
+  "status": "not_recovered",
+  "separate_lane": true,
+  "latest_evidence": {
+    "extended_variants": "docs/reports/stageF_gpu_fix_extended_kokkos_runtime_variants.md",
+    "blocker_decision": "docs/reports/stageF_F0_commensurate_ppf_gpu_backend_blocker_decision.md",
+    "final_handoff": "agent_report_stageF_gpu_fix_to_production_final.md"
+  },
+  "production": "not_started",
+  "reason": "release, debug, and clean CUDA 12.4 rebuild all failed KOKKOS CUDA MEAM/KK dynamics at step 0",
+  "next_viable_gpu_work": "source-level KOKKOS/MEAM debug or different validated GPU MEAM path; no GPU production until both comparable GPU smokes pass"
+}

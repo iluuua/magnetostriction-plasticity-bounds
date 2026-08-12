@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-07-06",
+  "mode": "PDF publication build (no MD, no LAMMPS)",
+  "engine": {
+    "backend": "headless Edge (Chromium) via DevTools Protocol Page.printToPDF",
+    "browser": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    "launch": "PowerShell Start-Process (Python subprocess launch delegated to running Edge and was not usable)",
+    "cdp_driver": "scripts/stageF_render_new_statement_pdf.py printpdf <ws_url> <out_pdf>",
+    "fallback": "chrome/edge --print-to-pdf CLI (not needed; CDP succeeded)",
+    "page": "A4 portrait, margins ~20 mm (0.79 in), page-number footer 'Стр. N / M'"
+  },
+  "renderer_script": "scripts/stageF_render_new_statement_pdf.py",
+  "markdown_to_html": "self-built converter (headers, tables with alignment, fenced code, nested lists, bold, inline code, hr, images) — no external markdown package",
+  "outputs": [
+    {
+      "pdf": "docs/reports/pdf/stageF_new_problem_statement_report_ru.pdf",
+      "html": "docs/reports/pdf/stageF_new_problem_statement_report_ru.html",
+      "pages": 14, "pdf_bytes": 932475, "html_bytes": 695898,
+      "figures_embedded": 6, "formulas_block": true, "five_numbers_table": true, "toc": true
+    },
+    {
+      "pdf": "docs/reports/pdf/stageF_new_problem_statement_short_ru.pdf",
+      "html": "docs/reports/pdf/stageF_new_problem_statement_short_ru.html",
+      "pages": 2, "pdf_bytes": 149628, "html_bytes": 6798,
+      "figures_embedded": 0, "formulas_block": true, "five_numbers_table": true
+    },
+    {
+      "pdf": "docs/reports/pdf/stageF_new_problem_statement_figures_appendix_ru.pdf",
+      "html": "docs/reports/pdf/stageF_new_problem_statement_figures_appendix_ru.html",
+      "pages": 4, "pdf_bytes": 587076, "html_bytes": 660170,
+      "figures_embedded": 6
+    }
+  ],
+  "figures_used": [
+    "stageF_cpu_results_delta_sigma_vm_last20.png",
+    "stageF_cpu_results_sigma_zz_last20.png",
+    "stageF_cpu_results_sigma_vm_last20.png",
+    "stageF_cpu_results_sigma_vm_p95_last20.png",
+    "stageF_cpu_results_delta_defect_nonfcc_final.png",
+    "stageF_cpu_results_defect_other_final.png"
+  ],
+  "missing_figures": [],
+  "notes": [
+    "Все 6 figures найдены и встроены (base64) в полный отчёт и в приложение.",
+    "Числовые выводы не менялись; добавлена только safe-wording строка 'пластическая деформация не подтверждена'.",
+    "Имя научрука в PDF/HTML отсутствует."
+  ]
+}

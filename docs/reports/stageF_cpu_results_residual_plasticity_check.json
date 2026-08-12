@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-07-02T07:38:26+03:00",
+  "status": "completed",
+  "verdict": "not_confirmed",
+  "max_final_dxa_line_length_A": 0.0,
+  "max_abs_final_delta_nonfcc_fraction": 0.035964068873947375,
+  "max_abs_final_delta_other_fraction": 0.035964068873947375,
+  "stress_delta_last20_max_vm_mean_mpa": 578.4223770611079,
+  "reasoning": [
+    "Stress transfer is present as a virial proxy, but stress alone is not residual plasticity.",
+    "CNA/DXA final comparison does not establish a persistent dislocation network.",
+    "Dmin2 was not available from stored dump fields and is not claimed."
+  ]
+}

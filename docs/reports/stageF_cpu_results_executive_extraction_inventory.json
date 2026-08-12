@@ -1,0 +1,239 @@
+{
+  "generated_at": "2026-07-02T08:03:43+03:00",
+  "reports_considered": 24,
+  "csv_files": [
+    {
+      "name": "stageF_cpu_results_delta_defect_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_delta_defect_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_delta_defect_profile.csv",
+      "length": 7522,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_delta_sigma_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_delta_sigma_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_delta_sigma_profile.csv",
+      "length": 62524,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_eps0000_defect_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_eps0000_defect_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_eps0000_defect_profile.csv",
+      "length": 12337,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_eps0000_sigma_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_eps0000_sigma_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_eps0000_sigma_profile.csv",
+      "length": 74263,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_eps00194_defect_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_eps00194_defect_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_eps00194_defect_profile.csv",
+      "length": 12789,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_eps00194_sigma_profile.csv",
+      "path": "docs/reports/stageF_cpu_results_eps00194_sigma_profile.csv",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_eps00194_sigma_profile.csv",
+      "length": 75975,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    }
+  ],
+  "json_files": [
+    {
+      "name": "stageF_cpu_results_defect_summary.json",
+      "path": "docs/reports/stageF_cpu_results_defect_summary.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_defect_summary.json",
+      "length": 2417,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_dump_inventory.json",
+      "path": "docs/reports/stageF_cpu_results_dump_inventory.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_dump_inventory.json",
+      "length": 16183,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_next_step_decision.json",
+      "path": "docs/reports/stageF_cpu_results_next_step_decision.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_next_step_decision.json",
+      "length": 741,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_production_verification.json",
+      "path": "docs/reports/stageF_cpu_results_production_verification.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_production_verification.json",
+      "length": 1978,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_residual_plasticity_check.json",
+      "path": "docs/reports/stageF_cpu_results_residual_plasticity_check.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_residual_plasticity_check.json",
+      "length": 621,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_sigma_summary.json",
+      "path": "docs/reports/stageF_cpu_results_sigma_summary.json",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_sigma_summary.json",
+      "length": 4798,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    }
+  ],
+  "md_files": [
+    {
+      "name": "stageE_physics_report_for_pshonkin_ru.md",
+      "path": "docs/reports/stageE_physics_report_for_pshonkin_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_physics_report_for_pshonkin_ru.md",
+      "length": 37125,
+      "last_write_time": "2026-06-25T09:16:33+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_dump_inventory.md",
+      "path": "docs/reports/stageF_cpu_results_dump_inventory.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_dump_inventory.md",
+      "length": 1935,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_next_step_decision_ru.md",
+      "path": "docs/reports/stageF_cpu_results_next_step_decision_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_next_step_decision_ru.md",
+      "length": 748,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_plasticity_report_ru.md",
+      "path": "docs/reports/stageF_cpu_results_plasticity_report_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_plasticity_report_ru.md",
+      "length": 2145,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_production_verification.md",
+      "path": "docs/reports/stageF_cpu_results_production_verification.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_production_verification.md",
+      "length": 737,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_pshonkin_criteria_map_ru.md",
+      "path": "docs/reports/stageF_cpu_results_pshonkin_criteria_map_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_pshonkin_criteria_map_ru.md",
+      "length": 3453,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_pshonkin_meeting_brief_ru.md",
+      "path": "docs/reports/stageF_cpu_results_pshonkin_meeting_brief_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_pshonkin_meeting_brief_ru.md",
+      "length": 733,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_pshonkin_report_ru.md",
+      "path": "docs/reports/stageF_cpu_results_pshonkin_report_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_pshonkin_report_ru.md",
+      "length": 4325,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_residual_plasticity_check_ru.md",
+      "path": "docs/reports/stageF_cpu_results_residual_plasticity_check_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_residual_plasticity_check_ru.md",
+      "length": 496,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_sigma_report_ru.md",
+      "path": "docs/reports/stageF_cpu_results_sigma_report_ru.md",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageF_cpu_results_sigma_report_ru.md",
+      "length": 2466,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    }
+  ],
+  "other_files": [
+    {
+      "name": "stageE_physics_report_for_pshonkin_ru.pdf",
+      "path": "docs/reports/stageE_physics_report_for_pshonkin_ru.pdf",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_physics_report_for_pshonkin_ru.pdf",
+      "length": 156122,
+      "last_write_time": "2026-06-25T09:21:27+03:00"
+    },
+    {
+      "name": "stageE_physics_report_for_pshonkin_ru.tex",
+      "path": "docs/reports/stageE_physics_report_for_pshonkin_ru.tex",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageE_physics_report_for_pshonkin_ru.tex",
+      "length": 41410,
+      "last_write_time": "2026-06-25T09:19:42+03:00"
+    }
+  ],
+  "figures": [
+    {
+      "name": "stageF_cpu_results_defect_hcp_final.png",
+      "path": "docs/reports/figures/stageF_cpu_results_defect_hcp_final.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_defect_hcp_final.png",
+      "length": 52195,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_defect_nonfcc_final.png",
+      "path": "docs/reports/figures/stageF_cpu_results_defect_nonfcc_final.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_defect_nonfcc_final.png",
+      "length": 58246,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_defect_other_final.png",
+      "path": "docs/reports/figures/stageF_cpu_results_defect_other_final.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_defect_other_final.png",
+      "length": 57386,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_delta_defect_nonfcc_final.png",
+      "path": "docs/reports/figures/stageF_cpu_results_delta_defect_nonfcc_final.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_delta_defect_nonfcc_final.png",
+      "length": 51677,
+      "last_write_time": "2026-07-02T07:38:26+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_delta_sigma_vm_last20.png",
+      "path": "docs/reports/figures/stageF_cpu_results_delta_sigma_vm_last20.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_delta_sigma_vm_last20.png",
+      "length": 76410,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_sigma_vm_last20.png",
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_vm_last20.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_sigma_vm_last20.png",
+      "length": 85741,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_sigma_vm_p95_last20.png",
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_vm_p95_last20.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_sigma_vm_p95_last20.png",
+      "length": 93958,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    },
+    {
+      "name": "stageF_cpu_results_sigma_zz_last20.png",
+      "path": "docs/reports/figures/stageF_cpu_results_sigma_zz_last20.png",
+      "full_path": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\figures\\stageF_cpu_results_sigma_zz_last20.png",
+      "length": 126194,
+      "last_write_time": "2026-07-02T07:38:17+03:00"
+    }
+  ],
+  "expected_missing": []
+}

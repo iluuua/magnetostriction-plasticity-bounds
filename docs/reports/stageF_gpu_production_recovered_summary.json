@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-07-01T16:46:40+03:00",
+  "status": "not_started",
+  "reason": "GPU validation gates did not reach eps00194 V6 10000 clean and eps0000 comparable 10000 clean.",
+  "pid": null,
+  "root": null,
+  "latest_step": null,
+  "stdout": null,
+  "stderr": null,
+  "log": null,
+  "analysis_status": "not_run"
+}

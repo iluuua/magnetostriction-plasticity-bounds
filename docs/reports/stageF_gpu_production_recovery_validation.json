@@ -1,0 +1,121 @@
+{
+  "timestamp": "2026-07-01T16:46:40+03:00",
+  "py_compile": {
+    "command": [
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\.venv\\Scripts\\python.exe",
+      "-m",
+      "py_compile",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\scripts\\prepare_stageF_boundary_patch_geometry.py",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\analysis\\python\\stageF_boundary_stress_decay.py",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\analysis\\python\\stageF_eps00194_lost_atom_forensic.py",
+      "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\scripts\\stageF_gpu_production_recovery.py"
+    ],
+    "cwd": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe",
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "",
+    "timed_out": false,
+    "elapsed_s": 0.137
+  },
+  "json_parse": [
+    {
+      "path": "docs/reports/stageF_gpu_production_recovery_current_state.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_recovery_blocker_summary.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_repro_package.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_source_level_diagnostics.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_alternative_builds.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_candidate_validation_ladder.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_recovered_summary.json",
+      "ok": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_final_blocker_report.json",
+      "ok": true
+    }
+  ],
+  "required_reports": [
+    {
+      "path": "docs/reports/stageF_gpu_production_recovery_current_state.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_recovery_blocker_summary.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_repro_package.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_source_level_diagnostics.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_alternative_builds.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_candidate_validation_ladder.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_recovered_launch_report.md",
+      "exists": true
+    },
+    {
+      "path": "docs/reports/stageF_gpu_production_final_blocker_report.md",
+      "exists": true
+    },
+    {
+      "path": "agent_report_stageF_gpu_production_recovery.md",
+      "exists": true
+    }
+  ],
+  "old_outputs_preserved": true,
+  "active_processes_query": {
+    "command": [
+      "powershell",
+      "-NoProfile",
+      "-Command",
+      "$rows = Get-CimInstance Win32_Process | Where-Object { $_.Name -match 'lmp|mpiexec' -or ($_.CommandLine -and $_.CommandLine -match 'lmp_kokkos|LAMMPS') } | Select-Object ProcessId,Name,CommandLine; if($rows){ $rows | ConvertTo-Json -Depth 4 } else { '[]' }"
+    ],
+    "cwd": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe",
+    "returncode": 0,
+    "stdout": "{\n    \"ProcessId\":  29276,\n    \"Name\":  \"powershell.exe\",\n    \"CommandLine\":  \"powershell -NoProfile -Command \\\"$rows = Get-CimInstance Win32_Process | Where-Object { $_.Name -match \\u0027lmp|mpiexec\\u0027 -or ($_.CommandLine -and $_.CommandLine -match \\u0027lmp_kokkos|LAMMPS\\u0027) } | Select-Object ProcessId,Name,CommandLine; if($rows){ $rows | ConvertTo-Json -Depth 4 } else { \\u0027[]\\u0027 }\\\"\"\n}\n",
+    "stderr": "",
+    "timed_out": false,
+    "elapsed_s": 0.454
+  },
+  "forbidden_claim_hits": [],
+  "git_status_short": {
+    "command": [
+      "git",
+      "status",
+      "--short"
+    ],
+    "cwd": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe",
+    "returncode": 0,
+    "stdout": " M .codex/state/current_context.md\n M analysis/python/stage_runner/analysis_runner.py\n M analysis/python/stage_runner/gpu_grid.py\n M docs/00_index/DOC_INDEX.md\n?? analysis/python/stageF_boundary_stress_decay.py\n?? analysis/python/stageF_check_lammps_data_integrity.py\n?? analysis/python/stageF_eps00194_lost_atom_forensic.py\n?? configs/stageD_local_interface_100k_mechanics.template.yaml\n?? configs/stageE_250k_single_physical_longrun.template.yaml\n?? configs/stageE_700k_dxa_confirm.template.yaml\n?? configs/stageE_homogeneous_inclusion_scaleup.template.yaml\n?? diagnostics/\n?? docs/60_milestones/2026-06-18_stageD_local_interface_100k_prepare.md\n?? docs/60_milestones/2026-06-22_stageE_homogeneous_inclusion_scaleup.md\n?? docs/60_milestones/2026-06-23_stageE_250k_single_physical_longrun.md\n?? docs/60_milestones/2026-06-25_stageE_700k_dxa_confirm_launch.md\n?? docs/reports/figures/\n?? docs/reports/physicist_last_meeting_action_plan.md\n?? docs/reports/renders/\n?? docs/reports/stageE_700k_full_analysis_report_ru.md\n?? docs/reports/stageE_700k_full_analysis_with_temporal_evolution_ru.md\n?? docs/reports/stageE_700k_temporal_defect_atoms.png\n?? docs/reports/stageE_700k_temporal_dislocation_length.png\n?? docs/reports/stageE_700k_temporal_evolution_report_ru.md\n?? docs/reports/stageE_700k_temporal_evolution_summary.json\n?? docs/reports/stageE_700k_temporal_evolution_table.csv\n?? docs/reports/stageE_700k_temporal_hcp_atoms.png\n?? docs/reports/stageE_dxa_confirmation_candidate_runs.disabled.json\n?? docs/reports/stageE_dxa_confirmation_hypotheses_and_run_plan_ru.md\n?? docs/reports/stageE_physics_report_for_pshonkin_ru.md\n?? docs/reports/stageE_physics_report_for_pshonkin_ru.pdf\n?? docs/reports/stageE_physics_report_for_pshonkin_ru.tex\n?? docs/reports/stageF_F0_commensurate_ppf_atom_count_consistency.md\n?? docs/reports/stageF_F0_commensurate_ppf_common_cell_audit.json\n?? docs/reports/stageF_F0_commensurate_ppf_common_cell_audit.md\n?? docs/reports/stageF_F0_commensurate_ppf_common_cell_fix_plan.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_cpu_diag_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_cpu_diag_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_data_integrity.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_data_integrity.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_debug_runner_stderr.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_debug_runner_stdout.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_debug_start.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_fix_decision.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_gpu_backend_matrix.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_gpu_backend_matrix.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_gpu_isolation_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_gpu_isolation_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_capture_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_capture_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_debug_start.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_debug_start.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_forensic_capture_stderr.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_forensic_capture_stdout.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_forensic_fix1_stderr.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_forensic_fix1_stdout.log\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_location.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_lost_atom_location.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_smoke_input_audit.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_smoke_input_audit.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_smoke_retry1_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_smoke_retry1_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_stabilization_ladder.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_stabilization_ladder.md\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_vs_eps0000_diff.json\n?? docs/reports/stageF_F0_commensurate_ppf_eps00194_vs_eps0000_diff.md\n?? docs/reports/stageF_F0_commensurate_ppf_file_inventory.json\n?? docs/reports/stageF_F0_commensurate_ppf_file_inventory.md\n?? docs/reports/stageF_F0_commensurate_ppf_gpu_backend_blocker_decision.md\n?? docs/reports/stageF_F0_commensurate_ppf_gpu_backend_lane_start.md\n?? docs/reports/stageF_F0_commensurate_ppf_gpu_binary_inventory.json\n?? docs/reports/stageF_F0_commensurate_ppf_gpu_binary_inventory.md\n?? docs/reports/stageF_F0_commensurate_ppf_input_path_validation.json\n?? docs/reports/stageF_F0_commensurate_ppf_input_path_validation.md\n?? docs/reports/stageF_F0_commensurate_ppf_log_parse_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_log_parse_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_production_gate_after_eps00194_fix.json\n?? docs/reports/stageF_F0_commensurate_ppf_production_gate_after_eps00194_fix.md\n?? docs/reports/stageF_F0_commensurate_ppf_production_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_production_summary.json\n?? docs/reports/stageF_F0_commensurate_ppf_smoke10k_report.md\n?? docs/reports/stageF_F0_commensurate_ppf_smoke10k_summary.json\n?? docs/reports/stageF_F0_planar_100A_commensurate_ppf_design.md\n?? docs/reports/stageF_F0_planar_100A_completion_failure_report.md\n?? docs/reports/stageF_F0_planar_100A_file_inventory.json\n?? docs/reports/stageF_F0_planar_100A_file_inventory.md\n?? docs/reports/stageF_F0_planar_100A_forensic_decision_report.md\n?? docs/reports/stageF_F0_planar_100A_geometry_check.md\n?? docs/reports/stageF_F0_planar_100A_geometry_failure_report.md\n?? docs/reports/stageF_F0_planar_100A_geometry_mmf_fix_report.md\n?? docs/reports/stageF_F0_planar_100A_geometry_summary.json\n?? docs/reports/stageF_F0_planar_100A_gpu_zero_forensic_precheck.md\n?? docs/reports/stageF_F0_planar_100A_launch_preflight.md\n?? docs/reports/stageF_F0_planar_100A_log_parse_report.md\n?? docs/reports/stageF_F0_planar_100A_log_parse_summary.json\n?? docs/reports/stageF_F0_planar_100A_production_launch_status.md\n?? docs/reports/stageF_F0_planar_100A_production_launch_summary.json\n?? docs/reports/stageF_F0_planar_100A_smoke_report.md\n?? docs/reports/stageF_F0_planar_100A_smoke_summary.json\n?? docs/reports/stageF_boundary_stress_decay_report_ru.md\n?? docs/reports/stageF_boundary_stress_decay_stderr.log\n?? docs/reports/stageF_boundary_stress_decay_stdout.log\n?? docs/reports/stageF_boundary_stress_decay_summary.json\n?? docs/reports/stageF_boundary_stress_decay_table.csv\n?? docs/reports/stageF_codex_recovered_state.json\n?? docs/reports/stageF_codex_recovered_state.md\n?? docs/reports/stageF_codex_recovery_preflight.json\n?? docs/reports/stageF_codex_recovery_preflight.md\n?? docs/reports/stageF_dual_lane_cpu_production_gpu_repair_start.json\n?? docs/reports/stageF_dual_lane_cpu_production_gpu_repair_start.md\n?? docs/reports/stageF_dual_lane_cpu_production_status.json\n?? docs/reports/stageF_dual_lane_cpu_production_status.md\n?? docs/reports/stageF_dual_lane_cpu_setup.json\n?? docs/reports/stageF_dual_lane_cpu_setup.md\n?? docs/reports/stageF_dual_lane_cpu_smoke_gate.json\n?? docs/reports/stageF_dual_lane_cpu_smoke_gate.md\n?? docs/reports/stageF_dual_lane_cpu_worker_launch.json\n?? docs/reports/stageF_dual_lane_cpu_worker_launch.md\n?? docs/reports/stageF_dual_lane_preflight.json\n?? docs/reports/stageF_dual_lane_preflight.md\n?? docs/reports/stageF_dual_lane_resource_policy.md\n?? docs/reports/stageF_dual_lane_validation.json\n?? docs/reports/stageF_event_timeline.csv\n?? docs/reports/stageF_event_timeline_report_ru.md\n?? docs/reports/stageF_gpu_alternative_builds.json\n?? docs/reports/stageF_gpu_alternative_builds.md\n?? docs/reports/stageF_gpu_candidate_validation_ladder.json\n?? docs/reports/stageF_gpu_candidate_validation_ladder.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_and_production_lane_start_20260630-201808.md\n?? docs/reports/stageF_gpu_fix_build_attempt.json\n?? docs/reports/stageF_gpu_fix_build_attempt.md\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_build_attempt_20260630-201808.md\n?? docs/reports/stageF_gpu_fix_environment_preflight.json\n?? docs/reports/stageF_gpu_fix_environment_preflight.md\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_environment_preflight_20260630-201808.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_existing_builds_audit_20260630-201808.md\n?? docs/reports/stageF_gpu_fix_extended_kokkos_runtime_variants.json\n?? docs/reports/stageF_gpu_fix_extended_kokkos_runtime_variants.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_minimal_repro_matrix_20260630-201808.md\n?? docs/reports/stageF_gpu_fix_to_production_summary.json\n?? docs/reports/stageF_gpu_fix_to_production_summary_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_to_production_summary_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_to_production_summary_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_to_production_summary_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_to_production_summary_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_validation.json\n?? docs/reports/stageF_gpu_fix_validation.md\n?? docs/reports/stageF_gpu_fix_validation_20260630-200604.json\n?? docs/reports/stageF_gpu_fix_validation_20260630-200604.md\n?? docs/reports/stageF_gpu_fix_validation_20260630-200922.json\n?? docs/reports/stageF_gpu_fix_validation_20260630-200922.md\n?? docs/reports/stageF_gpu_fix_validation_20260630-201253.json\n?? docs/reports/stageF_gpu_fix_validation_20260630-201253.md\n?? docs/reports/stageF_gpu_fix_validation_20260630-201535.json\n?? docs/reports/stageF_gpu_fix_validation_20260630-201535.md\n?? docs/reports/stageF_gpu_fix_validation_20260630-201808.json\n?? docs/reports/stageF_gpu_fix_validation_20260630-201808.md\n?? docs/reports/stageF_gpu_production_final_blocker_report.json\n?? docs/reports/stageF_gpu_production_final_blocker_report.md\n?? docs/reports/stageF_gpu_production_recovered_launch_report.md\n?? docs/reports/stageF_gpu_production_recovered_summary.json\n?? docs/reports/stageF_gpu_production_recovery_blocker_summary.json\n?? docs/reports/stageF_gpu_production_recovery_blocker_summary.md\n?? docs/reports/stageF_gpu_production_recovery_current_state.json\n?? docs/reports/stageF_gpu_production_recovery_current_state.md\n?? docs/reports/stageF_gpu_production_recovery_summary.json\n?? docs/reports/stageF_gpu_production_recovery_validation.json\n?? docs/reports/stageF_gpu_production_recovery_validation.md\n?? docs/reports/stageF_gpu_repro_package.json\n?? docs/reports/stageF_gpu_repro_package.md\n?? docs/reports/stageF_gpu_source_level_diagnostics.json\n?? docs/reports/stageF_gpu_source_level_diagnostics.md\n?? docs/reports/stageF_parallel_gpu_repair_status.json\n?? docs/reports/stageF_parallel_gpu_repair_status.md\n?? docs/reports/stageF_physics_meeting_alignment_ru.md\n?? docs/run_plans/stageF_boundary_patch_plan_ru.md\n?? lammps/stageF_boundary_patch/\n?? pr_body.md\n?? scripts/analyze_stageD_postrun.py\n?? scripts/analyze_stageE_700k_temporal_evolution.py\n?? scripts/analyze_stageE_v2_final.py\n?? scripts/make_common_cell_eps00194.py\n?? scripts/prepare_stageD_local_interface_100k.py\n?? scripts/prepare_stageE_homogeneous_inclusion_scaleup.py\n?? scripts/prepare_stageF_boundary_patch_geometry.py\n?? scripts/run_stageE_250k_single_physical_longrun.py\n?? scripts/run_stageE_700k_dxa_confirm.py\n?? scripts/run_stageE_smoke_then_full.py\n?? scripts/run_stageE_v2_stabilized.py\n?? scripts/stageF_codex_recovery_reporter.py\n?? scripts/stageF_dual_lane_cpu_production_gpu_repair.py\n?? scripts/stageF_eps00194_debug_runner.py\n?? scripts/stageF_gpu_backend_recovery_lane.py\n?? scripts/stageF_gpu_fix_to_production_lane.py\n?? scripts/stageF_gpu_production_recovery.py\n?? scripts/validate_stageF_input_paths.py\n?? scripts/watch_stageC_safe_prep.ps1\n?? structures/stageF_boundary_patch/\n",
+    "stderr": "",
+    "timed_out": false,
+    "elapsed_s": 0.065
+  }
+}

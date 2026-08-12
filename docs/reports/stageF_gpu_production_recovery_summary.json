@@ -1,0 +1,76 @@
+{
+  "timestamp": "2026-07-01T16:46:40+03:00",
+  "current_cpu_lane_state": "completed_clean_cpu_pair",
+  "gpu_recovery_status": "not recovered",
+  "root_cause": "pair MEAM/KK",
+  "best_gpu_binary_config": {
+    "path": "B:\\builds\\lammps-kokkos-cuda-stageF-rebuild-20260630-201808\\build\\lmp.exe",
+    "flags": [
+      "-k",
+      "on",
+      "g",
+      "1",
+      "-sf",
+      "kk",
+      "-pk",
+      "kokkos",
+      "newton",
+      "on",
+      "neigh",
+      "half",
+      "gpu/aware",
+      "off"
+    ],
+    "validation_result": {
+      "V0": "completed_clean",
+      "V1": "failed",
+      "V2": "not_run",
+      "V3": "not_run",
+      "V4": "not_run",
+      "V5": "not_run",
+      "V6": "not_run"
+    }
+  },
+  "eps00194_gpu_validation": {
+    "V0": "completed_clean",
+    "V1": "failed",
+    "V2": "not_run",
+    "V3": "not_run",
+    "V4": "not_run",
+    "V5": "not_run",
+    "V6": "not_run"
+  },
+  "eps00194_max_clean_step": 0,
+  "eps00194_first_failure": {
+    "gate": "V1",
+    "status": "failed",
+    "max_step": 0,
+    "fatal": "(cuda_instance->cuda_event_record_wrapper( CudaInternal::constantMemReusablePerDevice[cuda_device])) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:/Users/dille/Documents/builds/lammps-kokkos-cuda/lammps/lib/kokkos/core/src\\Cuda/Kokkos_Cuda_KernelLaunch.hpp:609"
+  },
+  "eps0000_comparable_gpu_validation": "not_run",
+  "gpu_production": {
+    "timestamp": "2026-07-01T16:46:40+03:00",
+    "status": "not_started",
+    "reason": "GPU validation gates did not reach eps00194 V6 10000 clean and eps0000 comparable 10000 clean.",
+    "pid": null,
+    "root": null,
+    "latest_step": null,
+    "stdout": null,
+    "stderr": null,
+    "log": null,
+    "analysis_status": "not_run"
+  },
+  "gpu_analysis": "not_run",
+  "eps005": "not_launched",
+  "what_can_be_shown_to_pshonkin_now": [
+    "CPU fallback comparable zhi=200 pair completed clean for smokes and 50k productions.",
+    "GPU blocker evidence: reproducible KOKKOS CUDA MEAM/KK dynamics failure before valid smoke gates.",
+    "Minimal repro package path for external/server debugging."
+  ],
+  "what_is_not_ready": [
+    "GPU production pair.",
+    "GPU delta-analysis.",
+    "Any CPU/GPU mixed delta claim."
+  ],
+  "exact_next_command": "Get-Content -Raw docs\\\\reports\\\\stageF_gpu_production_final_blocker_report.md"
+}

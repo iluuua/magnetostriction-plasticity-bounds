@@ -1,0 +1,106 @@
+{
+  "generated_at": "2026-07-02T08:03:43+03:00",
+  "status": "completed",
+  "source_files": {
+    "defect_summary": "docs/reports/stageF_cpu_results_defect_summary.json",
+    "residual": "docs/reports/stageF_cpu_results_residual_plasticity_check.json",
+    "eps0000_defect": "docs/reports/stageF_cpu_results_eps0000_defect_profile.csv",
+    "eps00194_defect": "docs/reports/stageF_cpu_results_eps00194_defect_profile.csv",
+    "delta_defect": "docs/reports/stageF_cpu_results_delta_defect_profile.csv"
+  },
+  "hcp": {
+    "eps0000_max_fraction_final": {
+      "column": "hcp_fraction",
+      "window": "final",
+      "value": 0.0008620689655172,
+      "abs_value": 0.0008620689655172,
+      "r_bin_min_A": 0.0,
+      "r_bin_max_A": 2.0,
+      "r_center_A": 1.0
+    },
+    "eps00194_max_fraction_final": {
+      "column": "hcp_fraction",
+      "window": "final",
+      "value": 0.0,
+      "abs_value": 0.0,
+      "r_bin_min_A": 0.0,
+      "r_bin_max_A": 2.0,
+      "r_center_A": 1.0
+    },
+    "max_abs_delta_fraction_final": {
+      "column": "delta_hcp_fraction",
+      "window": "final",
+      "value": -0.0008620689655172,
+      "abs_value": 0.0008620689655172,
+      "r_bin_min_A": 0.0,
+      "r_bin_max_A": 2.0,
+      "r_center_A": 1.0
+    }
+  },
+  "other": {
+    "eps0000_max_fraction_final": {
+      "column": "other_fraction",
+      "window": "final",
+      "value": 0.9362068965517242,
+      "abs_value": 0.9362068965517242,
+      "r_bin_min_A": 0.0,
+      "r_bin_max_A": 2.0,
+      "r_center_A": 1.0
+    },
+    "eps00194_max_fraction_final": {
+      "column": "other_fraction",
+      "window": "final",
+      "value": 0.9658119658119658,
+      "abs_value": 0.9658119658119658,
+      "r_bin_min_A": 0.0,
+      "r_bin_max_A": 2.0,
+      "r_center_A": 1.0
+    },
+    "max_abs_delta_fraction_final": {
+      "column": "delta_other_fraction",
+      "window": "final",
+      "value": 0.0359640688739473,
+      "abs_value": 0.0359640688739473,
+      "r_bin_min_A": 2.0,
+      "r_bin_max_A": 4.0,
+      "r_center_A": 3.0
+    }
+  },
+  "fcc": {
+    "max_non_fcc_delta_final": {
+      "column": "delta_non_fcc_fraction",
+      "window": "final",
+      "value": 0.0359640688739473,
+      "abs_value": 0.0359640688739473,
+      "r_bin_min_A": 2.0,
+      "r_bin_max_A": 4.0,
+      "r_center_A": 3.0
+    },
+    "fcc_drop": {
+      "max_fcc_fraction_drop_eps00194_minus_eps0000": 0.0359640688739473,
+      "r_bin_min_A": 2.0,
+      "r_bin_max_A": 4.0,
+      "r_center_A": 3.0
+    }
+  },
+  "dxa": {
+    "final_line_length_A_by_case": {
+      "eps0000": 0.0,
+      "eps00194": 0.0
+    },
+    "max_line_length_A_available_timeline": 0.0,
+    "burgers_types": [],
+    "persistence": "not_observed_in_available_step0_and_step50000_frames"
+  },
+  "residual_plasticity": {
+    "verdict": "not_confirmed",
+    "exact_reasoning": [
+      "Stress transfer is present as a virial proxy, but stress alone is not residual plasticity.",
+      "CNA/DXA final comparison does not establish a persistent dislocation network.",
+      "Dmin2 was not available from stored dump fields and is not claimed."
+    ],
+    "max_abs_final_delta_nonfcc_fraction": 0.035964068873947375
+  },
+  "classification": "absent/not_confirmed",
+  "interpretation": "Final DXA is zero for both CPU cases. HCP is essentially absent, and OTHER/non-FCC differences are small interface-shell/background differences rather than confirmed residual plasticity."
+}

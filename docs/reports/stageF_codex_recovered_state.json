@@ -1,0 +1,1187 @@
+{
+  "timestamp": "2026-06-30T05:00:48+03:00",
+  "old_invalid_open_lateral_mmf": {
+    "run_root": "runs/stageF_F0_planar_100A_open_lateral/20260629-184320",
+    "exists": true,
+    "status": "ignored_invalid_negative_diagnostic_only"
+  },
+  "current_commensurate_ppf": {
+    "run_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748",
+    "exists": true,
+    "inventory": {
+      "report": "stageF_F0_commensurate_ppf_file_inventory",
+      "timestamp": "2026-06-30T05:00:48+03:00",
+      "run_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748",
+      "cases": [
+        {
+          "case_id": "F0_planar_100A_comm_eps0000",
+          "dirs_exist": {
+            "structures": true,
+            "equil": true,
+            "smoke": true,
+            "production": true
+          },
+          "data_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/data.F0_planar_100A_comm_eps0000.relaxed",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/data.stageF_F0_planar_100A_comm_smoke.final",
+            "structures/stageF_boundary_patch/F0_planar_100A_comm_eps0000/data.F0_planar_100A_comm_eps0000"
+          ],
+          "relaxed_data_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/data.F0_planar_100A_comm_eps0000.relaxed"
+          ],
+          "smoke_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/data.stageF_F0_planar_100A_comm_smoke.final",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/dump.stageF_F0_planar_100A_comm_smoke.lammpstrj",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/in.smoke",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/log.lammps",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.10000",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.2000",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.4000",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.6000",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.8000",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/restart.stageF_F0_planar_100A_comm_smoke.final",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/run.out",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stderr.log",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log"
+          ],
+          "production_files": [],
+          "dump_count": 1,
+          "restart_count": 6,
+          "latest_file": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/run.out",
+          "latest_write_time": "2026-06-30T02:26:33+03:00",
+          "max_smoke_step_detected": 10000,
+          "max_production_step_detected": null,
+          "fatal_errors_detected": true,
+          "fatal_errors": [
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stderr.log",
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            },
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+              "line": 32,
+              "needle": "cuda",
+              "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+            },
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+              "line": 33,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+            },
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+              "line": 34,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+            },
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+              "line": 35,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+            },
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+              "line": 36,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+            }
+          ],
+          "completed_smoke_10000": true,
+          "completed_production_50000": false,
+          "smoke_status": "completed_with_prior_or_sidecar_fatal_marker",
+          "production_status": "not_started"
+        },
+        {
+          "case_id": "F0_planar_100A_comm_eps00194",
+          "dirs_exist": {
+            "structures": true,
+            "equil": true,
+            "smoke": true,
+            "production": true
+          },
+          "data_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_minimized",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_seed",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.relaxed",
+            "structures/stageF_boundary_patch/F0_planar_100A_comm_eps00194/data.F0_planar_100A_comm_eps00194"
+          ],
+          "relaxed_data_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/common_cell_min.err",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/common_cell_min.out",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_minimized",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_seed",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.relaxed",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/in.common_cell_min",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/log.common_cell_min"
+          ],
+          "smoke_files": [
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/dump.stageF_F0_planar_100A_comm_smoke.lammpstrj",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/in.smoke",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/log.lammps",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+            "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stdout.log"
+          ],
+          "production_files": [],
+          "dump_count": 1,
+          "restart_count": 0,
+          "latest_file": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+          "latest_write_time": "2026-06-30T04:49:18+03:00",
+          "max_smoke_step_detected": null,
+          "max_production_step_detected": null,
+          "fatal_errors_detected": true,
+          "fatal_errors": [
+            {
+              "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            }
+          ],
+          "completed_smoke_10000": false,
+          "completed_production_50000": false,
+          "smoke_status": "failed",
+          "production_status": "not_started"
+        }
+      ]
+    },
+    "common_cell": {
+      "report": "stageF_F0_commensurate_ppf_common_cell_audit",
+      "timestamp": "2026-06-30T05:00:48+03:00",
+      "current_run_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748",
+      "reference": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/data.F0_planar_100A_comm_eps0000.relaxed",
+        "exists": true,
+        "atoms_total": 113295,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "Al_type1": 105960,
+        "Fe_type2": 7335,
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 170.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 170.0
+      },
+      "independent_eps00194_relaxed": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.relaxed",
+        "exists": true,
+        "atoms_total": 113265,
+        "type_counts": {
+          "1": 105930,
+          "2": 7335
+        },
+        "Al_type1": 105930,
+        "Fe_type2": 7335,
+        "xlo": -0.6518504286412865,
+        "xhi": 93.80185042864136,
+        "ylo": -0.24880759864259588,
+        "yhi": 121.74880759864261,
+        "zlo": 0.0,
+        "zhi": 170.0,
+        "Lx_A": 94.45370085728264,
+        "Ly_A": 121.99761519728521,
+        "Lz_A": 170.0
+      },
+      "common_cell_seed": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_seed",
+        "exists": true,
+        "atoms_total": 113295,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "Al_type1": 105960,
+        "Fe_type2": 7335,
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 170.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 170.0
+      },
+      "common_cell_minimized": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/data.F0_planar_100A_comm_eps00194.common_cell_minimized",
+        "exists": true,
+        "atoms_total": 113295,
+        "type_counts": {
+          "1": 105960,
+          "2": 7335
+        },
+        "Al_type1": 105960,
+        "Fe_type2": 7335,
+        "xlo": -0.6514637826663469,
+        "xhi": 93.8014637826664,
+        "ylo": -0.27440643481592136,
+        "yhi": 121.77440643481592,
+        "zlo": 0.0,
+        "zhi": 170.0,
+        "Lx_A": 94.45292756533274,
+        "Ly_A": 122.04881286963183,
+        "Lz_A": 170.0
+      },
+      "independent_comparison": {
+        "abs_dLx_A": 0.0007732919498977253,
+        "abs_dLy_A": 0.05119767234661765,
+        "d_atoms_total": 30,
+        "d_Al_type1": 30,
+        "d_Fe_type2": 0,
+        "threshold_A": 0.0001,
+        "decision": "FAIL_REJECT_INDEPENDENT_EPS00194"
+      },
+      "common_cell_comparison": {
+        "abs_dLx_A": 0.0,
+        "abs_dLy_A": 0.0,
+        "d_atoms_total": 0,
+        "d_Al_type1": 0,
+        "d_Fe_type2": 0,
+        "threshold_A": 0.0001
+      },
+      "common_cell_min_log": {
+        "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/log.common_cell_min",
+        "exists": true,
+        "length": 5772,
+        "last_write_time": "2026-06-30T04:48:08+03:00",
+        "max_step": 110,
+        "final_step": 110,
+        "final_temp": null,
+        "max_temp": null,
+        "final_pxx": -5348.0432,
+        "final_pyy": -9209.4519,
+        "final_pzz": 669.61971,
+        "final_lx": 94.452928,
+        "final_ly": 122.04881,
+        "final_lz": 170.0,
+        "lx_changed": false,
+        "ly_changed": false,
+        "lz_changed": false,
+        "loop_time_present": true,
+        "total_wall_time_present": true,
+        "matches": [
+          {
+            "line": 60,
+            "needle": "Loop time",
+            "text": "Loop time of 45.3884 on 48 procs for 110 steps with 113295 atoms"
+          },
+          {
+            "line": 99,
+            "needle": "COMMON_CELL_DONE",
+            "text": "print           \"COMMON_CELL_DONE pxx=$(pxx) pyy=$(pyy) pzz=$(pzz) lx=$(lx) ly=$(ly) lz=$(lz) atoms=$(atoms)\""
+          },
+          {
+            "line": 100,
+            "needle": "COMMON_CELL_DONE",
+            "text": "COMMON_CELL_DONE pxx=-5348.0431734210660579 pyy=-9209.4518873067045206 pzz=669.61971488750089065 lx=94.452927565332743143 ly=122.04881286963183129 lz=170 atoms=113295"
+          },
+          {
+            "line": 101,
+            "needle": "Total wall time",
+            "text": "Total wall time: 0:00:46"
+          }
+        ],
+        "fatal_matches": []
+      },
+      "decision": "PASS_COMMON_CELL_MINIMIZED"
+    },
+    "log_summary": {
+      "report": "stageF_F0_commensurate_ppf_log_parse_summary",
+      "timestamp": "2026-06-30T05:00:48+03:00",
+      "run_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748",
+      "logs": [
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/log.min",
+          "exists": true,
+          "length": 4957,
+          "last_write_time": "2026-06-30T01:16:02+03:00",
+          "max_step": 48,
+          "final_step": 48,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": -42.372864,
+          "final_pyy": -1.5799561,
+          "final_pzz": 9465.952,
+          "final_lx": 94.452928,
+          "final_ly": 122.04881,
+          "final_lz": 170.0,
+          "lx_changed": true,
+          "ly_changed": true,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 58,
+              "needle": "Loop time",
+              "text": "Loop time of 14.1458 on 48 procs for 48 steps with 113295 atoms"
+            },
+            {
+              "line": 98,
+              "needle": "EQUIL_DONE",
+              "text": "print           \"EQUIL_DONE pxx=$(pxx) pyy=$(pyy) lx=$(lx) ly=$(ly)\""
+            },
+            {
+              "line": 99,
+              "needle": "EQUIL_DONE",
+              "text": "EQUIL_DONE pxx=-42.37286419658178005 pyy=-1.5799560555219955837 lx=94.452927565332743143 ly=122.04881286963183129"
+            },
+            {
+              "line": 100,
+              "needle": "Total wall time",
+              "text": "Total wall time: 0:00:15"
+            }
+          ],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/equil/log.min_test",
+          "exists": true,
+          "length": 2621,
+          "last_write_time": "2026-06-30T01:14:30+03:00",
+          "max_step": 5,
+          "final_step": 5,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": 12625.096,
+          "final_pyy": 6728.2605,
+          "final_pzz": 17829.81,
+          "final_lx": 93.61575,
+          "final_ly": 121.87175,
+          "final_lz": 170.0,
+          "lx_changed": true,
+          "ly_changed": true,
+          "lz_changed": false,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [
+            {
+              "line": 48,
+              "needle": "ERROR",
+              "text": "ERROR: Lost atoms: original 113295 current 113055"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 48,
+              "needle": "ERROR",
+              "text": "ERROR: Lost atoms: original 113295 current 113055"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/probe/log.lammps",
+          "exists": true,
+          "length": 3702,
+          "last_write_time": "2026-06-30T01:08:29+03:00",
+          "max_step": 0,
+          "final_step": 0,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": 20816.639,
+          "final_pyy": 13595.586,
+          "final_pzz": 22502.656,
+          "final_lx": 93.15,
+          "final_ly": 121.5,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 27,
+              "needle": "cuda",
+              "text": "For more information see https://docs.lammps.org/err0028 (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\verlet.cpp:60)"
+            },
+            {
+              "line": 48,
+              "needle": "Loop time",
+              "text": "Loop time of 0.000561 on 1 procs for 0 steps with 113295 atoms"
+            },
+            {
+              "line": 75,
+              "needle": "Total wall time",
+              "text": "Total wall time: 0:00:01"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 27,
+              "needle": "cuda",
+              "text": "For more information see https://docs.lammps.org/err0028 (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\verlet.cpp:60)"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/log.lammps",
+          "exists": true,
+          "length": 14950,
+          "last_write_time": "2026-06-30T02:26:32+03:00",
+          "max_step": 10000,
+          "final_step": 10000,
+          "final_temp": 286.00054,
+          "max_temp": 294.4946,
+          "final_pxx": -2620.8372,
+          "final_pyy": -2459.7924,
+          "final_pzz": 5561.5851,
+          "final_lx": 94.452928,
+          "final_ly": 122.04881,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 116,
+              "needle": "Loop time",
+              "text": "Loop time of 3987.08 on 1 procs for 10000 steps with 113295 atoms"
+            },
+            {
+              "line": 148,
+              "needle": "Total wall time",
+              "text": "Total wall time: 1:06:28"
+            }
+          ],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/run.out",
+          "exists": true,
+          "length": 24896,
+          "last_write_time": "2026-06-30T02:26:33+03:00",
+          "max_step": null,
+          "final_step": null,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": null,
+          "final_pyy": null,
+          "final_pzz": null,
+          "final_lx": null,
+          "final_ly": null,
+          "final_lz": null,
+          "lx_changed": null,
+          "ly_changed": null,
+          "lz_changed": null,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stderr.log",
+          "exists": true,
+          "length": 256,
+          "last_write_time": "2026-06-30T01:11:38+03:00",
+          "max_step": null,
+          "final_step": null,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": null,
+          "final_pyy": null,
+          "final_pzz": null,
+          "final_lx": null,
+          "final_ly": null,
+          "final_lz": null,
+          "lx_changed": null,
+          "ly_changed": null,
+          "lz_changed": null,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [
+            {
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+          "exists": true,
+          "length": 2332,
+          "last_write_time": "2026-06-30T01:11:38+03:00",
+          "max_step": 0,
+          "final_step": 0,
+          "final_temp": 0.0,
+          "max_temp": 0.0,
+          "final_pxx": null,
+          "final_pyy": null,
+          "final_pzz": null,
+          "final_lx": null,
+          "final_ly": null,
+          "final_lz": null,
+          "lx_changed": null,
+          "ly_changed": null,
+          "lz_changed": null,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [
+            {
+              "line": 32,
+              "needle": "cuda",
+              "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+            },
+            {
+              "line": 33,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+            },
+            {
+              "line": 34,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+            },
+            {
+              "line": 35,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+            },
+            {
+              "line": 36,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 32,
+              "needle": "cuda",
+              "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+            },
+            {
+              "line": 33,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+            },
+            {
+              "line": 34,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+            },
+            {
+              "line": 35,
+              "needle": "cuda",
+              "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+            },
+            {
+              "line": 36,
+              "needle": "cuda",
+              "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/common_cell_min.out",
+          "exists": true,
+          "length": 7840,
+          "last_write_time": "2026-06-30T04:48:08+03:00",
+          "max_step": null,
+          "final_step": null,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": null,
+          "final_pyy": null,
+          "final_pzz": null,
+          "final_lx": null,
+          "final_ly": null,
+          "final_lz": null,
+          "lx_changed": null,
+          "ly_changed": null,
+          "lz_changed": null,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/log.common_cell_min",
+          "exists": true,
+          "length": 5772,
+          "last_write_time": "2026-06-30T04:48:08+03:00",
+          "max_step": 110,
+          "final_step": 110,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": -5348.0432,
+          "final_pyy": -9209.4519,
+          "final_pzz": 669.61971,
+          "final_lx": 94.452928,
+          "final_ly": 122.04881,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 60,
+              "needle": "Loop time",
+              "text": "Loop time of 45.3884 on 48 procs for 110 steps with 113295 atoms"
+            },
+            {
+              "line": 99,
+              "needle": "COMMON_CELL_DONE",
+              "text": "print           \"COMMON_CELL_DONE pxx=$(pxx) pyy=$(pyy) pzz=$(pzz) lx=$(lx) ly=$(ly) lz=$(lz) atoms=$(atoms)\""
+            },
+            {
+              "line": 100,
+              "needle": "COMMON_CELL_DONE",
+              "text": "COMMON_CELL_DONE pxx=-5348.0431734210660579 pyy=-9209.4518873067045206 pzz=669.61971488750089065 lx=94.452927565332743143 ly=122.04881286963183129 lz=170 atoms=113295"
+            },
+            {
+              "line": 101,
+              "needle": "Total wall time",
+              "text": "Total wall time: 0:00:46"
+            }
+          ],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/equil/log.min",
+          "exists": true,
+          "length": 5336,
+          "last_write_time": "2026-06-30T01:18:30+03:00",
+          "max_step": 107,
+          "final_step": 107,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": -60.83999,
+          "final_pyy": 101.53811,
+          "final_pzz": 8883.4474,
+          "final_lx": 94.453701,
+          "final_ly": 121.99762,
+          "final_lz": 170.0,
+          "lx_changed": true,
+          "ly_changed": true,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 59,
+              "needle": "Loop time",
+              "text": "Loop time of 34.6897 on 48 procs for 107 steps with 113265 atoms"
+            },
+            {
+              "line": 99,
+              "needle": "EQUIL_DONE",
+              "text": "print           \"EQUIL_DONE pxx=$(pxx) pyy=$(pyy) lx=$(lx) ly=$(ly)\""
+            },
+            {
+              "line": 100,
+              "needle": "EQUIL_DONE",
+              "text": "EQUIL_DONE pxx=-60.839989511656931143 pyy=101.53810694101885304 lx=94.453700857282640868 ly=121.99761519728521364"
+            },
+            {
+              "line": 101,
+              "needle": "Total wall time",
+              "text": "Total wall time: 0:00:35"
+            }
+          ],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/probe/log.lammps",
+          "exists": true,
+          "length": 3706,
+          "last_write_time": "2026-06-30T01:08:30+03:00",
+          "max_step": 0,
+          "final_step": 0,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": 20525.059,
+          "final_pyy": 13359.074,
+          "final_pzz": 21666.145,
+          "final_lx": 93.15,
+          "final_ly": 121.5,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": true,
+          "total_wall_time_present": true,
+          "matches": [
+            {
+              "line": 27,
+              "needle": "cuda",
+              "text": "For more information see https://docs.lammps.org/err0028 (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\verlet.cpp:60)"
+            },
+            {
+              "line": 48,
+              "needle": "Loop time",
+              "text": "Loop time of 0.0006051 on 1 procs for 0 steps with 113265 atoms"
+            },
+            {
+              "line": 75,
+              "needle": "Total wall time",
+              "text": "Total wall time: 0:00:01"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 27,
+              "needle": "cuda",
+              "text": "For more information see https://docs.lammps.org/err0028 (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\verlet.cpp:60)"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/log.lammps",
+          "exists": true,
+          "length": 3907,
+          "last_write_time": "2026-06-30T04:49:17+03:00",
+          "max_step": 0,
+          "final_step": 0,
+          "final_temp": 286.81307,
+          "max_temp": 286.81307,
+          "final_pxx": -3066.0074,
+          "final_pyy": -6919.8397,
+          "final_pzz": 2965.6975,
+          "final_lx": 94.452928,
+          "final_ly": 122.04881,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [],
+          "fatal_matches": []
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+          "exists": true,
+          "length": 256,
+          "last_write_time": "2026-06-30T04:49:18+03:00",
+          "max_step": null,
+          "final_step": null,
+          "final_temp": null,
+          "max_temp": null,
+          "final_pxx": null,
+          "final_pyy": null,
+          "final_pzz": null,
+          "final_lx": null,
+          "final_ly": null,
+          "final_lz": null,
+          "lx_changed": null,
+          "ly_changed": null,
+          "lz_changed": null,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [
+            {
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            }
+          ],
+          "fatal_matches": [
+            {
+              "line": 1,
+              "needle": "cuda",
+              "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+            }
+          ]
+        },
+        {
+          "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stdout.log",
+          "exists": true,
+          "length": 1612,
+          "last_write_time": "2026-06-30T04:49:17+03:00",
+          "max_step": 0,
+          "final_step": 0,
+          "final_temp": 286.81307,
+          "max_temp": 286.81307,
+          "final_pxx": -3066.0074,
+          "final_pyy": -6919.8397,
+          "final_pzz": 2965.6975,
+          "final_lx": 94.452928,
+          "final_ly": 122.04881,
+          "final_lz": 170.0,
+          "lx_changed": false,
+          "ly_changed": false,
+          "lz_changed": false,
+          "loop_time_present": false,
+          "total_wall_time_present": false,
+          "matches": [],
+          "fatal_matches": []
+        }
+      ],
+      "stage_status": {
+        "F0_planar_100A_comm_eps0000": {
+          "smoke": {
+            "stage": "smoke",
+            "dir": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke",
+            "exists": true,
+            "status": "completed_with_prior_or_sidecar_fatal_marker",
+            "max_step": 10000,
+            "target_step": 10000,
+            "final_data_exists": true,
+            "final_restart_exists": true,
+            "fatal_errors_detected": true,
+            "fatal_matches": [
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stderr.log",
+                "line": 1,
+                "needle": "cuda",
+                "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "line": 32,
+                "needle": "cuda",
+                "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "line": 33,
+                "needle": "cuda",
+                "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "line": 34,
+                "needle": "cuda",
+                "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "line": 35,
+                "needle": "cuda",
+                "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "line": 36,
+                "needle": "cuda",
+                "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+              }
+            ],
+            "logs": [
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/log.lammps",
+                "exists": true,
+                "length": 14950,
+                "last_write_time": "2026-06-30T02:26:32+03:00",
+                "max_step": 10000,
+                "final_step": 10000,
+                "final_temp": 286.00054,
+                "max_temp": 294.4946,
+                "final_pxx": -2620.8372,
+                "final_pyy": -2459.7924,
+                "final_pzz": 5561.5851,
+                "final_lx": 94.452928,
+                "final_ly": 122.04881,
+                "final_lz": 170.0,
+                "lx_changed": false,
+                "ly_changed": false,
+                "lz_changed": false,
+                "loop_time_present": true,
+                "total_wall_time_present": true,
+                "matches": [
+                  {
+                    "line": 116,
+                    "needle": "Loop time",
+                    "text": "Loop time of 3987.08 on 1 procs for 10000 steps with 113295 atoms"
+                  },
+                  {
+                    "line": 148,
+                    "needle": "Total wall time",
+                    "text": "Total wall time: 1:06:28"
+                  }
+                ],
+                "fatal_matches": []
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/run.out",
+                "exists": true,
+                "length": 24896,
+                "last_write_time": "2026-06-30T02:26:33+03:00",
+                "max_step": null,
+                "final_step": null,
+                "final_temp": null,
+                "max_temp": null,
+                "final_pxx": null,
+                "final_pyy": null,
+                "final_pzz": null,
+                "final_lx": null,
+                "final_ly": null,
+                "final_lz": null,
+                "lx_changed": null,
+                "ly_changed": null,
+                "lz_changed": null,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [],
+                "fatal_matches": []
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stderr.log",
+                "exists": true,
+                "length": 256,
+                "last_write_time": "2026-06-30T01:11:38+03:00",
+                "max_step": null,
+                "final_step": null,
+                "final_temp": null,
+                "max_temp": null,
+                "final_pxx": null,
+                "final_pyy": null,
+                "final_pzz": null,
+                "final_lx": null,
+                "final_ly": null,
+                "final_lz": null,
+                "lx_changed": null,
+                "ly_changed": null,
+                "lz_changed": null,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [
+                  {
+                    "line": 1,
+                    "needle": "cuda",
+                    "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+                  }
+                ],
+                "fatal_matches": [
+                  {
+                    "line": 1,
+                    "needle": "cuda",
+                    "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+                  }
+                ]
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/smoke/stdout.log",
+                "exists": true,
+                "length": 2332,
+                "last_write_time": "2026-06-30T01:11:38+03:00",
+                "max_step": 0,
+                "final_step": 0,
+                "final_temp": 0.0,
+                "max_temp": 0.0,
+                "final_pxx": null,
+                "final_pyy": null,
+                "final_pzz": null,
+                "final_lx": null,
+                "final_ly": null,
+                "final_lz": null,
+                "lx_changed": null,
+                "ly_changed": null,
+                "lz_changed": null,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [
+                  {
+                    "line": 32,
+                    "needle": "cuda",
+                    "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+                  },
+                  {
+                    "line": 33,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+                  },
+                  {
+                    "line": 34,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+                  },
+                  {
+                    "line": 35,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+                  },
+                  {
+                    "line": 36,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+                  }
+                ],
+                "fatal_matches": [
+                  {
+                    "line": 32,
+                    "needle": "cuda",
+                    "text": "(C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\min_kokkos.cpp:94)"
+                  },
+                  {
+                    "line": 33,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:799)"
+                  },
+                  {
+                    "line": 34,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\comm_kokkos.cpp:812)"
+                  },
+                  {
+                    "line": 35,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:213)"
+                  },
+                  {
+                    "line": 36,
+                    "needle": "cuda",
+                    "text": "WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\src\\KOKKOS\\atom_kokkos.cpp:219)"
+                  }
+                ]
+              }
+            ]
+          },
+          "production": {
+            "stage": "production",
+            "dir": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps0000/production",
+            "exists": true,
+            "status": "not_started",
+            "max_step": null,
+            "target_step": 50000,
+            "final_data_exists": false,
+            "final_restart_exists": false,
+            "fatal_errors_detected": false,
+            "fatal_matches": [],
+            "logs": []
+          }
+        },
+        "F0_planar_100A_comm_eps00194": {
+          "smoke": {
+            "stage": "smoke",
+            "dir": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke",
+            "exists": true,
+            "status": "failed",
+            "max_step": null,
+            "target_step": 10000,
+            "final_data_exists": false,
+            "final_restart_exists": false,
+            "fatal_errors_detected": true,
+            "fatal_matches": [
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+                "line": 1,
+                "needle": "cuda",
+                "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+              }
+            ],
+            "logs": [
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/log.lammps",
+                "exists": true,
+                "length": 3907,
+                "last_write_time": "2026-06-30T04:49:17+03:00",
+                "max_step": 0,
+                "final_step": 0,
+                "final_temp": 286.81307,
+                "max_temp": 286.81307,
+                "final_pxx": -3066.0074,
+                "final_pyy": -6919.8397,
+                "final_pzz": 2965.6975,
+                "final_lx": 94.452928,
+                "final_ly": 122.04881,
+                "final_lz": 170.0,
+                "lx_changed": false,
+                "ly_changed": false,
+                "lz_changed": false,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [],
+                "fatal_matches": []
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stderr.log",
+                "exists": true,
+                "length": 256,
+                "last_write_time": "2026-06-30T04:49:18+03:00",
+                "max_step": null,
+                "final_step": null,
+                "final_temp": null,
+                "max_temp": null,
+                "final_pxx": null,
+                "final_pyy": null,
+                "final_pzz": null,
+                "final_lx": null,
+                "final_ly": null,
+                "final_lz": null,
+                "lx_changed": null,
+                "ly_changed": null,
+                "lz_changed": null,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [
+                  {
+                    "line": 1,
+                    "needle": "cuda",
+                    "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+                  }
+                ],
+                "fatal_matches": [
+                  {
+                    "line": 1,
+                    "needle": "cuda",
+                    "text": "cudaStreamSynchronize(stream) error( cudaErrorIllegalAddress): an illegal memory access was encountered C:\\Users\\dille\\Documents\\builds\\lammps-kokkos-cuda\\lammps\\lib\\kokkos\\core\\src\\Cuda\\Kokkos_Cuda_Instance.cpp:165"
+                  }
+                ]
+              },
+              {
+                "path": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/smoke/stdout.log",
+                "exists": true,
+                "length": 1612,
+                "last_write_time": "2026-06-30T04:49:17+03:00",
+                "max_step": 0,
+                "final_step": 0,
+                "final_temp": 286.81307,
+                "max_temp": 286.81307,
+                "final_pxx": -3066.0074,
+                "final_pyy": -6919.8397,
+                "final_pzz": 2965.6975,
+                "final_lx": 94.452928,
+                "final_ly": 122.04881,
+                "final_lz": 170.0,
+                "lx_changed": false,
+                "ly_changed": false,
+                "lz_changed": false,
+                "loop_time_present": false,
+                "total_wall_time_present": false,
+                "matches": [],
+                "fatal_matches": []
+              }
+            ]
+          },
+          "production": {
+            "stage": "production",
+            "dir": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/F0_planar_100A_comm_eps00194/production",
+            "exists": true,
+            "status": "not_started",
+            "max_step": null,
+            "target_step": 50000,
+            "final_data_exists": false,
+            "final_restart_exists": false,
+            "fatal_errors_detected": false,
+            "fatal_matches": [],
+            "logs": []
+          }
+        }
+      }
+    }
+  },
+  "process_scan_after_recovery": "[\n    {\n        \"ProcessId\":  8004,\n        \"Name\":  \"python.exe\",\n        \"CommandLine\":  \"\\\"C:\\\\Users\\\\dille\\\\Documents\\\\ilua-system\\\\projects\\\\physics_md_al_fe\\\\.venv\\\\Scripts\\\\python.exe\\\" scripts\\\\stageF_codex_recovery_reporter.py\"\n    },\n    {\n        \"ProcessId\":  4792,\n        \"Name\":  \"python.exe\",\n        \"CommandLine\":  \"\\\"C:\\\\Users\\\\dille\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python312\\\\python.exe\\\" scripts\\\\stageF_codex_recovery_reporter.py\"\n    }\n]"
+}

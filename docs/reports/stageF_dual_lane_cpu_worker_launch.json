@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-07-01T00:19:22+03:00",
+  "status": "running_smoke_gate",
+  "worker_pid": 10784,
+  "config": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/cpu_fallback_worker_config.json",
+  "status_json": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/cpu_fallback_worker_status.json",
+  "stdout": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/worker_stdout.log",
+  "stderr": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918/worker_stderr.log",
+  "comparable_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_comparable_20260701-001918",
+  "production_root": "runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918",
+  "monitor_command": "Get-Content -Raw runs\\stageF_F0_planar_100A_ppf_commensurate\\20260630-010748\\cpu_fallback_comparable_20260701-001918\\cpu_fallback_worker_status.json",
+  "preflight_report": "docs/reports/stageF_dual_lane_preflight.md"
+}

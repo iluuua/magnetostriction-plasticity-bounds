@@ -1,0 +1,183 @@
+{
+  "generated_at": "2026-07-02T08:03:43+03:00",
+  "status": "completed",
+  "window_primary": "last20_mean",
+  "yield_threshold_mpa": 120.0,
+  "source_files": {
+    "sigma_summary": "docs/reports/stageF_cpu_results_sigma_summary.json",
+    "eps0000_sigma": "docs/reports/stageF_cpu_results_eps0000_sigma_profile.csv",
+    "eps00194_sigma": "docs/reports/stageF_cpu_results_eps00194_sigma_profile.csv",
+    "delta_sigma": "docs/reports/stageF_cpu_results_delta_sigma_profile.csv"
+  },
+  "stress_conversion": "LAMMPS stress/atom virial converted as sigma_mpa = -sum(c_st)/(Lx*Ly*bin_width)*0.1; per-atom percentiles use bin_volume/count proxy.",
+  "peak_delta_sigma_vm_mean": {
+    "column": "delta_sigma_vm_mean_mpa",
+    "window": "last20_mean",
+    "value_mpa": 578.4223770611079,
+    "abs_value_mpa": 578.4223770611079,
+    "r_bin_min_A": 0.0,
+    "r_bin_max_A": 2.0,
+    "r_center_A": 1.0
+  },
+  "peak_delta_sigma_vm_p95": {
+    "column": "delta_sigma_vm_p95_mpa",
+    "window": "final",
+    "value_mpa": 1745.8495299392798,
+    "abs_value_mpa": 1745.8495299392798,
+    "r_bin_min_A": 85.0,
+    "r_bin_max_A": 90.0,
+    "r_center_A": 87.5
+  },
+  "peak_delta_sigma_zz_mean": {
+    "column": "delta_sigma_zz_mean_mpa",
+    "window": "final",
+    "value_mpa": -327.1570677095632,
+    "abs_value_mpa": 327.1570677095632,
+    "r_bin_min_A": 90.0,
+    "r_bin_max_A": 95.0,
+    "r_center_A": 92.5
+  },
+  "peak_total_sigma_vm_eps00194": {
+    "column": "sigma_vm_mean_mpa",
+    "window": "last20_mean",
+    "value_mpa": 2860.343534788461,
+    "r_bin_min_A": 0.0,
+    "r_bin_max_A": 2.0,
+    "r_center_A": 1.0
+  },
+  "peak_total_sigma_vm_eps0000": {
+    "column": "sigma_vm_mean_mpa",
+    "window": "last20_mean",
+    "value_mpa": 2281.9211577273536,
+    "r_bin_min_A": 0.0,
+    "r_bin_max_A": 2.0,
+    "r_center_A": 1.0
+  },
+  "layer_thickness": {
+    "eps00194_total_sigma_vm_mean_gt_120_A": 121.068,
+    "eps00194_total_sigma_vm_p95_gt_120_A": 121.068,
+    "abs_delta_sigma_vm_mean_gt_120_A": 4.0,
+    "abs_delta_sigma_vm_mean_above_noise_A": 4.0,
+    "first_bin_where_abs_delta_vm_below_noise": {
+      "r_bin_min_A": 4.0,
+      "r_bin_max_A": 6.0,
+      "r_center_A": 5.0,
+      "delta_sigma_vm_mean_mpa": 1.6731084807756815
+    }
+  },
+  "noise_floor": {
+    "method": "far-field r_center>=70 A, threshold = median(abs(delta_vm)) + 2*1.4826*MAD",
+    "window": "last20_mean",
+    "far_field_bin_count": 9,
+    "median_abs_delta_vm_mpa": 50.67916222166821,
+    "mad_abs_delta_vm_mpa": 27.93999951632634,
+    "noise_floor_mpa": 133.52684878747908,
+    "far_field_edge_outliers": [
+      {
+        "r_bin_min_A": 110.0,
+        "r_bin_max_A": 120.0,
+        "r_bin_center_A": 115.0,
+        "delta_sigma_vm_mean_mpa": -140.94006555515568
+      },
+      {
+        "r_bin_min_A": 120.0,
+        "r_bin_max_A": 121.068,
+        "r_bin_center_A": 120.534,
+        "delta_sigma_vm_mean_mpa": -447.8975560286815
+      }
+    ]
+  },
+  "checkpoints": [
+    {
+      "label": "0-5 A",
+      "r_value_A": 2.5,
+      "r_bin": "0-5",
+      "eps0000_sigma_vm_mean_mpa": 1402.8177916447694,
+      "eps00194_sigma_vm_mean_mpa": 1564.081506389671,
+      "delta_sigma_vm_mean_mpa": 161.2637147449017,
+      "eps0000_sigma_zz_mean_mpa": -115.24536467816942,
+      "eps00194_sigma_zz_mean_mpa": -157.4229346309,
+      "delta_sigma_zz_mean_mpa": -42.17756995273059,
+      "eps0000_fraction_vm_gt_120mpa": 1.0,
+      "eps00194_fraction_vm_gt_120mpa": 1.0,
+      "delta_fraction_vm_gt_120mpa": 0.0
+    },
+    {
+      "label": "10 A",
+      "r_value_A": 10.0,
+      "r_bin": "8-10",
+      "r_center_A": 9.0,
+      "eps0000_sigma_vm_mean_mpa": 681.6456248793894,
+      "eps00194_sigma_vm_mean_mpa": 680.4965200290957,
+      "delta_sigma_vm_mean_mpa": -1.1491048502937249,
+      "eps0000_sigma_zz_mean_mpa": -256.2139344128203,
+      "eps00194_sigma_zz_mean_mpa": -247.9404256173644,
+      "delta_sigma_zz_mean_mpa": 8.27350879545591,
+      "eps0000_fraction_vm_gt_120mpa": 1.0,
+      "eps00194_fraction_vm_gt_120mpa": 1.0,
+      "delta_fraction_vm_gt_120mpa": 0.0
+    },
+    {
+      "label": "20 A",
+      "r_value_A": 20.0,
+      "r_bin": "18-20",
+      "r_center_A": 19.0,
+      "eps0000_sigma_vm_mean_mpa": 674.55244216031,
+      "eps00194_sigma_vm_mean_mpa": 662.098439436596,
+      "delta_sigma_vm_mean_mpa": -12.454002723713984,
+      "eps0000_sigma_zz_mean_mpa": -313.45292873928736,
+      "eps00194_sigma_zz_mean_mpa": -306.4865810474498,
+      "delta_sigma_zz_mean_mpa": 6.966347691837541,
+      "eps0000_fraction_vm_gt_120mpa": 1.0,
+      "eps00194_fraction_vm_gt_120mpa": 1.0,
+      "delta_fraction_vm_gt_120mpa": 0.0
+    },
+    {
+      "label": "50 A",
+      "r_value_A": 50.0,
+      "r_bin": "48-50",
+      "r_center_A": 49.0,
+      "eps0000_sigma_vm_mean_mpa": 733.2320496781566,
+      "eps00194_sigma_vm_mean_mpa": 712.7911314023793,
+      "delta_sigma_vm_mean_mpa": -20.44091827577733,
+      "eps0000_sigma_zz_mean_mpa": -163.1346928935559,
+      "eps00194_sigma_zz_mean_mpa": -232.20610252364085,
+      "delta_sigma_zz_mean_mpa": -69.07140963008496,
+      "eps0000_fraction_vm_gt_120mpa": 1.0,
+      "eps00194_fraction_vm_gt_120mpa": 1.0,
+      "delta_fraction_vm_gt_120mpa": 0.0
+    },
+    {
+      "label": "100 A",
+      "r_value_A": 100.0,
+      "r_bin": "95-100",
+      "r_center_A": 97.5,
+      "eps0000_sigma_vm_mean_mpa": 786.7216335944428,
+      "eps00194_sigma_vm_mean_mpa": 816.8812487007528,
+      "delta_sigma_vm_mean_mpa": 30.15961510631007,
+      "eps0000_sigma_zz_mean_mpa": -290.20783199211826,
+      "eps00194_sigma_zz_mean_mpa": -266.1381249263174,
+      "delta_sigma_zz_mean_mpa": 24.069707065800856,
+      "eps0000_fraction_vm_gt_120mpa": 1.0,
+      "eps00194_fraction_vm_gt_120mpa": 1.0,
+      "delta_fraction_vm_gt_120mpa": 0.0
+    }
+  ],
+  "directional_components_at_peak_delta_vm": {
+    "components": {
+      "delta_sigma_xx_mean_mpa": -160.13010479841705,
+      "delta_sigma_yy_mean_mpa": -607.5872726502953,
+      "delta_sigma_zz_mean_mpa": 52.30801399315985,
+      "delta_sigma_vm_mean_mpa": 578.4223770611079
+    },
+    "dominant_component": "delta_sigma_yy_mean_mpa",
+    "z_component_dominates": false,
+    "interpretation": "The peak is mixed von-Mises/interface stress; sigma_zz does not dominate the peak bin."
+  },
+  "decay": {
+    "baseline_subtracted_delta_decays_within_100A": true,
+    "delta_vm_at_100A_mpa": 30.15961510631007,
+    "total_vm_layer_reaches_available_slab_edge": true,
+    "interpretation": "Delta sigma_vm falls below robust far-field noise by the 4-6 A bin and is below noise near 100 A; total sigma_vm remains above 120 MPa across the available slab, so total-stress cutoff is not a clean physical cutoff."
+  }
+}

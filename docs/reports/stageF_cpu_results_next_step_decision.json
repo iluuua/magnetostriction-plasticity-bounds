@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-07-02T07:38:26+03:00",
+  "decision": "use_completed_cpu_pair_for_pshonkin_report_do_not_launch_new_production_now",
+  "next_step": "If stronger plasticity evidence is required, run a separate post-processing task for Dmin2/atomic-strain reference handling or a planned longer boundary-patch run; do not treat GPU recovery as required for this CPU physics report.",
+  "do_not_do": [
+    "do not launch eps005, F1, F0_300A, or new production under this task",
+    "do not mix CPU and GPU in the same delta pair",
+    "do not claim persistent dislocation/plasticity from these CPU outputs"
+  ],
+  "stress_delta_last20_max_vm_mean_mpa": 578.4223770611079,
+  "residual_plasticity_verdict": "not_confirmed"
+}
