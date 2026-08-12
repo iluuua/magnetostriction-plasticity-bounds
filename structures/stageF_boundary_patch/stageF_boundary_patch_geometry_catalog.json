@@ -1,0 +1,73 @@
+{
+  "status": "prepared",
+  "created_at": "2026-06-30T01:06:35+03:00",
+  "geometries": {
+    "F0_planar_100A": {
+      "geometry_id": "F0_planar_100A",
+      "geometry_type": "planar",
+      "box_x_A": 120.0,
+      "box_y_A": 120.0,
+      "al_depth_A": 100.0,
+      "fe_depth_A": 50.0,
+      "total_z_A": 170.0,
+      "cap_radius_x_A": null,
+      "cap_radius_y_A": null,
+      "cap_height_A": null,
+      "commensurate_ppf": false
+    },
+    "F0_planar_100A_comm": {
+      "geometry_id": "F0_planar_100A_comm",
+      "geometry_type": "planar",
+      "box_x_A": 93.15,
+      "box_y_A": 121.5,
+      "al_depth_A": 100.0,
+      "fe_depth_A": 50.0,
+      "total_z_A": 170.0,
+      "cap_radius_x_A": null,
+      "cap_radius_y_A": null,
+      "cap_height_A": null,
+      "commensurate_ppf": true
+    },
+    "F0_planar_300A": {
+      "geometry_id": "F0_planar_300A",
+      "geometry_type": "planar",
+      "box_x_A": 120.0,
+      "box_y_A": 120.0,
+      "al_depth_A": 300.0,
+      "fe_depth_A": 50.0,
+      "total_z_A": 370.0,
+      "cap_radius_x_A": null,
+      "cap_radius_y_A": null,
+      "cap_height_A": null,
+      "commensurate_ppf": false
+    },
+    "F1_curved_cap_100A": {
+      "geometry_id": "F1_curved_cap_100A",
+      "geometry_type": "curved_cap",
+      "box_x_A": 200.0,
+      "box_y_A": 200.0,
+      "al_depth_A": 120.0,
+      "fe_depth_A": 50.0,
+      "total_z_A": 220.0,
+      "cap_radius_x_A": 80.0,
+      "cap_radius_y_A": 80.0,
+      "cap_height_A": 40.0,
+      "commensurate_ppf": false
+    }
+  },
+  "eps_scenarios": {
+    "eps0000": 0.0,
+    "eps00194": 0.00194,
+    "eps005": 0.005,
+    "eps010": 0.01
+  },
+  "first_safe_smoke_cases": [
+    "F0_planar_100A_eps0000",
+    "F0_planar_100A_eps00194",
+    "F0_planar_100A_eps005",
+    "F0_planar_300A_eps00194",
+    "F1_curved_cap_100A_eps00194",
+    "F1_curved_cap_100A_eps005"
+  ],
+  "no_production_without_smoke": true
+}

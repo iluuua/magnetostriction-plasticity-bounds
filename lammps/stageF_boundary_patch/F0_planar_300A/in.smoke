@@ -1,0 +1,38 @@
+# Stage F F0_planar_300A smoke template.
+# Replace DATA_FILE before running. Smoke only; production must wait for smoke validation.
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        DATA_FILE string ../../../structures/stageF_boundary_patch/F0_planar_300A_eps00194/data.F0_planar_300A_eps00194
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0 check no
+timestep        0.001
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 8.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+velocity        mobile create 300.0 88004 mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+
+thermo          100
+thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz lx ly lz
+dump            d1 all custom 100 dump.stageF_F0_planar_300A_smoke.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         1000 restart.stageF_F0_planar_300A_smoke.*
+
+run             2000
+
+write_restart   restart.stageF_F0_planar_300A_smoke.final
+write_data      data.stageF_F0_planar_300A_smoke.final
+write_dump      all custom dump.stageF_F0_planar_300A_smoke_final.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
