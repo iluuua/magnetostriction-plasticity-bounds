@@ -1,90 +1,18 @@
-Objective: Stage C 1M nearGB vacancies eps0100 safe-prep retry is running in a corrected fresh root after pagefile remediation.
-
-Current checkpoint, 2026-06-17 06:42 +03:00:
-- target repo: `C:\Users\dille\Documents\ilua-system\projects\physics_md_al_fe`
-- branch: `fix/stagec-safe-prep-retry`
-- project-local `AGENTS.md` / `AGENTS.override.md`: not present
-- global `C:\Users\dille\.codex\AGENTS.md`: attempted, missing on disk
-- old failed root preserved: `runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123`
-- superseded safe-prep root stopped: `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-060251`
-- active corrected safe-prep root: `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915`
-- background launch PID recorded: `22776`
-- worker child Python PID observed: `24088`
-- active LAMMPS PID observed: `22468`
-- production was not launched
-
-Why the previous safe-prep root was stopped:
-- `20260617-060251` was still early in prep and had not passed the first segment.
-- Its generated `hold_300K` segment used timestep `0.00025`.
-- `prompt.txt` requires the safe config to keep the 50->150, 150->300, and 300 K hold segments at timestep `0.0001`; `0.00025` is only acceptable as a later optional smoke step after a stable hold.
-- The root was preserved for diagnostics and was not deleted or resumed.
-
-Pagefile/runtime preflight for active corrected root:
-- diagnostics before pagefile change: `diagnostics\pagefile_before_stageC_safe_retry_20260617-055349.txt`
-- active `C:\pagefile.sys` setting: 24576/32768 MB
-- active `C:\pagefile.sys` allocation at launch preflight: 24576 MB
-- C: free at corrected launch preflight: `12.52 GB`
-- C: free at latest runtime check: about `12.43 GB`
-- RAM: `17079402496` bytes physical
-- GPU: RTX 3060 12 GB, about `509 MiB` used at launch preflight
-- no active MD process was present before corrected launch
-
-Geometry gate:
-- case: `C1_1M_nearGB_vacancies_medium_eps0100`
-- actual atoms: `938344`
-- matrix atoms: `900256`
-- inclusion atoms: `38088`
-- vacancy count: `1900`
-- min pair distance: `1.8112150514616776 A`
-- pairs below `1.8 A`: `0`
-- cross-source pairs below `2.1 A`: `0`
-- geometry gate: pass
-
-Corrected safe-prep plan:
-- direct LAMMPS relaxation/minimization remains disabled on this KOKKOS CUDA path because local runner policy forbids it for the validated MEAM neighbor workaround
-- ramp 50 -> 150 K: timestep `0.0001`, `10000` steps, tdamp `0.1`
-- ramp 150 -> 300 K: timestep `0.0001`, `20000` steps, tdamp `0.1`
-- hold 300 K: timestep `0.0001`, `20000` steps, tdamp `0.1`
-- total prep steps: `50000`
-- restart/dump cadence: `2000` steps
-- production disabled
-- launcher now has a post-run temperature guard for `Temp > 1000 K` and adjacent thermo-row order-of-magnitude jumps
-
-Current runtime observation:
-- `lmp_kokkos_cuda.exe` active at PID `22468`
-- GPU utilization observed at `100%`
-- GPU memory observed around `3306 MiB`
-- log exists at `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\cases\C1_1M_scaleup_100k\C1_1M_nearGB_vacancies_medium_eps0100\prep\log.C1_1M_nearGB_vacancies_medium_eps0100_prep.lammps`
-- latest thermo rows include step `0`, atoms `938344`, temp `50 K`
-- latest thermo rows include step `100`, atoms `938344`, temp `205.7817 K`
-- no runaway, LAMMPS error, or lost atoms marker observed at the checkpoint
-
-Files changed:
-- `analysis\python\stage_runner\builder.py`
-- `analysis\python\stage_runner\gpu_grid.py`
-- `scripts\launch_stageC_1M_safe_prep_retry.py`
-- `tests\test_stagec_1m_queue.py`
-- `docs\60_milestones\2026-06-17_stageC_1M_safe_prep_retry.md`
-- `docs\00_index\DOC_INDEX.md`
-- `.codex\state\current_context.md`
-- runtime artifacts under `runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\`
-- diagnostic artifact `diagnostics\pagefile_before_stageC_safe_retry_20260617-055349.txt`
-
-Validation:
-- `.venv\Scripts\python.exe -m compileall analysis\python\stage_runner scripts tests` passed
-- `.venv\Scripts\python.exe -m unittest tests.test_stagec_1m_queue` passed, 12 tests
-- corrected launch preflight passed and wrote `pagefile_preflight.json`
-- corrected background launch record written to `launch_record.json`
-- generated corrected input contains three `timestep 0.0001` segments, `neigh_modify delay 0 every 10 check no`, periodic dump/restart, `write_restart`, `write_data`, and `write_dump`
-
-Pending blockers/risks:
-- corrected safe-prep is still running and has reached only the first post-step thermo row at this checkpoint
-- C: free space is above the prompt minimum but limited; monitor dump/restart growth
-- production must not be launched automatically after prep success
-- if temperature exceeds `1000 K`, jumps sharply, or the log shows `ERROR`, `FATAL`, `Lost atoms`, `NaN`, `cudaError`, or out-of-memory, stop the pipeline and record failure
-
-Exact next step:
-Monitor:
-`Get-Content -Wait 'runs\stageC_1M_nearGB_vacancies_eps0100_safe_prep\20260617-063915\cases\C1_1M_scaleup_100k\C1_1M_nearGB_vacancies_medium_eps0100\prep\log.C1_1M_nearGB_vacancies_medium_eps0100_prep.lammps'`
-
-After safe-prep exits, inspect `safe_prep_result.json`, `state.json`, and `final_report.md`. If the gate is successful, report first and prepare a separate production command only with explicit approval.
+current objective: Stage F CPU fallback executive extraction for Pshonkin meeting completed.
+verified: target repo `C:\Users\dille\Documents\ilua-system\projects\physics_md_al_fe` on branch `ilua/auto/stageD-local-interface-100k-mechanics`.
+verified: control `AGENTS.md`, instruction-router, docs-pyramid-updater, task-completion-ledger, `prompt.txt`, project current context, DOC_INDEX, and existing Stage F CPU results CSV/JSON/MD/figures were used. Global and project-local AGENTS were absent.
+cpu_lane_state: both CPU zhi=200 smokes completed clean and both CPU zhi=200 50k productions completed clean under `runs/stageF_F0_planar_100A_ppf_commensurate/20260630-010748/cpu_fallback_production_20260701-001918`.
+cpu_pair_rule: CPU results remain CPU-only; no CPU/GPU delta mixing.
+extraction_status: completed read-only executive extraction; no LAMMPS production, smoke, GPU repair, eps005, F1, F0_300A, raw dump deletion, restart deletion, commit, push, merge, or deploy was performed.
+key_stress_numbers: peak Delta sigma_vm mean `578.422 MPa` at `r=1 A` (`0-2 A`, last20_mean); peak Delta sigma_zz mean `-327.157 MPa` at `r=92.5 A` (`90-95 A`, final); total eps00194 sigma_vm peak `2860.344 MPa` at `r=1 A`; total eps0000 sigma_vm peak `2281.921 MPa` at `r=1 A`.
+layer_numbers: eps00194 total sigma_vm_mean >120 MPa contiguous to `121.068 A` (available slab edge); abs Delta sigma_vm_mean meaningful above robust far-field noise to `4 A`; first below-noise bin `4-6 A`; Delta sigma_vm at 50/100 A is `-20.441 / 30.160 MPa`.
+directionality: at peak Delta sigma_vm, component deltas are xx `-160.130 MPa`, yy `-607.587 MPa`, zz `52.308 MPa`; Z component does not dominate, signal is mixed/interface VM stress.
+plasticity_numbers: final DXA line length is `0 A` for both eps0000 and eps00194; eps00194 final HCP max fraction `0`; final max Delta OTHER/non-FCC fraction `0.035964` at `r=3 A`; residual plasticity verdict `not_confirmed`.
+criteria_status: stress transfer/local stress layer confirmed in local F0 CPU model; plasticity, DXA/dislocations, residual plasticity, and Z-component dominance not confirmed; F0 planar is sufficient for flat-boundary discussion but not full curved/micron inclusion claims.
+primary_outputs: `docs/reports/stageF_cpu_results_pshonkin_executive_brief_ru.md`, `docs/reports/stageF_cpu_results_key_stress_numbers.md`, `docs/reports/stageF_cpu_results_key_plasticity_numbers.md`, `docs/reports/stageF_cpu_results_pshonkin_criteria_answers_ru.md`, `docs/reports/stageF_cpu_results_pshonkin_talk_track_ru.md`, `docs/reports/stageF_cpu_results_best_figures_for_pshonkin.md`, `docs/reports/stageF_cpu_results_safe_wording_ru.md`.
+handoff: `agent_report_stageF_cpu_results_key_numbers_extraction.md`.
+recommended_next_step: primary `stop/no new MD until supervisor feedback`; secondary `F1 curved cap` only if curvature realism is requested after discussing F0 numbers.
+validation: `py_compile` passed for prompt-required scripts plus `analysis/python/stageF_cpu_results_executive_extraction.py`; generated extraction JSON parsed; source sigma/defect CSV read with pandas; required MD reports exist; included best figure paths exist; forbidden claim scan clean; no LAMMPS/mpiexec process found.
+files_touched_this_turn: `analysis/python/stageF_cpu_results_executive_extraction.py`, `docs/reports/stageF_cpu_results_executive_extraction_inventory.*`, `docs/reports/stageF_cpu_results_key_stress_numbers.*`, `docs/reports/stageF_cpu_results_key_plasticity_numbers.*`, `docs/reports/stageF_cpu_results_pshonkin_criteria_answers.*`, `docs/reports/stageF_cpu_results_pshonkin_executive_brief_ru.md`, `docs/reports/stageF_cpu_results_pshonkin_talk_track_ru.md`, `docs/reports/stageF_cpu_results_best_figures_for_pshonkin.*`, `docs/reports/stageF_cpu_results_safe_wording_ru.md`, `agent_report_stageF_cpu_results_key_numbers_extraction.md`, `docs/00_index/DOC_INDEX.md`, and this context.
+exact_next_step: read or send `docs/reports/stageF_cpu_results_pshonkin_executive_brief_ru.md` for the meeting; exact command `Get-Content -Raw docs\reports\stageF_cpu_results_pshonkin_executive_brief_ru.md`.
+last_updated: `2026-07-02T08:05:00+03:00`
