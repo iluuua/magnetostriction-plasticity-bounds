@@ -1,0 +1,2 @@
+frame,step,n_atoms,hcp_matrix_atoms,dxa_total_length_A,n_segments,lower_n_segments,lower_length_A,lower_mean_x_A,lower_mean_z_A,lower_split_width_A,lower_bx_sum,upper_n_segments,upper_length_A,upper_mean_x_A,upper_mean_z_A,upper_split_width_A,upper_bx_sum
+0,3000,300124,281,360.7295134506677,4,2,179.8736980560107,155.11006130147123,49.4244944145021,9.368963260184046,2.8600406646728516,2,180.85581539465704,123.63794347421036,72.58597774274061,8.276467204865028,-2.86004102230072

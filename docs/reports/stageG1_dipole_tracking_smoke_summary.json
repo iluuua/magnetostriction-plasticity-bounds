@@ -1,0 +1,66 @@
+{
+  "run_dir": "runs\\stageG1_ridge_dipole\\20260813-020902",
+  "stage": "smoke",
+  "created_at": "2026-08-13T04:16:34+03:00",
+  "cases": {
+    "G1_ridge_dipole_eps0000": {
+      "status": "ok",
+      "frames": 1,
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG1_dipole_tracking_G1_ridge_dipole_eps0000_smoke.csv",
+      "last": {
+        "frame": 0,
+        "step": 3000,
+        "n_atoms": 300124,
+        "hcp_matrix_atoms": 281,
+        "dxa_total_length_A": 360.7295134506677,
+        "n_segments": 4,
+        "lower_n_segments": 2,
+        "lower_length_A": 179.8736980560107,
+        "lower_mean_x_A": 155.11006130147123,
+        "lower_mean_z_A": 49.4244944145021,
+        "lower_split_width_A": 9.368963260184046,
+        "lower_bx_sum": 2.8600406646728516,
+        "upper_n_segments": 2,
+        "upper_length_A": 180.85581539465704,
+        "upper_mean_x_A": 123.63794347421036,
+        "upper_mean_z_A": 72.58597774274061,
+        "upper_split_width_A": 8.276467204865028,
+        "upper_bx_sum": -2.86004102230072
+      }
+    },
+    "G1_ridge_dipole_eps00194": {
+      "status": "ok",
+      "frames": 1,
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG1_dipole_tracking_G1_ridge_dipole_eps00194_smoke.csv",
+      "last": {
+        "frame": 0,
+        "step": 3000,
+        "n_atoms": 300124,
+        "hcp_matrix_atoms": 273,
+        "dxa_total_length_A": 360.6104222990872,
+        "n_segments": 4,
+        "lower_n_segments": 2,
+        "lower_length_A": 180.28156705157303,
+        "lower_mean_x_A": 152.49400854492197,
+        "lower_mean_z_A": 49.37986368499487,
+        "lower_split_width_A": 8.753007246976239,
+        "lower_bx_sum": 2.8601512908935547,
+        "upper_n_segments": 2,
+        "upper_length_A": 180.32885524751413,
+        "upper_mean_x_A": 121.44807566220031,
+        "upper_mean_z_A": 72.49636689773276,
+        "upper_split_width_A": 7.655208166981893,
+        "upper_bx_sum": -2.8601512908935547
+      }
+    }
+  },
+  "delta_physical_minus_control": [
+    {
+      "step": 3000,
+      "delta_x_lower_A": -2.6160527565492657,
+      "delta_hcp": -8,
+      "delta_dxa_length_A": -0.11909115158050554,
+      "delta_x_upper_A": -2.18986781201005
+    }
+  ]
+}
