@@ -67,7 +67,7 @@ Z_SUP = 20.0                        # Fe4Al13 support slab thickness; interface 
 RIDGE_RX = 45.0                     # ridge half-width (x semi-axis)
 RIDGE_H = 25.0                      # ridge protrusion height (z semi-axis)
 VACUUM_TOP = 15.0
-Z_BOT = -1.0
+Z_BOT = -10.0                       # margin below the Fe support so minimize cannot lose atoms through zlo
 
 # --- Dipole parameters ---
 # Partners in the stable 45-degree configuration near the right ridge edge

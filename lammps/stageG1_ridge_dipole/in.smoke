@@ -21,7 +21,17 @@ compute         st all stress/atom NULL virial
 thermo          100
 thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz
 
+# Freeze the bottom slab BEFORE minimization (rigid-bulk anchor; also prevents
+# support atoms from drifting through zlo while unconstrained).
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+# Cap per-iteration displacement: dipole-core pairs start at ~2.0 A and an
+# uncapped CG line search can catapult atoms through the free surface.
 min_style       cg
+min_modify      dmax 0.1
 minimize        1.0e-8 1.0e-10 2000 20000
 
 reset_timestep  0
@@ -29,12 +39,10 @@ reset_timestep  0
 neigh_modify    delay 0 every 10 check no
 timestep        0.001
 
-region          bottom block INF INF INF INF INF 6.0 units box
-group           bottom region bottom
-group           mobile subtract all bottom
-fix             hold bottom setforce 0.0 0.0 0.0
 velocity        mobile create 300.0 88004 mom yes rot yes dist gaussian
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+# Insurance against rare evaporation through the fixed top boundary.
+fix             ztop mobile wall/reflect zhi EDGE units box
 
 run             3000
 

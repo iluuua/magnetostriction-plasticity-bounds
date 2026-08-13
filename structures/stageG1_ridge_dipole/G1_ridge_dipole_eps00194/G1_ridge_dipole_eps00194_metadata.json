@@ -2,8 +2,8 @@
   "case_id": "G1_ridge_dipole_eps00194",
   "geometry_id": "G1_ridge_dipole",
   "geometry_type": "ridge_cylinder_plus_edge_dipole",
-  "created_at": "2026-08-13T01:59:26+03:00",
-  "git_head_at_generation": "d5ae4c2efc4aa4daca04cc4ded36803986acb3ce",
+  "created_at": "2026-08-13T02:08:59+03:00",
+  "git_head_at_generation": "a924021d3d94ab79a3312c9ed90397dcd9915c9e",
   "al_orientation": {
     "x": "[1-10]",
     "y": "[11-2]",
@@ -12,7 +12,7 @@
   "box_A": {
     "lx": 186.1458601473586,
     "ly": 89.28390112444683,
-    "z_lo": -1.0,
+    "z_lo": -10.0,
     "z_hi": 315.59223082615813
   },
   "al_lattice_A": 4.05,

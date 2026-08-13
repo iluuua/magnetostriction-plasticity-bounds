@@ -28,6 +28,8 @@ group           bottom region bottom
 group           mobile subtract all bottom
 fix             hold bottom setforce 0.0 0.0 0.0
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+# Insurance against rare evaporation through the fixed top boundary.
+fix             ztop mobile wall/reflect zhi EDGE units box
 
 thermo          500
 thermo_style    custom step atoms temp pe ke etotal press pxx pyy pzz
