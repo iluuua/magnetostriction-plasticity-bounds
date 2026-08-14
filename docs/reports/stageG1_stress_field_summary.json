@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-08-14T15:24:37+03:00",
+  "run_dir": "runs\\stageG1_ridge_dipole\\20260813-020902",
+  "convention": "sigma_ij = -sum(c_st)/(N*V_at)*0.1 MPa, V_at=16.6072 A^3; last 20 frames averaged",
+  "delta_sigma_xz_at_dipole_MPa": {
+    "partner_plus": 13.00242096309239,
+    "partner_minus": -121.4836249086469
+  },
+  "max_abs_delta_sigma_xz_edge_zone_MPa": 1759.3979541951721,
+  "far_field_noise_MPa": {
+    "median_abs": 85.53740082620637,
+    "p95_abs": 525.0295583062288
+  },
+  "outputs": [
+    "stageG1_sigma_profile_flat.csv",
+    "stageG1_delta_sigma_xz_map.csv"
+  ]
+}
