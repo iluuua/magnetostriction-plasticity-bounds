@@ -41,3 +41,4 @@ status_dump_*.txt
 # Python tooling caches and local virtual environment
 .pytest_cache/
 .venv/
+*.start.data

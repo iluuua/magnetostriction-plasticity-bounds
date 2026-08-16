@@ -91,14 +91,29 @@ def parse_log(log_path: Path, expect_final_step: int) -> dict[str, Any]:
 
 
 class Runner:
-    def __init__(self, run_root: Path, backend: str, production_steps: int) -> None:
+    def __init__(self, run_root: Path, backend: str, production_steps: int,
+                 production_input: str = "in.production", smoke_source: Path | None = None,
+                 tau_max_mpa: int | None = None, production_data: Path | None = None,
+                 cases: list[str] | None = None, reseed: int = 0) -> None:
         self.run_root = run_root
         self.backend = backend
         self.production_steps = production_steps
+        self.production_input = production_input
+        self.smoke_source = smoke_source
+        self.tau_max_mpa = tau_max_mpa
+        self.production_data = production_data
+        self.cases = cases or CASES
+        self.reseed = reseed
         self.status: dict[str, Any] = {
             "run_root": str(run_root), "backend_policy": backend, "created_at": now(),
             "git_head": git_head(), "seed": 88004, "timestep_ps": 0.001,
             "production_steps": production_steps,
+            "production_input": production_input,
+            "smoke_source": str(smoke_source) if smoke_source else None,
+            "tau_max_mpa": tau_max_mpa,
+            "production_data": str(production_data) if production_data else None,
+            "cases": cases or CASES,
+            "reseed": reseed,
             "gpu_binary": str(GPU_BIN), "cpu_binary": str(CPU_BIN),
             "neighbor_policy": "neigh_modify delay 0 every 10 check no (KOKKOS workaround 2026-06-11)",
             "stages": {},
@@ -134,10 +149,18 @@ class Runner:
             expect = 3000
             extra: list[str] = []
         else:
-            in_file = IN_DIR / "in.production"
-            data_file = self.run_root / case / "smoke" / f"{case}.smoke.final.data"
+            in_file = IN_DIR / self.production_input
+            if self.production_data is not None:
+                data_file = self.production_data / case / f"{case}.start.data"
+            else:
+                smoke_root = self.smoke_source or self.run_root
+                data_file = smoke_root / case / "smoke" / f"{case}.smoke.final.data"
             expect = self.production_steps
             extra = ["-var", "NSTEPS", str(self.production_steps)]
+            if self.tau_max_mpa is not None:
+                extra += ["-var", "TAUMAX_MPA", str(self.tau_max_mpa)]
+            if self.reseed:
+                extra += ["-var", "RESEED", str(self.reseed)]
         cmd, env = self.cmd_for(backend, in_file, data_file, case, extra)
         rec: dict[str, Any] = {"backend": backend, "cmd": cmd, "cwd": str(stage_dir),
                                "started_at": now(), "state": "running"}
@@ -163,8 +186,33 @@ class Runner:
 
     def run(self) -> int:
         backend = "gpu" if self.backend in ("auto", "gpu") else "cpu"
+        if self.smoke_source is not None or self.production_data is not None:
+            # Production-only mode: starts come from prior smokes or prepared data.
+            for case in self.cases:
+                if self.production_data is not None:
+                    src = self.production_data / case / f"{case}.start.data"
+                else:
+                    src = self.smoke_source / case / "smoke" / f"{case}.smoke.final.data"
+                if not src.exists():
+                    print(f"missing production start data: {src}", flush=True)
+                    self.status["verdict"] = "start_data_missing"
+                    self.save()
+                    return 2
+            self.status["smoke_verdict"] = "production_only_mode"
+            ok = True
+            for case in self.cases:
+                prec = self.run_stage(case, "production", backend)
+                if not prec["gates"].get("pass"):
+                    ok = False
+                    self.status["verdict"] = f"production_failed_{case}"
+                    self.save()
+                    break
+            if ok:
+                self.status["verdict"] = f"production_completed_{backend}"
+                self.save()
+            return 0 if ok else 3
         # Smoke gate, case 1; auto-fallback to CPU on GPU failure.
-        rec = self.run_stage(CASES[0], "smoke", backend)
+        rec = self.run_stage(self.cases[0], "smoke", backend)
         if not rec["gates"].get("pass"):
             if backend == "gpu" and self.backend == "auto":
                 print("GPU smoke failed - falling back to CPU for ALL stages", flush=True)
@@ -173,12 +221,12 @@ class Runner:
                     "error_lines": rec["gates"].get("error_lines"),
                 }
                 backend = "cpu"
-                rec = self.run_stage(CASES[0], "smoke", backend)
+                rec = self.run_stage(self.cases[0], "smoke", backend)
             if not rec["gates"].get("pass"):
                 self.status["verdict"] = "smoke_failed_both_backends" if self.backend == "auto" else "smoke_failed"
                 self.save()
                 return 2
-        rec2 = self.run_stage(CASES[1], "smoke", backend)
+        rec2 = self.run_stage(self.cases[1], "smoke", backend)
         if not rec2["gates"].get("pass"):
             self.status["verdict"] = "smoke_case2_failed"
             self.save()
@@ -186,7 +234,7 @@ class Runner:
         self.status["smoke_verdict"] = f"both_passed_{backend}"
         self.save()
         ok = True
-        for case in CASES:
+        for case in self.cases:
             prec = self.run_stage(case, "production", backend)
             if not prec["gates"].get("pass"):
                 ok = False
@@ -204,10 +252,26 @@ def main() -> int:
     parser.add_argument("--backend", choices=["auto", "gpu", "cpu"], default="auto")
     parser.add_argument("--production-steps", type=int, default=60000)
     parser.add_argument("--run-root", type=Path, default=None)
+    parser.add_argument("--production-input", default="in.production",
+                        help="input template in lammps/stageG1_ridge_dipole/")
+    parser.add_argument("--smoke-source", type=Path, default=None,
+                        help="previous run root whose passed smoke finals should seed production")
+    parser.add_argument("--tau-max", type=int, default=None,
+                        help="TAUMAX_MPA for in.production_shear")
+    parser.add_argument("--production-data", type=Path, default=None,
+                        help="dir with <case>/<case>.start.data prepared starts (production-only mode)")
+    parser.add_argument("--cases", default=None,
+                        help="comma-separated case names (default: G1 pair)")
+    parser.add_argument("--reseed", type=int, default=0,
+                        help="RESEED velocity seed for replica runs (0 = keep velocities)")
     args = parser.parse_args()
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     run_root = args.run_root or (REPO_ROOT / "runs" / "stageG1_ridge_dipole" / stamp)
-    runner = Runner(run_root, args.backend, args.production_steps)
+    runner = Runner(run_root, args.backend, args.production_steps,
+                    production_input=args.production_input, smoke_source=args.smoke_source,
+                    tau_max_mpa=args.tau_max,
+                    production_data=args.production_data.resolve() if args.production_data else None,
+                    cases=args.cases.split(",") if args.cases else None, reseed=args.reseed)
     return runner.run()
 
 

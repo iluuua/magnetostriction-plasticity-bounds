@@ -1,0 +1,78 @@
+# Stage G2 v2: shear-stress RAMP with smooth onset, common-origin starts,
+# tau=0 pre-hold, and local tau_xz monitors at both dipole partners.
+# Redesigned after adversarial review (g2-shear-protocol-verify):
+#  - TAUMAX 400 MPa headroom over the ~198 MPa dipole passing stress + pinning
+#  - raised-cosine rate onset over TS steps suppresses the ~41 ps slab shear mode
+#  - PRE_STEPS tau=0 hold re-thermalizes both cases identically
+#  - reduce/region monitors give ~1 MPa tau_c resolution from thermo (dumps are coarse)
+#  - RESEED>0 redraws velocities for replica runs
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, NSTEPS (TOTAL steps incl. pre-hold),
+#                   TAUMAX_MPA, RESEED
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        NSTEPS index 101000
+variable        TAUMAX_MPA index 400
+variable        RESEED index 0
+variable        PRE_STEPS equal 5000
+variable        TS equal 16000
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+
+if "${RESEED} > 0" then "velocity mobile create 300.0 ${RESEED} mom yes rot yes dist gaussian"
+
+# --- smooth shear ramp ---------------------------------------------------
+# sp = step - PRE_STEPS (masked to 0 during the hold), N = NSTEPS - PRE_STEPS.
+# rate onset: r(sp) = R*0.5*(1-cos(pi*sp/TS)) for sp<TS, then R;
+# integrated:  tau(sp<TS) = R*(0.5*sp - (TS/(2*pi))*sin(pi*sp/TS))
+#              tau(sp>=TS) = R*(sp - TS/2),  R = 10*TAUMAX/(N - TS/2)  [bar/step]
+variable        NRAMP equal v_NSTEPS-v_PRE_STEPS
+variable        RBAR equal 10.0*v_TAUMAX_MPA/(v_NRAMP-0.5*v_TS)
+variable        sp equal step-v_PRE_STEPS
+variable        taubar equal "(step >= v_PRE_STEPS) * ((v_sp < v_TS) * v_RBAR*(0.5*v_sp - (v_TS/(2*PI))*sin(PI*v_sp/v_TS)) + (v_sp >= v_TS) * v_RBAR*(v_sp - 0.5*v_TS))"
+
+region          topgrab block INF INF INF INF 290.0 INF units box
+group           topgrab region topgrab
+variable        ntop equal count(topgrab)
+variable        fxa equal v_taubar*lx*ly*6.241509e-7/v_ntop
+fix             pull topgrab addforce v_fxa 0.0 0.0
+
+# --- local tau_xz monitors at the dipole partners (fixed boxes, full y) ---
+# lower (+b) partner near x~152, z 40-62; upper (-b) near x~108/103, z 62-85.
+region          rLow  block 127.0 177.0 INF INF 40.0 62.0 units box
+region          rUpp  block  83.0 133.0 INF INF 62.0 85.0 units box
+compute         tl all reduce/region rLow sum c_st[5]
+compute         tu all reduce/region rUpp sum c_st[5]
+# MPa: -sum(bar*A^3) / V[A^3] / 10;  V_low = 50*89.281*22, V_upp = 50*89.281*23
+variable        tauLowMPa equal -c_tl/982091.0
+variable        tauUppMPa equal -c_tu/1026731.5
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz v_taubar v_tauLowMPa v_tauUppMPa
+
+dump            d1 all custom 2000 ${OUT_PREFIX}.production.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         10000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.production.final.data
+write_dump      all custom ${OUT_PREFIX}.production.final.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
