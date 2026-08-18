@@ -1,0 +1,46 @@
+{
+  "run_dir": "runs\\stageG1_ridge_dipole\\20260816-083944",
+  "created_at": "2026-08-18T22:09:16+03:00",
+  "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
+  "cases": {
+    "G2_shear_eps0000": {
+      "case": "G2_shear_eps0000",
+      "sigma_s_A": 1.5999756088524628,
+      "threshold_A": 9.599853653114778,
+      "baseline_fit": {
+        "slope_A_per_step": -0.0005073941623875643,
+        "intercept_A": 44.77241521225495
+      },
+      "onset": {
+        "step": 32000,
+        "frame": 16,
+        "tau_c_nominal_MPa": 86.36363636363636,
+        "tau_local_low_MPa": -96.94495344444445,
+        "tau_local_upp_MPa": -44.0144418,
+        "s_at_onset_A": 39.450450230745986,
+        "s_dev_at_onset_A": 10.914648214893095
+      },
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG2_depinning_G2_shear_eps0000.csv"
+    },
+    "G2_shear_eps00194": {
+      "case": "G2_shear_eps00194",
+      "sigma_s_A": 1.4575594715909408,
+      "threshold_A": 8.745356829545646,
+      "baseline_fit": {
+        "slope_A_per_step": -0.0006133592353715542,
+        "intercept_A": 45.31540413808294
+      },
+      "onset": {
+        "step": 30000,
+        "frame": 15,
+        "tau_c_nominal_MPa": 77.27272727272727,
+        "tau_local_low_MPa": -14.708677395555554,
+        "tau_local_upp_MPa": -90.85202211111113,
+        "s_at_onset_A": 38.11868434709724,
+        "s_dev_at_onset_A": 11.20405727016093
+      },
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG2_depinning_G2_shear_eps00194.csv"
+    }
+  },
+  "delta_tau_c_nominal_MPa": -9.090909090909093
+}
