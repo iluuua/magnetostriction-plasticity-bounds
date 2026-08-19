@@ -24,7 +24,8 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 N_AL_MATRIX = 268488          # from G1 metadata: counts.al_matrix
 EPS = 0.00194
-CASES = {"G2_shear_eps0000": 0.0, "G2_shear_eps00194": EPS}
+# eps005 = 2.58x the physical field: the dose-response rung of the eps ladder.
+CASES = {"G2_shear_eps0000": 0.0, "G2_shear_eps00194": EPS, "G2_shear_eps005": 0.005}
 OUT_ROOT = REPO_ROOT / "structures" / "stageG2_common_origin"
 
 

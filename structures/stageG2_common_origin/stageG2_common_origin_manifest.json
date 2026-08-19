@@ -1,7 +1,7 @@
 {
   "source_snapshot": "runs\\stageG1_ridge_dipole\\20260813-020902\\G1_ridge_dipole_eps0000\\production\\G1_ridge_dipole_eps0000.production.final.data",
   "n_al_matrix": 268488,
-  "created_at": "2026-08-16T08:30:30+03:00",
+  "created_at": "2026-08-19T11:52:10+03:00",
   "cases": {
     "G2_shear_eps0000": {
       "eps_z": 0.0,
@@ -14,6 +14,12 @@
       "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG2_common_origin\\G2_shear_eps00194\\G2_shear_eps00194.start.data",
       "scaled_atoms": 31636,
       "zmax_fe_A": 47.34362726515734
+    },
+    "G2_shear_eps005": {
+      "eps_z": 0.005,
+      "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG2_common_origin\\G2_shear_eps005\\G2_shear_eps005.start.data",
+      "scaled_atoms": 31636,
+      "zmax_fe_A": 47.48821825806248
     }
   }
 }
