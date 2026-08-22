@@ -168,18 +168,22 @@ def analyze_case(case: str, run_dir: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-dir", type=Path, required=True)
+    parser.add_argument("--cases", default=None, help="comma-separated case names")
+    parser.add_argument("--tag", default="", help="suffix for output file names")
     parser.add_argument("--out-dir", type=Path, default=REPO_ROOT / "docs" / "reports")
     args = parser.parse_args()
 
-    summary = {"run_dir": str(args.run_dir),
+    cases = args.cases.split(",") if args.cases else CASES
+    tag = f"_{args.tag}" if args.tag else ""
+    summary = {"run_dir": str(args.run_dir), "cases_analyzed": cases,
                "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
                "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), "
                            "baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
                "cases": {}}
-    for case in CASES:
+    for case in cases:
         res = analyze_case(case, args.run_dir)
         keys = [k for k in res["frames"][0].keys()]
-        csv_path = args.out_dir / f"stageG2_depinning_{case}.csv"
+        csv_path = args.out_dir / f"stageG2_depinning_{case}{tag}.csv"
         lines = [",".join(keys)]
         for r in res["frames"]:
             lines.append(",".join("" if r.get(k) is None else str(r.get(k)) for k in keys))
@@ -187,11 +191,12 @@ def main() -> int:
         summary["cases"][case] = {k: v for k, v in res.items() if k != "frames"}
         summary["cases"][case]["csv"] = str(csv_path)
 
-    o0 = summary["cases"][CASES[0]]["onset"]
-    o1 = summary["cases"][CASES[1]]["onset"]
-    if o0 and o1:
-        summary["delta_tau_c_nominal_MPa"] = o1["tau_c_nominal_MPa"] - o0["tau_c_nominal_MPa"]
-    out = args.out_dir / "stageG2_depinning_summary.json"
+    if len(cases) >= 2:
+        o0 = summary["cases"][cases[0]]["onset"]
+        o1 = summary["cases"][cases[1]]["onset"]
+        if o0 and o1:
+            summary["delta_tau_c_nominal_MPa"] = o1["tau_c_nominal_MPa"] - o0["tau_c_nominal_MPa"]
+    out = args.out_dir / f"stageG2_depinning_summary{tag}.json"
     out.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: v for k, v in summary.items() if k != "cases"}, indent=2))
     for c, v in summary["cases"].items():

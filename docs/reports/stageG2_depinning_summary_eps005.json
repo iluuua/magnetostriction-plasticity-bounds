@@ -1,0 +1,29 @@
+{
+  "run_dir": "B:\\backups\\physics_md_al_fe\\stageG2b\\g2c-eps005",
+  "cases_analyzed": [
+    "G2_shear_eps005"
+  ],
+  "created_at": "2026-08-22T03:27:32+03:00",
+  "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
+  "cases": {
+    "G2_shear_eps005": {
+      "case": "G2_shear_eps005",
+      "sigma_s_A": 1.181141358062709,
+      "threshold_A": 8.0,
+      "baseline_fit": {
+        "slope_A_per_step": -0.000624421720110227,
+        "intercept_A": 44.81285332566484
+      },
+      "onset": {
+        "step": 30000,
+        "frame": 15,
+        "tau_c_nominal_MPa": 77.27272727272727,
+        "tau_local_low_MPa": -58.69929033333334,
+        "tau_local_upp_MPa": -98.214238,
+        "s_at_onset_A": 37.225498445346986,
+        "s_dev_at_onset_A": 11.145296722988956
+      },
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG2_depinning_G2_shear_eps005_eps005.csv"
+    }
+  }
+}

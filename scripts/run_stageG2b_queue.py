@@ -30,7 +30,11 @@ BACKUP_ROOT = Path("B:/backups/physics_md_al_fe/stageG2b")
 
 JOBS = [
     {"name": "g2c-eps005", "cases": "G2_shear_eps005", "reseed": 0},
-    {"name": "g2b-r90001", "cases": "G2_shear_eps0000,G2_shear_eps00194", "reseed": 90001},
+    # r90001 control completed in run 20260820-183942 before the session ended;
+    # only the physical leg is outstanding and it writes into that same run root
+    # so the replica stays one coherent directory.
+    {"name": "g2b-r90001", "cases": "G2_shear_eps00194", "reseed": 90001,
+     "run_root": "runs/stageG1_ridge_dipole/20260820-183942"},
     {"name": "g2b-r90002", "cases": "G2_shear_eps0000,G2_shear_eps00194", "reseed": 90002},
 ]
 COMMON = ["--backend", "gpu", "--production-steps", "101000",
@@ -44,18 +48,27 @@ def now() -> str:
 
 def main() -> int:
     queue = {"created_at": now(), "jobs": {}}
+    if "--resume" in sys.argv and QUEUE_STATUS.exists():
+        prev = json.loads(QUEUE_STATUS.read_text(encoding="utf-8"))
+        queue["jobs"] = {k: v for k, v in prev.get("jobs", {}).items() if v.get("state") == "done"}
+        queue["resumed_at"] = now()
 
     def save() -> None:
         queue["updated_at"] = now()
         QUEUE_STATUS.write_text(json.dumps(queue, indent=2) + "\n", encoding="utf-8")
 
     for job in JOBS:
+        if queue["jobs"].get(job["name"], {}).get("state") == "done":
+            print(f"[{now()}] QUEUE skip {job['name']} (already done)", flush=True)
+            continue
         rec = {"state": "running", "started_at": now()}
         queue["jobs"][job["name"]] = rec
         save()
         cmd = [PY, str(RUNNER), *COMMON, "--cases", job["cases"]]
         if job["reseed"]:
             cmd += ["--reseed", str(job["reseed"])]
+        if job.get("run_root"):
+            cmd += ["--run-root", str(REPO_ROOT / job["run_root"])]
         print(f"[{now()}] QUEUE start {job['name']}: {' '.join(cmd[2:])}", flush=True)
         proc = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True)
         rec["returncode"] = proc.returncode

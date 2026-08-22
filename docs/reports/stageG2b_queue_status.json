@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-08-22T03:11:36+03:00",
+  "jobs": {
+    "g2c-eps005": {
+      "state": "done",
+      "started_at": "2026-08-19T11:53:14+03:00",
+      "returncode": 0,
+      "stdout_tail": "[2026-08-19T11:53:14+03:00] START G2_shear_eps005/production on gpu\n[2026-08-20T18:39:29+03:00] DONE  G2_shear_eps005/production: passed (perf=0.079 ns/day, T=294.21281)\n",
+      "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageG1_ridge_dipole\\20260819-115314",
+      "verdict": "production_completed_gpu",
+      "finished_at": "2026-08-20T18:39:41+03:00"
+    },
+    "g2b-r90001": {
+      "state": "running",
+      "started_at": "2026-08-22T03:11:36+03:00"
+    }
+  },
+  "resumed_at": "2026-08-22T03:11:36+03:00",
+  "updated_at": "2026-08-22T03:11:36+03:00"
+}
