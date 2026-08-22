@@ -1,0 +1,116 @@
+{
+  "case_id": "G4_tilted_eps00194",
+  "created_at": "2026-08-22T17:47:34+03:00",
+  "git_head_at_generation": "aa4c3abf52808456b48c9a221d33d148baa9ebcf",
+  "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
+  "orientation": {
+    "x": "[1-10]",
+    "y": "[11-2]",
+    "z": "[111]"
+  },
+  "box_A": {
+    "lx": 114.55129855222069,
+    "ly": 39.68173383308748,
+    "z_lo": -10.0,
+    "z_hi": 315.59223082615813
+  },
+  "interface_plane_z_A": 20.0,
+  "al_depth_A": 280.59223082615813,
+  "ridge": {
+    "rx_A": 35.0,
+    "h_A": 20.0,
+    "center_x_A": 57.27564927611034,
+    "apex_z_A": 40.0,
+    "right_edge_x_A": 92.27564927611034
+  },
+  "eigenstrain": {
+    "eps": 0.00194,
+    "tilt_deg_from_z_toward_x": 45.0,
+    "axis_unit_vector": [
+      0.7071067811865476,
+      0.0,
+      0.7071067811865476
+    ],
+    "tensor": "lambda*(1.5 u(x)u - 0.5 I), trace = 0 (volume conserving)",
+    "tensor_matrix": [
+      [
+        0.00048500000000000046,
+        0.0,
+        0.0014550000000000006
+      ],
+      [
+        0.0,
+        -0.00097,
+        0.0
+      ],
+      [
+        0.0014550000000000006,
+        0.0,
+        0.00048500000000000046
+      ]
+    ],
+    "schmid_on_dipole_plane": 0.5,
+    "note": "a z-axis eigenstrain would give Schmid 0.00000"
+  },
+  "solutes": {
+    "Mg_at_pct": 1.0,
+    "Si_at_pct": 0.6,
+    "seed": 12345,
+    "n_Mg": 733,
+    "n_Si": 440
+  },
+  "dipole": {
+    "burgers_A": 2.863782463805517,
+    "line_axis": "y",
+    "glide_plane": "(111) parallel to interface",
+    "partner_plus": {
+      "x": 104.27564927611034,
+      "z": 53.90489455816078
+    },
+    "partner_minus": {
+      "x": 104.27564927611034,
+      "z": 287.7317535799592
+    },
+    "n_x_images": 3,
+    "separation_z_A": 233.82685902179844,
+    "tau_pass_MPa": 19.776000414138988
+  },
+  "counts": {
+    "total": 81273,
+    "al_matrix": 73328,
+    "fe_block": 7945,
+    "type_Al": 78245,
+    "type_Fe": 1855,
+    "type_Mg": 733,
+    "type_Si": 440
+  },
+  "cleanup": {
+    "removed_al_near_fe": 160,
+    "min_cross_A": 0.2510892876650696,
+    "fe_seam_dedup": 0
+  },
+  "seam_check": {
+    "n_atoms": 81273,
+    "scipy_available": true,
+    "intra_cell_min_nn_A": 1.8634275100508022,
+    "seam_min_nn_A": 2.0777247300433928,
+    "overall_min_nn_A": 1.8634275100508022,
+    "seam_pairs_lt_1p8_A": 0,
+    "seam_pairs_lt_2p1_A": 2,
+    "intra_pairs_lt_1p8_A": 0,
+    "seam_clean": true
+  },
+  "commensurate_misfit": {
+    "commensurate": true,
+    "fe_cell_a_x_A": 15.498,
+    "fe_cell_b_y_A": 8.0814,
+    "n_fe_cells_x": 7,
+    "n_fe_cells_y": 5,
+    "inplane_scale_x": 1.055908583155621,
+    "inplane_scale_y": 0.9820509771348399,
+    "inplane_misfit_x_pct": 5.590858315562097,
+    "inplane_misfit_y_pct": -1.7949022865160091
+  },
+  "boundary_conditions": "p p f",
+  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps00194\\G4_tilted_eps00194.start.data"
+}

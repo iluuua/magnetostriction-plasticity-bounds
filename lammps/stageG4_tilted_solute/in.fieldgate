@@ -1,0 +1,36 @@
+# Stage G4 field gate: does the tilted deviatoric eigenstrain actually leave a
+# shear stress at the dislocation glide planes after relaxation?
+#
+# The Stage G diagnosis showed that under p p f a laterally uniform eigenstrained
+# slab relaxes sigma_zz to ~0 by simply getting taller. The same equilibrium
+# argument (d sigma_xz/dz = 0 with a traction-free top) can null the SHEAR
+# component too, leaving only the ridge shape differential. This gate measures
+# Delta sigma_xz between physical and control BEFORE spending 16 GPU-hours.
+# Minimization only, no dynamics: ~5 min per case.
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+thermo          100
+thermo_style    custom step atoms temp pe press pxz
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 3000 30000
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

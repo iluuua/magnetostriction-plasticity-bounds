@@ -1,0 +1,77 @@
+# Stage G4: Al + Fe4Al13 inclusion + Mg/Si solutes, dislocation mobility under a
+# STAIRCASE of constant shear stresses. Control (eps=0) vs physical (eps=0.00194,
+# tilted 45 deg so the eigenstrain actually resolves onto the glide plane).
+# Observable: dislocation velocity at each step -> V* = kT dln(v)/dtau, and the
+# control/physical velocity ratio at fixed tau.
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, SEED, PRE, HOLD, TAU0, DTAU
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        SEED index 88004
+variable        PRE index 10000          # 10 ps at tau = 0
+variable        HOLD index 20000         # 20 ps per stress step
+# The staircase must stay BELOW the 99 MPa dipole passing stress: above it the
+# lines run away athermally (~500 m/s measured in the probe at 150 MPa) and the
+# field effect is invisible. Below it the dipole holds the lines in equilibrium
+# and escape is a thermally activated EVENT whose waiting time depends
+# exponentially on tau - that is the amplified observable.
+# Experiment: 160 MPa uniaxial creep on a polycrystal -> resolved shear
+# 160/3.06 = 52 MPa (Taylor factor). Solute strength for this composition is
+# ~38 MPa. The staircase 30/40/50/60 MPa therefore BRACKETS both the solute
+# threshold and the experimental working point, which is where thermal
+# activation - and hence any field effect - is measurable.
+variable        TAU0 index 30            # steps: 30/40/50/60 MPa
+variable        DTAU index 10
+variable        NSTEPS equal v_PRE+4*v_HOLD
+
+read_data       ${DATA_FILE}
+
+# types: 1 = Al, 2 = Fe, 3 = Mg, 4 = Si (library element order: Al Si Mg Cu Fe)
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+region          topgrab block INF INF INF INF 288.0 INF units box
+group           topgrab region topgrab
+group           mobile subtract all bottom
+
+fix             hold bottom setforce 0.0 0.0 0.0
+min_style       cg
+min_modify      dmax 0.1
+thermo          200
+thermo_style    custom step atoms temp pe press pxz
+minimize        1.0e-8 1.0e-10 2000 20000
+
+reset_timestep  0
+# validated KOKKOS neighbor workaround (milestone 2026-06-11)
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+velocity        mobile create 300.0 ${SEED} mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+
+# staircase: tau = 0 during PRE, then TAU0 + DTAU*floor((step-PRE)/HOLD)
+variable        taumpa equal "(step < v_PRE) * 0.0 + (step >= v_PRE) * (v_TAU0 + v_DTAU*floor((step-v_PRE)/v_HOLD))"
+variable        ntop equal count(topgrab)
+# F_atom [eV/A] = tau[MPa]*10[bar/MPa] * Lx*Ly[A^2] * 6.241509e-7 / N_top
+variable        fxa equal 10.0*v_taumpa*lx*ly*6.241509e-7/v_ntop
+fix             pull topgrab addforce v_fxa 0.0 0.0
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz v_taumpa
+dump            d1 all custom 1000 ${OUT_PREFIX}.mobility.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         20000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.mobility.final.data

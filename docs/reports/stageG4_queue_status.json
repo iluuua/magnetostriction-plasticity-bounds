@@ -1,0 +1,15 @@
+{
+  "created_at": "2026-08-22T17:56:50+03:00",
+  "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageG4_tilted_solute\\20260822-175650",
+  "expected_steps": 90000,
+  "model": "Al + Fe4Al13 ridge inclusion + Mg/Si solutes, 45-deg tilted eigenstrain",
+  "protocol": "staircase tau = 30/40/50/60 MPa, 20 ps each, after 10 ps at tau=0",
+  "observable": "dislocation velocity per step; V* = kT dln(v)/dtau; v_physical/v_control",
+  "cases": {
+    "G4_tilted_eps0000": {
+      "state": "running",
+      "started_at": "2026-08-22T17:56:50+03:00"
+    }
+  },
+  "updated_at": "2026-08-22T17:56:50+03:00"
+}
