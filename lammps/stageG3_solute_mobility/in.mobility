@@ -1,0 +1,69 @@
+# Stage G3: dislocation mobility under a STAIRCASE of constant shear stresses.
+# Rationale (docs/reports/stageG_diagnosis_and_pivot_ru.md): a stress RAMP measures
+# an athermal threshold and responds LINEARLY to a small stress change. Holding tau
+# CONSTANT and measuring dislocation velocity gives the thermally activated response
+# v ~ exp(V* tau / kT), whose slope yields the activation volume V* = kT dln(v)/dtau -
+# the amplifier the Stage G lineage was missing. Five steps per run => five v(tau)
+# points from one 130 ps trajectory.
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, SEED
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        SEED index 88004
+# index style so a smoke run can shorten them from the command line
+variable        PRE index 10000          # 10 ps thermalization at tau = 0
+variable        HOLD index 24000         # 24 ps per stress step
+variable        TAU0 index 90            # first step, above tau_pass = 82 MPa
+variable        DTAU index 15            # increment per step (90/105/120/135/150)
+variable        NSTEPS equal v_PRE+5*v_HOLD
+
+read_data       ${DATA_FILE}
+
+# types: 1 = Al, 2 = Mg, 3 = Si  (element order in the library file: Al Si Mg Cu Fe)
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 8.0 units box
+group           bottom region bottom
+region          topgrab block INF INF INF INF 118.0 INF units box
+group           topgrab region topgrab
+group           mobile subtract all bottom
+
+fix             hold bottom setforce 0.0 0.0 0.0
+min_style       cg
+min_modify      dmax 0.1
+thermo          200
+thermo_style    custom step atoms temp pe press pxz
+minimize        1.0e-8 1.0e-10 2000 20000
+
+reset_timestep  0
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+velocity        mobile create 300.0 ${SEED} mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+
+# staircase: tau = 0 during PRE, then TAU0 + DTAU*floor((step-PRE)/HOLD)
+variable        taumpa equal "(step < v_PRE) * 0.0 + (step >= v_PRE) * (v_TAU0 + v_DTAU*floor((step-v_PRE)/v_HOLD))"
+variable        ntop equal count(topgrab)
+# F_atom [eV/A] = tau[MPa]*10[bar/MPa] * Lx*Ly [A^2] * 6.241509e-7 / N_top
+variable        fxa equal 10.0*v_taumpa*lx*ly*6.241509e-7/v_ntop
+fix             pull topgrab addforce v_fxa 0.0 0.0
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz v_taumpa
+dump            d1 all custom 1000 ${OUT_PREFIX}.mobility.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         20000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.mobility.final.data

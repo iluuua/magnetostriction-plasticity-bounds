@@ -1,0 +1,13 @@
+{
+  "created_at": "2026-08-22T16:33:04+03:00",
+  "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageG3_solute_mobility\\20260822-163304",
+  "expected_steps": 130000,
+  "protocol": "staircase tau = 90/105/120/135/150 MPa, 24 ps each, after 10 ps at tau=0",
+  "cases": {
+    "G3_pureAl": {
+      "state": "running",
+      "started_at": "2026-08-22T16:33:04+03:00"
+    }
+  },
+  "updated_at": "2026-08-22T16:33:04+03:00"
+}
