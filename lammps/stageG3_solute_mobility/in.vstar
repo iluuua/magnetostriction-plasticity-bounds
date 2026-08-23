@@ -1,0 +1,92 @@
+# Stage G6: activation-volume measurement. Al + Mg/Si solutes + edge dipole,
+# NO inclusion, NO eigenstrain. Constant-stress staircase ABOVE the solute
+# strength (~38 MPa) and above the 22 MPa dipole passing stress: the partners
+# separate and each line glides steadily against solute friction; v(tau) over
+# four rungs yields V* = kT dln(v)/dtau - the number that closes the two-scale
+# bridge (stageG5) with our own potential instead of literature values.
+#
+# Protocol fixes from the G4 post-mortem (audit g4-results-scrutiny):
+# - rung transitions are SMOOTHSTEP over TRANS steps (a hard step pumped the
+#   slab's standing shear wave resonantly; rung-mean stress was non-monotonic)
+# - the stress axis for the V* fit is the MEASURED rung-mean of the local
+#   monitor (v_tauprobe), not the nominal setting
+# - region bounds match THIS cell (bottom < 8 A frozen, driven slab z > 259 A)
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, SEED
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        SEED index 88004
+variable        PRE index 10000          # 10 ps at tau = 0
+variable        HOLD index 30000         # 30 ps per rung
+variable        TRANS index 4000         # 4 ps smoothstep between rungs
+variable        TAU0 index 45            # rungs: 45/55/65/75 MPa
+variable        DTAU index 10
+variable        NSTEPS equal v_PRE+4*v_HOLD
+
+read_data       ${DATA_FILE}
+
+# types: 1 = Al, 2 = Mg, 3 = Si (element order in the library: Al Si Mg Cu Fe)
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 8.0 units box
+group           bottom region bottom
+region          topgrab block INF INF INF INF 259.0 INF units box
+group           topgrab region topgrab
+group           mobile subtract all bottom
+
+fix             hold bottom setforce 0.0 0.0 0.0
+min_style       cg
+min_modify      dmax 0.1
+thermo          200
+thermo_style    custom step atoms temp pe press pxz
+minimize        1.0e-8 1.0e-10 2000 20000
+
+reset_timestep  0
+# validated KOKKOS neighbor workaround (milestone 2026-06-11)
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+velocity        mobile create 300.0 ${SEED} mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+
+# --- smooth staircase ----------------------------------------------------
+# k = rung index; within the first TRANS steps of each rung tau interpolates
+# from the previous level with smoothstep f^2(3-2f); rung 0 rises from 0.
+variable        sp equal step-v_PRE
+variable        kk equal floor(v_sp/v_HOLD)
+variable        rr equal v_sp-v_kk*v_HOLD
+variable        tprev equal (v_kk>0)*(v_TAU0+v_DTAU*(v_kk-1))
+variable        tbase equal v_TAU0+v_DTAU*v_kk
+variable        ff equal (v_rr<v_TRANS)*(v_rr/v_TRANS)+(v_rr>=v_TRANS)*1.0
+variable        sm equal v_ff*v_ff*(3.0-2.0*v_ff)
+variable        taumpa equal (step>=v_PRE)*(v_tprev+(v_tbase-v_tprev)*v_sm)
+
+variable        ntop equal count(topgrab)
+# F_atom [eV/A] = tau[MPa]*10[bar/MPa] * Lx*Ly[A^2] * 6.241509e-7 / N_top
+variable        fxa equal 10.0*v_taumpa*lx*ly*6.241509e-7/v_ntop
+fix             pull topgrab addforce v_fxa 0.0 0.0
+
+# --- local stress monitor at the probe glide plane (z = 29.2 A) ----------
+region          rprobe block INF INF INF INF 23.0 35.0 units box
+compute         tp all reduce/region rprobe sum c_st[5]
+variable        vprobe equal lx*ly*12.0
+variable        tauprobe equal -c_tp/(v_vprobe*10.0)
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz v_taumpa v_tauprobe
+dump            d1 all custom 1000 ${OUT_PREFIX}.vstar.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         20000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.vstar.final.data

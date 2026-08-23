@@ -157,13 +157,39 @@ def edge_dislocation_disp(dx: np.ndarray, dz: np.ndarray, b: float) -> tuple[np.
 
 
 def dipole_displacement(pos: np.ndarray, lx: float) -> np.ndarray:
+    """Volterra dipole displacement, made EXACTLY x-periodic.
+
+    The truncated image sum is not periodic in x: its end-to-end mismatch
+    u(Lx, z) - u(0, z) contains, besides the physical integer-b slip content,
+    a smooth non-integer residual that grows when the partner separation h is
+    comparable to or larger than Lx. Wrapping atom positions then converts that
+    residual into a REAL spurious dislocation at the periodic seam - this is
+    what annihilated the probe in the first G4 production (audit
+    g4-results-scrutiny, 2026-08-23: 0.94b seam step, dipole dead at frame 0).
+
+    Fix: evaluate the mismatch R(z) analytically with the same truncated sum,
+    keep its integer-lattice part (that IS the dislocation content; b equals
+    the x lattice period, so it is physically invisible), and subtract the
+    non-integer residual as a smooth ramp (x/Lx)*residual(z). The correction
+    is a small affine distortion that relaxes in minimization; the slip steps
+    at the glide-plane cuts are untouched.
+    """
     b = DIPOLE["burgers_A"]
-    disp = np.zeros((len(pos), 2))
-    for sign, p in ((+1.0, DIPOLE["partner_plus"]), (-1.0, DIPOLE["partner_minus"])):
-        for ix in range(-DIPOLE["n_x_images"], DIPOLE["n_x_images"] + 1):
-            ux, uz = edge_dislocation_disp(pos[:, 0] - (p["x"] + ix * lx), pos[:, 2] - p["z"], sign * b)
-            disp[:, 0] += ux
-            disp[:, 1] += uz
+
+    def field(x: np.ndarray, z: np.ndarray) -> np.ndarray:
+        d = np.zeros((len(x), 2))
+        for sign, p in ((+1.0, DIPOLE["partner_plus"]), (-1.0, DIPOLE["partner_minus"])):
+            for ix in range(-DIPOLE["n_x_images"], DIPOLE["n_x_images"] + 1):
+                ux, uz = edge_dislocation_disp(x - (p["x"] + ix * lx), z - p["z"], sign * b)
+                d[:, 0] += ux
+                d[:, 1] += uz
+        return d
+
+    disp = field(pos[:, 0], pos[:, 2])
+    zeros = np.zeros(len(pos))
+    mismatch = field(zeros + lx, pos[:, 2]) - field(zeros, pos[:, 2])
+    mismatch[:, 0] -= b * np.round(mismatch[:, 0] / b)   # keep integer slip content
+    disp -= (pos[:, 0] / lx)[:, None] * mismatch
     disp -= disp.mean(axis=0)
     return disp
 

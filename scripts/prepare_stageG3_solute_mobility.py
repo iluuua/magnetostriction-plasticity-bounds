@@ -47,10 +47,13 @@ from prepare_stageG1_ridge_dipole import (  # noqa: E402
 
 AL_A = 4.05
 NX, NY = 40, 10                 # Lx = 114.55 A, Ly = 49.60 A
-N_LAYERS = 56                   # Lz = 130.9 A
+N_LAYERS = 116                  # Lz = 271.2 A (tall: room for h = 88 layers)
 Z_BOT_FIXED = 8.0               # bottom rigid slab (frozen)
 Z_TOP_GRAB = 12.0               # top slab thickness used to apply the shear
-DIPOLE_DZ_LAYERS = 24           # h = 56.1 A -> tau_pass = 82 MPa
+# h = 88 layers = 205.8 A -> tau_pass = 22 MPa, well below the ~38 MPa solute
+# strength: above ~40 MPa applied the partners separate and each glides
+# steadily against solute friction - the v(tau) regime that yields V*.
+DIPOLE_DZ_LAYERS = 88
 MASSES = {1: 26.981539, 2: 24.305, 3: 28.0855}   # Al, Mg, Si
 CASES = {
     "G3_pureAl":      {"mg_at_pct": 0.0, "si_at_pct": 0.0, "solute_seed": None},
@@ -112,10 +115,12 @@ def main() -> int:
     z_mid = z0 + (N_LAYERS / 2) * D111
     g1.DIPOLE = {
         "burgers_A": PX, "line_axis": "y", "glide_plane": "(111)",
-        # +0.5*D111 puts each glide plane BETWEEN atomic layers; sitting on a
-        # layer drives the Volterra cut through atom positions (min nn 1.40 A).
-        "partner_plus":  {"x": lx * 0.30, "z": z_mid - h / 2 + 0.5 * D111},
-        "partner_minus": {"x": lx * 0.70, "z": z_mid + h / 2 + 0.5 * D111},
+        # STACKED partners (same x) = the stable dipole-wall equilibrium; glide
+        # planes at half-integer layer indices (between atomic layers). Probe
+        # plane z = 29.2 A clears the frozen bottom (8 A); partner plane
+        # z = 235.0 A clears the driven slab (z > 259 A) by 24 A.
+        "partner_plus":  {"x": lx * 0.5, "z": 12.5 * D111},
+        "partner_minus": {"x": lx * 0.5, "z": 100.5 * D111},
         "n_x_images": 3,
     }
     disp = dipole_displacement(base, lx)
