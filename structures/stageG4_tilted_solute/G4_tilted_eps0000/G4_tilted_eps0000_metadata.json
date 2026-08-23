@@ -1,7 +1,7 @@
 {
   "case_id": "G4_tilted_eps0000",
-  "created_at": "2026-08-22T17:47:34+03:00",
-  "git_head_at_generation": "aa4c3abf52808456b48c9a221d33d148baa9ebcf",
+  "created_at": "2026-08-23T16:10:47+03:00",
+  "git_head_at_generation": "a03c4117edd92cf58a7f238c0202f27ad8cf1ea6",
   "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
   "orientation": {
     "x": "[1-10]",
@@ -9,19 +9,19 @@
     "z": "[111]"
   },
   "box_A": {
-    "lx": 114.55129855222069,
-    "ly": 39.68173383308748,
+    "lx": 108.82373362460964,
+    "ly": 64.48281747876715,
     "z_lo": -10.0,
-    "z_hi": 315.59223082615813
+    "z_hi": 175.29611541307906
   },
   "interface_plane_z_A": 20.0,
-  "al_depth_A": 280.59223082615813,
+  "al_depth_A": 140.29611541307906,
   "ridge": {
     "rx_A": 35.0,
     "h_A": 20.0,
-    "center_x_A": 57.27564927611034,
+    "center_x_A": 54.41186681230482,
     "apex_z_A": 40.0,
-    "right_edge_x_A": 92.27564927611034
+    "right_edge_x_A": 89.41186681230482
   },
   "eigenstrain": {
     "eps": 0.0,
@@ -56,47 +56,47 @@
     "Mg_at_pct": 1.0,
     "Si_at_pct": 0.6,
     "seed": 12345,
-    "n_Mg": 733,
-    "n_Si": 440
+    "n_Mg": 537,
+    "n_Si": 322
   },
   "dipole": {
     "burgers_A": 2.863782463805517,
     "line_axis": "y",
     "glide_plane": "(111) parallel to interface",
     "partner_plus": {
-      "x": 104.27564927611034,
+      "x": 101.41186681230482,
       "z": 53.90489455816078
     },
     "partner_minus": {
-      "x": 104.27564927611034,
-      "z": 287.7317535799592
+      "x": 101.41186681230482,
+      "z": 124.05295226470031
     },
     "n_x_images": 3,
-    "separation_z_A": 233.82685902179844,
-    "tau_pass_MPa": 19.776000414138988
+    "separation_z_A": 70.14805770653953,
+    "tau_pass_MPa": 65.92000138046329
   },
   "counts": {
-    "total": 81273,
-    "al_matrix": 73328,
-    "fe_block": 7945,
-    "type_Al": 78245,
-    "type_Fe": 1855,
-    "type_Mg": 733,
-    "type_Si": 440
+    "total": 66698,
+    "al_matrix": 53690,
+    "fe_block": 13008,
+    "type_Al": 62823,
+    "type_Fe": 3016,
+    "type_Mg": 537,
+    "type_Si": 322
   },
   "cleanup": {
-    "removed_al_near_fe": 160,
-    "min_cross_A": 0.2510892876650696,
+    "removed_al_near_fe": 208,
+    "min_cross_A": 0.31367445279646206,
     "fe_seam_dedup": 0
   },
   "seam_check": {
-    "n_atoms": 81273,
+    "n_atoms": 66698,
     "scipy_available": true,
-    "intra_cell_min_nn_A": 1.895385564628195,
-    "seam_min_nn_A": 2.0777247300433928,
-    "overall_min_nn_A": 1.895385564628195,
+    "intra_cell_min_nn_A": 2.073653479070554,
+    "seam_min_nn_A": 2.3644258619029177,
+    "overall_min_nn_A": 2.073653479070554,
     "seam_pairs_lt_1p8_A": 0,
-    "seam_pairs_lt_2p1_A": 2,
+    "seam_pairs_lt_2p1_A": 0,
     "intra_pairs_lt_1p8_A": 0,
     "seam_clean": true
   },
@@ -105,11 +105,11 @@
     "fe_cell_a_x_A": 15.498,
     "fe_cell_b_y_A": 8.0814,
     "n_fe_cells_x": 7,
-    "n_fe_cells_y": 5,
-    "inplane_scale_x": 1.055908583155621,
-    "inplane_scale_y": 0.9820509771348399,
-    "inplane_misfit_x_pct": 5.590858315562097,
-    "inplane_misfit_y_pct": -1.7949022865160091
+    "n_fe_cells_y": 8,
+    "inplane_scale_x": 1.00311315399784,
+    "inplane_scale_y": 0.9973955236525717,
+    "inplane_misfit_x_pct": 0.3113153997839957,
+    "inplane_misfit_y_pct": -0.26044763474283306
   },
   "boundary_conditions": "p p f",
   "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps0000\\G4_tilted_eps0000.start.data"

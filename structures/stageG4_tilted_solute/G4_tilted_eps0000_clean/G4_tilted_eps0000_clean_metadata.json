@@ -1,6 +1,6 @@
 {
-  "case_id": "G4_tilted_eps00194",
-  "created_at": "2026-08-23T16:10:48+03:00",
+  "case_id": "G4_tilted_eps0000_clean",
+  "created_at": "2026-08-23T16:18:11+03:00",
   "git_head_at_generation": "a03c4117edd92cf58a7f238c0202f27ad8cf1ea6",
   "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
   "orientation": {
@@ -24,7 +24,7 @@
     "right_edge_x_A": 89.41186681230482
   },
   "eigenstrain": {
-    "eps": 0.00194,
+    "eps": 0.0,
     "tilt_deg_from_z_toward_x": 45.0,
     "axis_unit_vector": [
       0.7071067811865476,
@@ -34,19 +34,19 @@
     "tensor": "lambda*(1.5 u(x)u - 0.5 I), trace = 0 (volume conserving)",
     "tensor_matrix": [
       [
-        0.00048500000000000046,
         0.0,
-        0.0014550000000000006
-      ],
-      [
         0.0,
-        -0.00097,
         0.0
       ],
       [
-        0.0014550000000000006,
         0.0,
-        0.00048500000000000046
+        -0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
       ]
     ],
     "schmid_on_dipole_plane": 0.5,
@@ -56,8 +56,8 @@
     "Mg_at_pct": 1.0,
     "Si_at_pct": 0.6,
     "seed": 12345,
-    "n_Mg": 537,
-    "n_Si": 322
+    "n_Mg": 0,
+    "n_Si": 0
   },
   "dipole": {
     "burgers_A": 2.863782463805517,
@@ -79,10 +79,10 @@
     "total": 66698,
     "al_matrix": 53690,
     "fe_block": 13008,
-    "type_Al": 62823,
+    "type_Al": 63682,
     "type_Fe": 3016,
-    "type_Mg": 537,
-    "type_Si": 322
+    "type_Mg": 0,
+    "type_Si": 0
   },
   "cleanup": {
     "removed_al_near_fe": 208,
@@ -92,9 +92,9 @@
   "seam_check": {
     "n_atoms": 66698,
     "scipy_available": true,
-    "intra_cell_min_nn_A": 2.03185836161526,
-    "seam_min_nn_A": 2.4010183577485362,
-    "overall_min_nn_A": 2.03185836161526,
+    "intra_cell_min_nn_A": 2.242399151662996,
+    "seam_min_nn_A": 2.270716858023448,
+    "overall_min_nn_A": 2.242399151662996,
     "seam_pairs_lt_1p8_A": 0,
     "seam_pairs_lt_2p1_A": 0,
     "intra_pairs_lt_1p8_A": 0,
@@ -112,5 +112,5 @@
     "inplane_misfit_y_pct": -0.26044763474283306
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps00194\\G4_tilted_eps00194.start.data"
+  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps0000_clean\\G4_tilted_eps0000_clean.start.data"
 }

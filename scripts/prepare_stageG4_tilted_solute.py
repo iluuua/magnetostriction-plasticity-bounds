@@ -48,16 +48,24 @@ from prepare_stageG1_ridge_dipole import (  # noqa: E402
     remove_close_matrix_atoms_pbc, replicate_fe4al13_box, write_json,
 )
 
-NX, NY = 40, 8                   # Lx = 114.55 A, Ly = 39.68 A
+# COMMENSURATE cell: Fe4Al13 in-plane periods are a_x = 15.498, b_y = 8.0814 A.
+# NX = 38 -> Lx = 108.82 A = 7 Fe cells (+0.31% misfit); NY = 13 -> Ly = 64.48 A
+# = 8 Fe cells (-0.26%). The previous 40x8 cell carried +5.59%/-1.79% misfit,
+# i.e. a lattice-mismatch stress 29x LARGER than the magnetostrictive signal -
+# it buried the effect under a ~600 MPa background.
+NX, NY = 38, 13                  # Lx = 108.82 A, Ly = 64.48 A
 Z_SUP = 20.0                     # Fe4Al13 support slab; interface plane
 RIDGE_RX, RIDGE_H = 35.0, 20.0   # ridge apex at z = 40 A
-AL_LAYERS = 120                  # Al up to z = 300.6 A
+AL_LAYERS = 60                   # Al up to z = 160.3 A
 VACUUM_TOP, Z_BOT = 15.0, -10.0
 # The dipole is only a reaction partner; its passing stress must be SMALL compared
 # with the solute strength (~38 MPa for 1.1 at% Mg + 0.7 at% Si) so that what the
 # probe dislocation fights is the solutes, not its own partner.
-# h = 100 layers = 233.8 A -> tau_pass = 20 MPa.
-DIPOLE_DZ_LAYERS = 100
+# h = 80 layers = 187.1 A -> tau_pass = 25 MPa, still far below the ~38 MPa
+# solute strength. (100 layers put the upper partner at z = 287.7 A, i.e. 0.3 A
+# under the driven slab at z > 288 - it would have been dragged by the loading
+# fix instead of gliding freely.)
+DIPOLE_DZ_LAYERS = 30
 TILT_DEG = 45.0                  # eigenstrain axis tilt from z toward x
 MG_AT_PCT, SI_AT_PCT = 1.0, 0.6
 SOLUTE_SEED = 12345
@@ -98,6 +106,11 @@ def write_data(path: Path, pos, types, lx, ly, z_lo, z_hi) -> None:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-root", type=Path, default=OUT_ROOT)
+    ap.add_argument("--no-dipole", action="store_true",
+                    help="omit the dislocation dipole (clean sigma(r) measurement)")
+    ap.add_argument("--no-solutes", action="store_true",
+                    help="omit Mg/Si solutes (they add their own misfit stress)")
+    ap.add_argument("--tag", default="", help="suffix for case names")
     args = ap.parse_args()
 
     g1.NX, g1.NY = NX, NY
@@ -148,17 +161,19 @@ def main() -> int:
         "partner_minus": {"x": cx + RIDGE_RX + 12.0, "z": z_lo_plane + h},
         "n_x_images": 3,
     }
-    disp = dipole_displacement(base, lx)
+    disp = (np.zeros((len(base), 2)) if args.no_dipole
+            else dipole_displacement(base, lx))
 
     # --- solutes: same sites in BOTH cases (identical atom sets) ------------
     rng = np.random.default_rng(SOLUTE_SEED)
     matrix_idx = np.where((~fe_block) & (base[:, 2] > Z_SUP + 6.0) & (base[:, 2] < z_al_top - 8.0))[0]
     n_mg = int(round(n_al * MG_AT_PCT / 100.0))
     n_si = int(round(n_al * SI_AT_PCT / 100.0))
-    pick = rng.choice(matrix_idx, size=n_mg + n_si, replace=False)
     types = types0.copy()
-    types[pick[:n_mg]] = 3
-    types[pick[n_mg:]] = 4
+    if not args.no_solutes:
+        pick = rng.choice(matrix_idx, size=n_mg + n_si, replace=False)
+        types[pick[:n_mg]] = 3
+        types[pick[n_mg:]] = 4
 
     # --- tilted, VOLUME-CONSERVING magnetostrictive eigenstrain ------------
     # Magnetostriction strains the crystal along the magnetization without
@@ -182,7 +197,7 @@ def main() -> int:
         pos[:, 0] %= lx
         pos[:, 1] %= ly
 
-        case = f"G4_tilted_{label}"
+        case = f"G4_tilted_{label}{args.tag}"
         out_dir = args.out_root / case
         out_dir.mkdir(parents=True, exist_ok=True)
         data_file = out_dir / f"{case}.start.data"

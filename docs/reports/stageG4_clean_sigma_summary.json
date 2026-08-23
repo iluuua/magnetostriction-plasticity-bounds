@@ -1,0 +1,37 @@
+{
+  "created_at": "2026-08-23",
+  "cell": "Al matrix + Fe4Al13 ridge inclusion, NO dislocations, NO solutes, 66698 atoms",
+  "commensurate_misfit_pct": {
+    "x": 0.31,
+    "y": -0.26
+  },
+  "eigenstrain": {
+    "eps": 0.00194,
+    "tilt_deg": 45,
+    "tensor": "lambda(1.5 uu - 0.5 I), trace 0",
+    "shear_component": 0.001455
+  },
+  "method": "CG minimization only (no thermal noise, no dynamics); per-atom virial averaged as a TENSOR per 4 A bin, invariant formed after averaging",
+  "max_delta_vm_at_interface_MPa": 19.47893665585559,
+  "delta_sxz_first_bins_MPa": [
+    6.61,
+    5.62,
+    4.6
+  ],
+  "decay_length_A": 60,
+  "delta_beyond_60A_MPa": {
+    "mean": -0.5729508869804913,
+    "std": 2.1412772447299733
+  },
+  "background_vm_control_MPa": {
+    "at_interface": 74.33468532379246,
+    "far_field": 24.4799937379302
+  },
+  "rescaled_to_real_magnetostriction": {
+    "20ppm": 0.201,
+    "40ppm": 0.402,
+    "100ppm": 1.005
+  },
+  "csv": "docs/reports/stageG4_clean_sigma_profile.csv",
+  "verdict": "At eps = 1940 ppm (19-97x the largest measured Fe-Al magnetostriction) the interface stress increment is only 19.5 MPa in von Mises and 6.6 MPa in shear, decaying to the +-2 MPa noise floor within 60 A. Rescaled to a defensible lambda_s = 40 ppm this is 0.40 MPa. The two-scale bridge requires 9-41 MPa to explain the +25% creep, so the magnetostrictive channel falls short by a factor of 20-100."
+}
