@@ -1,0 +1,58 @@
+{
+  "tag": "pureAl",
+  "dump": "runs\\stageG6_vstar\\20260823-174823\\G3_pureAl\\G3_pureAl.vstar.lammpstrj",
+  "n_frames": 131,
+  "created_at": "2026-08-24T20:20:21+03:00",
+  "quiet_box": {
+    "x0": 5.0,
+    "x1": 45.0,
+    "z0": 60.0,
+    "z1": 115.0
+  },
+  "rungs": [
+    {
+      "nominal_MPa": 45,
+      "tau_actual_MPa": -133.00875286558977,
+      "tau_actual_sem_MPa": 18.562689952342417,
+      "v_A_per_ps": 0.6234622599292603,
+      "v_sem_A_per_ps": 0.7001410430275248,
+      "v_m_per_s": 62.34622599292603,
+      "autocorr_rho": 0.8775279047310636,
+      "n_frames": 25,
+      "displacement_A": 5.890585500558657
+    },
+    {
+      "nominal_MPa": 55,
+      "tau_actual_MPa": -188.13327681131878,
+      "tau_actual_sem_MPa": 9.010859691211182,
+      "v_A_per_ps": -0.7239594478351732,
+      "v_sem_A_per_ps": 0.23262550221677866,
+      "v_m_per_s": -72.39594478351732,
+      "autocorr_rho": 0.7958768725213835,
+      "n_frames": 25,
+      "displacement_A": -18.523972759467078
+    },
+    {
+      "nominal_MPa": 65,
+      "tau_actual_MPa": -228.64150571279103,
+      "tau_actual_sem_MPa": 8.298381811085793,
+      "v_A_per_ps": 1.0570490548240015,
+      "v_sem_A_per_ps": 0.12367749676948454,
+      "v_m_per_s": 105.70490548240015,
+      "autocorr_rho": 0.6272049000874319,
+      "n_frames": 25,
+      "displacement_A": 20.752282829962027
+    },
+    {
+      "nominal_MPa": 75,
+      "tau_actual_MPa": -271.6033658901579,
+      "tau_actual_sem_MPa": 5.137924093383607,
+      "v_A_per_ps": -0.2170639698346833,
+      "v_sem_A_per_ps": 0.2723206980113356,
+      "v_m_per_s": -21.70639698346833,
+      "autocorr_rho": 0.8657008470257574,
+      "n_frames": 25,
+      "displacement_A": -3.171107368021225
+    }
+  ]
+}
