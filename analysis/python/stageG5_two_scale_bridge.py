@@ -89,7 +89,7 @@ def main() -> int:
         }
 
     # what real Fe-Al magnetostriction can produce in the matrix
-    for lam in (2e-5, 4e-5, 1e-4, 1.5e-4):
+    for lam in (2e-5, 4e-5, 1e-4):  # .0e formatting collides 1.5e-4 with 1e-4
         res["what_real_magnetostriction_gives"][f"lambda_s={lam:.0e}"] = {
             "sigma_matrix_MPa": round(2 * MU_AL * lam / 1e6, 2),
             "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)",

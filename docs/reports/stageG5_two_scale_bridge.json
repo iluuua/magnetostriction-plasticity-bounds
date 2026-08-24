@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-08-25T01:53:22+03:00",
+  "created_at": "2026-08-25T01:53:55+03:00",
   "model": "Eshelby r^-3 exterior field + thermally activated glide; <rate>/rate0 - 1 = f*x0*INT_0^x0 (cosh u - 1)/u^2 du, x0 = V* sigma_m / kT",
   "constants": {
     "kT_300K_J": 4.141947e-21,
@@ -54,7 +54,7 @@
       "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)"
     },
     "lambda_s=1e-04": {
-      "sigma_matrix_MPa": 7.95,
+      "sigma_matrix_MPa": 5.3,
       "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)"
     }
   },
@@ -67,5 +67,5 @@
     "lambda_s=4e-05": 2.81,
     "lambda_s=1e-04": 7.02
   },
-  "verdict": "The experiment requires sigma_m = 9-41 MPa. Real Fe-Al magnetostriction supplies 1.1-8.0 MPa. The manuscript's 147 MPa overshoots the requirement by 3.6-17x and, fed forward, predicts enhancements of order 1e6-1e31 instead of 25%. Two independent routes therefore place the true interface stress at a few to a few tens of MPa."
+  "verdict": "The experiment requires sigma_m = 9-41 MPa. Real Fe-Al magnetostriction supplies 1.1-5.3 MPa. The manuscript's 147 MPa overshoots the requirement by 3.6-17x and, fed forward, predicts enhancements of order 1e6-1e31 instead of 25%. Two independent routes therefore place the true interface stress at a few to a few tens of MPa."
 }
