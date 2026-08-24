@@ -5,9 +5,54 @@
   "protocol": "staircase tau = 90/105/120/135/150 MPa, 24 ps each, after 10 ps at tau=0",
   "cases": {
     "G3_pureAl": {
-      "state": "running",
-      "started_at": "2026-08-22T16:33:04+03:00"
+      "state": "failed",
+      "started_at": "2026-08-22T16:33:04+03:00",
+      "cmd": [
+        "B:\\builds\\lammps-kokkos-cuda-cuda124-msvc1439\\build\\lmp_kokkos_cuda.exe",
+        "-k",
+        "on",
+        "g",
+        "1",
+        "-sf",
+        "kk",
+        "-pk",
+        "kokkos",
+        "newton",
+        "on",
+        "neigh",
+        "half",
+        "gpu/aware",
+        "off",
+        "-in",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\lammps\\stageG3_solute_mobility\\in.mobility",
+        "-log",
+        "log.lammps",
+        "-var",
+        "DATA_FILE",
+        "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG3_solute_mobility\\G3_pureAl\\G3_pureAl.start.data",
+        "-var",
+        "POT_DIR",
+        "C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012",
+        "-var",
+        "OUT_PREFIX",
+        "G3_pureAl"
+      ],
+      "returncode": 1,
+      "gates": {
+        "log_exists": true,
+        "has_error": false,
+        "lost_atoms": false,
+        "gpu_crash": false,
+        "completed": false,
+        "last_step": 3600,
+        "last_temp_K": 276.47527,
+        "final_tau_MPa": 0.0,
+        "atoms_constant": true,
+        "reached_final": false,
+        "pass": false
+      },
+      "finished_at": "2026-08-22T16:56:47+03:00"
     }
   },
-  "updated_at": "2026-08-22T16:33:04+03:00"
+  "updated_at": "2026-08-22T16:56:47+03:00"
 }

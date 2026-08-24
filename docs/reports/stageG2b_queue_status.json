@@ -11,10 +11,15 @@
       "finished_at": "2026-08-20T18:39:41+03:00"
     },
     "g2b-r90001": {
-      "state": "running",
-      "started_at": "2026-08-22T03:11:36+03:00"
+      "state": "failed",
+      "started_at": "2026-08-22T03:11:36+03:00",
+      "returncode": 3,
+      "stdout_tail": "[2026-08-22T03:11:36+03:00] START G2_shear_eps00194/production on gpu\n[2026-08-22T15:51:57+03:00] DONE  G2_shear_eps00194/production: failed (perf=None ns/day, T=293.83068)\n",
+      "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageG1_ridge_dipole\\20260820-183942",
+      "verdict": "production_failed_G2_shear_eps00194",
+      "finished_at": "2026-08-22T15:51:58+03:00"
     }
   },
   "resumed_at": "2026-08-22T03:11:36+03:00",
-  "updated_at": "2026-08-22T03:11:36+03:00"
+  "updated_at": "2026-08-22T15:51:58+03:00"
 }
