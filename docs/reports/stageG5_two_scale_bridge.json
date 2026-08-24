@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-08-22T19:15:32+03:00",
+  "created_at": "2026-08-25T01:53:22+03:00",
   "model": "Eshelby r^-3 exterior field + thermally activated glide; <rate>/rate0 - 1 = f*x0*INT_0^x0 (cosh u - 1)/u^2 du, x0 = V* sigma_m / kT",
   "constants": {
     "kT_300K_J": 4.141947e-21,
