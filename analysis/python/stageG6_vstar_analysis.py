@@ -19,7 +19,7 @@ from pathlib import Path
 import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-LX = 108.8237
+LX = 114.5513   # G6 cell Lx (40*PX); the G4 cell is 108.8237 - do not mix
 KT = 1.380649e-23 * 300.0
 B_M = 4.05e-10 / math.sqrt(2.0)
 V_AT = 16.6072
