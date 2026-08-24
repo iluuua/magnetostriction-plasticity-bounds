@@ -1,0 +1,217 @@
+{
+  "created_at": "2026-08-25T02:04:26+03:00",
+  "method": "Delta sigma_ij = sigma(field) - sigma(control), tensor-averaged per 4 A bin; RSS maximized over the 12 fcc {111}<110> systems in the lab frame x=[1-10] y=[11-2] z=[111]",
+  "note": "vM_of_difference is the invariant OF the difference tensor, which is NOT the difference of the two von Mises values reported earlier",
+  "eigenstrain_used": 0.00194,
+  "peak": {
+    "r_A": 30.0,
+    "max_RSS_MPa": 6.26,
+    "system": "(111)[1-10]",
+    "vM_of_difference_MPa": 11.303,
+    "d_sigma_xz_MPa": 6.26,
+    "n_atoms": 1183
+  },
+  "far_field_beyond_60A": {
+    "mean_max_RSS_MPa": 0.486,
+    "std_MPa": 0.548
+  },
+  "peak_rescaled_to_real_magnetostriction_MPa": {
+    "20 ppm": 0.0645,
+    "40 ppm": 0.1291,
+    "100 ppm": 0.3227
+  },
+  "profile": [
+    {
+      "r_A": 26.0,
+      "max_RSS_MPa": 5.104,
+      "system": "(111)[1-10]",
+      "vM_of_difference_MPa": 9.761,
+      "d_sigma_xz_MPa": 5.104,
+      "n_atoms": 1781
+    },
+    {
+      "r_A": 30.0,
+      "max_RSS_MPa": 6.26,
+      "system": "(111)[1-10]",
+      "vM_of_difference_MPa": 11.303,
+      "d_sigma_xz_MPa": 6.26,
+      "n_atoms": 1183
+    },
+    {
+      "r_A": 34.0,
+      "max_RSS_MPa": 3.721,
+      "system": "(111)[01-1]",
+      "vM_of_difference_MPa": 7.42,
+      "d_sigma_xz_MPa": 3.605,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 38.0,
+      "max_RSS_MPa": 1.834,
+      "system": "(111)[01-1]",
+      "vM_of_difference_MPa": 3.639,
+      "d_sigma_xz_MPa": 1.559,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 42.0,
+      "max_RSS_MPa": 1.539,
+      "system": "(-11-1)[011]",
+      "vM_of_difference_MPa": 3.929,
+      "d_sigma_xz_MPa": 0.57,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 46.0,
+      "max_RSS_MPa": 1.807,
+      "system": "(-11-1)[011]",
+      "vM_of_difference_MPa": 6.009,
+      "d_sigma_xz_MPa": 0.163,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 50.0,
+      "max_RSS_MPa": 2.172,
+      "system": "(-11-1)[011]",
+      "vM_of_difference_MPa": 7.916,
+      "d_sigma_xz_MPa": 0.007,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 54.0,
+      "max_RSS_MPa": 2.283,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 8.378,
+      "d_sigma_xz_MPa": -0.005,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 58.0,
+      "max_RSS_MPa": 2.19,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 8.031,
+      "d_sigma_xz_MPa": -0.001,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 62.0,
+      "max_RSS_MPa": 1.87,
+      "system": "(-1-11)[101]",
+      "vM_of_difference_MPa": 6.864,
+      "d_sigma_xz_MPa": 0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 66.0,
+      "max_RSS_MPa": 1.443,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 5.298,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 70.0,
+      "max_RSS_MPa": 1.114,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 4.092,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 74.0,
+      "max_RSS_MPa": 0.815,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 2.994,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 78.0,
+      "max_RSS_MPa": 0.484,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 1.778,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 82.0,
+      "max_RSS_MPa": 0.294,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 1.081,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 86.0,
+      "max_RSS_MPa": 0.164,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 0.603,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 90.0,
+      "max_RSS_MPa": 0.063,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 0.23,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 94.0,
+      "max_RSS_MPa": 0.034,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 0.125,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 98.0,
+      "max_RSS_MPa": 0.048,
+      "system": "(1-1-1)[101]",
+      "vM_of_difference_MPa": 0.175,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 102.0,
+      "max_RSS_MPa": 0.085,
+      "system": "(1-1-1)[101]",
+      "vM_of_difference_MPa": 0.313,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 106.0,
+      "max_RSS_MPa": 0.151,
+      "system": "(-1-11)[011]",
+      "vM_of_difference_MPa": 0.554,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 110.0,
+      "max_RSS_MPa": 0.202,
+      "system": "(1-1-1)[101]",
+      "vM_of_difference_MPa": 0.743,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 988
+    },
+    {
+      "r_A": 114.0,
+      "max_RSS_MPa": 0.245,
+      "system": "(1-1-1)[110]",
+      "vM_of_difference_MPa": 0.901,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    },
+    {
+      "r_A": 118.0,
+      "max_RSS_MPa": 0.28,
+      "system": "(1-1-1)[101]",
+      "vM_of_difference_MPa": 1.028,
+      "d_sigma_xz_MPa": -0.0,
+      "n_atoms": 1976
+    }
+  ]
+}
