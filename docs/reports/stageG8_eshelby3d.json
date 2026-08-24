@@ -1,0 +1,98 @@
+{
+  "created_at": "2026-08-25T02:41:22+03:00",
+  "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a compact 3D particle carrying the same eigenstrain?",
+  "elastic_constants": {
+    "mu_GPa": 26.5,
+    "nu": 0.347
+  },
+  "eigenstrain": {
+    "amplitude": 0.00194,
+    "tilt_deg": 45.0,
+    "form": "lambda*(1.5 u(x)u - 0.5 I), trace 0"
+  },
+  "interior_stress_MPa": {
+    "sphere_3D": {
+      "tensor": [
+        [
+          -13.82,
+          0.0,
+          -41.45
+        ],
+        [
+          0.0,
+          27.63,
+          0.0
+        ],
+        [
+          -41.45,
+          0.0,
+          -13.82
+        ]
+      ],
+      "max_RSS_MPa": 41.45,
+      "system": "(111)[1-10]"
+    },
+    "cylinder_2D_along_y": {
+      "tensor": [
+        [
+          -50.66,
+          0.0,
+          -29.52
+        ],
+        [
+          0.0,
+          34.09,
+          0.0
+        ],
+        [
+          -29.52,
+          0.0,
+          -50.66
+        ]
+      ],
+      "max_RSS_MPa": 42.75,
+      "system": "(-11-1)[110]"
+    }
+  },
+  "ratio_sphere_over_cylinder": 0.97,
+  "exterior_decay_sphere": [
+    {
+      "r_over_a": 1.05,
+      "max_RSS_MPa": 47.427,
+      "system": "(111)[1-10]"
+    },
+    {
+      "r_over_a": 1.2,
+      "max_RSS_MPa": 24.676,
+      "system": "(111)[1-10]"
+    },
+    {
+      "r_over_a": 1.5,
+      "max_RSS_MPa": 11.34,
+      "system": "(111)[1-10]"
+    },
+    {
+      "r_over_a": 2.0,
+      "max_RSS_MPa": 4.751,
+      "system": "(111)[1-10]"
+    },
+    {
+      "r_over_a": 3.0,
+      "max_RSS_MPa": 1.429,
+      "system": "(111)[1-10]"
+    }
+  ],
+  "md_ridge_measurement_MPa": {
+    "peak_max_RSS": 6.26,
+    "at_r_A": 30.0,
+    "source": "stageG4_rss_profile.json"
+  },
+  "rescaled_to_real_magnetostriction": {
+    "sphere_interior_MPa": {
+      "20 ppm": 0.427,
+      "40 ppm": 0.855,
+      "100 ppm": 2.137
+    }
+  },
+  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 42.7 MPa for the infinite cylinder, a ratio of 0.97. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell measured 6.26 MPa at 30 A from the interface, i.e. the same order as the 3D exterior field at comparable relative distance, so the ridge geometry does not inflate the driving stress; rescaled to realistic magnetostriction the 3D interior value itself is 0.85 MPa at 40 ppm."
+}

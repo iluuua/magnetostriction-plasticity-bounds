@@ -59,6 +59,11 @@ CASES = {
     "G3_pureAl":      {"mg_at_pct": 0.0, "si_at_pct": 0.0, "solute_seed": None},
     "G3_solute_relA": {"mg_at_pct": 1.0, "si_at_pct": 0.6, "solute_seed": 12345},
     "G3_solute_relB": {"mg_at_pct": 1.0, "si_at_pct": 0.6, "solute_seed": 67890},
+    # replicas requested by the external review: three to five independent
+    # solute realizations are needed before any threshold can be quoted as
+    # a material property rather than as "observed in this realization"
+    "G3_solute_relC": {"mg_at_pct": 1.0, "si_at_pct": 0.6, "solute_seed": 24680},
+    "G3_solute_relD": {"mg_at_pct": 1.0, "si_at_pct": 0.6, "solute_seed": 13579},
 }
 OUT_ROOT = REPO_ROOT / "structures" / "stageG3_solute_mobility"
 

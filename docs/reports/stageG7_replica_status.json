@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-08-25T02:29:56+03:00",
+  "run_root": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\runs\\stageG7_replicas\\20260825-022956",
+  "cases": {
+    "G3_solute_relB": {
+      "state": "running",
+      "started_at": "2026-08-25T02:29:56+03:00"
+    }
+  },
+  "protocol": "same staircase as G6: 10 ps at tau=0, then 45/55/65/75 MPa, 30 ps per rung with 4 ps smoothstep onsets, 130 ps total",
+  "updated_at": "2026-08-25T02:29:56+03:00"
+}
