@@ -37,6 +37,7 @@ REPORTS = REPO / "docs" / "reports"
 PAPER = REPO / "docs" / "paper"
 PRE, HOLD = 10000, 30000
 RUNGS = [45, 55, 65, 75]
+ETA_RETAINED = 0.30   # stageG12: fraction of the imposed mode the ridge keeps
 A_RIDGE = 35.0          # ridge half-width, A
 RIDGE_H = 20.0          # ridge height above the flat interface, A
 EPS_INFLATED = 1.94e-3
@@ -50,7 +51,8 @@ L = {
         ctl="control ($\\varepsilon^*=0$)", fld="field ($\\varepsilon^*=1.94\\times10^{-3}$)",
         rss="RSS$_{\\max}$ of $\\Delta\\sigma_{ij}$", vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
         noise="noise floor measured beyond 60 Å",
-        apex="ridge flank ($r$ ill-defined):\nRSS$_{\\max}$ up to %.0f MPa",
+        apex="bins straddling the ridge flank are excluded from the plot\n"
+             "(diagnostic range 19-%.0f MPa; not a field measurement)",
         f2title="Dislocation trajectories in Al–Mg–Si under a constant-stress staircase",
         f2x="time (ps)", f2y="displacement along the glide direction (Å)",
         probe="probe line (lower plane)", partner="reaction partner (upper plane)",
@@ -60,9 +62,9 @@ L = {
         f3y="field-induced RSS$_{\\max}$ (MPa)",
         md="MD ridge, $\\varepsilon^*=1.94\\times10^{-3}$",
         esh="3D Eshelby sphere, same $\\varepsilon^*$",
-        resc="MD ridge rescaled to $\\lambda_s=100$ ppm",
-        flank="ridge flank, $d\\lesssim4$ Å",
-        thr=["solute pinning 75 MPa", "dipole motion 77–86 MPa",
+        resc="rescaled to $\\lambda_s=100$ ppm on the retained\namplitude $\\eta\\varepsilon^*$, $\\eta=0.30$",
+        flank="excluded diagnostic flank bins (19-80 MPa),\nnot a field measurement",
+        thr=["no depinning through 75 MPa - lower bound",
              "interface nucleation 195 MPa"],
     ),
     "ru": dict(
@@ -76,7 +78,8 @@ L = {
         rss="RSS$_{\\max}$ тензора $\\Delta\\sigma_{ij}$",
         vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
         noise="шумовой уровень за 60 Å",
-        apex="фланг гребня ($r$ не определено):\nRSS$_{\\max}$ до %.0f МПа",
+        apex="бины, седлающие фланг гребня, исключены\n"
+             "(диагностический разброс 19-%.0f МПа, не измерение поля)",
         f2title="Траектории дислокаций в Al–Mg–Si при ступенчатом нагружении",
         f2x="время, пс",
         f2y="смещение вдоль направления скольжения, Å",
@@ -88,9 +91,9 @@ L = {
         f3y="вызванное полем RSS$_{\\max}$, МПа",
         md="MD, гребень, $\\varepsilon^*=1{,}94\\times10^{-3}$",
         esh="3D-сфера Эшелби, та же $\\varepsilon^*$",
-        resc="пересчёт MD на $\\lambda_s=100$ ppm",
-        flank="фланг гребня, $d\\lesssim4$ Å",
-        thr=["закрепление на примесях 75 МПа",
+        resc="пересчёт на $\\lambda_s=100$ ppm по удержанной\nамплитуде $\\eta\\varepsilon^*$, $\\eta=0{,}30$",
+        flank="исключённые диагностические бины фланга\n(19-80 МПа), не измерение поля",
+        thr=["открепления не было до 75 МПа - нижняя граница",
              "движение диполя 77–86 МПа",
              "зарождение на границе 195 МПа"],
     ),
@@ -136,10 +139,8 @@ def fig_sigma(lang: str) -> None:
     a2.legend(fontsize=9, loc="upper right")
     a2.set_xlim(r[ok].min() - 3, r.max() + 3)
     flank_max = max(x["max_RSS_MPa"] for x in d["apex_straddling_bins_excluded"])
-    a2.annotate(t["apex"] % flank_max, xy=(r[ok].min(), rss[ok][0]),
-                xytext=(r[ok].min() + 14, 26), fontsize=8.5, color="#c07000",
-                ha="left", va="center",
-                arrowprops=dict(arrowstyle="->", color="#c07000", lw=1.0))
+    a2.text(0.015, 0.035, t["apex"] % flank_max, transform=a2.transAxes,
+            fontsize=8.2, color="#c07000", ha="left", va="bottom")
     fig.tight_layout()
     for ext in ("png", "pdf"):
         fig.savefig(PAPER / ("fig_sigma_profile_%s.%s" % (lang, ext)), dpi=150)
@@ -205,7 +206,7 @@ def fig_rss(lang: str) -> None:
     ed = np.array([(x["r_over_a"] - 1.0) * A_RIDGE for x in esh["exterior_decay_sphere"]])
     ev = np.array([x["max_RSS_MPa"] for x in esh["exterior_decay_sphere"]])
 
-    scale = 1e-4 / EPS_INFLATED
+    scale = 1e-4 / (ETA_RETAINED * EPS_INFLATED)
     fig, ax = plt.subplots(figsize=(7.2, 4.9))
     ax.semilogy(dd, np.maximum(rss, 1e-3), "o-", ms=4.5, color="#3b8b52", label=t["md"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
@@ -213,7 +214,7 @@ def fig_rss(lang: str) -> None:
                 alpha=0.6, label=t["resc"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
-    for y, ytxt, lbl, col in zip((75, 86, 195), (0.60, 1.16, 1.16), t["thr"],
+    for y, ytxt, lbl, col in zip((75, 86, 195), (0.52, 1.10, 1.28), t["thr"],
                                  ("#444444", "#777777", "#aa2222")):
         ax.axhline(y, ls="--", lw=1.1, color=col)
         ax.text(73, y * ytxt, lbl, fontsize=8, color=col, ha="right")
