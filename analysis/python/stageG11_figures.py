@@ -60,11 +60,12 @@ L = {
         f3title="Field-induced driving stress against the thresholds it must overcome",
         f3x="distance from the nearest inclusion surface, $d$ (Å)",
         f3y="field-induced RSS$_{\\max}$ (MPa)",
-        md="MD ridge, $\\varepsilon^*=1.94\\times10^{-3}$",
-        esh="3D Eshelby sphere, same $\\varepsilon^*$",
+        md="MD ridge, relaxed response to the same\ninitial affine perturbation",
+        esh="3D Eshelby sphere, maintained $\\varepsilon^*=1.94\\times10^{-3}$",
         resc="rescaled to $\\lambda_s=100$ ppm on the retained\namplitude $\\eta\\varepsilon^*$, $\\eta=0.30$",
         flank="excluded diagnostic flank bins (19-80 MPa),\nnot a field measurement",
         thr=["no depinning through 75 MPa - lower bound",
+             "dipole motion 77-86 MPa",
              "interface nucleation 195 MPa"],
     ),
     "ru": dict(
@@ -89,8 +90,8 @@ L = {
         f3title="Вызванное полем напряжение и пороги, которые оно должно преодолеть",
         f3x="расстояние от ближайшей поверхности включения, $d$ (Å)",
         f3y="вызванное полем RSS$_{\\max}$, МПа",
-        md="MD, гребень, $\\varepsilon^*=1{,}94\\times10^{-3}$",
-        esh="3D-сфера Эшелби, та же $\\varepsilon^*$",
+        md="MD, гребень: релаксированный отклик\nна то же начальное возмущение",
+        esh="3D-сфера Эшелби, поддерживаемая $\\varepsilon^*=1{,}94\\times10^{-3}$",
         resc="пересчёт на $\\lambda_s=100$ ppm по удержанной\nамплитуде $\\eta\\varepsilon^*$, $\\eta=0{,}30$",
         flank="исключённые диагностические бины фланга\n(19-80 МПа), не измерение поля",
         thr=["открепления не было до 75 МПа - нижняя граница",
@@ -210,8 +211,6 @@ def fig_rss(lang: str) -> None:
     fig, ax = plt.subplots(figsize=(7.2, 4.9))
     ax.semilogy(dd, np.maximum(rss, 1e-3), "o-", ms=4.5, color="#3b8b52", label=t["md"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
-    ax.semilogy(dd, np.maximum(rss * scale, 1e-4), "o:", ms=3.5, color="#3b8b52",
-                alpha=0.6, label=t["resc"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
     for y, ytxt, lbl, col in zip((75, 86, 195), (0.52, 1.10, 1.28), t["thr"],
