@@ -46,9 +46,10 @@ L = {
     "en": dict(
         f1title="Stress decay from the Al$_{13}$Fe$_4$/Al interface\n"
                 "(clean cell: no dislocations, no solutes, energy-minimised)",
-        f1y1="von Mises stress (MPa)", f1y2="field-induced increment (MPa)",
+        f1y1="von Mises stress (MPa)", f1y2="affine-surrogate stress difference (MPa)",
         f1x="distance from the flat interface, $r$ (Å)",
-        ctl="control ($\\varepsilon^*=0$)", fld="field ($\\varepsilon^*=1.94\\times10^{-3}$)",
+        ctl="control ($\\lambda_s=0$)",
+        fld="affine-perturbed ($\\lambda_{\\mathrm{nom}}=1.94\\times10^{-3}$)",
         rss="RSS$_{\\max}$ of $\\Delta\\sigma_{ij}$", vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
         noise="noise floor measured beyond 60 Å",
         apex="bins straddling the ridge flank are excluded from the plot\n"
@@ -57,14 +58,14 @@ L = {
         f2x="time (ps)", f2y="displacement along the glide direction (Å)",
         probe="probe line (lower plane)", partner="reaction partner (upper plane)",
         noload="no load", mpa="MPa",
-        f3title="Field-induced driving stress against the thresholds it must overcome",
+        f3title="Affine-surrogate and maintained-eigenstrain stress bounds",
         f3x="distance from the nearest inclusion surface, $d$ (Å)",
-        f3y="field-induced RSS$_{\\max}$ (MPa)",
-        md="MD ridge, relaxed response to the same\ninitial affine perturbation",
-        esh="3D Eshelby sphere, maintained $\\varepsilon^*=1.94\\times10^{-3}$",
-        resc="rescaled to $\\lambda_s=100$ ppm on the retained\namplitude $\\eta\\varepsilon^*$, $\\eta=0.30$",
+        f3y="RSS$_{\\max}$ of the stress difference (MPa)",
+        md="MD ridge, relaxed response at $\\lambda_{\\mathrm{nom}}$\n(diagnostic, inflated amplitude)",
+        esh="3D Eshelby sphere, maintained $\\lambda_{\\mathrm{nom}}$\n(diagnostic, inflated amplitude)",
+        resc="Eshelby sphere at $\\lambda_s=100$ ppm\n(physical: peak 2.4 MPa)",
         flank="excluded diagnostic flank bins (19-80 MPa),\nnot a field measurement",
-        thr=["no depinning through 75 MPa - lower bound",
+        thr=["no depinning through 75 MPa ($\\pm$22, dipole)",
              "dipole motion 77-86 MPa",
              "interface nucleation 195 MPa"],
     ),
@@ -72,10 +73,10 @@ L = {
         f1title="Затухание напряжения от границы Al$_{13}$Fe$_4$/Al\n"
                 "(чистая ячейка: без дислокаций и примесей, минимизация)",
         f1y1="напряжение фон Мизеса, МПа",
-        f1y2="приращение от поля, МПа",
+        f1y2="приращение после аффинного возмущения, МПа",
         f1x="расстояние от плоской границы, $r$ (Å)",
-        ctl="контроль ($\\varepsilon^*=0$)",
-        fld="поле ($\\varepsilon^*=1{,}94\\times10^{-3}$)",
+        ctl="контроль ($\\lambda_s=0$)",
+        fld="аффинное возмущение\n($\\lambda_{\\mathrm{nom}}=1{,}94\\times10^{-3}$)",
         rss="RSS$_{\\max}$ тензора $\\Delta\\sigma_{ij}$",
         vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
         noise="шумовой уровень за 60 Å",
@@ -87,14 +88,14 @@ L = {
         probe="дислокация-зонд (нижняя плоскость)",
         partner="партнёр (верхняя плоскость)",
         noload="без нагрузки", mpa="МПа",
-        f3title="Вызванное полем напряжение и пороги, которые оно должно преодолеть",
+        f3title="Оценки напряжения: аффинный суррогат и поддерживаемая деформация",
         f3x="расстояние от ближайшей поверхности включения, $d$ (Å)",
-        f3y="вызванное полем RSS$_{\\max}$, МПа",
-        md="MD, гребень: релаксированный отклик\nна то же начальное возмущение",
-        esh="3D-сфера Эшелби, поддерживаемая $\\varepsilon^*=1{,}94\\times10^{-3}$",
-        resc="пересчёт на $\\lambda_s=100$ ppm по удержанной\nамплитуде $\\eta\\varepsilon^*$, $\\eta=0{,}30$",
+        f3y="RSS$_{\\max}$ разностного тензора, МПа",
+        md="MD, гребень: релаксированный отклик при\n$\\lambda_{\\mathrm{nom}}$ (диагностика, завышенная амплитуда)",
+        esh="3D-сфера Эшелби, поддерживаемая $\\lambda_{\\mathrm{nom}}$\n(диагностика, завышенная амплитуда)",
+        resc="сфера Эшелби при $\\lambda_s=100$ ppm\n(физическая: пик 2{,}4 МПа)",
         flank="исключённые диагностические бины фланга\n(19-80 МПа), не измерение поля",
-        thr=["открепления не было до 75 МПа - нижняя граница",
+        thr=["открепления не было до 75 МПа ($\\pm$22, диполь)",
              "движение диполя 77–86 МПа",
              "зарождение на границе 195 МПа"],
     ),
@@ -207,13 +208,19 @@ def fig_rss(lang: str) -> None:
     ed = np.array([(x["r_over_a"] - 1.0) * A_RIDGE for x in esh["exterior_decay_sphere"]])
     ev = np.array([x["max_RSS_MPa"] for x in esh["exterior_decay_sphere"]])
 
-    scale = 1e-4 / (ETA_RETAINED * EPS_INFLATED)
-    fig, ax = plt.subplots(figsize=(7.2, 4.9))
+    # the physical curve: the maintained-eigenstrain solution rescaled from the
+    # inflated nominal amplitude to a measured Fe-Al magnetostriction
+    phys = ev * (1e-4 / EPS_INFLATED)
+    fig, ax = plt.subplots(figsize=(7.2, 5.2))
     ax.semilogy(dd, np.maximum(rss, 1e-3), "o-", ms=4.5, color="#3b8b52", label=t["md"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
+    ax.semilogy(ed, phys, "s-", ms=5, lw=2.0, color="#8b3b8b", alpha=0.45,
+                label=t["resc"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
-    for y, ytxt, lbl, col in zip((75, 86, 195), (0.52, 1.10, 1.28), t["thr"],
+    # the pinning bound is not unconditional: the dipole carries its own 22 MPa
+    ax.axhspan(53, 97, color="#444444", alpha=0.13, lw=0)
+    for y, ytxt, lbl, col in zip((75, 86, 195), (0.40, 1.13, 1.30), t["thr"],
                                  ("#444444", "#777777", "#aa2222")):
         ax.axhline(y, ls="--", lw=1.1, color=col)
         ax.text(73, y * ytxt, lbl, fontsize=8, color=col, ha="right")
@@ -222,7 +229,7 @@ def fig_rss(lang: str) -> None:
     ax.set_xlim(0, 75)
     ax.set_ylim(1e-3, 500)
     ax.set_title(t["f3title"], fontsize=11)
-    ax.legend(fontsize=8.5, loc="lower left")
+    ax.legend(fontsize=8.0, loc="lower left")
     ax.grid(alpha=0.3, which="both")
     fig.tight_layout()
     for ext in ("png", "pdf"):

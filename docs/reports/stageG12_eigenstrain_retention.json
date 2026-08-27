@@ -210,5 +210,37 @@
     "40 ppm": 0.1291,
     "100 ppm": 0.3227
   },
-  "interpretation": "The construction is an initial affine perturbation followed by unconstrained minimisation, not a maintained eigenstrain: the equilibrium metric of the potential is unchanged, so the inclusion relaxes back toward it and is held away only by lattice discreteness. Rescaling on the nominal amplitude therefore understates the field by 1/eta. The amplitude that a genuinely maintained eigenstrain would produce is given instead by the analytic Eshelby solution of stageG8, 2.14 MPa interior at 100 ppm."
+  "interpretation": "The construction is an initial affine perturbation followed by unconstrained minimisation, not a maintained eigenstrain: the equilibrium metric of the potential is unchanged, so the inclusion relaxes back toward it and is held away only by lattice discreteness. Rescaling on the nominal amplitude therefore understates the field by 1/eta. The amplitude that a genuinely maintained eigenstrain would produce is given instead by the analytic Eshelby solution of stageG8, 2.14 MPa interior at 100 ppm.",
+  "components_table_1e3": {
+    "ridge (z>22 A)": {
+      "N": 992,
+      "Exx": -0.047297561179049374,
+      "Eyy": -0.099426511382672,
+      "Ezz": -0.015013470822666797,
+      "Exz": 0.5686820829177505,
+      "eta": 0.3048655058651314,
+      "se": 0.0998781270595846
+    },
+    "support (z<18 A)": {
+      "N": 1672,
+      "Exx": 0.2362999435392421,
+      "Eyy": -0.43346593841830927,
+      "Ezz": -0.36307717472444656,
+      "Exz": 1.3187713861038162,
+      "eta": 0.7433662338723632,
+      "se": 0.08054225713998284
+    },
+    "whole inclusion": {
+      "N": 3016,
+      "Exx": 0.12977363210542325,
+      "Eyy": -0.3105551347182822,
+      "Ezz": -0.47496243363936985,
+      "Exz": 0.909372429411018,
+      "eta": 0.49245326841655696,
+      "se": 0.03339755270510892
+    }
+  },
+  "error_definition": "formal least-squares standard error: Cov(F) = s^2 (dX^T dX)^-1 with s^2 the residual sum of squares over 3N-9 degrees of freedom, propagated linearly to eta. Not a bootstrap and not a spread over independent seeds: the fit is deterministic on two minimized structures.",
+  "atom_correspondence": "by atom id; both cells written by the same generator with the same seed",
+  "pbc": "minimum image applied to the x and y components of the displacement before fitting"
 }
