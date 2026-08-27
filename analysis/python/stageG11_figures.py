@@ -29,6 +29,9 @@ from pathlib import Path
 
 import matplotlib
 matplotlib.use("Agg")
+# embed TrueType rather than Type 3: some publisher pipelines reject Type 3
+matplotlib.rcParams["pdf.fonttype"] = 42
+matplotlib.rcParams["ps.fonttype"] = 42
 import matplotlib.pyplot as plt
 import numpy as np
 
