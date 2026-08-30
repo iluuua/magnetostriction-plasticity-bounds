@@ -37,7 +37,7 @@ import numpy as np
 
 REPO = Path(__file__).resolve().parents[2]
 REPORTS = REPO / "docs" / "reports"
-SRC = Path("C:/Users/dille/AppData/Local/Temp/claude/g4clean")
+from _g4clean import source_dir, open_dump, CONTROL, FIELD
 
 V_AT = 16.6072          # A^3 per Al atom
 Z_INTERFACE = 20.0      # flat Fe4Al13/Al boundary
@@ -69,7 +69,7 @@ def slip_systems_lab():
 
 def load(path: Path):
     rows, started = [], False
-    for ln in io.open(path, encoding="utf-8", errors="replace"):
+    for ln in path:
         if ln.startswith("ITEM: ATOMS"):
             started = True
             continue
@@ -91,8 +91,11 @@ def vm(t):
 
 
 def main() -> int:
-    t_c, p_c, s_c = load(SRC / "G4_tilted_eps0000_clean.gate.lammpstrj")
-    t_f, p_f, s_f = load(SRC / "G4_tilted_eps00194_clean.gate.lammpstrj")
+    src = source_dir()
+    with open_dump(src, CONTROL) as fh:
+        t_c, p_c, s_c = load(fh)
+    with open_dump(src, FIELD) as fh:
+        t_f, p_f, s_f = load(fh)
     assert len(t_c) == len(t_f)
     systems = slip_systems_lab()
 

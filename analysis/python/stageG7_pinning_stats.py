@@ -105,14 +105,41 @@ def analyse(name: str, steps: np.ndarray, x: np.ndarray) -> dict:
                       "oscillation_A": round(osc, 2),
                       "ratio": round(abs(net) / max(osc, 1e-9), 2),
                       "depinned": bool(abs(net) > 3 * osc and abs(net) > B_A)})
+    # A replica that was stopped early cannot be said to have withstood a rung it
+    # never reached: bound the claim by the highest rung the trajectory covers.
+    covered = [r["tau_MPa"] for r in rungs]
+    highest = max(covered) if covered else 0
     return {"case": name,
             "net_displacement_A": round(net_total, 2),
             "net_displacement_b": round(net_total / B_A, 2),
             "oscillation_A": round(float(np.std(x[load])), 2),
             "rungs": rungs,
+            "rungs_covered_MPa": covered,
+            "complete": highest == max(RUNGS),
             "any_depinning": any(r["depinned"] for r in rungs),
-            "max_stress_withstood_MPa": max(RUNGS) if not any(r["depinned"] for r in rungs)
+            "max_stress_withstood_MPa": highest if not any(r["depinned"] for r in rungs)
             else min(r["tau_MPa"] for r in rungs if r["depinned"])}
+
+
+def _verdict(results, nets) -> str:
+    """State only what the trajectories that exist actually support."""
+    if any(r["any_depinning"] for r in results):
+        return ("%d of %d realizations show a depinning event; the pinning stress is "
+                "not uniform across solute configurations."
+                % (sum(1 for r in results if r["any_depinning"]), len(results)))
+    full = [r for r in results if r["complete"]]
+    part = [r for r in results if not r["complete"]]
+    s = ("In %d realization%s the probe stays pinned through every rung it was taken "
+         "to: net displacement %.1f-%.1f b, with no rung showing a displacement above "
+         "three times the thermal oscillation."
+         % (len(results), "" if len(results) == 1 else "s", min(nets), max(nets)))
+    if full:
+        s += (" %s ran the complete staircase and therefore withstands at least "
+              "%d MPa." % (", ".join(r["case"] for r in full), max(RUNGS)))
+    for r in part:
+        s += (" %s was stopped early at %d MPa and bounds nothing above that."
+              % (r["case"], r["max_stress_withstood_MPa"]))
+    return s
 
 
 def main() -> int:
@@ -150,16 +177,7 @@ def main() -> int:
                                "min": round(float(np.min(nets)), 2),
                                "max": round(float(np.max(nets)), 2)},
         "depinning_events": sum(1 for r in results if r["any_depinning"]),
-        "verdict": ("In all %d independent solute realizations the probe stays pinned "
-                    "through the entire staircase: net displacement %.1f-%.1f b over "
-                    "120 ps, with no rung showing a displacement above three times the "
-                    "thermal oscillation. The solute configuration therefore withstands "
-                    "at least 75 MPa in every realization."
-                    % (len(results), min(nets), max(nets)))
-        if not any(r["any_depinning"] for r in results) else
-        ("%d of %d realizations show a depinning event; the pinning stress is not "
-         "uniform across solute configurations."
-         % (sum(1 for r in results if r["any_depinning"]), len(results)))}
+        "verdict": _verdict(results, nets)}
 
     out = REPORTS / "stageG7_pinning_statistics.json"
     out.write_text(json.dumps(summary, indent=2) + chr(10), encoding="utf-8")

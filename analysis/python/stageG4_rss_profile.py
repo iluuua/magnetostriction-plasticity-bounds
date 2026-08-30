@@ -58,7 +58,7 @@ def slip_systems_lab() -> list[tuple[np.ndarray, np.ndarray, str]]:
 def load(path: Path) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     rows = []
     started = False
-    for ln in io.open(path, encoding="utf-8", errors="replace"):
+    for ln in path:
         if ln.startswith("ITEM: ATOMS"):
             started = True
             continue
@@ -83,9 +83,12 @@ def von_mises(t: np.ndarray) -> float:
 
 
 def main() -> int:
-    base = Path("C:/Users/dille/AppData/Local/Temp/claude/g4clean")
-    t_ctl, p_ctl, s_ctl = load(base / "G4_tilted_eps0000_clean.gate.lammpstrj")
-    t_phy, p_phy, s_phy = load(base / "G4_tilted_eps00194_clean.gate.lammpstrj")
+    from _g4clean import source_dir, open_dump, CONTROL, FIELD
+    base = source_dir()
+    with open_dump(base, CONTROL) as fh:
+        t_ctl, p_ctl, s_ctl = load(fh)
+    with open_dump(base, FIELD) as fh:
+        t_phy, p_phy, s_phy = load(fh)
     assert len(t_ctl) == len(t_phy), "atom counts differ"
 
     systems = slip_systems_lab()

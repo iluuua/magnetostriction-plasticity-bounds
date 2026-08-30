@@ -1,7 +1,7 @@
 {
   "case_id": "G3_solute_relB",
-  "created_at": "2026-08-23T17:38:06+03:00",
-  "git_head_at_generation": "da4e8e6578d9381df1fefa2ff150a78e679cd2f3",
+  "created_at": "2026-08-25T02:29:20+03:00",
+  "git_head_at_generation": "4a4428b39c578fc2ed731374a619687abe337533",
   "orientation": {
     "x": "[1-10]",
     "y": "[11-2]",

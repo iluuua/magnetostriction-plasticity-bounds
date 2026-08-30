@@ -1,44 +1,93 @@
-# macOS
-.DS_Store
+# ---------------------------------------------------------------- raw MD data
+# Trajectories and restarts are large and regenerable from the inputs that are
+# published here. They stay on the machine that produced them.
+*.lammpstrj
+*.xyz
+dump.*
+restart.*
+data.*
+*.start.data
+data.*_final
+log.smoke*.lammps
+log.short*.lammps
+log.production*.lammps
 
-# Python
+# The one exception, and it is deliberate: the two minimized Stage G4 interface
+# cells are the primary data behind Fig. 1, Table 1 and every stress number the
+# manuscript quotes, so they ARE published, gzipped, under data/stageG4_clean/.
+# The rule above does not match the .gz suffix today; this negation keeps that
+# true if the pattern is ever tightened.
+!data/stageG4_clean/**
+
+# The whole run tree: 14 GB of production output. This used to live only in
+# .git/info/exclude, which is per-clone and never published - so a fresh clone
+# elsewhere would have seen runs/ as untracked-but-not-ignored and swept it into
+# the next `git add -A`.
+runs/
+
+# ------------------------------------------------------- private and copyright
+# Supervisor source materials: copyrighted PDFs and an unpublished manuscript.
+pshonkin_materials_ishodniki/
+# Local notes, drafts and correspondence prepared for the supervisor.
+docs/_local/
+
+# ------------------------------------------------------------- session debris
+# Reports written by the AI agents that ran the campaign, to hand work between
+# sessions. Useful at the time, noise in a published repository.
+agent_report*.md
+prompt*.txt
+pr_body.md
+release_commit_manifest.md
+# Frozen agent state and verbatim third-party web scrapes.
+.codex/
+.firecrawl/
+# Operator babysitting output: watchdog CSVs, PowerShell transcripts, pagefile
+# probes and disk-cleanup manifests. Machine-specific, no scientific content.
+diagnostics/
+monitor_snapshots/
+status_dump_*.txt
+
+# ------------------------------------------------------------------- tooling
 __pycache__/
 *.py[cod]
 *$py.class
-*.pyc
-
-# Local editor / temp
+.pytest_cache/
+.venv/
+_docx_build/
+*.stackdump
 *.tmp
 *.temp
 *.swp
 *.swo
 .cache/
+.DS_Store
 
-# Large raw MD trajectories — kept LOCAL, never committed
-*.lammpstrj
+# --------------------------------------------- retired manuscript tooling
+# One-shot text patchers from the revision rounds. Every one is a flat list of
+# literal replacements whose anchors no longer exist in the sources, so running
+# one now does nothing or half-applies. The revision history is in the git log.
+docs/paper/revise_*.py
+docs/paper/apply_fixes.py
+docs/paper/fix_units.py
+docs/paper/make_pdf.py
+# Superseded reading copies and regenerable packaging.
+docs/paper/manuscript_en.pdf
+docs/paper/manuscript_ru.pdf
+docs/paper/manuscript_*_editable.docx
+docs/paper/overleaf_*.zip
+docs/paper/*.spl
 
-# Heavy visual-debug artifacts — regenerable, kept local
-*.xyz
+# ------------------------------------------------- correspondence drafts
+docs/reports/pshonkin_message_*.md
 
-# Large raw structure data — kept local. Specific small starting structures needed to
-# continue Stage A0 on another machine are force-added explicitly (`git add -f <path>`).
-data.*
+# ------------------------------- stage F debugging debris (no results in it)
+docs/reports/stageF_dual_lane_preflight.*
+docs/reports/stageF_gpu_fix_*
+docs/reports/stageF_F0_*
+docs/reports/*.log
+docs/reports/pdf/*.html
+docs/reports/pdf/preview_*.png
+docs/reports/pdf/stageF_pdf_*
 
-# Local/private notes (supervisor questions, assessment, drafts) — not for the public repo
-docs/_local/
-
-# Supervisor source materials (copyrighted PDFs + unpublished manuscript) — do not publish
-pshonkin_materials_ishodniki/
-
-# Heavy / temporary MD run artifacts — kept LOCAL.
-# The whole runs/ tree is also excluded via .git/info/exclude; these patterns make the
-# intent explicit and also cover any stray copies outside runs/.
-dump.*
-restart.*
-monitor_snapshots/
-status_dump_*.txt
-
-# Python tooling caches and local virtual environment
-.pytest_cache/
-.venv/
-*.start.data
+# --------------------------------- third-party archives we do not redistribute
+potentials/**/*.tar.gz

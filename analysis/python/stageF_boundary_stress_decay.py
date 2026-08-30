@@ -908,9 +908,9 @@ def _write_alignment_report(path: Path, meta: dict[str, Any], source_map: dict[s
 
 Boundary-patch соответствует замечанию физика, дает физически читаемый `sigma(r)`, позволяет сравнить профиль с `sigma_y = 120 MPa` и заменяет blind DXA hunting на проверку переноса/затухания напряжения от interface.
 
-## Как visual* и Phonkin_discussion_m4a.txt меняют постановку задачи
+## Как замечания физика меняют постановку задачи
 
-На `visual*` нарисованы локальная граница Fe4Al13 / Al и срез/отрезанная верхушка эллипсоида. `r=0` расположен на границе раздела; направление `r` идет от interface в Al matrix. `Z` показан как направление поля/eigenstrain. Нужен график `sigma(r)`, падающий от interface в matrix, и слой, где stress proxy выше или сравним с `120 MPa`.
+На переданных эскизах нарисована локальная граница Fe4Al13 / Al и срез/отрезанная верхушка эллипсоида. `r=0` расположен на границе раздела; направление `r` идет от interface в Al matrix. `Z` показан как направление поля/eigenstrain. Нужен график `sigma(r)`, падающий от interface в matrix, и слой, где stress proxy выше или сравним с `120 MPa`.
 
 Ожидаемый физический вывод: либо напряжение передается в Al matrix на заметную толщину, либо затухает в тонкой оболочке около interface. DXA остается вторичным диагностическим признаком и не должен быть целью любой ценой.
 
@@ -1044,11 +1044,9 @@ Completed post-processing and planning only. No MD production, blind 700k/1M run
 
 
 def _source_map(run_root: Path, frame_plan: list[FrameSpec], render_status: dict[str, Any]) -> dict[str, Any]:
-    materials = REPO_ROOT / "pshonkin_materials_ishodniki"
+    # The supervisor's source materials are copyrighted and never published, so
+    # this map records only what a reader of the repository can actually open.
     return {
-        "prompt": str(REPO_ROOT.parents[1] / "prompt.txt"),
-        "physicist_transcript": str(materials / "Phonkin_discussion_m4a.txt"),
-        "visual_photos": [str(p) for p in sorted(materials.glob("visual*"))],
         "stageE_reports": [
             str(REPORTS_DIR / "stageE_700k_full_analysis_with_temporal_evolution_ru.md"),
             str(REPORTS_DIR / "stageE_700k_temporal_evolution_report_ru.md"),

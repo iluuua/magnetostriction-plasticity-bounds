@@ -1,6 +1,6 @@
 {
-  "case_id": "G3_solute_relA",
-  "created_at": "2026-08-25T02:29:19+03:00",
+  "case_id": "G3_solute_relD",
+  "created_at": "2026-08-25T02:29:20+03:00",
   "git_head_at_generation": "4a4428b39c578fc2ed731374a619687abe337533",
   "orientation": {
     "x": "[1-10]",
@@ -24,7 +24,7 @@
     "Mg": 1.0,
     "Si": 0.6
   },
-  "solute_seed": 12345,
+  "solute_seed": 13579,
   "dipole": {
     "burgers_A": 2.863782463805517,
     "line_axis": "y",
@@ -47,5 +47,5 @@
     "top_grab": 12.0
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG3_solute_mobility\\G3_solute_relA\\G3_solute_relA.start.data"
+  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG3_solute_mobility\\G3_solute_relD\\G3_solute_relD.start.data"
 }

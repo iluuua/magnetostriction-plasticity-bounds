@@ -1,0 +1,116 @@
+LAMMPS (22 Jul 2025 - Update 4)
+KOKKOS mode with Kokkos version 4.6.2 is enabled
+  will use up to 1 GPU(s) per node
+package kokkos
+package kokkos newton on neigh half gpu/aware off
+# Stage G4 field gate: does the tilted deviatoric eigenstrain actually leave a
+# shear stress at the dislocation glide planes after relaxation?
+#
+# The Stage G diagnosis showed that under p p f a laterally uniform eigenstrained
+# slab relaxes sigma_zz to ~0 by simply getting taller. The same equilibrium
+# argument (d sigma_xz/dz = 0 with a traction-free top) can null the SHEAR
+# component too, leaving only the ridge shape differential. This gate measures
+# Delta sigma_xz between physical and control BEFORE spending 16 GPU-hours.
+# Minimization only, no dynamics: ~5 min per case.
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+read_data       ${DATA_FILE}
+read_data       C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/structures/stageG4_tilted_solute/G4_tilted_eps00194_clean/G4_tilted_eps00194_clean.start.data
+Reading data file ...
+  orthogonal box = (0 0 -10) to (108.82373 64.482817 175.29612)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  66698 atoms
+  read_data CPU = 0.152 seconds
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+pair_coeff      * * C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+pair_coeff      * * C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+2448 atoms in group bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+thermo          100
+thermo_style    custom step atoms temp pe press pxz
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 3000 30000
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = no
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7
+  ghost atom cutoff = 7
+  binsize = 7, bins = 16 10 27
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair meam/kk, perpetual
+      attributes: full, newton on, kokkos_device
+      pair build: full/bin/kk/device
+      stencil: full/bin/3d
+      bin: kk/device
+  (2) pair meam/kk, perpetual, half/full from (1)
+      attributes: half, newton on, kokkos_device
+      pair build: halffull/newton/kk/device
+      stencil: none
+      bin: none
+WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\comm_kokkos.cpp:799)
+WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\comm_kokkos.cpp:812)
+WARNING: Fix MINIMIZE/kk not compatible with Kokkos sorting on device (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\atom_kokkos.cpp:213)
+WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\atom_kokkos.cpp:219)
+Per MPI rank memory allocation (min/avg/max) = 115.9 | 115.9 | 115.9 Mbytes
+   Step        Atoms         Temp          PotEng         Press           Pxz      
+         0       66698   0             -222775.56      11390.818     -2338.5398    
+       100       66698   0             -224323.32      2661.5759     -1112.2582    
+       200       66698   0             -224447.68      1505.4999     -1005.0664    
+       234       66698   0             -224473.28      1240.2968     -1001.0206    
+Loop time of 97.0857 on 1 procs for 234 steps with 66698 atoms
+
+98.8% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = energy tolerance
+  Energy initial, next-to-last, final = 
+     -222775.561376969  -224473.280165205   -224473.28034551
+  Force two-norm initial, final = 121.42179 31.993289
+  Force max component initial, final = 4.1355036 15.071132
+  Final line search alpha, max atom move = 0.00024386394 0.0036753056
+  Iterations, force evaluations = 234 429
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 92.823     | 92.823     | 92.823     |   0.0 | 95.61
+Neigh   | 3.2922     | 3.2922     | 3.2922     |   0.0 |  3.39
+Comm    | 0.50792    | 0.50792    | 0.50792    |   0.0 |  0.52
+Output  | 0.0010646  | 0.0010646  | 0.0010646  |   0.0 |  0.00
+Modify  | 0.065925   | 0.065925   | 0.065925   |   0.0 |  0.07
+Other   |            | 0.3959     |            |       |  0.41
+
+Nlocal:          66698 ave       66698 max       66698 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:          23834 ave       23834 max       23834 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    2.66301e+06 ave 2.66301e+06 max 2.66301e+06 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:  5.32601e+06 ave 5.32601e+06 max 5.32601e+06 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 5326012
+Ave neighs/atom = 79.852649
+Neighbor list builds = 430
+Dangerous builds not checked
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
+write_dump      all custom G4_tilted_eps00194_clean.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
+Total wall time: 0:01:37

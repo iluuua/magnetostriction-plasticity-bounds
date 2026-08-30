@@ -1,209 +1,175 @@
-# physics_md_al_fe — MD-моделирование деформации Al-матрицы с включением Fe₄Al₁₃ при магнитострикционном воздействии
+# Atomistic bounds on the magnetostrictive mechanism in Al–Mg–Si
 
-## 1. Название и суть
+Molecular-dynamics test of a specific published claim: that pre-exposing an
+Al–Mg–Si alloy containing Fe-bearing inclusions to a static 0.7 T field raises
+its subsequent room-temperature creep by about 25% because magnetostriction of
+the inclusion generates ≈147 MPa at the interface — above the 120 MPa yield
+stress of the matrix — and plastifies the surrounding aluminium.
 
-Проект посвящён молекулярно-динамическому (MD) моделированию алюминиевой матрицы
-с интерметаллидным включением Fe₄Al₁₃ (Al₁₃Fe₄), на которое действует
-магнитострикционная деформация. Цель — выяснить, при каком масштабе модели и уровне
-воздействия в алюминии у включения зарождаются подтверждённые дефекты и дислокации.
+The claim does not survive the test. This repository holds the calculations
+that establish that, the analysis code that turns them into numbers, and the
+manuscript built from them.
 
-## 2. Цель проекта
+**The short version.** A magnetic field cannot be simulated in classical MD, so
+its effect enters as a volume-preserving affine strain applied to the inclusion
+before an unconstrained minimisation. At an amplitude 19–97× larger than any
+magnetostriction measured in Fe–Al, the resolved shear stress this produces in
+the matrix peaks at **6.3 MPa**, and beyond 60 Å from the interface its mean is
+0.5 ± 0.6 MPa. The same cells, loaded in applied shear, place dislocation
+activity at **77–86 MPa** (dipole motion), **≈195 MPa** (heterogeneous
+nucleation at the interface) and **≥75 MPa** (depinning from a random Mg/Si
+solute configuration). The field-induced stress falls one to two orders of
+magnitude short of every threshold it would have to cross.
 
-Построить атомистическую модель «матрица Al + включение Fe₄Al₁₃» и исследовать, как
-локальное напряжение от магнитострикционной деформации включения влияет на:
+---
 
-- распределение локальной деформации в матрице;
-- нарушение кристаллического порядка (FCC → HCP/OTHER);
-- зону пластической перестройки у границы включения и границы зерна;
-- зарождение подтверждённых дислокаций (по DXA).
+## The numbers
 
-## 3. Физическая идея простыми словами
-
-```text
-магнитное поле
-  → магнитострикционная деформация включения Fe₄Al₁₃
-    → локальное напряжение на границе включение–матрица
-      → деформация алюминиевой матрицы
-        → дефекты / зона пластической перестройки / (возможно) дислокации
-```
-
-Магнитное поле **напрямую не моделируется**. Его эффект вводится механически: атомам
-включения задаётся **собственная деформация (eigenstrain)**. Это объёмосохраняющее
-растяжение вдоль оси z с поперечным сжатием:
-
-```text
-eps_x = eps_y = -eps_z / 2,   eps_z > 0
-```
-
-Связь воздействия с напряжением и деформацией (оценочно):
-
-```text
-σ_m ≈ λ_m · B        (магнитострикционное напряжение)
-ε   ≈ σ / E          (оценка собственной деформации)
-```
-
-где `λ_m` — магнитострикционная постоянная, `B` — индукция поля, `E` — модуль Юнга.
-В расчётах управляющим параметром является именно `eps_z`: вариант `eps_z = 0.0025`
-трактуется как физически близкий, `eps_z = 0.0100` — как усиленный (overload) для
-проверки порога зарождения дефектов.
-
-## 4. Что реализовано
-
-- **Генерация атомной структуры**: fcc-алюминий (`a = 4.05 Å`) + эллипсоидное
-  включение Fe₄Al₁₃ из конвертированной структуры `Al13Fe4`.
-- **Включение**: эллипсоид с полуосями 19.5×19.5×39.0 Å (соотношение 1:1:2), тип
-  атомов Al/Fe, без удаления атомов матрицы под включением.
-- **Варианты положения**: внутри зерна (`grain_interior`) и у границы зерна
-  (`near_grain_boundary`) — бикристалл с разориентацией 36.87°.
-- **Предефекты (вакансии)**: детерминированное удаление атомов матрицы вне защитной
-  оболочки 4 Å вокруг включения (`vacancies_low/medium`).
-- **Eigenstrain**: объёмосохраняющая собственная деформация атомов включения как
-  механический суррогат магнитострикции.
-- **Расчёт на GPU**: LAMMPS с KOKKOS/CUDA, парный стиль `meam/kk` (потенциал MEAM,
-  трек `MEAM_Jelinek_2012`), на NVIDIA RTX 3060.
-- **Порционная (chunked) production**: прогон по 10 000 шагов с записью restart и
-  проверкой лога после каждой порции.
-- **restart/resume**: продолжение с последнего корректного restart той же командой.
-- **watchdog / hang recovery**: контроль зависания по CPU-времени и росту файлов;
-  снятие зависшей порции, перезапуск с restart, повтор один раз.
-- **event pipeline**: построение временной шкалы событий и манифестов кадров для
-  последующей визуализации (без обязательного запуска OVITO/ffmpeg).
-- **Анализ DXA/CNA**: подсчёт дислокаций, длины линий, плотности, долей FCC/HCP/OTHER,
-  индикаторов дефектов упаковки и протяжённости зоны пластичности.
-- **Очередь Stage C 1M**: подготовка и контролируемый запуск масштабного расчёта
-  ≈ 1 млн атомов.
-
-## 5. Текущий статус расчётов
-
-| Этап | Что это | Статус |
+| Quantity | Value | Where it comes from |
 |---|---|---|
-| Stage B realism 100k (старый) | первичный realism-прогон 100k | завершён (исторический run root) |
-| **Focused Stage B nearGB vacancies 100k** | два варианта eps_z = 0.0025 и 0.0100 у границы зерна с вакансиями | **завершён, проанализирован** |
-| **Stage C 1M** | масштабный расчёт ≈ 944 812 атомов, eps_z = 0.0100 | **подготовлен и запущен (считается)** |
+| Peak resolved shear from the strain surrogate | 6.3 MPa at *r* = 30 Å | `stageG10_field_profile.py` |
+| Noise floor, mean over *r* ≥ 60 Å | 0.5 ± 0.6 MPa | same |
+| Fraction of the imposed distortion that survives minimisation | η = 0.30 ± 0.10 | `stageG12_eigenstrain_retention.py` |
+| Maintained-eigenstrain amplitude at λ<sub>s</sub> = 100 ppm | ≤ 2.4 MPa | `stageG8_eshelby3d.py` |
+| Generous analytical scale 2μ<sub>Al</sub>λ<sub>s</sub> | ≤ 5.3 MPa | analytic |
+| Onset of dipole motion | 77–86 MPa applied shear | Stage G1/G6 |
+| Heterogeneous nucleation at the interface | ≈195 MPa applied shear | Stage G1 |
+| Solute pinning bound | ≥ 75 MPa | `stageG7_pinning_stats.py` |
+| Stress the measured +25% creep actually requires | 8.7–65.2 MPa | `stageG5_two_scale_bridge.py` |
+| What 147 MPa would predict instead | 2.2 × 10³ × the observed effect | same |
 
-Focused run root: `runs/stageB_nearGB_vacancies_focus_100k/20260615-215533`.
-Stage C run root: `runs/stageC_1M_nearGB_vacancies_eps0100_100k/20260616-173123`
-(запущен отдельной командой пользователя после завершения focused; PID 20944, кейс
-`C1_1M_nearGB_vacancies_medium_eps0100`, контрольная точка 100 000 шагов). Результаты
-Stage C будут оформлены отдельным последующим PR после контрольной точки 100k.
+Three stresses are kept apart throughout and should not be conflated: the
+**147 MPa** interface estimate from the experimental papers, the **≤5.3 MPa**
+elastic scale that real Fe–Al magnetostriction can supply, and the **6.3 MPa**
+relaxed response of the MD surrogate at a deliberately inflated amplitude.
 
-## 6. Ключевые результаты focused Stage B 100k
+## Reproducing the published numbers
 
-Общая модель обоих вариантов: ячейка 105.3×105.3×157.95 Å, 103 037 атомов (матрица Al
-98 788 + включение Fe₄Al₁₃ 4 249), 200 вакансий, у границы зерна, T = 300 K,
-100 000 шагов production.
+The two minimised interface cells that every stress number is measured from are
+in `data/stageG4_clean/` (gzipped, ~2 MB each). Nothing else is needed:
 
-| Расчётный вариант | eps_z | DXA segments | DXA length, Å | DXA density, 1/м² | HCP (матрица) | OTHER (матрица) | Дефекты за оболочкой 1.3 |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| eps0025 | 0.0025 | 0 | 0.0 | 0.0 | 8 (0.008 %) | 17 200 (17.41 %) | 13 445 |
-| eps0100 | 0.0100 | 0 | 0.0 | 0.0 | 1 (0.001 %) | 16 144 (16.34 %) | 12 517 |
-
-**Интерпретация:**
-
-```text
-DXA = 0 означает отсутствие подтверждённых дислокационных линий в данном масштабе расчёта.
+```bash
+python analysis/python/stageG10_field_profile.py        # Fig. 1, the σ(r) profile
+python analysis/python/stageG12_eigenstrain_retention.py # Table 1, retained strain
+python analysis/python/stageG8_eshelby3d.py             # the analytic 3D comparison
+python analysis/python/stageG5_two_scale_bridge.py      # Table 2, the two-scale bridge
+python analysis/python/stageG11_figures.py              # all three manuscript figures
+python docs/paper/audit_v4.py                           # 150 checks, text against data
 ```
 
-- Подтверждённых дислокаций нет ни при физическом, ни при усиленном воздействии.
-- HCP в матрице пренебрежимо мал (единицы атомов) и не растёт с деформацией.
-- Большая доля OTHER — это структурный и тепловой фон (граница зерна, интерфейс
-  включения, тепловые смещения при 300 K), а **не** дислокации; она даже не растёт
-  при увеличении `eps_z` в 4 раза.
+Each script writes a JSON record into `docs/reports/`. `audit_v4.py` re-derives
+every quantity quoted in the manuscript from those records and exits non-zero if
+the text and the data disagree — so a claim cannot drift away from its evidence
+without the check noticing.
 
-Подробности: `results/stageB_focused_100k_summary.md`,
-`results/stageB_focused_100k_summary.csv`,
-`docs/reports/stageB_focused_100k_and_stageC_1M_report.pdf`.
+## Layout
 
-## 7. Как запустить мониторинг
-
-```powershell
-.\scripts\monitor_md_runs.ps1
+```
+analysis/python/    analysis code, stage by stage; stageG* is what the paper uses
+scripts/           structure generators and run drivers
+data/stageG4_clean/ the two minimised cells the stress field is measured from
+docs/paper/        the manuscript (EN + RU), figures, bibliography, audit
+docs/reports/      the JSON/CSV records figures and tables are built from
+docs/run_plans/    what was planned, including branches deliberately not run
+configs/           YAML run configurations for stages A–E
+lammps/            input decks and thermo logs for the early stages
+structures/        starting structures and their build metadata
+potentials/        interatomic potentials (third party — see below)
+tests/             unit tests for the stage B/C planner and gates
 ```
 
-Скрипт показывает активные процессы LAMMPS/runner, прогресс по порциям и состояние
-GPU/диска. Он только наблюдает и ничего не запускает и не останавливает.
+## The stages, and why there are seven of them
 
-## 8. Как воспроизвести focused run
+The campaign ran A through G. Stages A–F are, honestly, one long null result
+escalated four different ways; the reason it stayed null turned out to be
+geometric, and finding it is the most useful thing in the history.
 
-```powershell
-.venv\Scripts\python.exe scripts\run_stage_sweep.py `
-  --config configs\stageB_nearGB_vacancies_focus_100k.template.yaml `
-  --run-dir runs\stageB_nearGB_vacancies_focus_100k\<новый-таймстамп> `
-  --run-stage B3_nearGB_vacancies_focus_100k --gpu
-```
+| Stage | Question | Outcome |
+|---|---|---|
+| **A** | Does an eigenstrained ellipsoid nucleate anything at finite *T*? | Null. 0 dislocation segments at every amplitude including 4× overload. The 4.5% "OTHER" atoms were the static interface shell, not damage. |
+| **B** | Does microstructural realism help — inclusion at a grain boundary, vacancies present? | Null, and *stronger*: HCP defect count went **down** as the driving strain went up 4×. |
+| **C** | Is the cell simply too small — does a million atoms change it? | Never got past preparation. Consumed on queueing and disk. |
+| **D** | Strip it down: a local interface patch at 100k. | A disorder precursor only. |
+| **E** | Scale up: 250k / 510k / 700k. | An 8–17 Å DXA segment present at one sampled frame and gone by the next. Not a dislocation. |
+| **F** | Stop hunting dislocations; measure σ(*r*) from the interface, which is what was actually asked for. | Nearly information-free: forming the von Mises invariant *per atom* measures the GPa thermal virial, leaving a 133 MPa noise floor. The stage was then lost to a KOKKOS/CUDA MEAM crash that closed the GPU lane. |
+| **G** | Ask the field to *move* a dislocation that already exists, rather than create one. | The null was explained, and the mechanism bounded. |
 
-Геометрия детерминирована сидами (eps0025 — `73005`, eps0100 — `73006`). Все шаги,
-значения eps, пороги и анализ задаются конфигом. Прогон проходит цепочку расчёта
-prep → smoke → production → анализ.
+Two findings from Stage G are worth stating plainly because they invalidate
+the earlier work and explain it at the same time:
 
-## 9. Как запустить Stage C 1M после focused
+**The driving force was zero by construction.** For the orientation used since
+Stage A — glide plane (111) parallel to the interface, eigenstrain along *z* —
+the Schmid factor on the (111)[1̄10] system is *identically* zero and the whole
+Peach–Koehler force vanishes. Every null from A through G2 measured a driving
+force that was zero for geometric reasons, not physical ones. The Stage G cells
+tilt the strain axis 45° to fix this.
 
-Безопасный запуск с проверкой отсутствия активного focused-расчёта:
+**Direct simulation of the mechanism is unreachable at any size.** The line-tension
+bound *a*<sub>min</sub> = μ*b*/σ<sub>m</sub> gives 52 nm at the claimed 147 MPa —
+about 2 × 10⁸ atoms against a 17 nm cell. MD cannot enact this mechanism. It can
+bound it, and measure the quantities a mesoscale model would consume, which is
+what the final work does.
 
-```powershell
-.venv\Scripts\python.exe scripts\launch_stageC_1M_after_focus.py `
-  --focus-run-root runs\stageB_nearGB_vacancies_focus_100k\20260615-215533 `
-  --stageC-run-root runs\stageC_1M_nearGB_vacancies_eps0100_100k\20260616-173123
-```
+A third, smaller lesson: the Stage F GPU crash that closed a whole stage was the
+same neighbour-list bug the project had already diagnosed and worked around in
+Stage A with `neigh_modify delay 0 every 10 check no`. The recovery ladder never
+applied it. Stage G ran the same hardware for weeks without a crash.
 
-Продолжение до 200k/250k — только вручную, после анализа контрольной точки 100k
-(команды: `results/stageC_1M_queue/continue_to_200k_command.txt`,
-`continue_to_250k_command.txt`).
+## What is deliberately not here
 
-## 10. Как читать результаты
+- **`runs/`** — 14 GB of raw production output. Regenerable from the inputs here.
+- **Raw trajectories** (`*.lammpstrj`) — with the single exception of
+  `data/stageG4_clean/`, which is the manuscript's primary data.
+- **Session logs** of the agents that ran the campaign, operator watchdog output,
+  and machine-specific diagnostics. None of it is evidence.
+- **The supervisor's source materials** — copyrighted PDFs and an unpublished
+  manuscript, never redistributed.
 
-- **Сводки**: `results/stageB_focused_100k_summary.csv` и `.md`.
-- **Малые подтверждающие артефакты**: `results/stageB_focused_100k_artifacts/`
-  (`analysis_eps*.json`, `defect_summary.csv`, `final_report.md`, отчёты).
-- **Отчёты**: `docs/reports/stageB_focused_100k_and_stageC_1M_report.(md|pdf|docx)`.
-- **Stage C launch/queue**: `results/stageC_1M_queue/`.
-- **Полные сырые dumps/restarts/logs**: только локально в `runs/` (см.
-  `results/local_raw_data_inventory.md`).
+## Potentials — third-party, not covered by this repository's licence
 
-## 11. Ограничения
+`potentials/` contains the 2NN-MEAM Al–Si–Mg–Cu–Fe potential of Jelinek *et al.*
+([Phys. Rev. B 85, 245102 (2012)](https://doi.org/10.1103/PhysRevB.85.245102)),
+obtained from the NIST Interatomic Potentials Repository, and `Al_zhou.eam.alloy`,
+a DYNAMO `setfl` file distributed with LAMMPS. Neither carries an explicit
+redistribution licence; they are included so the runs are reproducible. They are
+**not** covered by the MIT licence on the rest of this repository, and their
+respective authors and distributors retain all rights.
 
-- Масштаб 100k атомов **не гарантирует** зарождение дислокаций: барьер зарождения и
-  длина пробега дислокации могут не умещаться в ячейке 105×105×158 Å.
-- Большая доля OTHER у границы/интерфейса **не равна** дислокации; подтверждение даёт
-  только DXA (геометрия дислокационных линий), а не счётчик нераспознанных атомов.
-- Расчёт ≈ 1 млн атомов (Stage C) нужен именно для проверки масштабного эффекта.
-- Per-atom напряжения — сравнительные вириальные оценки, а не абсолютные
-  экспериментально подтверждённые значения.
+## Manuscript
 
-## 12. Структура репозитория
+`docs/paper/` holds both versions — `main.tex` (English, elsarticle) and
+`main_ru.tex` (Russian) — with `main_en_compiled.pdf` and `main_ru_compiled.pdf`
+as built. `make_docx.py` produces Word review copies for co-authors.
 
-```text
-physics_md_al_fe/
-  README.md
-  analysis/python/
-    stage_runner/        # цепочка расчёта: builder, eigenstrain, gpu_grid, runner, анализ, отчёты
-    science_optimizer/   # планировщик и cost-model для будущих Stage B-волн (только планирование)
-    event_pipeline/      # временная шкала событий и манифесты кадров для визуализации
-    *.py                 # построение структур, интерфейса, eigenstrain-серий, анализ
-  scripts/               # запуск sweep, мониторинг, launch Stage C, event dry-run и т.д.
-  configs/               # конфиги stage sweep / focused / Stage C / оптимизатора (*.yaml)
-  tests/                 # unit-тесты гейтов, runtime, event pipeline, Stage C queue
-  docs/                  # milestones, run_plans, article, audit, reports, index
-  results/               # сводки, малые таблицы, финальные фигуры, артефакты focused/Stage C
-  structures/            # исходные и конвертированные структуры (Al, Al13Fe4)
-  potentials/            # межатомные потенциалы (MEAM) и тесты
-  lammps/                # шаблоны входов LAMMPS
-  runs/                  # ЛОКАЛЬНО: тяжёлые прогоны (исключены из git)
-```
+The conclusion is a refutation with a constructive remainder. The direct elastic
+magnetostrictive mechanism is quantitatively unsupported. But the stress the
+experiment actually requires, 8.7–65.2 MPa, is the same order as what real
+magnetostriction supplies — so if the effect is real it acts by lowering a
+thermally activated barrier, not by exceeding a yield stress. Two open problems
+remain: Al₁₃Fe₄ as identified is a dilute paramagnet and cannot carry Joule
+magnetostriction at all, so the magnetic phase needs identifying; and the
+30-minute field-off protocol is a *memory*, which points to a slow diffusional
+channel these calculations do not test.
 
-## 13. Требования
+## Licence and contact
 
-- **Python** 3.12 (локальное окружение `.venv`; запускать `.venv\Scripts\python.exe`).
-- **LAMMPS** с поддержкой MEAM; для GPU — сборка KOKKOS/CUDA с `meam/kk`.
-- **CUDA / NVIDIA**: для GPU-расчёта (проверено на RTX 3060, sm_86, CUDA 12.4).
-- **OVITO** — только для последующего анализа/визуализации (DXA/CNA, кадры); для самого
-  MD-расчёта не обязателен.
+MIT, except `potentials/` as noted above. I. Mikhailovskiy, D. Pshonkin,
+Moscow Polytechnic University.
 
-## 14. Безопасность данных
+---
 
-- Крупные траектории `*.lammpstrj` и бинарные `restart.*` **не хранятся в git** — они
-  тяжёлые и регенерируемы; ключевые числа извлекаются анализом в малые файлы.
-- Весь каталог `runs/` исключён через `.git/info/exclude`; шаблоны тяжёлых/временных
-  файлов также перечислены в `.gitignore`.
-- Приватные/копирайтные материалы (`docs/_local/`, `pshonkin_materials_ishodniki/`) в
-  репозиторий не попадают.
+### Кратко по-русски
+
+Проверка методами молекулярной динамики конкретного published-утверждения: что
+выдержка сплава Al–Mg–Si с железосодержащими включениями в поле 0,7 Тл повышает
+последующую ползучесть на ~25%, поскольку магнитострикция включения создаёт на
+границе ≈147 МПа. Утверждение проверки не выдерживает: при амплитуде, в 19–97
+раз завышенной относительно измеренной магнитострикции Fe–Al, разрешённое
+касательное напряжение достигает лишь 6,3 МПа, тогда как дислокационный отклик в
+тех же ячейках начинается с 75–195 МПа. Двухмасштабная оценка показывает, что
+эксперименту требуется 8,7–65,2 МПа, а заявленные 147 МПа предсказали бы эффект
+в 2,2·10³ раза больше наблюдаемого.
+
+Рукопись — в `docs/paper/`, обе версии. Числа воспроизводятся командами из
+раздела «Reproducing the published numbers» выше; `docs/paper/audit_v4.py`
+проверяет 150 утверждений текста против записей данных.
