@@ -6,9 +6,9 @@ its subsequent room-temperature creep by about 25% because magnetostriction of
 the inclusion generates ≈147 MPa at the interface — above the 120 MPa yield
 stress of the matrix — and plastifies the surrounding aluminium.
 
-The claim does not survive the test. This repository holds the calculations
-that establish that, the analysis code that turns them into numbers, and the
-manuscript built from them.
+The claim does not survive the test. This repository holds the calculations that
+establish that and the analysis code that turns them into numbers. The manuscript
+built from them is still in co-author review and is added here on submission.
 
 **The short version.** A magnetic field cannot be simulated in classical MD, so
 its effect enters as a volume-preserving affine strain applied to the inclusion
@@ -53,14 +53,13 @@ python analysis/python/stageG10_field_profile.py        # Fig. 1, the σ(r) prof
 python analysis/python/stageG12_eigenstrain_retention.py # Table 1, retained strain
 python analysis/python/stageG8_eshelby3d.py             # the analytic 3D comparison
 python analysis/python/stageG5_two_scale_bridge.py      # Table 2, the two-scale bridge
-python analysis/python/stageG11_figures.py              # all three manuscript figures
-python docs/paper/audit_v4.py                           # 150 checks, text against data
+python analysis/python/stageG11_figures.py              # all three figures
 ```
 
-Each script writes a JSON record into `docs/reports/`. `audit_v4.py` re-derives
-every quantity quoted in the manuscript from those records and exits non-zero if
-the text and the data disagree — so a claim cannot drift away from its evidence
-without the check noticing.
+Each script writes a JSON record into `docs/reports/`, and the figures are drawn
+from those records rather than from anything held in a notebook. A companion
+check re-derives every number quoted in the manuscript from the same records and
+fails if the two disagree; it ships with the manuscript.
 
 ## Layout
 
@@ -68,7 +67,6 @@ without the check noticing.
 analysis/python/    analysis code, stage by stage; stageG* is what the paper uses
 scripts/           structure generators and run drivers
 data/stageG4_clean/ the two minimised cells the stress field is measured from
-docs/paper/        the manuscript (EN + RU), figures, bibliography, audit
 docs/reports/      the JSON/CSV records figures and tables are built from
 docs/run_plans/    what was planned, including branches deliberately not run
 configs/           YAML run configurations for stages A–E
@@ -137,14 +135,16 @@ respective authors and distributors retain all rights.
 
 ## Manuscript
 
-`docs/paper/` holds both versions — `main.tex` (English, elsarticle) and
-`main_ru.tex` (Russian) — with `main_en_compiled.pdf` and `main_ru_compiled.pdf`
-as built. `make_docx.py` produces Word review copies for co-authors.
+The manuscript is in preparation and is **not** in this repository yet. It will
+be added, with the figures and the text-against-data audit, once it has been
+through co-author review and submitted. Until then this repository is the
+calculation record: everything the paper will assert can be recomputed from what
+is here.
 
-The conclusion is a refutation with a constructive remainder. The direct elastic
-magnetostrictive mechanism is quantitatively unsupported. But the stress the
-experiment actually requires, 8.7–65.2 MPa, is the same order as what real
-magnetostriction supplies — so if the effect is real it acts by lowering a
+The conclusion it will carry is a refutation with a constructive remainder. The
+direct elastic magnetostrictive mechanism is quantitatively unsupported. But the
+stress the experiment actually requires, 8.7–65.2 MPa, is the same order as what
+real magnetostriction supplies — so if the effect is real it acts by lowering a
 thermally activated barrier, not by exceeding a yield stress. Two open problems
 remain: Al₁₃Fe₄ as identified is a dilute paramagnet and cannot carry Joule
 magnetostriction at all, so the magnetic phase needs identifying; and the
@@ -170,6 +170,6 @@ Moscow Polytechnic University.
 эксперименту требуется 8,7–65,2 МПа, а заявленные 147 МПа предсказали бы эффект
 в 2,2·10³ раза больше наблюдаемого.
 
-Рукопись — в `docs/paper/`, обе версии. Числа воспроизводятся командами из
-раздела «Reproducing the published numbers» выше; `docs/paper/audit_v4.py`
-проверяет 150 утверждений текста против записей данных.
+Рукопись готовится и будет добавлена сюда после вычитки соавторами и подачи.
+Пока репозиторий — это расчётная запись: всё, что статья утверждает, считается
+командами из раздела «Reproducing the published numbers» выше.

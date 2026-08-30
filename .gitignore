@@ -91,3 +91,9 @@ docs/reports/pdf/stageF_pdf_*
 
 # --------------------------------- third-party archives we do not redistribute
 potentials/**/*.tar.gz
+
+# ------------------------------------------------------------- the manuscript
+# Held back until co-author review is finished and the paper is submitted. It
+# lands here as its own commit at that point, together with the audit that
+# checks its every number against docs/reports/.
+docs/paper/
