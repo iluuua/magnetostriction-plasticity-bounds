@@ -37,13 +37,13 @@ STRUCT = REPO / "structures"
 TXT = {
     "en": dict(matrix="Al matrix (fcc)", incl="Al$_{13}$Fe$_4$ inclusion",
                fixed="fixed bottom layer", free="free surface (vacuum)",
-               axis="strain axis, 45° to the interface",
-               dip="edge dislocation pair", shear="applied shear τ, ramped 0 → 400 MPa",
+               axis="strain axis,\n45° to the interface",
+               dip="edge dislocation pair", shear="applied shear τ\nramped 0 → 400 MPa",
                cell="interface cell, 9·10⁴ atoms", load="loaded cell, 9·10⁴ atoms"),
     "ru": dict(matrix="матрица Al (ГЦК)", incl="включение Al$_{13}$Fe$_4$",
-               fixed="закреплённый нижний слой", free="свободная поверхность (вакуум)",
-               axis="ось деформации, 45° к границе",
-               dip="пара краевых дислокаций", shear="приложенный сдвиг τ, 0 → 400 МПа",
+               fixed="закреплённый нижний слой", free="свободная поверхность" + chr(10) + "(вакуум)",
+               axis="ось деформации,\n45° к границе",
+               dip="пара краевых дислокаций", shear="приложенный сдвиг τ\n0 → 400 МПа",
                cell="ячейка границы, 9·10⁴ атомов", load="нагружаемая ячейка, 9·10⁴ атомов"),
 }
 # matplotlib-style $..$ is not understood by OVITO overlays: use plain unicode
@@ -52,10 +52,15 @@ for L in TXT.values():
 
 
 def label(vp: Viewport, text: str, x: float, y: float, size=0.05, color=(0.1, 0.1, 0.1)):
-    ov = TextLabelOverlay(text=text, offset_x=x, offset_y=y, font_size=size,
-                          text_color=color, alignment=Qt.AlignLeft | Qt.AlignBottom)
-    vp.overlays.append(ov)
-    return ov
+    """One overlay per line: TextLabelOverlay does not break lines itself."""
+    lines = text.split("\n")
+    out = []
+    for i, ln in enumerate(lines):
+        ov = TextLabelOverlay(text=ln, offset_x=x, offset_y=y - i * 1.25 * size, font_size=size,
+                              text_color=color, alignment=Qt.AlignLeft | Qt.AlignBottom)
+        vp.overlays.append(ov)
+        out.append(ov)
+    return out[0]
 
 
 def render_interface(lang: str) -> Path:
@@ -72,17 +77,17 @@ def render_interface(lang: str) -> Path:
 
     vp = Viewport(type=Viewport.Type.Front)      # looks along -y: the x-z plane
     vp.zoom_all()
-    vp.fov = vp.fov * 0.92
-    label(vp, t["cell"], 0.02, 0.955, 0.042)
-    label(vp, t["matrix"], 0.66, 0.55, 0.042)
-    label(vp, t["incl"], 0.66, 0.10, 0.042, (0.6, 0.08, 0.06))
-    label(vp, t["fixed"], 0.02, 0.02, 0.036, (0.3, 0.3, 0.3))
-    label(vp, t["free"], 0.02, 0.90, 0.034, (0.3, 0.3, 0.3))
-    label(vp, t["axis"], 0.66, 0.30, 0.036, (0.05, 0.25, 0.55))
-    tripod = CoordinateTripodOverlay(size=0.11, offset_x=0.86, offset_y=0.04)
+    vp.fov = vp.fov * 1.25
+    label(vp, t["cell"], 0.02, 0.875, 0.040)
+    label(vp, t["matrix"], 0.70, 0.58, 0.034)
+    label(vp, t["incl"], 0.70, 0.13, 0.034, (0.6, 0.08, 0.06))
+    label(vp, t["fixed"], 0.02, 0.045, 0.034, (0.3, 0.3, 0.3))
+    label(vp, t["free"], 0.02, 0.805, 0.028, (0.3, 0.3, 0.3))
+    label(vp, t["axis"], 0.70, 0.33, 0.028, (0.05, 0.25, 0.55))
+    tripod = CoordinateTripodOverlay(size=0.10, offset_x=0.90, offset_y=0.02)
     vp.overlays.append(tripod)
     out = PAPER / f"fig_cell_interface_{lang}.png"
-    vp.render_image(size=(1600, 1150), filename=str(out), background=(1, 1, 1),
+    vp.render_image(size=(1900, 1150), filename=str(out), background=(1, 1, 1),
                     renderer=TachyonRenderer(antialiasing=True, ambient_occlusion=True))
     pipe.remove_from_scene()
     return out
@@ -126,14 +131,15 @@ def render_loading(lang: str) -> Path:
 
     vp = Viewport(type=Viewport.Type.Front)
     vp.zoom_all()
-    label(vp, t["load"], 0.02, 0.955, 0.042)
-    label(vp, t["dip"], 0.60, 0.50, 0.040, (0.05, 0.35, 0.10))
-    label(vp, t["incl"], 0.30, 0.10, 0.040, (0.6, 0.08, 0.06))
-    label(vp, t["shear"], 0.02, 0.90, 0.036, (0.05, 0.25, 0.55))
-    label(vp, t["fixed"], 0.02, 0.02, 0.036, (0.3, 0.3, 0.3))
-    vp.overlays.append(CoordinateTripodOverlay(size=0.11, offset_x=0.86, offset_y=0.04))
+    vp.fov = vp.fov * 1.25                       # same scale as the interface figure
+    label(vp, t["load"], 0.02, 0.875, 0.040)
+    label(vp, t["dip"], 0.70, 0.62, 0.032, (0.05, 0.35, 0.10))
+    label(vp, t["incl"], 0.70, 0.13, 0.032, (0.6, 0.08, 0.06))
+    label(vp, t["shear"], 0.02, 0.77, 0.032, (0.05, 0.25, 0.55))
+    label(vp, t["fixed"], 0.02, 0.045, 0.034, (0.3, 0.3, 0.3))
+    vp.overlays.append(CoordinateTripodOverlay(size=0.10, offset_x=0.90, offset_y=0.02))
     out = PAPER / f"fig_cell_loading_{lang}.png"
-    vp.render_image(size=(1600, 1150), filename=str(out), background=(1, 1, 1),
+    vp.render_image(size=(1900, 1150), filename=str(out), background=(1, 1, 1),
                     renderer=TachyonRenderer(antialiasing=True, ambient_occlusion=True))
     n_seg = len(data.dislocations.segments)
     print("loading cell: %d atoms, DXA found %d dislocation segments" % (data.particles.count, n_seg))

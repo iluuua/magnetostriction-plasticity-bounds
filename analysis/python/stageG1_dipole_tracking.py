@@ -115,20 +115,28 @@ def write_csv(path: Path, rows: list[dict]) -> None:
 
 
 def main() -> int:
+    global CASES
     parser = argparse.ArgumentParser()
     parser.add_argument("--run-dir", type=Path, required=True,
                         help="runs/stageG1_ridge_dipole/<stamp>")
     parser.add_argument("--stage", default="production", choices=["production", "smoke"])
     parser.add_argument("--out-dir", type=Path, default=REPO_ROOT / "docs" / "reports")
     parser.add_argument("--lx", type=float, default=LX_DEFAULT)
+    parser.add_argument("--cases", default=",".join(CASES),
+                        help="comma-separated case names; the first is the control")
+    parser.add_argument("--flat", action="store_true",
+                        help="dumps live at <run-dir>/<case>/<case>.production.lammpstrj "
+                             "(the stage G15 layout) rather than under a production/ subdir")
+    parser.add_argument("--tag", default="", help="suffix for the output file names")
     args = parser.parse_args()
+    CASES = args.cases.split(",")
 
     summary: dict = {"run_dir": str(args.run_dir), "stage": args.stage,
                      "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
                      "cases": {}}
     per_case_rows: dict[str, list[dict]] = {}
     for case in CASES:
-        stage_dir = args.run_dir / case / args.stage
+        stage_dir = args.run_dir / case if args.flat else args.run_dir / case / args.stage
         if args.stage == "production":
             dump = stage_dir / f"{case}.production.lammpstrj"
         else:
@@ -163,7 +171,7 @@ def main() -> int:
         summary["delta_physical_minus_control"] = deltas
         write_csv(args.out_dir / f"stageG1_dipole_tracking_delta_{args.stage}.csv", deltas)
 
-    out_json = args.out_dir / f"stageG1_dipole_tracking_{args.stage}_summary.json"
+    out_json = args.out_dir / f"stageG1_dipole_tracking_{args.stage}{args.tag}_summary.json"
     out_json.write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({k: (v if k != "delta_physical_minus_control" else f"{len(v)} rows")
                       for k, v in summary.items()}, indent=2, default=str))

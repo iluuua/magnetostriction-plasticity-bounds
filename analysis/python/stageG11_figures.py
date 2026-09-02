@@ -47,60 +47,56 @@ EPS_INFLATED = 1.94e-3
 
 L = {
     "en": dict(
-        f1title="Stress decay from the Al$_{13}$Fe$_4$/Al interface\n"
-                "(clean cell: no dislocations, no solutes, energy-minimised)",
-        f1y1="von Mises stress (MPa)", f1y2="affine-surrogate stress difference (MPa)",
-        f1x="distance from the flat interface, $r$ (Å)",
-        ctl="control ($\\lambda_s=0$)",
-        fld="affine-perturbed ($\\lambda_{\\mathrm{nom}}=1.94\\times10^{-3}$)",
-        rss="RSS$_{\\max}$ of $\\Delta\\sigma_{ij}$", vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
-        noise="noise floor measured beyond 60 Å",
-        apex="bins straddling the ridge flank are excluded from the plot\n"
-             "(diagnostic range 19-%.0f MPa; not a field measurement)",
-        f2title="Dislocation trajectories in Al–Mg–Si under a constant-stress staircase",
+        f1title="Stress in the Al matrix against the distance from the Al$_{13}$Fe$_4$ interface",
+        f1y1="von Mises stress (MPa)", f1y2="stress difference, strained minus control (MPa)",
+        f1x="distance from the interface plane, $r$ (Å)",
+        ctl="control cell (inclusion unstrained)",
+        fld="inclusion elongated by 0.194 %, strain maintained",
+        rss="shear stress of the difference on the most favourable\nslip system, RSS$_{\\max}$", vmd="von Mises stress of the difference",
+        noise="far-field level beyond 60 Å",
+        apex="slices crossing the ridge flank are not plotted\n"
+             "(they read 19-%.0f MPa and mix inclusion and matrix atoms)",
+        f2title="Dislocation position in Al–Mg–Si under constant applied shear",
         f2x="time (ps)", f2y="displacement along the glide direction (Å)",
-        probe="probe line (lower plane)", partner="reaction partner (upper plane)",
+        probe="dislocation followed (lower glide plane)", partner="its partner of opposite sign (upper glide plane)",
         noload="no load", mpa="MPa",
-        f3title="Affine-surrogate and maintained-eigenstrain stress bounds",
+        f3title="Stress produced by the strained inclusion against the stresses\nat which dislocations respond",
         f3x="distance from the nearest inclusion surface, $d$ (Å)",
-        f3y="RSS$_{\\max}$ of the stress difference (MPa)",
-        md="MD ridge, relaxed response at $\\lambda_{\\mathrm{nom}}$\n(diagnostic, inflated amplitude)",
-        esh="3D Eshelby sphere, maintained $\\lambda_{\\mathrm{nom}}$\n(diagnostic, inflated amplitude)",
-        resc="Eshelby sphere at $\\lambda_s=100$ ppm\n(physical: peak 2.4 MPa)",
-        flank="excluded diagnostic flank bins (19-80 MPa),\nnot a field measurement",
-        thr=["no depinning through 75 MPa ($\\pm$22, dipole)",
-             "dipole motion 77-86 MPa",
-             "interface nucleation 195 MPa"],
+        f3y="shear stress on the most favourable slip system, RSS$_{\\max}$ (MPa)",
+        md="interface cell: inclusion held at 0.194 % (MD)",
+        esh="analytical sphere held at 0.194 %",
+                flank="omitted flank slices, 19-80 MPa",
+        thr=["pinned dislocation holds through 75 MPa",
+             "existing dislocation pair starts to move, 77-86 MPa",
+             "new dislocations nucleate at the interface, 195 MPa"],
     ),
     "ru": dict(
-        f1title="Затухание напряжения от границы Al$_{13}$Fe$_4$/Al\n"
-                "(чистая ячейка: без дислокаций и примесей, минимизация)",
+        f1title="Напряжение в матрице Al в зависимости от расстояния от границы с Al$_{13}$Fe$_4$",
         f1y1="напряжение фон Мизеса, МПа",
-        f1y2="приращение после аффинного возмущения, МПа",
-        f1x="расстояние от плоской границы, $r$ (Å)",
-        ctl="контроль ($\\lambda_s=0$)",
-        fld="аффинное возмущение\n($\\lambda_{\\mathrm{nom}}=1{,}94\\times10^{-3}$)",
-        rss="RSS$_{\\max}$ тензора $\\Delta\\sigma_{ij}$",
-        vmd="$\\sigma_{vM}[\\Delta\\sigma_{ij}]$",
-        noise="шумовой уровень за 60 Å",
-        apex="бины, седлающие фланг гребня, исключены\n"
-             "(диагностический разброс 19-%.0f МПа, не измерение поля)",
-        f2title="Траектории дислокаций в Al–Mg–Si при ступенчатом нагружении",
+        f1y2="разность напряжений, деформированная минус контрольная, МПа",
+        f1x="расстояние от плоскости границы, $r$ (Å)",
+        ctl="контрольная ячейка (включение не деформировано)",
+        fld="включение удлинено на 0,194 %, деформация удерживается",
+        rss="касательное напряжение разности в наиболее\nблагоприятной системе скольжения, RSS$_{\\max}$",
+        vmd="напряжение фон Мизеса разности",
+        noise="уровень дальнего поля за 60 Å",
+        apex="слои, пересекающие склон гребня, не показаны\n"
+             "(в них 19-%.0f МПа; смешаны атомы включения и матрицы)",
+        f2title="Положение дислокации в Al–Mg–Si при постоянном приложенном сдвиге",
         f2x="время, пс",
         f2y="смещение вдоль направления скольжения, Å",
-        probe="дислокация-зонд (нижняя плоскость)",
-        partner="партнёр (верхняя плоскость)",
+        probe="наблюдаемая дислокация (нижняя плоскость скольжения)",
+        partner="её партнёр противоположного знака (верхняя плоскость скольжения)",
         noload="без нагрузки", mpa="МПа",
-        f3title="Оценки напряжения: аффинный суррогат и поддерживаемая деформация",
+        f3title="Напряжение от деформированного включения\nи напряжения отклика дислокаций",
         f3x="расстояние от ближайшей поверхности включения, $d$ (Å)",
-        f3y="RSS$_{\\max}$ разностного тензора, МПа",
-        md="MD, гребень: релаксированный отклик при\n$\\lambda_{\\mathrm{nom}}$ (диагностика, завышенная амплитуда)",
-        esh="3D-сфера Эшелби, поддерживаемая $\\lambda_{\\mathrm{nom}}$\n(диагностика, завышенная амплитуда)",
-        resc="сфера Эшелби при $\\lambda_s=100$ ppm\n(физическая: пик 2,4 МПа)",
-        flank="исключённые диагностические бины фланга\n(19-80 МПа), не измерение поля",
-        thr=["открепления не было до 75 МПа ($\\pm$22, диполь)",
-             "движение диполя 77–86 МПа",
-             "зарождение на границе 195 МПа"],
+        f3y="касательное напряжение в наиболее благоприятной системе, RSS$_{\\max}$, МПа",
+        md="ячейка границы: включение удерживается при 0,194 % (МД)",
+        esh="аналитическая сфера, удерживаемая при 0,194 %",
+                flank="опущенные слои склонов, 19-80 МПа",
+        thr=["закреплённая дислокация удерживается до 75 МПа",
+             "начало движения существующей пары дислокаций, 77–86 МПа",
+             "зарождение новых дислокаций на границе, 195 МПа"],
     ),
 }
 
@@ -211,14 +207,9 @@ def fig_rss(lang: str) -> None:
     ed = np.array([(x["r_over_a"] - 1.0) * A_RIDGE for x in esh["exterior_decay_sphere"]])
     ev = np.array([x["max_RSS_MPa"] for x in esh["exterior_decay_sphere"]])
 
-    # the physical curve: the maintained-eigenstrain solution rescaled from the
-    # inflated nominal amplitude to a measured Fe-Al magnetostriction
-    phys = ev * (1e-4 / EPS_INFLATED)
     fig, ax = plt.subplots(figsize=(7.2, 5.2))
     ax.semilogy(dd, np.maximum(rss, 1e-3), "o-", ms=4.5, color="#3b8b52", label=t["md"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
-    ax.semilogy(ed, phys, "s-", ms=5, lw=2.0, color="#8b3b8b", alpha=0.45,
-                label=t["resc"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
     # the pinning bound is not unconditional: the dipole carries its own 22 MPa
@@ -242,8 +233,15 @@ def fig_rss(lang: str) -> None:
 
 
 if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--only", choices=["sigma", "traj", "rss"], default=None)
+    args = ap.parse_args()
     plt.rcParams["font.family"] = ["DejaVu Sans"]
     for lg in ("en", "ru"):
-        fig_sigma(lg)
-        fig_traj(lg)
-        fig_rss(lg)
+        if args.only in (None, "sigma"):
+            fig_sigma(lg)
+        if args.only in (None, "traj"):
+            fig_traj(lg)
+        if args.only in (None, "rss"):
+            fig_rss(lg)
