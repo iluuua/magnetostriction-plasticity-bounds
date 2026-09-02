@@ -1,0 +1,73 @@
+# Stage G13 v2: the field gate with THERMAL PRE-RELAXATION.
+#
+# Every earlier gate minimisation (stageG4, stageG10, the first G13 pass)
+# stopped on the energy tolerance with a residual force two-norm of 9-11 in
+# the control cells and 32 in the strained ones: conjugate gradient stalls on
+# the long-wavelength z-mode of a slab 60-94 layers tall, and it stalls at a
+# different point in the two cells. The difference field then carries a
+# diagonal residue with sigma_xx = sigma_yy = sigma_zz/2 and no shear - the
+# signature of an unrelaxed uniaxial strain - at tens of MPa in the normal
+# components. The shear component is not part of that mode and was clean.
+#
+# Sound crosses the cell in a few picoseconds, so a short thermal run relaxes
+# the mode that CG cannot. Protocol: CG to remove the large forces, 10 ps at
+# 300 K on the mobile atoms, then a FIRE quench to a FORCE tolerance. Both
+# cells get the identical protocol and the identical velocity seed.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL, HOLD_INCL (0/1), KSPRING
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        HOLD_INCL index 0
+variable        KSPRING index 20.0
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+timestep        0.001
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+if "${HOLD_INCL} > 0" then &
+   "fix tether inclusion spring/self ${KSPRING}" &
+   "fix_modify tether energy yes"
+
+thermo          100
+thermo_style    custom step atoms temp pe press pxz fnorm
+
+# 1. coarse CG: the large forces of the as-built interface
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 3000 30000
+
+# 2. thermal relaxation of the long-wavelength modes, 10 ps at 300 K
+neigh_modify    delay 0 every 10 check no
+velocity        mobile create 300.0 4242 mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+thermo          500
+run             10000
+unfix           nvt_mobile
+unfix           ztop
+velocity        all set 0.0 0.0 0.0
+
+# 3. FIRE quench to a force tolerance (etol = 0: stop on force only)
+neigh_modify    delay 0 every 1 check no
+thermo          200
+min_style       fire
+minimize        0.0 1.0e-5 100000 400000
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

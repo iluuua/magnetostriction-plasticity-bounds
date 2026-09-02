@@ -39,12 +39,12 @@ TXT = {
                fixed="fixed bottom layer", free="free surface (vacuum)",
                axis="strain axis, 45° to the interface",
                dip="edge dislocation pair", shear="applied shear τ, ramped 0 → 400 MPa",
-               cell="interface cell, ~10⁵ atoms", load="loaded cell, ~10⁵ atoms"),
+               cell="interface cell, 9·10⁴ atoms", load="loaded cell, 9·10⁴ atoms"),
     "ru": dict(matrix="матрица Al (ГЦК)", incl="включение Al$_{13}$Fe$_4$",
                fixed="закреплённый нижний слой", free="свободная поверхность (вакуум)",
                axis="ось деформации, 45° к границе",
                dip="пара краевых дислокаций", shear="приложенный сдвиг τ, 0 → 400 МПа",
-               cell="ячейка границы, ~10⁵ атомов", load="нагружаемая ячейка, ~10⁵ атомов"),
+               cell="ячейка границы, 9·10⁴ атомов", load="нагружаемая ячейка, 9·10⁴ атомов"),
 }
 # matplotlib-style $..$ is not understood by OVITO overlays: use plain unicode
 for L in TXT.values():
@@ -60,7 +60,7 @@ def label(vp: Viewport, text: str, x: float, y: float, size=0.05, color=(0.1, 0.
 
 def render_interface(lang: str) -> Path:
     t = TXT[lang]
-    src = next((STRUCT / "stageG4_tilted_solute" / "G4_tilted_eps0000_clean100k").glob("*.start.data"))
+    src = next((STRUCT / "stageG4_tilted_solute" / "G4_tilted_eps0000_u100k").glob("*.start.data"))
     pipe = import_file(str(src), atom_style="atomic")
     # species colours: Al pale grey, Fe deep red so the intermetallic stands out
     pt = pipe.source.data.particles_.particle_types_
@@ -73,12 +73,12 @@ def render_interface(lang: str) -> Path:
     vp = Viewport(type=Viewport.Type.Front)      # looks along -y: the x-z plane
     vp.zoom_all()
     vp.fov = vp.fov * 0.92
-    label(vp, t["cell"], 0.02, 0.94, 0.050)
+    label(vp, t["cell"], 0.02, 0.955, 0.042)
     label(vp, t["matrix"], 0.66, 0.55, 0.042)
     label(vp, t["incl"], 0.66, 0.10, 0.042, (0.6, 0.08, 0.06))
     label(vp, t["fixed"], 0.02, 0.02, 0.036, (0.3, 0.3, 0.3))
-    label(vp, t["free"], 0.02, 0.88, 0.036, (0.3, 0.3, 0.3))
-    label(vp, t["axis"], 0.02, 0.40, 0.038, (0.05, 0.25, 0.55))
+    label(vp, t["free"], 0.02, 0.90, 0.034, (0.3, 0.3, 0.3))
+    label(vp, t["axis"], 0.66, 0.30, 0.036, (0.05, 0.25, 0.55))
     tripod = CoordinateTripodOverlay(size=0.11, offset_x=0.86, offset_y=0.04)
     vp.overlays.append(tripod)
     out = PAPER / f"fig_cell_interface_{lang}.png"
@@ -90,7 +90,7 @@ def render_interface(lang: str) -> Path:
 
 def render_loading(lang: str) -> Path:
     t = TXT[lang]
-    cand = sorted((STRUCT / "stageG1_ridge_dipole").rglob("data.*eps0000*"))
+    cand = sorted((STRUCT / "stageG4_tilted_solute" / "G4_tilted_eps0000_dipu100k").glob("*.start.data"))
     if not cand:
         print("no G1 structure found; skipping the loading figure")
         return None
@@ -109,17 +109,23 @@ def render_loading(lang: str) -> Path:
     pipe.modifiers.append(SelectTypeModifier(property="Structure Type",
                                              types={DislocationAnalysisModifier.Lattice.FCC}))
     pipe.modifiers.append(AssignColorModifier(color=(0.93, 0.93, 0.95)))
-    vis = pipe.compute().dislocations.vis
+    out_data = pipe.compute()
+    vis = out_data.dislocations.vis
     vis.line_width = 3.0
     vis.shading = DislocationVis.Shading.Normal
+    # the DXA defect mesh (interface surfaces, free surface) only clutters a
+    # picture whose point is the pair and the inclusion
+    if out_data.surfaces:
+        for s in out_data.surfaces.values():
+            s.vis.enabled = False
     pipe.add_to_scene()
 
     vp = Viewport(type=Viewport.Type.Front)
     vp.zoom_all()
-    label(vp, t["load"], 0.02, 0.94, 0.050)
+    label(vp, t["load"], 0.02, 0.955, 0.042)
     label(vp, t["dip"], 0.60, 0.50, 0.040, (0.05, 0.35, 0.10))
     label(vp, t["incl"], 0.30, 0.10, 0.040, (0.6, 0.08, 0.06))
-    label(vp, t["shear"], 0.02, 0.88, 0.038, (0.05, 0.25, 0.55))
+    label(vp, t["shear"], 0.02, 0.90, 0.036, (0.05, 0.25, 0.55))
     label(vp, t["fixed"], 0.02, 0.02, 0.036, (0.3, 0.3, 0.3))
     vp.overlays.append(CoordinateTripodOverlay(size=0.11, offset_x=0.86, offset_y=0.04))
     out = PAPER / f"fig_cell_loading_{lang}.png"

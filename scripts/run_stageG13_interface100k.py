@@ -36,16 +36,30 @@ def n_al_of(cell: str) -> int:
     return json.loads(meta.read_text(encoding="utf-8"))["counts"]["al_matrix"]
 
 
-CASES = [
-    ("ctl_free", "G4_tilted_eps0000_clean100k", "in.fieldgate", {}),
-    ("fld_free", "G4_tilted_eps00194_clean100k", "in.fieldgate", {}),
-    ("ctl_held", "G4_tilted_eps0000_clean100k", "in.fieldgate_held", {"N_AL": "meta"}),
-    ("fld_held", "G4_tilted_eps00194_clean100k", "in.fieldgate_held", {"N_AL": "meta"}),
-]
+import argparse
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--cell", default="clean100k", help="structure tag: clean100k (38x13x94) or u100k (54x13x56)")
+_ap.add_argument("--protocol", choices=("v1", "v2"), default="v2",
+                 help="v1: CG only (the original gate); v2: CG + 10 ps 300 K + FIRE to ftol")
+_ap.add_argument("--only", default="", help="comma list of case names to run")
+_args = _ap.parse_args()
+_c = "G4_tilted_eps0000_" + _args.cell
+_f = "G4_tilted_eps00194_" + _args.cell
+if _args.protocol == "v1":
+    CASES = [("ctl_free", _c, "in.fieldgate", {}), ("fld_free", _f, "in.fieldgate", {}),
+             ("ctl_held", _c, "in.fieldgate_held", {"N_AL": "meta"}),
+             ("fld_held", _f, "in.fieldgate_held", {"N_AL": "meta"})]
+else:
+    CASES = [("ctl_free", _c, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 0}),
+             ("fld_free", _f, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 0}),
+             ("ctl_held", _c, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 1}),
+             ("fld_held", _f, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 1})]
+if _args.only:
+    CASES = [c for c in CASES if c[0] in _args.only.split(",")]
 
 
 def main() -> int:
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S") + "_" + _args.cell + "_" + _args.protocol
     root = REPO / "runs" / "stageG13_interface100k" / stamp
     root.mkdir(parents=True)
     status = {"started": datetime.now().astimezone().isoformat(timespec="seconds"),

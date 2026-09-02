@@ -81,9 +81,10 @@ def main() -> int:
     ap.add_argument("--only", choices=("G15", "G16"))
     ap.add_argument("--cases", default="ctl,fld")
     ap.add_argument("--nsteps", type=int, default=101000)
+    ap.add_argument("--nsteps-g16", type=int, default=60000)
     args = ap.parse_args()
     cases = args.cases.split(",")
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
     root = REPO / "runs" / "stageG15_unified" / stamp
     root.mkdir(parents=True)
     status = {"started": datetime.now().astimezone().isoformat(timespec="seconds"), "runs": {}}
@@ -95,7 +96,7 @@ def main() -> int:
     if args.only in (None, "G16"):
         for c in cases:
             g = geometry(CELLS[c])
-            plan.append(("G16", c, {"N_AL": g["N_AL"]}, "in.fieldhold_dynamics", 100000))
+            plan.append(("G16", c, {"N_AL": g["N_AL"]}, "in.fieldhold_dynamics", args.nsteps_g16))
     for stage, c, extra, infile, n in plan:
         status["runs"][f"{stage}_{c}"] = launch(stage, c, root, extra, infile, n)
         (root / "status.json").write_text(json.dumps(status, indent=2), encoding="utf-8")
