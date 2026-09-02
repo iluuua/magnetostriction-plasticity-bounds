@@ -44,7 +44,7 @@ OUT = REPO_ROOT / "docs" / "reports" / "stageG8_eshelby3d.json"
 MU = 26.5e9          # Pa, Al shear modulus used throughout the project
 NU = 0.347           # Al Poisson ratio
 LAMBDA = 2.0 * MU * NU / (1.0 - 2.0 * NU)
-EPS = 1.94e-3        # inflated eigenstrain amplitude used in the MD cells
+EPS = 1.94e-3        # eigenstrain amplitude of the MD cells (0.194 %, the strain of the 147 MPa estimate)
 TILT_DEG = 45.0
 RIDGE_RX = 35e-10    # m, ridge semi-axis in x
 RIDGE_H = 20e-10     # m, ridge semi-axis in z
@@ -199,6 +199,17 @@ def main() -> int:
         val, lbl = max_rss(sig, systems)
         decay.append({"r_over_a": rr, "max_RSS_MPa": round(val / 1e6, 3), "system": lbl})
 
+    md_peak = {"source": "docs/reports/stageG10_field_profile.json"}
+    g10 = REPO_ROOT / "docs" / "reports" / "stageG10_field_profile.json"
+    if g10.exists():
+        d10 = json.loads(g10.read_text(encoding="utf-8"))
+        pk = d10.get("peak", {})
+        md_peak.update({"peak_max_RSS": pk.get("max_RSS_MPa"), "at_r_A": pk.get("r_A"),
+                        "system": pk.get("system"), "cell": d10.get("cell"),
+                        "label": d10.get("label")})
+        axis = [abs(x["d_sigma_xz_axis_MPa"]) for x in d10.get("profile", [])
+                if x.get("above_apex") and x.get("d_sigma_xz_axis_MPa") is not None]
+        md_peak["on_axis_max_abs_d_sigma_xz"] = round(max(axis), 2) if axis else None
     res = {
         "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a "
@@ -214,25 +225,29 @@ def main() -> int:
         },
         "ratio_sphere_over_cylinder": round(rss_sphere / rss_cyl, 3),
         "exterior_decay_sphere": decay,
-        "md_ridge_measurement_MPa": {"peak_max_RSS": 6.26, "at_r_A": 30.0,
-                                     "source": "stageG4_rss_profile.json"},
-        "rescaled_to_real_magnetostriction": {
+        "md_ridge_measurement_MPa": md_peak,
+        "at_measured_FeAl_magnetostriction": {
+            "note": "what the same sphere would carry if its strain were the largest "
+                    "magnetostriction reported for bulk Fe-Al alloys (Hall 1959; "
+                    "Bormio-Nunes 2012), i.e. 20-100 times less than 0.194 %",
             "sphere_interior_MPa": {k: round(rss_sphere / 1e6 * lam / EPS, 3)
                                     for k, lam in LAM_REAL.items()},
         },
     }
+    md_txt = ("The MD ridge cell (%s) gives a peak max-RSS of %.1f MPa at r = %.0f A from the "
+              "interface plane%s" % (md_peak.get("source", "?"), md_peak["peak_max_RSS"], md_peak["at_r_A"],
+                                     (", and %.1f MPa within 10 A of the ridge axis" % md_peak["on_axis_max_abs_d_sigma_xz"])
+                                     if md_peak.get("on_axis_max_abs_d_sigma_xz") is not None else "")
+              if md_peak.get("peak_max_RSS") is not None else "No MD profile record was found")
     res["verdict"] = (
         f"At identical eigenstrain the compact 3D inclusion carries an interior "
         f"max-RSS of {rss_sphere/1e6:.1f} MPa against {rss_cyl/1e6:.1f} MPa for the "
         f"infinite cylinder, a ratio of {rss_sphere/rss_cyl:.2f}. The exterior field "
         f"of the sphere falls to "
         f"{decay[2]['max_RSS_MPa']:.2f} MPa at r = 1.5a and "
-        f"{decay[-1]['max_RSS_MPa']:.2f} MPa at r = 3a. The MD ridge cell measured "
-        f"6.26 MPa at 30 A from the interface, i.e. the same order as the 3D "
-        f"exterior field at comparable relative distance, so the ridge geometry does "
-        f"not inflate the driving stress; rescaled to realistic magnetostriction the "
-        f"3D interior value itself is "
-        f"{rss_sphere/1e6*4e-5/EPS:.2f} MPa at 40 ppm."
+        f"{decay[-1]['max_RSS_MPa']:.2f} MPa at r = 3a. {md_txt}. At the largest "
+        f"magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere "
+        f"would carry {rss_sphere/1e6*1e-4/EPS:.2f} MPa."
     )
     OUT.write_text(json.dumps(res, indent=2) + chr(10), encoding="utf-8")
     print(json.dumps({k: v for k, v in res.items()

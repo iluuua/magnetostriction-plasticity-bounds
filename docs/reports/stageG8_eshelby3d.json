@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-09-02T17:32:48+03:00",
+  "created_at": "2026-09-02T18:45:01+03:00",
   "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a compact 3D particle carrying the same eigenstrain?",
   "elastic_constants": {
     "mu_GPa": 26.5,
@@ -83,16 +83,21 @@
     }
   ],
   "md_ridge_measurement_MPa": {
+    "source": "docs/reports/stageG10_field_profile.json",
     "peak_max_RSS": 6.26,
     "at_r_A": 30.0,
-    "source": "stageG4_rss_profile.json"
+    "system": "(111)[1-10]",
+    "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes",
+    "label": null,
+    "on_axis_max_abs_d_sigma_xz": null
   },
-  "rescaled_to_real_magnetostriction": {
+  "at_measured_FeAl_magnetostriction": {
+    "note": "what the same sphere would carry if its strain were the largest magnetostriction reported for bulk Fe-Al alloys (Hall 1959; Bormio-Nunes 2012), i.e. 20-100 times less than 0.194 %",
     "sphere_interior_MPa": {
       "20 ppm": 0.427,
       "40 ppm": 0.855,
       "100 ppm": 2.137
     }
   },
-  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell measured 6.26 MPa at 30 A from the interface, i.e. the same order as the 3D exterior field at comparable relative distance, so the ridge geometry does not inflate the driving stress; rescaled to realistic magnetostriction the 3D interior value itself is 0.85 MPa at 40 ppm."
+  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell (docs/reports/stageG10_field_profile.json) gives a peak max-RSS of 6.3 MPa at r = 30 A from the interface plane. At the largest magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere would carry 2.14 MPa."
 }
