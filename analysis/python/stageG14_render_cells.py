@@ -43,7 +43,7 @@ TXT = {
     "ru": dict(matrix="матрица Al (ГЦК)", incl="включение Al$_{13}$Fe$_4$",
                fixed="закреплённый нижний слой", free="свободная поверхность" + chr(10) + "(вакуум)",
                axis="ось деформации,\n45° к границе",
-               dip="пара краевых дислокаций", shear="приложенный сдвиг τ\n0 → 400 МПа",
+               dip="пара краевых" + chr(10) + "дислокаций", shear="приложенный сдвиг τ\n0 → 400 МПа",
                cell="ячейка границы, 9·10⁴ атомов", load="нагружаемая ячейка, 9·10⁴ атомов"),
 }
 # matplotlib-style $..$ is not understood by OVITO overlays: use plain unicode
@@ -61,6 +61,17 @@ def label(vp: Viewport, text: str, x: float, y: float, size=0.05, color=(0.1, 0.
         vp.overlays.append(ov)
         out.append(ov)
     return out[0]
+
+
+def autocrop(path: Path, margin: int = 30) -> None:
+    """Trim the white margins the fixed 1900x1150 canvas leaves around the cell."""
+    from PIL import Image, ImageChops
+    im = Image.open(path).convert("RGB")
+    bg = Image.new("RGB", im.size, (255, 255, 255))
+    box = ImageChops.difference(im, bg).getbbox()
+    if box:
+        l, u, r, d = box
+        im.crop((max(0, l - margin), max(0, u - margin), min(im.width, r + margin), min(im.height, d + margin))).save(path)
 
 
 def render_interface(lang: str) -> Path:
@@ -90,6 +101,7 @@ def render_interface(lang: str) -> Path:
     vp.render_image(size=(1900, 1150), filename=str(out), background=(1, 1, 1),
                     renderer=TachyonRenderer(antialiasing=True, ambient_occlusion=True))
     pipe.remove_from_scene()
+    autocrop(out)
     return out
 
 
@@ -144,6 +156,7 @@ def render_loading(lang: str) -> Path:
     n_seg = len(data.dislocations.segments)
     print("loading cell: %d atoms, DXA found %d dislocation segments" % (data.particles.count, n_seg))
     pipe.remove_from_scene()
+    autocrop(out)
     return out
 
 
