@@ -39,8 +39,9 @@ def n_al_of(cell: str) -> int:
 import argparse
 _ap = argparse.ArgumentParser()
 _ap.add_argument("--cell", default="clean100k", help="structure tag: clean100k (38x13x94) or u100k (54x13x56)")
-_ap.add_argument("--protocol", choices=("v1", "v2"), default="v2",
-                 help="v1: CG only (the original gate); v2: CG + 10 ps 300 K + FIRE to ftol")
+_ap.add_argument("--protocol", choices=("v1", "v2", "v3"), default="v3",
+                 help="v1: CG only (the original gate); v2: CG + 10 ps 300 K + CG quench (stalls in the "
+                      "tethered cell); v3: CG + 6 ps 300 K + 12 ps Langevin cooling + CG, two-norm criteria")
 _ap.add_argument("--only", default="", help="comma list of case names to run")
 _args = _ap.parse_args()
 _c = "G4_tilted_eps0000_" + _args.cell
@@ -50,10 +51,11 @@ if _args.protocol == "v1":
              ("ctl_held", _c, "in.fieldgate_held", {"N_AL": "meta"}),
              ("fld_held", _f, "in.fieldgate_held", {"N_AL": "meta"})]
 else:
-    CASES = [("ctl_free", _c, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 0}),
-             ("fld_free", _f, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 0}),
-             ("ctl_held", _c, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 1}),
-             ("fld_held", _f, "in.fieldgate_v2", {"N_AL": "meta", "HOLD_INCL": 1})]
+    _in = "in.fieldgate_" + _args.protocol
+    CASES = [("ctl_free", _c, _in, {"N_AL": "meta", "HOLD_INCL": 0}),
+             ("fld_free", _f, _in, {"N_AL": "meta", "HOLD_INCL": 0}),
+             ("ctl_held", _c, _in, {"N_AL": "meta", "HOLD_INCL": 1}),
+             ("fld_held", _f, _in, {"N_AL": "meta", "HOLD_INCL": 1})]
 if _args.only:
     CASES = [c for c in CASES if c[0] in _args.only.split(",")]
 

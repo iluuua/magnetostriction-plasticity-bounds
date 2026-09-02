@@ -1,0 +1,96 @@
+# Stage G13 v3: the field gate with thermal pre-relaxation and a DAMPED
+# quench.
+#
+# v2 (CG + 10 ps NVT + CG quench) relaxed the control cell to a force
+# two-norm of 1e-9 but stalled in the strained, tethered cell after 600
+# iterations of the quench: energy and force norm froze (line search alpha
+# = 0 every iteration, not caught by the Kokkos CG) with the 300 K thermal
+# expansion of the slab still in it (+0.85 % along z, sigma_zz ~ -1.1 GPa).
+# The difference field of that pair is dominated by the unrelaxed slab.
+#
+# Under Kokkos the max-force criterion (min_modify norm max) is also
+# unreliable - runs stop at max iterations with the max force far below the
+# tolerance - so every criterion here is the force two-norm.
+#
+# Protocol, identical in both cells and with the same velocity seed:
+#   1. CG to a force two-norm of 1 eV/A (removes the as-built forces)
+#   2. NVT_STEPS fs at 300 K (relaxes the long-wavelength slab modes)
+#   3. COOL_STEPS fs of Langevin cooling 300 -> 0.5 K on every mobile atom
+#      (damps every mode, the slab breathing mode included, without a line
+#      search)
+#   4. CG to a force two-norm of CG_FTOL (default 0.05 eV/A, rms 1.6e-4 eV/A
+#      per atom, ~0.003 MPa) or until the line search can no longer make
+#      progress
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL, HOLD_INCL (0/1),
+#   KSPRING, NVT_STEPS, COOL_STEPS, CG1_MAX, CG4_MAX, CG_FTOL
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        HOLD_INCL index 0
+variable        KSPRING index 20.0
+variable        NVT_STEPS index 6000
+variable        COOL_STEPS index 12000
+variable        CG1_MAX index 2000
+variable        CG4_MAX index 3000
+variable        CG_FTOL index 0.05
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+timestep        0.001
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+if "${HOLD_INCL} > 0" then &
+   "fix tether inclusion spring/self ${KSPRING}" &
+   "fix_modify tether energy yes"
+
+thermo          100
+thermo_style    custom step atoms temp pe press pxz fnorm
+thermo_modify   flush yes
+
+# 1. coarse CG on the as-built interface
+min_style       cg
+min_modify      dmax 0.1
+minimize        0.0 1.0 ${CG1_MAX} 40000
+
+# 2. thermal relaxation of the long-wavelength modes at 300 K
+neigh_modify    delay 0 every 10 check no
+velocity        mobile create 300.0 4242 mom yes rot yes dist gaussian
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+thermo          500
+run             ${NVT_STEPS}
+unfix           nvt_mobile
+
+# 3. damped quench: Langevin cooling to 0.5 K on every mobile atom
+fix             nve_mobile mobile nve
+fix             cool mobile langevin 300.0 0.5 0.2 4243
+run             ${COOL_STEPS}
+unfix           cool
+unfix           nve_mobile
+unfix           ztop
+velocity        all set 0.0 0.0 0.0
+
+# 4. final CG to the force two-norm CG_FTOL
+neigh_modify    delay 0 every 1 check no
+thermo          200
+min_style       cg
+min_modify      dmax 0.1
+minimize        0.0 ${CG_FTOL} ${CG4_MAX} 60000
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

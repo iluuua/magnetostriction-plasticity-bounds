@@ -23,13 +23,14 @@ variable        TAUMAX_MPA index 400
 variable        RESEED index 0
 variable        HOLD_INCL index 0
 variable        KSPRING index 20.0
+variable        CG_MAX index 2000
 variable        PRE_STEPS equal 5000
 variable        TS equal 16000
 
 read_data       ${DATA_FILE}
 
 pair_style      meam
-pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
 
 neighbor        2.0 bin
 neigh_modify    delay 0 every 10 check no
@@ -53,10 +54,14 @@ if "${HOLD_INCL} > 0" then &
 thermo          200
 thermo_style    custom step atoms temp pe press pxz
 thermo_modify   flush yes
+# Kokkos: minimise with the neighbour list rebuilt every step and no distance
+# check (check_distance_kokkos raises an illegal address after 'every 10')
+neigh_modify    delay 0 every 1 check no
 min_style       cg
-min_modify      dmax 0.1 norm max
-minimize        0.0 0.5 2000 20000
+min_modify      dmax 0.1
+minimize        0.0 1.0 ${CG_MAX} 20000
 reset_timestep  0
+neigh_modify    delay 0 every 10 check no
 
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
 fix             ztop mobile wall/reflect zhi EDGE units box
