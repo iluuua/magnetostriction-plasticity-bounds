@@ -48,10 +48,13 @@ if "${HOLD_INCL} > 0" then &
 thermo          100
 thermo_style    custom step atoms temp pe press pxz fnorm
 
-# 1. coarse CG: the large forces of the as-built interface
+# 1. coarse CG: the large forces of the as-built interface. Force criterion
+# on the MAX per-atom force, no energy criterion: the relative-energy stop
+# fires on a single poor line search in a cell this size (74 iterations,
+# fnorm 148 -> 129, on the first attempt).
 min_style       cg
-min_modify      dmax 0.1
-minimize        1.0e-8 1.0e-10 3000 30000
+min_modify      dmax 0.1 norm max
+minimize        0.0 0.05 3000 30000
 
 # 2. thermal relaxation of the long-wavelength modes, 10 ps at 300 K
 neigh_modify    delay 0 every 10 check no
@@ -64,10 +67,11 @@ unfix           nvt_mobile
 unfix           ztop
 velocity        all set 0.0 0.0 0.0
 
-# 3. FIRE quench to a force tolerance (etol = 0: stop on force only)
+# 3. FIRE quench to a max per-atom force of 1e-3 eV/A, no energy criterion
 neigh_modify    delay 0 every 1 check no
 thermo          200
 min_style       fire
-minimize        0.0 1.0e-5 100000 400000
+min_modify      norm max
+minimize        0.0 1.0e-3 20000 100000
 
 write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

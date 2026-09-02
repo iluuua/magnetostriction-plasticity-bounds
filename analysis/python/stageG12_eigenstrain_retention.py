@@ -83,10 +83,22 @@ def green(F: np.ndarray) -> np.ndarray:
 
 
 def main() -> int:
+    import argparse, gzip
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--control"); ap.add_argument("--field"); ap.add_argument("--out")
+    ap.add_argument("--n-al", type=int, help="matrix atoms; ids above are inclusion (default: Fe sublattice by type)")
+    ap.add_argument("--label", default="")
+    args = ap.parse_args()
+    def _open(pth):
+        pth = Path(pth)
+        return (io.TextIOWrapper(gzip.open(pth, "rb"), encoding="utf-8", errors="replace")
+                if pth.suffix == ".gz" else io.open(pth, encoding="utf-8", errors="replace"))
     src = source_dir()
-    with open_dump(src, CONTROL) as fh:
+    ctl_fh = _open(args.control) if args.control else open_dump(src, CONTROL)
+    fld_fh = _open(args.field) if args.field else open_dump(src, FIELD)
+    with ctl_fh as fh:
         ids_c, ty_c, X, lx, ly = load(fh)
-    with open_dump(src, FIELD) as fh:
+    with fld_fh as fh:
         ids_f, ty_f, x, _, _ = load(fh)
     assert np.array_equal(ids_c, ids_f) and np.array_equal(ty_c, ty_f)
 
@@ -193,7 +205,10 @@ def main() -> int:
             "to a physical magnetostriction; that amplitude comes from the analytic "
             "Eshelby solution of stageG8 instead."),
     }
-    p = REPO / "docs" / "reports" / "stageG12_eigenstrain_retention.json"
+    if args.label:
+        res["label"] = args.label
+        res["inputs"] = {"control": args.control, "field": args.field}
+    p = Path(args.out) if args.out else REPO / "docs" / "reports" / "stageG12_eigenstrain_retention.json"
     p.write_text(json.dumps(res, indent=2) + chr(10), encoding="utf-8")
 
     print("nominal eps* = %.3e, ||eps*|| = %.4e" % (EPS_NOM, math.sqrt(eps_norm2)))

@@ -109,6 +109,10 @@ def render_loading(lang: str) -> Path:
     pipe.modifiers.append(SelectTypeModifier(property="Structure Type",
                                              types={DislocationAnalysisModifier.Lattice.FCC}))
     pipe.modifiers.append(AssignColorModifier(color=(0.93, 0.93, 0.95)))
+    # AssignColor creates a Color property, after which the type colours no
+    # longer apply; give the inclusion its red back explicitly
+    pipe.modifiers.append(SelectTypeModifier(property="Particle Type", types={2}))
+    pipe.modifiers.append(AssignColorModifier(color=(0.75, 0.12, 0.10)))
     out_data = pipe.compute()
     vis = out_data.dislocations.vis
     vis.line_width = 3.0

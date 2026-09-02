@@ -53,8 +53,8 @@ if "${HOLD_INCL} > 0" then &
 thermo          200
 thermo_style    custom step atoms temp pe press pxz
 min_style       cg
-min_modify      dmax 0.1
-minimize        1.0e-8 1.0e-10 2000 20000
+min_modify      dmax 0.1 norm max
+minimize        0.0 0.05 2000 20000
 reset_timestep  0
 
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1

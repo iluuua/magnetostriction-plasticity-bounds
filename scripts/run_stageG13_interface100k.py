@@ -59,7 +59,7 @@ if _args.only:
 
 
 def main() -> int:
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S") + "_" + _args.cell + "_" + _args.protocol
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f") + "_" + _args.cell + "_" + _args.protocol
     root = REPO / "runs" / "stageG13_interface100k" / stamp
     root.mkdir(parents=True)
     status = {"started": datetime.now().astimezone().isoformat(timespec="seconds"),
