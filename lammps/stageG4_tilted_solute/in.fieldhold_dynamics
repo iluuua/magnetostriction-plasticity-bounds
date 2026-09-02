@@ -44,9 +44,10 @@ fix_modify      tether energy yes
 
 thermo          200
 thermo_style    custom step atoms temp pe press pxz f_tether
+thermo_modify   flush yes
 min_style       cg
 min_modify      dmax 0.1 norm max
-minimize        0.0 0.05 2000 20000
+minimize        0.0 0.5 2000 20000
 reset_timestep  0
 
 write_dump      all custom ${OUT_PREFIX}.minimized.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

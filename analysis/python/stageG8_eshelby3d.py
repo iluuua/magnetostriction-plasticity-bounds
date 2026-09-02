@@ -96,7 +96,11 @@ def eshelby_cylinder() -> np.ndarray:
     f = 1.0 / (2.0 * (1.0 - NU))
     S[0, 0, 0, 0] = S[2, 2, 2, 2] = f * (5.0 - 4.0 * NU) / 4.0
     S[0, 0, 2, 2] = S[2, 2, 0, 0] = f * (4.0 * NU - 1.0) / 4.0
-    S[0, 0, 1, 1] = S[2, 2, 1, 1] = f * 2.0 * NU
+    # S_1133 for the cylinder is nu / (2 (1 - nu)) = f * nu (Mura 11.22). An
+    # earlier version had f * 2 nu, which doubled the coupling to eps*_yy and
+    # put the interior normal stresses at -50.7 MPa instead of -6.0; caught
+    # on 2 Sept 2026 by an independent boundary-integral solution (stageG17).
+    S[0, 0, 1, 1] = S[2, 2, 1, 1] = f * NU
     S[0, 2, 0, 2] = S[2, 0, 2, 0] = S[0, 2, 2, 0] = S[2, 0, 0, 2] = f * (3.0 - 4.0 * NU) / 4.0
     S[0, 1, 0, 1] = S[1, 0, 1, 0] = S[0, 1, 1, 0] = S[1, 0, 0, 1] = 0.25
     S[1, 2, 1, 2] = S[2, 1, 2, 1] = S[1, 2, 2, 1] = S[2, 1, 1, 2] = 0.25

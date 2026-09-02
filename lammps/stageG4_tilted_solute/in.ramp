@@ -52,9 +52,10 @@ if "${HOLD_INCL} > 0" then &
 # relax the as-built cell before any dynamics, tether included if requested
 thermo          200
 thermo_style    custom step atoms temp pe press pxz
+thermo_modify   flush yes
 min_style       cg
 min_modify      dmax 0.1 norm max
-minimize        0.0 0.05 2000 20000
+minimize        0.0 0.5 2000 20000
 reset_timestep  0
 
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1

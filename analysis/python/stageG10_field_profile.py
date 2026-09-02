@@ -123,6 +123,10 @@ def main() -> int:
     for i in range(len(edges) - 1):
         lo, hi = Z_INTERFACE + edges[i], Z_INTERFACE + edges[i + 1]
         m = (p_c[:, 2] >= lo) & (p_c[:, 2] < hi) & (t_c == 1)
+        # the same bin restricted to a 20 A window over the ridge crest: what a
+        # continuum solution predicts on the vertical through the apex (stageG17)
+        cx_ = 0.5 * float(np.max(p_c[:, 0]) + np.min(p_c[:, 0]))
+        m_axis = m & (np.abs(p_c[:, 0] - cx_) < 10.0)
         n = int(m.sum())
         if n < 50:
             continue
@@ -141,6 +145,9 @@ def main() -> int:
             "max_RSS_MPa": round(rss[0][0], 3),
             "system": rss[0][1],
             "d_sigma_xz_MPa": round(float(dT[0, 2]), 3),
+            "d_sigma_xz_axis_MPa": (round(float(((-s_f[m_axis].mean(axis=0) + s_c[m_axis].mean(axis=0)) / V_AT / 10.0)[4]), 3)
+                                    if m_axis.sum() >= 20 else None),
+            "n_axis": int(m_axis.sum()),
             "n_atoms": n,
         })
 
