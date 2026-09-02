@@ -1,0 +1,58 @@
+# Stage G13: the field gate with the eigenstrain MAINTAINED.
+#
+# in.fieldgate applies the affine distortion and then lets everything relax;
+# stageG12 showed the inclusion keeps only eta = 0.30 of it. That is a relaxed
+# response to a perturbation, not the field of an eigenstrained inclusion.
+#
+# Here every inclusion atom is tethered by a stiff harmonic spring to the
+# position it was given - the strained position in the field case, the
+# unstrained one in the control - so the inclusion holds its transformation
+# strain while the Al matrix relaxes around it. Applied identically to both
+# cases, the tether cancels in their difference and what remains is the field
+# of a maintained eigenstrain of the nominal amplitude. This is the quantity the
+# Eshelby comparison of stageG8 refers to, measured in the actual atomistic cell.
+#
+# K = 20 eV/A^2: the relaxation forces in stageG12 were ~0.1-0.5 eV/A, so the
+# tether holds the inclusion to ~0.01 A. Al13Fe4 is in any case far stiffer than
+# Al, so treating it as rigid against the matrix is the physically conservative
+# choice for a maximum field.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL (matrix atoms come first
+# in the data file; every id above N_AL is an inclusion atom), KSPRING
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        KSPRING index 20.0
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         st all stress/atom NULL virial
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+group           matrix subtract all inclusion
+variable        nincl equal count(inclusion)
+variable        nmat equal count(matrix)
+print           "inclusion atoms tethered: ${nincl}; free matrix atoms: ${nmat}"
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+fix             tether inclusion spring/self ${KSPRING}
+fix_modify      tether energy yes
+
+thermo          100
+thermo_style    custom step atoms temp pe press pxz f_tether
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 3000 30000
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

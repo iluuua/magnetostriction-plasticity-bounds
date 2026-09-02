@@ -227,8 +227,10 @@ def main() -> int:
     z_al_top = Z_SUP + N_AL_LAYERS * D111
     z_hi = z_al_top + VACUUM_TOP
 
+    # fold_pbc: the monoclinic tilt of Al13Fe4 otherwise leaves the support slab
+    # missing for x < 16 A - see replicate_fe4al13_box for the mechanism
     fe_symbols, fe_pos, misfit = replicate_fe4al13_box(
-        lx, ly, 0.0, Z_SUP + RIDGE_H + 1.0, 0.0, commensurate=True
+        lx, ly, 0.0, Z_SUP + RIDGE_H + 1.0, 0.0, commensurate=True, fold_pbc=True
     )
     keep_fe = (fe_pos[:, 2] < Z_SUP) | ridge_mask(fe_pos, cx, RIDGE_RX, RIDGE_H)
     fe_symbols, fe_pos = fe_symbols[keep_fe], fe_pos[keep_fe]

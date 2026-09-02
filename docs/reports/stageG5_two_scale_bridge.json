@@ -1,47 +1,63 @@
 {
-  "created_at": "2026-08-25T01:53:55+03:00",
+  "created_at": "2026-09-02T16:22:01+03:00",
   "model": "Eshelby r^-3 exterior field + thermally activated glide; <rate>/rate0 - 1 = f*x0*INT_0^x0 (cosh u - 1)/u^2 du, x0 = V* sigma_m / kT",
   "constants": {
     "kT_300K_J": 4.141947e-21,
     "b_m": 2.863782463805517e-10,
     "mu_Al_Pa": 26500000000.0,
-    "volume_fraction": 0.002,
+    "volume_fraction": 0.00246,
     "target_enhancement": 0.25
   },
   "required_interface_stress": {
+    "V*=19b^3": {
+      "sigma_m_MPa": 62.7,
+      "note": "interface stress needed to explain the measured +25% creep"
+    },
     "V*=30b^3": {
-      "sigma_m_MPa": 41.3,
+      "sigma_m_MPa": 39.7,
       "note": "interface stress needed to explain the measured +25% creep"
     },
     "V*=50b^3": {
-      "sigma_m_MPa": 24.8,
+      "sigma_m_MPa": 23.8,
+      "note": "interface stress needed to explain the measured +25% creep"
+    },
+    "V*=70b^3": {
+      "sigma_m_MPa": 17.0,
       "note": "interface stress needed to explain the measured +25% creep"
     },
     "V*=100b^3": {
-      "sigma_m_MPa": 12.4,
+      "sigma_m_MPa": 11.9,
       "note": "interface stress needed to explain the measured +25% creep"
     },
     "V*=142b^3": {
-      "sigma_m_MPa": 8.7,
+      "sigma_m_MPa": 8.4,
       "note": "interface stress needed to explain the measured +25% creep"
     }
   },
   "forward_prediction_at_claimed_147MPa": {
+    "V*=19b^3": {
+      "predicted_enhancement": "6.803e+02",
+      "vs_measured_0.25": "overshoots by 2.72e+03x"
+    },
     "V*=30b^3": {
-      "predicted_enhancement": "3.164e+06",
-      "vs_measured_0.25": "overshoots by 1.27e+07x"
+      "predicted_enhancement": "3.891e+06",
+      "vs_measured_0.25": "overshoots by 1.56e+07x"
     },
     "V*=50b^3": {
-      "predicted_enhancement": "3.180e+13",
-      "vs_measured_0.25": "overshoots by 1.27e+14x"
+      "predicted_enhancement": "3.911e+13",
+      "vs_measured_0.25": "overshoots by 1.56e+14x"
+    },
+    "V*=70b^3": {
+      "predicted_enhancement": "4.784e+20",
+      "vs_measured_0.25": "overshoots by 1.91e+21x"
     },
     "V*=100b^3": {
-      "predicted_enhancement": "1.952e+31",
-      "vs_measured_0.25": "overshoots by 7.81e+31x"
+      "predicted_enhancement": "2.401e+31",
+      "vs_measured_0.25": "overshoots by 9.60e+31x"
     },
     "V*=142b^3": {
-      "predicted_enhancement": "2.184e+46",
-      "vs_measured_0.25": "overshoots by 8.74e+46x"
+      "predicted_enhancement": "2.686e+46",
+      "vs_measured_0.25": "overshoots by 1.07e+47x"
     }
   },
   "what_real_magnetostriction_gives": {
@@ -67,5 +83,5 @@
     "lambda_s=4e-05": 2.81,
     "lambda_s=1e-04": 7.02
   },
-  "verdict": "The experiment requires sigma_m = 9-41 MPa. Real Fe-Al magnetostriction supplies 1.1-5.3 MPa. The manuscript's 147 MPa overshoots the requirement by 3.6-17x and, fed forward, predicts enhancements of order 1e6-1e31 instead of 25%. Two independent routes therefore place the true interface stress at a few to a few tens of MPa."
+  "verdict": "The experiment requires sigma_m = 8-63 MPa. Real Fe-Al magnetostriction supplies 1.1-5.3 MPa. The manuscript's 147 MPa overshoots the requirement by 2.3-18x and, fed forward, predicts enhancements of order 1e6-1e31 instead of 25%. Two independent routes therefore place the true interface stress at a few to a few tens of MPa."
 }

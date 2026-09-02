@@ -127,8 +127,23 @@ def parse_fe4al13_source() -> tuple[np.ndarray, np.ndarray, np.ndarray]:
 
 
 def replicate_fe4al13_box(
-    box_x: float, box_y: float, z_lo: float, z_hi: float, eps_z: float, commensurate: bool = False
+    box_x: float, box_y: float, z_lo: float, z_hi: float, eps_z: float, commensurate: bool = False,
+    fold_pbc: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+    """Tile the Al13Fe4 cell into a box.
+
+    fold_pbc: the source cell is monoclinic - its c vector carries an x tilt of
+    -3.8 A - so the replicated block is a parallelogram in x-z, and every row of
+    cells is offset in x by k * xz relative to the one below. Cutting that block
+    at x in [0, box_x) leaves a wedge-shaped void at small x whose width grows
+    with the block height: the stage G cells built before 2 Sept 2026 had no
+    support slab at all for x < 15 A (one full cell), with the Al matrix above
+    it sitting on vacuum. When the block is commensurate the crystal is
+    periodic in x with period box_x, so folding every atom's x (and y) modulo
+    the box is an exact symmetry operation and fills the void with the atoms
+    it should contain. Off by default so the stage F cells, whose published
+    records were made without it, keep reproducing.
+    """
     symbols0, pos0, cell = parse_fe4al13_source()
     lengths = np.linalg.norm(cell, axis=1)
     reps = np.ceil(np.array([box_x, box_y, z_hi - z_lo]) / lengths).astype(int) + 2
@@ -169,6 +184,14 @@ def replicate_fe4al13_box(
                 "inplane_misfit_y_pct": (scale_y - 1.0) * 100.0,
             }
         )
+
+    if fold_pbc:
+        if not commensurate:
+            raise ValueError("fold_pbc requires a commensurate block: folding is only a "
+                             "symmetry when box_x and box_y are integer multiples of the cell")
+        pos[:, 0] = np.mod(pos[:, 0], box_x)
+        pos[:, 1] = np.mod(pos[:, 1], box_y)
+        misfit["folded_pbc"] = True
 
     pos[:, 2] *= 1.0 + float(eps_z)
     pos[:, 2] += z_lo

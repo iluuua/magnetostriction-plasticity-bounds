@@ -104,6 +104,7 @@ def write_data(path: Path, pos, types, lx, ly, z_lo, z_hi) -> None:
 
 
 def main() -> int:
+    global AL_LAYERS
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-root", type=Path, default=OUT_ROOT)
     ap.add_argument("--no-dipole", action="store_true",
@@ -111,7 +112,11 @@ def main() -> int:
     ap.add_argument("--no-solutes", action="store_true",
                     help="omit Mg/Si solutes (they add their own misfit stress)")
     ap.add_argument("--tag", default="", help="suffix for case names")
+    ap.add_argument("--al-layers", type=int, default=60,
+                    help="Al (111) layers above the interface; 60 -> 66.7k atoms, "
+                         "94 -> ~100k atoms with the same commensurate footprint")
     args = ap.parse_args()
+    AL_LAYERS = args.al_layers
 
     g1.NX, g1.NY = NX, NY
     lx, ly = NX * PX, NY * PY
@@ -120,8 +125,10 @@ def main() -> int:
     z_hi = z_al_top + VACUUM_TOP
 
     # --- Fe4Al13 support + ridge -------------------------------------------
+    # fold_pbc: the monoclinic tilt of Al13Fe4 otherwise leaves the support slab
+    # missing for x < 15 A - see replicate_fe4al13_box for the mechanism
     fe_symbols, fe_pos, misfit = replicate_fe4al13_box(
-        lx, ly, 0.0, Z_SUP + RIDGE_H + 1.0, 0.0, commensurate=True)
+        lx, ly, 0.0, Z_SUP + RIDGE_H + 1.0, 0.0, commensurate=True, fold_pbc=True)
     keep = (fe_pos[:, 2] < Z_SUP) | g1.ridge_mask(fe_pos, cx, RIDGE_RX, RIDGE_H)
     fe_symbols, fe_pos = fe_symbols[keep], fe_pos[keep]
     fe_types_tmp = np.where(fe_symbols == "Fe", 2, 1)

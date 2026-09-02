@@ -44,7 +44,9 @@ KT_300 = 1.380649e-23 * 300.0          # J
 B_BURGERS = 4.05e-10 / math.sqrt(2.0)  # m
 B3 = B_BURGERS ** 3                    # m^3
 MU_AL = 26.5e9                         # Pa
-F_VOL = 0.002                          # inclusion volume fraction (0.1-0.3%)
+# 0.35 wt% Al13Fe4 (the supervisor's figure for this batch, 30 Aug 2026),
+# converted with rho(Al13Fe4) = 3.85 and rho(Al) = 2.70 g/cm^3 -> 0.246 vol%.
+F_VOL = 0.00246                        # inclusion volume fraction
 TARGET = 0.25                          # +25% creep enhancement
 
 
@@ -76,7 +78,7 @@ def main() -> int:
         "what_real_magnetostriction_gives": {},
     }
 
-    for v in (30, 50, 100, 142):
+    for v in (19, 30, 50, 70, 100, 142):
         s_req = required_sigma(v)
         res["required_interface_stress"][f"V*={v}b^3"] = {
             "sigma_m_MPa": round(s_req / 1e6, 1),
