@@ -52,7 +52,9 @@ L = {
         f1x="distance from the interface plane, $r$ (Å)",
         ctl="control cell (inclusion unstrained)",
         fld="inclusion elongated by 0.194 %, strain maintained",
-        rss="shear stress of the difference on the most favourable\nslip system, RSS$_{\\max}$", vmd="von Mises stress of the difference",
+        rss="shear stress of the difference on the most favourable\nslip system, RSS$_{\\max}$, averaged over the cell width",
+        rss_axis="the same within 10 Å of the ridge axis",
+        vmd="von Mises stress of the difference",
         noise="far-field level beyond 60 Å",
         apex="slices crossing the ridge flank are not plotted\n"
              "(they read 19-%.0f MPa and mix inclusion and matrix atoms)",
@@ -63,7 +65,8 @@ L = {
         f3title="Stress produced by the strained inclusion against the stresses\nat which dislocations respond",
         f3x="distance from the nearest inclusion surface, $d$ (Å)",
         f3y="shear stress on the most favourable slip system, RSS$_{\\max}$ (MPa)",
-        md="interface cell: inclusion held at 0.194 % (MD)",
+        md="interface cell (MD), averaged over the cell width",
+        md_axis="interface cell (MD), within 10 Å of the ridge axis",
         esh="analytical sphere held at 0.194 %",
                 flank="omitted flank slices, 19-80 MPa",
         thr=["pinned dislocation holds through 75 MPa",
@@ -77,7 +80,8 @@ L = {
         f1x="расстояние от плоскости границы, $r$ (Å)",
         ctl="контрольная ячейка (включение не деформировано)",
         fld="включение удлинено на 0,194 %, деформация удерживается",
-        rss="касательное напряжение разности в наиболее\nблагоприятной системе скольжения, RSS$_{\\max}$",
+        rss="касательное напряжение разности в наиболее\nблагоприятной системе скольжения, RSS$_{\\max}$, среднее по ширине ячейки",
+        rss_axis="то же в пределах 10 Å от оси гребня",
         vmd="напряжение фон Мизеса разности",
         noise="уровень дальнего поля за 60 Å",
         apex="слои, пересекающие склон гребня, не показаны\n"
@@ -91,7 +95,8 @@ L = {
         f3title="Напряжение от деформированного включения\nи напряжения отклика дислокаций",
         f3x="расстояние от ближайшей поверхности включения, $d$ (Å)",
         f3y="касательное напряжение в наиболее благоприятной системе, RSS$_{\\max}$, МПа",
-        md="ячейка границы: включение удерживается при 0,194 % (МД)",
+        md="ячейка границы (МД), среднее по ширине ячейки",
+        md_axis="ячейка границы (МД), в пределах 10 Å от оси гребня",
         esh="аналитическая сфера, удерживаемая при 0,194 %",
                 flank="опущенные слои склонов, 19-80 МПа",
         thr=["закреплённая дислокация удерживается до 75 МПа",
@@ -115,6 +120,8 @@ def fig_sigma(lang: str) -> None:
     vf = np.array([x["vm_field_MPa"] for x in rows])
     rss = np.array([x["max_RSS_MPa"] for x in rows])
     vmd = np.array([x["vm_of_difference_MPa"] for x in rows])
+    axis = np.array([abs(x["d_sigma_xz_axis_MPa"]) if x.get("d_sigma_xz_axis_MPa") is not None else np.nan
+                     for x in rows])
     nf = d["noise_floor_beyond_60A"]
     band = nf["mean_max_RSS_MPa"] + nf["std_MPa"]
     apex_r = d["ridge_apex_A"] - d["z_interface_A"]
@@ -130,6 +137,8 @@ def fig_sigma(lang: str) -> None:
     a1.legend(fontsize=9)
 
     a2.plot(r[ok], rss[ok], "o-", ms=4, lw=1.5, color="#3b8b52", label=t["rss"])
+    if np.isfinite(axis).any():
+        a2.plot(r[ok], np.maximum(axis[ok], 1e-3), "d-", ms=4, lw=1.3, color="#1f6f2f", alpha=0.85, label=t["rss_axis"])
     a2.plot(r[ok], vmd[ok], "^--", ms=4, lw=1.2, color="#7a4fa3", label=t["vmd"])
     a2.axhspan(0, band, color="0.75", alpha=0.45, label=t["noise"])
     a2.axhline(band, color="0.45", lw=0.8)
@@ -201,6 +210,8 @@ def fig_rss(lang: str) -> None:
     # a bin lying above the apex
     dd = np.array([x["r_A"] for x in rows]) - RIDGE_H
     rss = np.array([x["max_RSS_MPa"] for x in rows])
+    axis = np.array([abs(x["d_sigma_xz_axis_MPa"]) if x.get("d_sigma_xz_axis_MPa") is not None else np.nan
+                     for x in rows])
     flank = [x["max_RSS_MPa"] for x in d["apex_straddling_bins_excluded"]]
 
     esh = json.loads(io.open(REPORTS / "stageG8_eshelby3d.json", encoding="utf-8").read())
@@ -209,6 +220,8 @@ def fig_rss(lang: str) -> None:
 
     fig, ax = plt.subplots(figsize=(7.2, 5.2))
     ax.semilogy(dd, np.maximum(rss, 1e-3), "o-", ms=4.5, color="#3b8b52", label=t["md"])
+    if np.isfinite(axis).any():
+        ax.semilogy(dd, np.maximum(axis, 1e-3), "d-", ms=4.5, color="#1f6f2f", alpha=0.85, label=t["md_axis"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
