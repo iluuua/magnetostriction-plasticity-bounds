@@ -104,7 +104,7 @@ def write_data(path: Path, pos, types, lx, ly, z_lo, z_hi) -> None:
 
 
 def main() -> int:
-    global AL_LAYERS
+    global AL_LAYERS, NX, NY
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-root", type=Path, default=OUT_ROOT)
     ap.add_argument("--no-dipole", action="store_true",
@@ -115,8 +115,18 @@ def main() -> int:
     ap.add_argument("--al-layers", type=int, default=60,
                     help="Al (111) layers above the interface; 60 -> 66.7k atoms, "
                          "94 -> ~100k atoms with the same commensurate footprint")
+    ap.add_argument("--nx", type=int, default=38,
+                    help="Al periods along x; must be commensurate with Fe4Al13 "
+                         "(38 -> 7 cells, +0.31%%; 54 -> 10 cells, -0.22%%)")
+    ap.add_argument("--ny", type=int, default=13, help="Al periods along y (13 -> 8 cells)")
+    ap.add_argument("--dipole-style", choices=("g4", "g1"), default="g4",
+                    help="g4: partners stacked (d = 0) above the ridge shoulder, the mobility "
+                         "probe. g1: the 45-degree pair of the threshold cell, plus partner "
+                         "27 A right of the ridge edge, minus partner 23.4 A left and 10 "
+                         "layers up - the configuration whose onsets are 77-86 MPa")
     args = ap.parse_args()
     AL_LAYERS = args.al_layers
+    NX, NY = args.nx, args.ny
 
     g1.NX, g1.NY = NX, NY
     lx, ly = NX * PX, NY * PY
@@ -168,6 +178,24 @@ def main() -> int:
         "partner_minus": {"x": cx + RIDGE_RX + 12.0, "z": z_lo_plane + h},
         "n_x_images": 3,
     }
+    if args.dipole_style == "g1":
+        # The threshold-cell pair (stageG1): partners offset 45 degrees, which is
+        # the stable dipole configuration, with the lower (+b) line 27 A right of
+        # the ridge edge on the first glide plane clear of the apex. Its passing
+        # stress is ~198 MPa, so the pair moves as a bound unit under the ramp and
+        # the onset measured is the pair's, not a separation.
+        edge = cx + RIDGE_RX
+        zp = Z_SUP + 12.5 * D111
+        g1.DIPOLE.update({
+            "partner_plus":  {"x": edge + 27.0, "z": zp},
+            "partner_minus": {"x": edge + 27.0 - 23.4, "z": zp + 10.0 * D111},
+        })
+        for key in ("partner_plus", "partner_minus"):
+            xx = g1.DIPOLE[key]["x"]
+            if not (15.0 < xx < lx - 15.0):
+                raise SystemExit("dipole partner at x = %.1f is within 15 A of the periodic "
+                                 "seam (Lx = %.1f); widen the cell" % (xx, lx))
+        h = g1.DIPOLE["partner_minus"]["z"] - g1.DIPOLE["partner_plus"]["z"]
     disp = (np.zeros((len(base), 2)) if args.no_dipole
             else dipole_displacement(base, lx))
 

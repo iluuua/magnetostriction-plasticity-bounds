@@ -91,10 +91,29 @@ def vm(t):
 
 
 def main() -> int:
+    global R_MAX
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--control", help="control dump (default: data/stageG4_clean)")
+    ap.add_argument("--field", help="strained dump (default: data/stageG4_clean)")
+    ap.add_argument("--out", help="output JSON (default: docs/reports/stageG10_field_profile.json)")
+    ap.add_argument("--r-max", type=float, default=R_MAX)
+    ap.add_argument("--label", default="", help="free-text label stored in the record")
+    args = ap.parse_args()
+    R_MAX = args.r_max
     src = source_dir()
-    with open_dump(src, CONTROL) as fh:
+    if args.control and args.field:
+        import gzip
+        def _open(pth):
+            pth = Path(pth)
+            return (io.TextIOWrapper(gzip.open(pth, "rb"), encoding="utf-8", errors="replace")
+                    if pth.suffix == ".gz" else io.open(pth, encoding="utf-8", errors="replace"))
+        ctl_fh, fld_fh = _open(args.control), _open(args.field)
+    else:
+        ctl_fh, fld_fh = open_dump(src, CONTROL), open_dump(src, FIELD)
+    with ctl_fh as fh:
         t_c, p_c, s_c = load(fh)
-    with open_dump(src, FIELD) as fh:
+    with fld_fh as fh:
         t_f, p_f, s_f = load(fh)
     assert len(t_c) == len(t_f)
     systems = slip_systems_lab()
@@ -159,7 +178,10 @@ def main() -> int:
             k: round(2 * MU_AL * lam / 1e6, 3) for k, lam in LAMBDA_REAL.items()},
         "profile": rows,
     }
-    (REPORTS / "stageG10_field_profile.json").write_text(
+    if args.label:
+        res["label"] = args.label
+        res["inputs"] = {"control": args.control, "field": args.field}
+    (Path(args.out) if args.out else REPORTS / "stageG10_field_profile.json").write_text(
         json.dumps(res, indent=2) + chr(10), encoding="utf-8")
 
     keys = ("r_A", "above_apex", "vm_control_MPa", "vm_field_MPa", "vm_of_difference_MPa",

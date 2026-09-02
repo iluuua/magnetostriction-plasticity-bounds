@@ -1,0 +1,98 @@
+# Stage G15: shear-stress ramp on the unified ~10^5-atom cell with the
+# threshold-cell dislocation pair (stageG1 geometry, 45-degree stacked).
+#
+# Same protocol as stageG1's in.production_shear - smooth raised-cosine onset,
+# tau = 0 pre-hold, linear ramp to TAUMAX over the remainder, local tau_xz
+# monitors at both partners - but every geometry-dependent number arrives as a
+# variable, computed by the runner from the cell's metadata, so the input is
+# not tied to one box.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, NSTEPS, TAUMAX_MPA, RESEED,
+#   TOPZ                       z above which the pulling force is applied
+#   XL0 XL1 ZL0 ZL1            monitor box around the lower (+b) partner
+#   XU0 XU1 ZU0 ZU1            monitor box around the upper (-b) partner
+#   HOLD_INCL (0/1) KSPRING    optionally tether the inclusion (maintained strain)
+#   N_AL                       matrix atoms come first; ids above are inclusion
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        NSTEPS index 101000
+variable        TAUMAX_MPA index 400
+variable        RESEED index 0
+variable        HOLD_INCL index 0
+variable        KSPRING index 20.0
+variable        PRE_STEPS equal 5000
+variable        TS equal 16000
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+if "${HOLD_INCL} > 0" then &
+   "fix tether inclusion spring/self ${KSPRING}" &
+   "fix_modify tether energy yes"
+
+# relax the as-built cell before any dynamics, tether included if requested
+thermo          200
+thermo_style    custom step atoms temp pe press pxz
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 2000 20000
+reset_timestep  0
+
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+velocity        mobile create 300.0 88004 mom yes rot yes dist gaussian
+if "${RESEED} > 0" then "velocity mobile create 300.0 ${RESEED} mom yes rot yes dist gaussian"
+
+# --- smooth shear ramp (identical to stageG1) ---------------------------
+variable        NRAMP equal v_NSTEPS-v_PRE_STEPS
+variable        RBAR equal 10.0*v_TAUMAX_MPA/(v_NRAMP-0.5*v_TS)
+variable        sp equal step-v_PRE_STEPS
+variable        taubar equal "(step >= v_PRE_STEPS) * ((v_sp < v_TS) * v_RBAR*(0.5*v_sp - (v_TS/(2*PI))*sin(PI*v_sp/v_TS)) + (v_sp >= v_TS) * v_RBAR*(v_sp - 0.5*v_TS))"
+
+region          topgrab block INF INF INF INF ${TOPZ} INF units box
+group           topgrab region topgrab
+variable        ntop equal count(topgrab)
+variable        fxa equal v_taubar*lx*ly*6.241509e-7/v_ntop
+fix             pull topgrab addforce v_fxa 0.0 0.0
+
+# --- local tau_xz monitors at the two partners ---------------------------
+region          rLow  block ${XL0} ${XL1} INF INF ${ZL0} ${ZL1} units box
+region          rUpp  block ${XU0} ${XU1} INF INF ${ZU0} ${ZU1} units box
+compute         tl all reduce/region rLow sum c_st[5]
+compute         tu all reduce/region rUpp sum c_st[5]
+# MPa = -sum(bar A^3) / V[A^3] / 10
+variable        VL equal (v_XL1-v_XL0)*ly*(v_ZL1-v_ZL0)*10.0
+variable        VU equal (v_XU1-v_XU0)*ly*(v_ZU1-v_ZU0)*10.0
+variable        tauLowMPa equal -c_tl/v_VL
+variable        tauUppMPa equal -c_tu/v_VU
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz v_taubar v_tauLowMPa v_tauUppMPa
+
+dump            d1 all custom 2000 ${OUT_PREFIX}.production.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6]
+dump_modify     d1 sort id
+restart         10000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.production.final.data
+write_dump      all custom ${OUT_PREFIX}.production.final.lammpstrj id type x y z c_pe_atom c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id

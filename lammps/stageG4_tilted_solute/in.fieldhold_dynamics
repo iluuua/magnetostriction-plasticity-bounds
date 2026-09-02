@@ -1,0 +1,68 @@
+# Stage G16: does the field of a MAINTAINED eigenstrain move a dislocation
+# pair that is already there, with no applied load at all?
+#
+# This is the supervisor's third question of 1 Sept 2026 in its honest form:
+# the ~10^5-atom cell cannot hold twenty dislocations, but it holds the
+# threshold-cell pair next to the inclusion, and the question of whether the
+# inclusion's own field moves it is the same question. The inclusion is
+# tethered to its strained positions throughout - the strain is maintained, not
+# relaxed - and the cell is run at 300 K with zero applied shear. Control (no
+# strain, same tether) and field cells are run identically; the partner
+# trajectories are extracted by DXA afterwards.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, NSTEPS, N_AL, KSPRING, RESEED
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        NSTEPS index 100000
+variable        KSPRING index 20.0
+variable        RESEED index 0
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+
+compute         pe_atom all pe/atom
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+fix             tether inclusion spring/self ${KSPRING}
+fix_modify      tether energy yes
+
+thermo          200
+thermo_style    custom step atoms temp pe press pxz f_tether
+min_style       cg
+min_modify      dmax 0.1
+minimize        1.0e-8 1.0e-10 2000 20000
+reset_timestep  0
+
+write_dump      all custom ${OUT_PREFIX}.minimized.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id
+
+fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
+fix             ztop mobile wall/reflect zhi EDGE units box
+velocity        mobile create 300.0 88004 mom yes rot yes dist gaussian
+if "${RESEED} > 0" then "velocity mobile create 300.0 ${RESEED} mom yes rot yes dist gaussian"
+
+thermo          200
+thermo_style    custom step atoms temp pe ke etotal press pxz f_tether
+
+dump            d1 all custom 1000 ${OUT_PREFIX}.dyn.lammpstrj id type x y z c_pe_atom c_st[5]
+dump_modify     d1 sort id
+restart         10000 ${OUT_PREFIX}.restart.a ${OUT_PREFIX}.restart.b
+
+run             ${NSTEPS} upto
+
+write_data      ${OUT_PREFIX}.final.data
