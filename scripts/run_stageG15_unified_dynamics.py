@@ -42,12 +42,20 @@ def geometry(cell: str) -> dict:
         else 20.0 + meta["al_depth_A"]
     px, mx = d["partner_plus"]["x"], d["partner_minus"]["x"]
     pz, mz = d["partner_plus"]["z"], d["partner_minus"]["z"]
+    lx = meta["box_A"]["lx"]
+    # LAMMPS regions do not wrap: a monitor box that crosses the periodic x
+    # boundary would be silently truncated while in.ramp computes its volume
+    # from the requested width. Clamp to the box so region and volume agree.
+    def xwin(xc, half=25.0):
+        return round(max(0.0, xc - half), 2), round(min(lx, xc + half), 2)
+    xl0, xl1 = xwin(px)
+    xu0, xu1 = xwin(mx)
     return {
         "N_AL": meta["counts"]["al_matrix"],
         "TOPZ": round(al_top - 6.0, 2),                 # top ~2.5 layers pull
-        "XL0": round(px - 25.0, 2), "XL1": round(px + 25.0, 2),
+        "XL0": xl0, "XL1": xl1,
         "ZL0": round(pz - 11.0, 2), "ZL1": round(pz + 11.0, 2),
-        "XU0": round(mx - 25.0, 2), "XU1": round(mx + 25.0, 2),
+        "XU0": xu0, "XU1": xu1,
         "ZU0": round(mz - 11.0, 2), "ZU1": round(mz + 11.0, 2),
     }
 
