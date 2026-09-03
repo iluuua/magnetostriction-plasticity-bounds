@@ -1,0 +1,31 @@
+{
+ "control_dump": "runs\\stageG13_interface100k\\20260903-001905-144804_u100k_v3\\ctl_held\\ctl_held.gate.lammpstrj",
+ "n_al": 72532,
+ "eps": 0.00194,
+ "tilt_deg": 45.0,
+ "ridge_atoms": 4816,
+ "ridge_centroid": [
+  77.258,
+  32.201,
+  28.678
+ ],
+ "max_ridge_displacement_A": 0.05412060997425172,
+ "eigenstrain_tensor": [
+  [
+   0.000485,
+   0.0,
+   0.001455
+  ],
+  [
+   0.0,
+   -0.00097,
+   0.0
+  ],
+  [
+   0.001455,
+   0.0,
+   0.000485
+  ]
+ ],
+ "z_ridge": 20.0
+}

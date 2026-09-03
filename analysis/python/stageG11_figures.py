@@ -57,7 +57,7 @@ L = {
         vmd="von Mises stress of the difference",
         noise="far-field level beyond 60 Å",
         apex="slices crossing the ridge flank are not plotted\n"
-             "(they read 19-%.0f MPa and mix inclusion and matrix atoms)",
+             "(they read %.0f-%.0f MPa and mix inclusion and matrix atoms)",
         f2title="Dislocation position in Al–Mg–Si under constant applied shear",
         f2x="time (ps)", f2y="displacement along the glide direction (Å)",
         probe="dislocation followed (lower glide plane)", partner="its partner of opposite sign (upper glide plane)",
@@ -68,7 +68,7 @@ L = {
         md="interface cell (MD), averaged over the cell width",
         md_axis="interface cell (MD), within 10 Å of the ridge axis",
         esh="analytical sphere held at 0.194 %",
-                flank="omitted flank slices, 19-80 MPa",
+                flank="omitted flank slices, %.0f-%.0f MPa",
         thr=["pinned dislocation holds through 75 MPa",
              "existing dislocation pair starts to move, 77-86 MPa",
              "new dislocations nucleate at the interface, 195 MPa"],
@@ -85,7 +85,7 @@ L = {
         vmd="напряжение фон Мизеса разности",
         noise="уровень дальнего поля за 60 Å",
         apex="слои, пересекающие склон гребня, не показаны\n"
-             "(в них 19-%.0f МПа; смешаны атомы включения и матрицы)",
+             "(в них %.0f-%.0f МПа; смешаны атомы включения и матрицы)",
         f2title="Положение дислокации в Al–Mg–Si при постоянном приложенном сдвиге",
         f2x="время, пс",
         f2y="смещение вдоль направления скольжения, Å",
@@ -98,7 +98,7 @@ L = {
         md="ячейка границы (МД), среднее по ширине ячейки",
         md_axis="ячейка границы (МД), в пределах 10 Å от оси гребня",
         esh="аналитическая сфера, удерживаемая при 0,194 %",
-                flank="опущенные слои склонов, 19-80 МПа",
+                flank="опущенные слои склонов, %.0f-%.0f МПа",
         thr=["закреплённая дислокация удерживается до 75 МПа",
              "начало движения существующей пары дислокаций, 77–86 МПа",
              "зарождение новых дислокаций на границе, 195 МПа"],
@@ -148,8 +148,8 @@ def fig_sigma(lang: str) -> None:
     a2.set_xlabel(t["f1x"])
     a2.legend(fontsize=8.5, loc="lower left", bbox_to_anchor=(0.0, 0.12))
     a2.set_xlim(r[ok].min() - 3, r.max() + 3)
-    flank_max = max(x["max_RSS_MPa"] for x in d["apex_straddling_bins_excluded"])
-    a2.text(0.015, 0.035, t["apex"] % flank_max, transform=a2.transAxes,
+    fl = [x["max_RSS_MPa"] for x in d["apex_straddling_bins_excluded"]]
+    a2.text(0.015, 0.035, t["apex"] % (min(fl), max(fl)), transform=a2.transAxes,
             fontsize=8.2, color="#c07000", ha="left", va="bottom")
     fig.tight_layout()
     for ext in ("png", "pdf"):
@@ -224,7 +224,7 @@ def fig_rss(lang: str) -> None:
         ax.semilogy(dd, np.maximum(axis, 1e-3), "d-", ms=4.5, color="#1f6f2f", alpha=0.85, label=t["md_axis"])
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
-                fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"])
+                fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"] % (min(flank), max(flank)))
     # the pinning bound is not unconditional: the dipole carries its own 22 MPa
     ax.axhspan(53, 97, color="#444444", alpha=0.13, lw=0)
     for y, ytxt, lbl, col in zip((75, 86, 195), (0.40, 1.13, 1.30), t["thr"],

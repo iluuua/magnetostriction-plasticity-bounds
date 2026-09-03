@@ -1,0 +1,138 @@
+LAMMPS (22 Jul 2025 - Update 4)
+KOKKOS mode with Kokkos version 4.6.2 is enabled
+  will use up to 1 GPU(s) per node
+package kokkos
+package kokkos newton on neigh half gpu/aware off
+# Stage G13, perturbation gate: minimise a cell that was built from the
+# RELAXED control by displacing the ridge atoms (scripts/make_perturbed_cell.py).
+# No thermal stage: the interfacial Al layer and the slab breathing mode are
+# then identical in the control and the strained cell by construction, and
+# conjugate gradients only has to relax the local response to the ridge.
+#
+# Kokkos rules (see lammps-kokkos-pitfalls): two-norm criterion only,
+# neighbour list rebuilt every step with no distance check.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL, HOLD_INCL (0/1),
+#   KSPRING, CG_MAX, CG_FTOL
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        HOLD_INCL index 1
+variable        KSPRING index 20.0
+variable        CG_MAX index 6000
+variable        CG_FTOL index 0.02
+
+read_data       ${DATA_FILE}
+read_data       C:\Users\dille\Documents\ilua-system\projects\physics_md_al_fe\runs\stageG13_interface100k\20260903-153826-627855_u100k_pert\cells\pert_fld.data
+Reading data file ...
+  orthogonal box = (0 0 -10) to (154.64425 64.482817 165.94304)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  91428 atoms
+  read_data CPU = 0.230 seconds
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+pair_coeff      * * C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+pair_coeff      * * C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS C:/Users/dille/Documents/ilua-system/projects/physics_md_al_fe/potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+4320 atoms in group bottom
+group           mobile subtract all bottom
+87108 atoms in group mobile
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+group           inclusion id 72533:999999999
+18896 atoms in group inclusion
+if "${HOLD_INCL} > 0" then    "fix tether inclusion spring/self ${KSPRING}"    "fix_modify tether energy yes"
+fix tether inclusion spring/self ${KSPRING}
+fix tether inclusion spring/self 20.0
+fix_modify tether energy yes
+
+thermo          100
+thermo_style    custom step atoms pe press pzz pxz fnorm
+thermo_modify   flush yes
+
+min_style       cg
+min_modify      dmax 0.05
+minimize        0.0 ${CG_FTOL} ${CG_MAX} 60000
+minimize        0.0 0.02 ${CG_MAX} 60000
+minimize        0.0 0.02 6000 60000
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = no
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7
+  ghost atom cutoff = 7
+  binsize = 7, bins = 23 10 26
+  2 neighbor lists, perpetual/occasional/extra = 2 0 0
+  (1) pair meam/kk, perpetual
+      attributes: full, newton on, kokkos_device
+      pair build: full/bin/kk/device
+      stencil: full/bin/3d
+      bin: kk/device
+  (2) pair meam/kk, perpetual, half/full from (1)
+      attributes: half, newton on, kokkos_device
+      pair build: halffull/newton/kk/device
+      stencil: none
+      bin: none
+WARNING: Fix MINIMIZE/kk not compatible with sending data in Kokkos communication (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\comm_kokkos.cpp:799)
+WARNING: Fix with atom-based arrays not compatible with sending data in Kokkos communication, switching to classic exchange/border communication (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\comm_kokkos.cpp:812)
+WARNING: Fix spring/self/kk not compatible with Kokkos sorting on device (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\atom_kokkos.cpp:213)
+WARNING: Fix with atom-based arrays not compatible with Kokkos sorting on device, switching to classic host sorting (C:\Users\dille\Documents\builds\lammps-kokkos-cuda\lammps\src\KOKKOS\atom_kokkos.cpp:219)
+Per MPI rank memory allocation (min/avg/max) = 161.7 | 161.7 | 161.7 Mbytes
+   Step        Atoms        PotEng         Press           Pzz            Pxz           Fnorm     
+         0       91428  -306814.37      11927.683      14312.513     -2126.6514      88.273901    
+       100       91428  -306949.61      11647.742      14123.422     -1757.6621      0.080910003  
+       200       91428  -306949.62      11597.951      14048.14      -1755.7576      0.057920965  
+       300       91428  -306949.63      11573.869      14012.386     -1757.6444      0.021708553  
+       310       91428  -306949.63      11573.049      14011.189     -1758.3926      0.019879873  
+Loop time of 507.502 on 1 procs for 310 steps with 91428 atoms
+
+91.5% CPU use with 1 MPI tasks x 1 OpenMP threads
+
+Minimization stats:
+  Stopping criterion = force tolerance
+  Energy initial, next-to-last, final = 
+     -306814.373846247  -306949.627596314  -306949.627609263
+  Force two-norm initial, final = 88.273901 0.019879873
+  Force max component initial, final = 2.685065 0.0031252334
+  Final line search alpha, max atom move = 1 0.0031252334
+  Iterations, force evaluations = 310 619
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 485.46     | 485.46     | 485.46     |   0.0 | 95.66
+Neigh   | 18.007     | 18.007     | 18.007     |   0.0 |  3.55
+Comm    | 0.9296     | 0.9296     | 0.9296     |   0.0 |  0.18
+Output  | 0.0047832  | 0.0047832  | 0.0047832  |   0.0 |  0.00
+Modify  | 1.1263     | 1.1263     | 1.1263     |   0.0 |  0.22
+Other   |            | 1.97       |            |       |  0.39
+
+Nlocal:          91428 ave       91428 max       91428 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Nghost:          29353 ave       29353 max       29353 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+Neighs:    3.76431e+06 ave 3.76431e+06 max 3.76431e+06 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+FullNghs:  7.52862e+06 ave 7.52862e+06 max 7.52862e+06 min
+Histogram: 1 0 0 0 0 0 0 0 0 0
+
+Total # of neighbors = 7528622
+Ave neighs/atom = 82.344818
+Neighbor list builds = 620
+Dangerous builds not checked
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+write_dump      all custom C:\Users\dille\Documents\ilua-system\projects\physics_md_al_fe\runs\stageG13_interface100k\20260903-153826-627855_u100k_pert\fld_held\fld_held.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+Total wall time: 0:08:29

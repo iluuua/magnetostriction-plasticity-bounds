@@ -21,8 +21,8 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 DEFAULT_DIR = REPO / "data" / "stageG4_clean"
 
-CONTROL = "G4_tilted_eps0000_clean.gate.lammpstrj"
-FIELD = "G4_tilted_eps00194_clean.gate.lammpstrj"
+CONTROL = "G13_pert_ctl_held.gate.lammpstrj"
+FIELD = "G13_pert_fld_held.gate.lammpstrj"
 
 
 def source_dir(override: str | os.PathLike | None = None) -> Path:
