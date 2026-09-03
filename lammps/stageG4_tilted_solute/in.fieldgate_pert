@@ -1,0 +1,51 @@
+# Stage G13, perturbation gate: minimise a cell that was built from the
+# RELAXED control by displacing the ridge atoms (scripts/make_perturbed_cell.py).
+# No thermal stage: the interfacial Al layer and the slab breathing mode are
+# then identical in the control and the strained cell by construction, and
+# conjugate gradients only has to relax the local response to the ridge.
+#
+# Kokkos rules (see lammps-kokkos-pitfalls): two-norm criterion only,
+# neighbour list rebuilt every step with no distance check.
+#
+# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL, HOLD_INCL (0/1),
+#   KSPRING, CG_MAX, CG_FTOL
+
+units           metal
+atom_style      atomic
+boundary        p p f
+
+variable        HOLD_INCL index 1
+variable        KSPRING index 20.0
+variable        CG_MAX index 6000
+variable        CG_FTOL index 0.02
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+compute         st all stress/atom NULL virial
+
+region          bottom block INF INF INF INF INF 6.0 units box
+group           bottom region bottom
+group           mobile subtract all bottom
+fix             hold bottom setforce 0.0 0.0 0.0
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+if "${HOLD_INCL} > 0" then &
+   "fix tether inclusion spring/self ${KSPRING}" &
+   "fix_modify tether energy yes"
+
+thermo          100
+thermo_style    custom step atoms pe press pzz pxz fnorm
+thermo_modify   flush yes
+
+min_style       cg
+min_modify      dmax 0.05
+minimize        0.0 ${CG_FTOL} ${CG_MAX} 60000
+
+write_dump      all custom ${OUT_PREFIX}.gate.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
