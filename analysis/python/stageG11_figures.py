@@ -69,9 +69,10 @@ L = {
         md_axis="interface cell (MD), within 10 Å of the ridge axis",
         esh="analytical sphere held at 0.194 %",
                 flank="omitted flank slices, %.0f-%.0f MPa",
-        thr=["pinned dislocation holds through 75 MPa",
-             "existing dislocation pair starts to move, 77-86 MPa",
-             "new dislocations nucleate at the interface, 195 MPa"],
+        thr_pin="pinned dislocation holds through 75 MPa",
+        thr_move="pre-existing pair torn apart, %s MPa",
+        thr_nuc="new dislocations nucleate at the interface, %s MPa",
+        thr_nonuc="no new dislocation at the interface up to %s MPa (end of ramp)",
     ),
     "ru": dict(
         f1title="Напряжение в матрице Al в зависимости от расстояния от границы с Al$_{13}$Fe$_4$",
@@ -99,9 +100,10 @@ L = {
         md_axis="ячейка границы (МД), в пределах 10 Å от оси гребня",
         esh="аналитическая сфера, удерживаемая при 0,194 %",
                 flank="опущенные слои склонов, %.0f-%.0f МПа",
-        thr=["закреплённая дислокация удерживается до 75 МПа",
-             "начало движения существующей пары дислокаций, 77–86 МПа",
-             "зарождение новых дислокаций на границе, 195 МПа"],
+        thr_pin="закреплённая дислокация удерживается до 75 МПа",
+        thr_move="разрыв существующей пары, %s МПа",
+        thr_nuc="зарождение новых дислокаций на границе, %s МПа",
+        thr_nonuc="новых дислокаций на границе нет до %s МПа (конец рампы)",
     ),
 }
 
@@ -225,16 +227,29 @@ def fig_rss(lang: str) -> None:
     ax.semilogy(ed, ev, "s--", ms=5, color="#8b3b8b", label=t["esh"])
     ax.errorbar([1.0], [max(flank)], yerr=[[max(flank) - min(flank)], [0.0]],
                 fmt="D", ms=6, color="#c07000", capsize=4, label=t["flank"] % (min(flank), max(flank)))
-    # the pinning bound is not unconditional: the dipole carries its own 22 MPa
+    # thresholds of the unified loaded cell (stage G15); the pinning bound is
+    # not unconditional: the dipole carries its own 22 MPa
+    thr_path = REPORTS / "stageG15_thresholds.json"
+    thr = json.loads(io.open(thr_path, encoding="utf-8").read()) if thr_path.exists() else {
+        "pair_lower_onset_MPa": {"ctl": [95, 105], "fld": [95, 105]}, "nucleation_MPa": None, "ramp_max_MPa": 400}
+    lo = min(v[0] for v in thr["pair_lower_onset_MPa"].values())
+    hi = max(v[1] for v in thr["pair_lower_onset_MPa"].values())
     ax.axhspan(53, 97, color="#444444", alpha=0.13, lw=0)
-    for y, ytxt, lbl, col in zip((75, 86, 195), (0.40, 1.13, 1.30), t["thr"],
-                                 ("#444444", "#777777", "#aa2222")):
-        ax.axhline(y, ls="--", lw=1.1, color=col)
-        ax.text(73, y * ytxt, lbl, fontsize=8, color=col, ha="right")
+    ax.axhline(75, ls="--", lw=1.1, color="#444444")
+    ax.text(73, 75 * 0.40, t["thr_pin"], fontsize=8, color="#444444", ha="right")
+    ax.axhspan(lo, hi, color="#777777", alpha=0.18, lw=0)
+    ax.axhline(0.5 * (lo + hi), ls="--", lw=1.1, color="#777777")
+    ax.text(73, hi * 1.13, t["thr_move"] % ("%d-%d" % (lo, hi) if lo != hi else "%d" % lo), fontsize=8, color="#777777", ha="right")
+    if thr.get("nucleation_MPa"):
+        ax.axhline(thr["nucleation_MPa"], ls="--", lw=1.1, color="#aa2222")
+        ax.text(73, thr["nucleation_MPa"] * 1.3, t["thr_nuc"] % thr["nucleation_MPa"], fontsize=8, color="#aa2222", ha="right")
+    else:
+        ax.axhline(thr.get("ramp_max_MPa", 400), ls=":", lw=1.1, color="#aa2222")
+        ax.text(73, thr.get("ramp_max_MPa", 400) * 0.72, t["thr_nonuc"] % thr.get("ramp_max_MPa", 400), fontsize=8, color="#aa2222", ha="right")
     ax.set_xlabel(t["f3x"])
     ax.set_ylabel(t["f3y"])
     ax.set_xlim(0, 75)
-    ax.set_ylim(1e-3, 500)
+    ax.set_ylim(1e-3, 700)
     ax.set_title(t["f3title"], fontsize=11)
     ax.legend(fontsize=8.0, loc="lower left")
     ax.grid(alpha=0.3, which="both")
