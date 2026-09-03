@@ -146,7 +146,7 @@ def fig_sigma(lang: str) -> None:
     a2.set_ylim(0.02, 60)
     a2.set_ylabel(t["f1y2"])
     a2.set_xlabel(t["f1x"])
-    a2.legend(fontsize=9, loc="upper right")
+    a2.legend(fontsize=8.5, loc="lower left", bbox_to_anchor=(0.0, 0.12))
     a2.set_xlim(r[ok].min() - 3, r.max() + 3)
     flank_max = max(x["max_RSS_MPa"] for x in d["apex_straddling_bins_excluded"])
     a2.text(0.015, 0.035, t["apex"] % flank_max, transform=a2.transAxes,

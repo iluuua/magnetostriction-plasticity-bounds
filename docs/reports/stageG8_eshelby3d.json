@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-09-03T19:34:10+03:00",
+  "created_at": "2026-09-03T20:00:42+03:00",
   "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a compact 3D particle carrying the same eigenstrain?",
   "elastic_constants": {
     "mu_GPa": 26.5,
@@ -88,7 +88,7 @@
     "at_r_A": 50.0,
     "system": "(111)[1-10]",
     "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes",
-    "label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2)",
+    "label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2); profile to 20 A below the free surface",
     "on_axis_max_abs_d_sigma_xz": 15.45
   },
   "at_measured_FeAl_magnetostriction": {
