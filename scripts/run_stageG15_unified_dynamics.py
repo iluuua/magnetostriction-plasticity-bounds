@@ -90,9 +90,12 @@ def main() -> int:
     ap.add_argument("--cases", default="ctl,fld")
     ap.add_argument("--nsteps", type=int, default=101000)
     ap.add_argument("--nsteps-g16", type=int, default=60000)
+    ap.add_argument("--hold", action="store_true", help="tether the inclusion (spring/self) during the G15 ramp: the strained ridge keeps its strain")
+    ap.add_argument("--taumax", type=float, default=400.0, help="ramp end stress (MPa); keep TAUMAX/(NSTEPS-13000) fixed to keep the loading rate")
+    ap.add_argument("--tag", default="", help="suffix of the run directory")
     args = ap.parse_args()
     cases = args.cases.split(",")
-    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f") + args.tag
     root = REPO / "runs" / "stageG15_unified" / stamp
     root.mkdir(parents=True)
     status = {"started": datetime.now().astimezone().isoformat(timespec="seconds"), "runs": {}}
@@ -100,7 +103,7 @@ def main() -> int:
     if args.only in (None, "G15"):
         for c in cases:
             g = geometry(CELLS[c])
-            plan.append(("G15", c, {**g, "TAUMAX_MPA": 400, "HOLD_INCL": 0}, "in.ramp", args.nsteps))
+            plan.append(("G15", c, {**g, "TAUMAX_MPA": args.taumax, "HOLD_INCL": 1 if args.hold else 0}, "in.ramp", args.nsteps))
     if args.only in (None, "G16"):
         for c in cases:
             g = geometry(CELLS[c])
