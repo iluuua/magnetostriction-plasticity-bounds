@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-09-03T05:00:39+03:00",
+  "created_at": "2026-09-03T23:57:22+03:00",
   "question": "Does the nominal eigenstrain survive unconstrained minimisation?",
   "method": "best-fit affine map between minimised control and minimised field on the Fe sublattice; E_res = 0.5(F^T F - I); eta = (E_res:eps*)/(eps*:eps*)",
   "eigenstrain_nominal": 0.00194,
@@ -25,173 +25,173 @@
       "n_atoms": 4352,
       "F_minus_I": [
         [
-          0.000108,
-          3e-05,
-          0.000228
+          3.7e-05,
+          0.000156,
+          0.000167
         ],
         [
-          0.0,
-          9.6e-05,
-          0.000125
+          -5.9e-05,
+          0.000147,
+          0.000716
         ],
         [
-          5e-05,
-          -5.3e-05,
-          0.002077
+          5e-06,
+          -2e-06,
+          0.00116
         ]
       ],
       "E_res": [
         [
-          0.000108,
-          1.5e-05,
-          0.000139
+          3.7e-05,
+          4.9e-05,
+          8.6e-05
         ],
         [
-          1.5e-05,
-          9.6e-05,
-          3.6e-05
+          4.9e-05,
+          0.000147,
+          0.000357
         ],
         [
-          0.000139,
-          3.6e-05,
-          0.00208
+          8.6e-05,
+          0.000357,
+          0.001161
         ]
       ],
-      "eta_retained_fraction": 0.243,
-      "eta_standard_error": 0.0249,
-      "E_res_norm": 0.002095,
+      "eta_retained_fraction": 0.1218,
+      "eta_standard_error": 0.0277,
+      "E_res_norm": 0.001283,
       "eps_star_norm": 0.002376,
-      "rms_nonaffine_A": 0.0989
+      "rms_nonaffine_A": 0.1103
     },
     "support_slab_only_z_lt_18": {
       "n_atoms": 2880,
       "F_minus_I": [
         [
-          4.8e-05,
-          3.7e-05,
-          0.000135
+          1.8e-05,
+          0.000119,
+          -0.000126
         ],
         [
-          1.2e-05,
-          3.2e-05,
-          0.000203
+          -2.9e-05,
+          6.2e-05,
+          0.000215
         ],
         [
-          1.3e-05,
-          -5e-06,
-          0.00164
+          2e-06,
+          4e-05,
+          0.000892
         ]
       ],
       "E_res": [
         [
-          4.8e-05,
-          2.5e-05,
-          7.4e-05
+          1.8e-05,
+          4.5e-05,
+          -6.2e-05
         ],
         [
-          2.5e-05,
-          3.2e-05,
-          9.9e-05
+          4.5e-05,
+          6.2e-05,
+          0.000128
         ],
         [
-          7.4e-05,
-          9.9e-05,
-          0.001641
+          -6.2e-05,
+          0.000128,
+          0.000892
         ]
       ],
-      "eta_retained_fraction": 0.1776,
-      "eta_standard_error": 0.0426,
-      "E_res_norm": 0.001652,
+      "eta_retained_fraction": 0.0355,
+      "eta_standard_error": 0.054,
+      "E_res_norm": 0.000919,
       "eps_star_norm": 0.002376,
-      "rms_nonaffine_A": 0.076
+      "rms_nonaffine_A": 0.0967
     },
     "ridge_only_z_gt_22": {
-      "n_atoms": 992,
+      "n_atoms": 996,
       "F_minus_I": [
         [
-          0.000993,
-          1.5e-05,
-          -0.000294
+          0.00021,
+          0.000228,
+          0.001484
         ],
         [
-          -0.000356,
-          8e-05,
-          0.000649
+          -0.000428,
+          0.000317,
+          -0.000247
         ],
         [
-          0.000704,
-          -0.000138,
-          0.000273
+          1.4e-05,
+          -6.9e-05,
+          0.001007
         ]
       ],
       "E_res": [
         [
-          0.000994,
-          -0.00017,
-          0.000205
+          0.00021,
+          -0.0001,
+          0.000749
         ],
         [
-          -0.00017,
-          8e-05,
-          0.000255
+          -0.0001,
+          0.000317,
+          -0.000158
         ],
         [
-          0.000205,
-          0.000255,
-          0.000273
+          0.000749,
+          -0.000158,
+          0.001009
         ]
       ],
-      "eta_retained_fraction": 0.2007,
-      "eta_standard_error": 0.1064,
-      "E_res_norm": 0.001158,
+      "eta_retained_fraction": 0.4364,
+      "eta_standard_error": 0.1019,
+      "E_res_norm": 0.001535,
       "eps_star_norm": 0.002376,
-      "rms_nonaffine_A": 0.0985
+      "rms_nonaffine_A": 0.0952
     },
     "ridge_interior_z22_34_x_within_25": {
       "n_atoms": 592,
       "F_minus_I": [
         [
-          0.000841,
-          0.000156,
-          0.000302
+          0.000177,
+          0.000495,
+          0.001651
         ],
         [
-          -0.000527,
-          0.000132,
-          0.001092
+          -0.000371,
+          0.000465,
+          -0.000279
         ],
         [
-          0.000871,
-          -0.000102,
-          0.000368
+          -0.000196,
+          0.000119,
+          0.001335
         ]
       ],
       "E_res": [
         [
-          0.000842,
-          -0.000185,
-          0.000586
+          0.000177,
+          6.2e-05,
+          0.000727
         ],
         [
-          -0.000185,
-          0.000132,
-          0.000495
+          6.2e-05,
+          0.000466,
+          -8e-05
         ],
         [
-          0.000586,
-          0.000495,
-          0.000368
+          0.000727,
+          -8e-05,
+          0.001338
         ]
       ],
-      "eta_retained_fraction": 0.3835,
-      "eta_standard_error": 0.1789,
-      "E_res_norm": 0.001452,
+      "eta_retained_fraction": 0.4251,
+      "eta_standard_error": 0.1984,
+      "E_res_norm": 0.001765,
       "eps_star_norm": 0.002376,
-      "rms_nonaffine_A": 0.0927
+      "rms_nonaffine_A": 0.1028
     }
   },
-  "eta_used_for_rescaling": 0.2,
-  "eta_used_for_rescaling_se": 0.11,
+  "eta_used_for_rescaling": 0.44,
+  "eta_used_for_rescaling_se": 0.1,
   "eta_note": "The ridge radiates the field sampled above the crest, so its retention governs the quoted value. The support slab retains more because periodicity in x and y stops it relaxing laterally.",
   "error_definition": "formal least-squares standard error, Cov(f_alpha) = s^2 (Xc^T Xc)^-1 per row with s^2 pooled over 3N-12 degrees of freedom, propagated linearly to eta; not a bootstrap and not a spread over seeds",
   "atom_correspondence": "by atom id; both cells written by the same generator and seed",
@@ -199,39 +199,39 @@
   "components_table_1e3": {
     "whole_inclusion_Fe_sublattice": {
       "N": 4352,
-      "Exx": 0.108,
-      "Eyy": 0.096,
-      "Ezz": 2.08,
-      "Exz": 0.139,
-      "eta": 0.243,
-      "se": 0.0249
+      "Exx": 0.037,
+      "Eyy": 0.147,
+      "Ezz": 1.161,
+      "Exz": 0.086,
+      "eta": 0.1218,
+      "se": 0.0277
     },
     "support_slab_only_z_lt_18": {
       "N": 2880,
-      "Exx": 0.048,
-      "Eyy": 0.032,
-      "Ezz": 1.641,
-      "Exz": 0.074,
-      "eta": 0.1776,
-      "se": 0.0426
+      "Exx": 0.018,
+      "Eyy": 0.062,
+      "Ezz": 0.892,
+      "Exz": -0.062,
+      "eta": 0.0355,
+      "se": 0.054
     },
     "ridge_only_z_gt_22": {
-      "N": 992,
-      "Exx": 0.994,
-      "Eyy": 0.08,
-      "Ezz": 0.273,
-      "Exz": 0.205,
-      "eta": 0.2007,
-      "se": 0.1064
+      "N": 996,
+      "Exx": 0.21,
+      "Eyy": 0.317,
+      "Ezz": 1.009,
+      "Exz": 0.749,
+      "eta": 0.4364,
+      "se": 0.1019
     },
     "ridge_interior_z22_34_x_within_25": {
       "N": 592,
-      "Exx": 0.842,
-      "Eyy": 0.132,
-      "Ezz": 0.368,
-      "Exz": 0.586,
-      "eta": 0.3835,
-      "se": 0.1789
+      "Exx": 0.177,
+      "Eyy": 0.466,
+      "Ezz": 1.338,
+      "Exz": 0.727,
+      "eta": 0.4251,
+      "se": 0.1984
     }
   },
   "nominal_1e3": {
@@ -241,9 +241,9 @@
     "Exz": 1.455
   },
   "interpretation": "The construction is an initial affine perturbation followed by unconstrained minimisation, not a maintained eigenstrain: the potential's equilibrium metric is unchanged, so the inclusion relaxes back toward it. eta is reported as a diagnostic of that relaxation only. The residual tensor is not proportional to the imposed one - the shear survives while the normal components do not - so no single scalar can rescale the field to a physical magnetostriction; that amplitude comes from the analytic Eshelby solution of stageG8 instead.",
-  "label": "stage G13 v1 (CG only), free pair, unified 91,428-atom cell, eigenstrain on the ridge only",
+  "label": "stage G13 perturbation pair, unified cell, eigenstrain on the ridge only, inclusion free (CG from the v3-relaxed control, both stopped at 6000 iterations)",
   "inputs": {
-    "control": "runs/stageG13_interface100k/20260903-042909-186738_u100k_v1//ctl_free/ctl_free.gate.lammpstrj",
-    "field": "runs/stageG13_interface100k/20260903-042909-186738_u100k_v1//fld_free/fld_free.gate.lammpstrj"
+    "control": "runs/stageG13_interface100k/20260903-153826-627855_u100k_pert//ctl_free/ctl_free.gate.lammpstrj",
+    "field": "runs/stageG13_interface100k/20260903-153826-627855_u100k_pert//fld_free/fld_free.gate.lammpstrj"
   }
 }
