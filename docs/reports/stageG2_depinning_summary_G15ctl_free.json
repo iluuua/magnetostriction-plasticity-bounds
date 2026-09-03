@@ -1,0 +1,51 @@
+{
+  "run_dir": "runs\\stageG15_unified\\20260903-041548-482289",
+  "cases_analyzed": [
+    "G15_ctl"
+  ],
+  "created_at": "2026-09-04T02:20:08+03:00",
+  "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
+  "cases": {
+    "G15_ctl": {
+      "case": "G15_ctl",
+      "sigma_s_A": 6.781838574679566,
+      "threshold_A": 40.691031448077396,
+      "baseline_fit": {
+        "slope_A_per_step": 0.0011625574997105829,
+        "intercept_A": 38.73199359348571
+      },
+      "per_line": {
+        "plus": {
+          "x_at_start_A": 144.114515635915,
+          "displacement_in_first_6ps_A": -12.674201612551684,
+          "baseline_sigma_A": 2.473499925481406,
+          "threshold_A": 14.840999552888437,
+          "baseline_slope_A_per_step": 0.0002138329226996374,
+          "onset": {
+            "step": 36000,
+            "tau_nominal_MPa": 104.54545454545455,
+            "x_A": 156.97241041716265,
+            "dev_A": 16.329690358663782
+          },
+          "line_gone_at_step": 38000
+        },
+        "minus": {
+          "x_at_start_A": 119.44619365418033,
+          "displacement_in_first_6ps_A": -38.04603237717062,
+          "baseline_sigma_A": 3.383576502447295,
+          "threshold_A": 20.301459014683772,
+          "baseline_slope_A_per_step": -0.00030511868102179153,
+          "onset": {
+            "step": 40000,
+            "tau_nominal_MPa": 122.72727272727272,
+            "x_A": 45.77667125897145,
+            "dev_A": -27.104295642625573
+          },
+          "line_gone_at_step": 52000
+        }
+      },
+      "onset": null,
+      "csv": "docs\\reports\\stageG2_depinning_G15_ctl_G15ctl_free.csv"
+    }
+  }
+}
