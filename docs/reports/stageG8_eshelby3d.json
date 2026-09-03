@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-09-02T18:45:01+03:00",
+  "created_at": "2026-09-03T19:34:10+03:00",
   "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a compact 3D particle carrying the same eigenstrain?",
   "elastic_constants": {
     "mu_GPa": 26.5,
@@ -84,12 +84,12 @@
   ],
   "md_ridge_measurement_MPa": {
     "source": "docs/reports/stageG10_field_profile.json",
-    "peak_max_RSS": 6.26,
-    "at_r_A": 30.0,
+    "peak_max_RSS": 5.042,
+    "at_r_A": 50.0,
     "system": "(111)[1-10]",
     "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes",
-    "label": null,
-    "on_axis_max_abs_d_sigma_xz": null
+    "label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2)",
+    "on_axis_max_abs_d_sigma_xz": 15.45
   },
   "at_measured_FeAl_magnetostriction": {
     "note": "what the same sphere would carry if its strain were the largest magnetostriction reported for bulk Fe-Al alloys (Hall 1959; Bormio-Nunes 2012), i.e. 20-100 times less than 0.194 %",
@@ -99,5 +99,5 @@
       "100 ppm": 2.137
     }
   },
-  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell (docs/reports/stageG10_field_profile.json) gives a peak max-RSS of 6.3 MPa at r = 30 A from the interface plane. At the largest magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere would carry 2.14 MPa."
+  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell (docs/reports/stageG10_field_profile.json) gives a peak max-RSS of 5.0 MPa at r = 50 A from the interface plane, and 15.4 MPa within 10 A of the ridge axis. At the largest magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere would carry 2.14 MPa."
 }
