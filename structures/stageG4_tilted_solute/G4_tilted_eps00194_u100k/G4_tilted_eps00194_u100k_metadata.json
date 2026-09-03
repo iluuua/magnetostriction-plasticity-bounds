@@ -1,7 +1,7 @@
 {
   "case_id": "G4_tilted_eps00194_u100k",
-  "created_at": "2026-09-02T16:40:08+03:00",
-  "git_head_at_generation": "3411874d5de319269f724793c01e36661fb106c0",
+  "created_at": "2026-09-03T04:27:21+03:00",
+  "git_head_at_generation": "794d16228c6418cb52ab2aa4ff8e6ac93fd485d2",
   "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
   "orientation": {
     "x": "[1-10]",
@@ -26,6 +26,7 @@
   "eigenstrain": {
     "eps": 0.00194,
     "tilt_deg_from_z_toward_x": 45.0,
+    "applied_to": "ridge_only (z > Z_SUP), about the ridge centroid",
     "axis_unit_vector": [
       0.7071067811865476,
       0.0,
@@ -92,9 +93,9 @@
   "seam_check": {
     "n_atoms": 91428,
     "scipy_available": true,
-    "intra_cell_min_nn_A": 2.165850047618596,
-    "seam_min_nn_A": 2.2673227173056865,
-    "overall_min_nn_A": 2.165850047618596,
+    "intra_cell_min_nn_A": 2.2186307192393264,
+    "seam_min_nn_A": 2.292048153841381,
+    "overall_min_nn_A": 2.2186307192393264,
     "seam_pairs_lt_1p8_A": 0,
     "seam_pairs_lt_2p1_A": 0,
     "intra_pairs_lt_1p8_A": 0,
@@ -113,5 +114,5 @@
     "folded_pbc": true
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps00194_u100k\\G4_tilted_eps00194_u100k.start.data"
+  "data_file": "C:\\Users\\dille\\AppData\\Local\\Temp\\claude\\C--Users-dille-Documents-ilua-system-projects-physics-md-al-fe\\a390cfa3-c161-46d3-b945-106caf7d16ac\\scratchpad\\regen\\G4_tilted_eps00194_u100k\\G4_tilted_eps00194_u100k.start.data"
 }

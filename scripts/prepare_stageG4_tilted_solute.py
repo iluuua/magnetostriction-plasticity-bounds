@@ -112,6 +112,13 @@ def main() -> int:
     ap.add_argument("--no-solutes", action="store_true",
                     help="omit Mg/Si solutes (they add their own misfit stress)")
     ap.add_argument("--tag", default="", help="suffix for case names")
+    ap.add_argument("--strain-ridge-only", action="store_true",
+                    help="apply the eigenstrain to the ridge (z > Z_SUP) only, about the ridge centroid; "
+                         "the flat support layer, which exists only to close the periodic cell, stays "
+                         "unstrained. A periodic layer cannot carry a shear eigenstrain coherently: held "
+                         "at eps*_xz its surface is a sawtooth u_z = eps*_xz (x - cx) with a step "
+                         "eps*_xz L_x at the seam, which strains the whole Al slab by ~eps*_xz along z "
+                         "(stage G13 v3, 3 Sept 2026: sigma_zz ~ 160 MPa across the cell)")
     ap.add_argument("--al-layers", type=int, default=60,
                     help="Al (111) layers above the interface; 60 -> 66.7k atoms, "
                          "94 -> ~100k atoms with the same commensurate footprint")
@@ -223,10 +230,11 @@ def main() -> int:
     for label, eps in EPS_CASES.items():
         pos = base.copy()
         if eps != 0.0:
-            # applied about the Fe-block centroid, not the box origin
-            centroid = pos[fe_block].mean(axis=0)
-            r = pos[fe_block] - centroid
-            pos[fe_block] += eps * (r @ E_TENSOR)
+            # applied about the centroid of the strained atoms, not the box origin
+            strained = fe_block & (base[:, 2] > Z_SUP) if args.strain_ridge_only else fe_block
+            centroid = pos[strained].mean(axis=0)
+            r = pos[strained] - centroid
+            pos[strained] += eps * (r @ E_TENSOR)
         pos[:, 0] += disp[:, 0]
         pos[:, 2] += disp[:, 1]
         pos[:, 0] %= lx
@@ -255,6 +263,8 @@ def main() -> int:
             "ridge": {"rx_A": RIDGE_RX, "h_A": RIDGE_H, "center_x_A": cx,
                       "apex_z_A": Z_SUP + RIDGE_H, "right_edge_x_A": cx + RIDGE_RX},
             "eigenstrain": {"eps": eps, "tilt_deg_from_z_toward_x": TILT_DEG,
+                            "applied_to": "ridge_only (z > Z_SUP), about the ridge centroid" if args.strain_ridge_only
+                                          else "whole inclusion (support slab + ridge), about its centroid",
                             "axis_unit_vector": list(u),
                             "tensor": "lambda*(1.5 u(x)u - 0.5 I), trace = 0 (volume conserving)",
                             "tensor_matrix": [list(row) for row in (eps * E_TENSOR)],

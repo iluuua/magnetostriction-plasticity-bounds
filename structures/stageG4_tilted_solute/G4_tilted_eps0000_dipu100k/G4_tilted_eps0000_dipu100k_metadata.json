@@ -1,7 +1,7 @@
 {
   "case_id": "G4_tilted_eps0000_dipu100k",
-  "created_at": "2026-09-02T16:40:10+03:00",
-  "git_head_at_generation": "3411874d5de319269f724793c01e36661fb106c0",
+  "created_at": "2026-09-03T04:27:25+03:00",
+  "git_head_at_generation": "794d16228c6418cb52ab2aa4ff8e6ac93fd485d2",
   "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
   "orientation": {
     "x": "[1-10]",
@@ -26,6 +26,7 @@
   "eigenstrain": {
     "eps": 0.0,
     "tilt_deg_from_z_toward_x": 45.0,
+    "applied_to": "ridge_only (z > Z_SUP), about the ridge centroid",
     "axis_unit_vector": [
       0.7071067811865476,
       0.0,
@@ -113,5 +114,5 @@
     "folded_pbc": true
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG4_tilted_solute\\G4_tilted_eps0000_dipu100k\\G4_tilted_eps0000_dipu100k.start.data"
+  "data_file": "C:\\Users\\dille\\AppData\\Local\\Temp\\claude\\C--Users-dille-Documents-ilua-system-projects-physics-md-al-fe\\a390cfa3-c161-46d3-b945-106caf7d16ac\\scratchpad\\regen_dip\\G4_tilted_eps0000_dipu100k\\G4_tilted_eps0000_dipu100k.start.data"
 }
