@@ -79,7 +79,7 @@ def main() -> int:
             cmd += ["-var", k, str(n_al_of(cell) if v == "meta" else v)]
         t0 = time.time()
         print("[%s] %s  <-  %s / %s" % (datetime.now().strftime("%H:%M:%S"), name, cell, infile), flush=True)
-        proc = subprocess.run(cmd, cwd=d, capture_output=True, text=True, timeout=4 * 3600)
+        proc = subprocess.run(cmd, cwd=d, capture_output=True, text=True, timeout=16 * 3600)
         (d / "stdout.txt").write_text(proc.stdout, encoding="utf-8")
         (d / "stderr.txt").write_text(proc.stderr, encoding="utf-8")
         dump = d / (name + ".gate.lammpstrj")
