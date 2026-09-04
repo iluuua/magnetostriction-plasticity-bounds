@@ -1,0 +1,33 @@
+# Abstract and keywords (RU: paragraph after \textbf{Аннотация.} plus the \textbf{Ключевые слова:} line; EN: the abstract and keyword environments)
+
+## terms explained
+- affine surrogate / аффинный суррогат -> replaced by 'elongated along the field by 0.194% ... and relaxed freely' / 'удлинено вдоль поля на 0,194% ... и свободно релаксировано' (no term used)
+- eigenstrain / собственная деформация -> replaced by 'the strain corresponding to the 147 MPa interface stress estimated in earlier experiments' / 'деформация, отвечающая оценённому ... межфазному напряжению 147 МПа'; the lambda_s / ppm / '19-97 times' framing is gone entirely
+- eta = 0.30 +/- 0.10 of the imposed mode 'survives' -> 'the inclusion keeps about a third of it' / 'сохранив около трети этого удлинения' ('keeps'/'сохранив' replaces 'survives'/'переживает')
+- RSS_max / maximum resolved shear stress -> 'the resolved shear stress in the matrix peaks at 6.3 MPa' / 'разрешённое касательное напряжение в матрице достигает 6,3 МПа'; 'resolved shear stress' is kept as the standard term (not on the opaque list) because there is no room to gloss it in a 150-word abstract - the Methods/Results section must define it at first use
+- noise floor beyond 60 A -> 'averages 0.5 +/- 0.6 MPa beyond 60 A' / 'за пределами 60 A составляет в среднем 0,5 +/- 0,6 МПа'
+- ridge / гребень, 'd ~ 10 A above the ridge crest' -> dropped from the abstract (cell geometry belongs to Methods); the peak location r = 30 A was also dropped for the word budget, the 60 A decay distance is kept
+- dislocation dipole / диполь -> 'dislocations move from 77-86 MPa' / 'дислокации начинают двигаться при 77-86 МПа'
+- heterogeneous nucleation -> 'nucleate at the interface near 195 MPa' / 'новые зарождаются на границе около 195 МПа'
+- solute pinning of the sampled Mg/Si configuration through 75 MPa -> 'Mg/Si atoms pin them up to 75 MPa' / 'атомы Mg и Si удерживают дислокацию вплоть до 75 МПа' (a bound: 75 MPa was the highest stress applied, no depinning seen)
+- two-scale model, activation volume V*, f = 0.002, 'activation-driving resolved-shear amplitude' -> 'The measured 25% creep increase requires an estimated 8.7-65.2 MPa' / 'требует, по оценке, 8,7-65,2 МПа' ('estimated'/'по оценке' marks it as model-derived)
+- spin degrees of freedom / classical MD has no spins -> removed; the abstract only says the inclusion is strained and relaxed
+- 'direct elastic magnetostrictive mechanism' -> 'the direct elastic mechanism' / 'прямой упругий механизм' (no magnetostriction constant is quoted or derived)
+- 'separate slow channel' -> 'a separate slow process' / 'отдельного медленного процесса'
+- keywords: 'eigenstrain'/'собственная деформация' replaced by 'interface stress'/'межфазные напряжения'; 'примесное закрепление' -> 'закрепление дислокаций примесями'; 'magnetic memory'/'магнитная память' and 'creep'/'ползучесть' added
+
+## figures requested
+
+
+## notes
+1. DATA vs MANUSCRIPT DISCREPANCY (needs a decision upstream). docs/reports/stageG5_two_scale_bridge.json in the working tree was regenerated today (2026-09-02 16:22, uncommitted, together with an uncommitted edit of analysis/python/stageG5_two_scale_bridge.py) with the inclusion volume fraction changed from 0.002 to 0.00246 ('0.35 wt% Al13Fe4, the supervisor's figure for this batch, 30 Aug 2026'). It now gives 8.4-62.7 MPa for V* = 19-142 b^3; the committed HEAD record and the whole manuscript (Table tab:bridge, Section 4, Conclusions, highlights.tex) still say 8.7-65.2 MPa at f = 0.002. Per the 'numbers stay exactly as they are' rule the abstract keeps 8.7-65.2 MPa so that it matches the body; if the body is moved to f = 0.00246, the abstract must become 8.4-62.7 MPa (and the body's 0.033-3.17% figures would shift too, since they scale with f).
+
+2. Numbers deliberately absent from the abstract, and why. (a) The Eshelby maintained-strain bound '<= 2.4 MPa at lambda_s = 100 ppm', the '2 mu lambda_s <= 5.3 MPa' scale and the '0.033-3.17%' forward prediction all exist only inside the lambda_s/ppm framing the supervisor ordered dropped; they cannot be restated without quoting a magnetostriction constant, so they are omitted here. The body sections that carry them (Results 3.1, Section 4, Discussion 5.1, Conclusions, Limitations) need the same decision - this is where the science constrains the simplification most. (b) '19-97 times measured Fe-Al magnetostriction' dropped per instructions. (c) eta = 0.30 +/- 0.10 is rendered as 'about a third'; this is the ridge-subset value the paper quotes (whole-inclusion Fe sublattice gives 0.49). (d) The caveat that the 77-86 / ~195 / 75 MPa values are single-realisation, cell-, potential- and rate-specific was cut for the word budget; it remains in Conclusions and Limitations. If the orchestrator wants it in the abstract it costs ~10 words and the 150-word limit is exceeded.
+
+3. Honesty of the new framing. The imposed strain eps = 1.94e-3 is exactly what every record was computed with (stageG10, G12, G8, G4 all carry eigenstrain 0.00194), so stating it as 'the strain corresponding to the 147 MPa estimate' changes only the prose. The 6.3 MPa peak is explicitly tied to free relaxation with only about a third of the strain retained - without that clause a reader would take 6.3 MPa as the field of a maintained 0.194% strain, which the paper itself says it is not (Eshelby with a maintained strain gives ~41-47 MPa). The conclusion sentence stays at the paper's strength ('does not account for / fails to explain'), and 'requires a separate slow process' is the paper's own 'requires a separate slow channel'; nothing is presented as agreeing with experiment.
+
+4. Word count: 148 (EN) and 148 (RU) with a counter that treats '0.5+/-0.6', 'Al-Mg-Si', '77-86' and '8.7-65.2' as one token each; a journal counter that splits these lands at roughly 155. Nothing shorter keeps all six key numbers plus the relaxation caveat.
+
+5. The RU keeps the supervisor's clause 'результаты сопоставлены с ранними экспериментами' verbatim; in EN the comparison is carried by 'estimated in earlier experiments' and 'the measured 25% creep increase' because the explicit clause did not fit under 150 words.
+
+6. No \cite, \ref or \label existed in either abstract, none added. Nothing is written to the manuscript files; drafts are in the scratchpad (abs_en.tex, abs_ru.tex). The title still reads 'Atomistic bounds on the magnetostrictive mechanism...' in both languages - outside this section's scope but it uses the word the abstract now avoids.

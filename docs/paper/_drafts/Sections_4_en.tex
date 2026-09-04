@@ -1,0 +1,343 @@
+\section{From local resolved shear to macroscopic creep}
+\label{sec:bridge}
+
+The results of Section~\ref{sec:results} bound what a strained inclusion can
+do locally. To connect them with the macroscopic observation the question is
+turned around: how large a stress around the inclusions would be needed to
+raise the creep rate by the measured 25\%? The estimate that answers it has
+three ingredients.
+
+The first is the shape of the stress field. Outside a compact particle of
+radius $a$ that is bonded to the matrix and strained, the elastic solution of
+Eshelby \cite{Eshelby1957} gives a stress that falls off with distance $r$
+from the particle centre as $(a/r)^{3}$. The resolved shear stress---the part
+of the stress that pushes a dislocation (Section~\ref{sec:stress}), and hence
+the only part that pushes a dislocation---is written in this scalar form as
+$\tau(r)=\tau_m(a/r)^{3}$, with $\tau_m$ its value at the particle surface. In
+a dilute dispersion with inclusion volume fraction $f$, the fraction of matrix
+volume in which $|\tau|$ exceeds a given level $s$ is
+$F(>s)=f\,(\tau_m/s-1)$ for $0<s<\tau_m$ (the volume of the particle itself
+is subtracted), and the distribution of stress levels over the matrix volume
+is given by the density $p(s)=-\mathrm{d}F/\mathrm{d}s=f\,\tau_m/s^{2}$.
+
+The second is the response of dislocation glide to stress. At room
+temperature dislocations pass obstacles by thermally activated jumps, and a
+local stress $\tau$ changes the jump rate by the factor
+$\exp(\pm V^{*}\tau/kT)$. Here $V^{*}$ is the activation volume of Section~\ref{sec:mobility}
+\cite{CaillardMartin2003}. Because the stress around a particle
+takes both signs, the two directions are weighted equally and the rate is
+proportional to $\cosh(V^{*}\tau/kT)$.
+
+The third is the averaging. The creep rate of the alloy is the rate averaged
+over the matrix volume, so $\cosh(V^{*}\tau/kT)-1$ is integrated over the
+density $p(s)$. The relative enhancement of the creep rate is
+\begin{equation}
+\frac{\langle\dot\varepsilon\rangle}{\dot\varepsilon_0}-1
+ = f\,x_0\!\int_{0}^{x_0}\!\frac{\cosh u-1}{u^{2}}\,\mathrm{d}u
+ = f\left[x_0\,\mathrm{Shi}(x_0)-(\cosh x_0-1)\right],
+\label{eq:bridge}
+\end{equation}
+with $x_0=V^{*}\tau_m/kT$, where
+$\mathrm{Shi}(x)=\int_0^x\sinh u\,\mathrm{d}u/u$ is the hyperbolic sine
+integral. The integral is taken down to $s=0$, i.e.\ it assumes that the
+stressed shells of neighbouring particles do not overlap; cutting it off where
+they would (at $u_{\min}=f x_0$, where the shell of one particle reaches its
+neighbours) lowers the predicted enhancement from 0.2500 to 0.2499 and raises
+the required $\tau_m$ by about $0.01\%$ at every $V^{*}$ in
+Table~\ref{tab:bridge}, so the tabulated values stand.
+Equation~(\ref{eq:bridge}) is a model estimate of sensitivity, not an
+extraction of the interface stress from the experiment: it describes the field
+by a single amplitude $\tau_m$, weights positive and negative stresses
+equally, and takes the spatial statistics of the $(a/r)^{3}$ field. It
+matters that $\tau_m$ is the amplitude of the resolved shear at the particle
+surface, not the full interface stress, of which only a part acts in any one
+slip plane.
+
+The inputs are the following. The temperature is 300~K. The inclusion content of the alloy is
+0.35~wt\%, corresponding to a volume fraction $f=0.00246$, within the
+0.1--0.3\% reported in Ref.~\cite{Friha2024JMMM}; Table~\ref{tab:bridge} is
+evaluated at this value.
+The activation volume is taken in the range $V^{*}=19$--$142\,b^{3}$, which
+spans the values for aluminium alloys \cite{CaillardMartin2003}, with
+$V^{*}=70\,b^{3}$ measured for Al--Mg--Si \cite{Soula2022JALCOM} as the
+central case; no value of $V^{*}$ was extracted from the present simulations
+(Section~\ref{sec:mobility}), so the range is a sensitivity range within the
+model, not a measured input.
+
+The output is Table~\ref{tab:bridge}. Its second column is obtained by
+setting the left side of Eq.~(\ref{eq:bridge}) to 0.25 and solving for
+$\tau_m$: 8.4--62.7~MPa across the range of $V^{*}$, the larger values at the
+smaller activation volumes. Although the enhancement is proportional to $f$
+at fixed $\tau_m$, the required $\tau_m$ is obtained by inverting a nonlinear
+function and therefore does not scale as $1/f$: direct recalculation gives
+9.8--73.3~MPa at $f=0.001$ and 8.1--60.3~MPa at $f=0.003$.
+
+Three comparisons follow. If the 147~MPa of Ref.~\cite{Friha2024JMMM} were
+the resolved shear stress acting on the dislocations, Eq.~(\ref{eq:bridge})
+would predict enhancements from $6.8\times10^{2}$ to $2.7\times10^{46}$
+(third column), at least $2.7\times10^{3}$ times the observed 0.25; 147~MPa
+acting as a shear stress is incompatible with the observed enhancement. The
+stress that an inclusion strained by 0.194\% actually produces is smaller.
+For a bonded sphere held at that strain the exact solution \cite{Eshelby1957}
+gives 41~MPa of resolved shear inside the particle and just outside it (Section~\ref{sec:sigma_r});
+with this amplitude Eq.~(\ref{eq:bridge}) gives 0.045 at $V^{*}=19\,b^{3}$,
+0.31 at $30\,b^{3}$ and values far above 0.25 at larger $V^{*}$ (fourth
+column). The ridge of the interface cell, held at the same strain, produces
+15~MPa of resolved shear just above its crest
+(Section~\ref{sec:sigma_r}); with this amplitude the estimate gives
+0.042 at $V^{*}=50\,b^{3}$ and 0.16 at $70\,b^{3}$, the
+activation volume measured for Al--Mg--Si \cite{Soula2022JALCOM} (last
+column). At a strain of 0.194\%, therefore, the stress around the inclusions
+is of the order the estimate requires: the observed 0.25 is reproduced for
+$V^{*}$ between about 30 and 75$\,b^{3}$, depending on which
+of the two amplitudes is taken.
+
+This is a consistency, not a confirmation, for three reasons. The estimate
+is exponentially sensitive to the product $V^{*}\tau_m$: doubling $V^{*}$ at
+fixed amplitude moves the prediction by two to four orders of magnitude, so
+the agreement fixes little beyond the order of magnitude. The strain of
+0.194\% is an input taken from the earlier estimate of the interface stress
+\cite{Friha2024JMMM}, not a measured property of the inclusions; the
+magnetostriction measured for bulk iron--aluminium alloys does not exceed
+$10^{-4}$ \cite{Hall1959,BormioNunes2012}, twenty times less, and since the
+stress is proportional to the strain an inclusion strained by $10^{-4}$ would
+produce at most 2~MPa at its surface, for which Eq.~(\ref{eq:bridge}) gives
+an enhancement below 0.4\% at every $V^{*}$ in the range. And the estimate
+describes a field that exists while the inclusion is strained; it says
+nothing about the tens of minutes for which the effect persists after the
+field is removed (Section~\ref{sec:memory}). Whether the inclusions of this
+alloy strain by 0.194\% in a field of 0.7~T is therefore the question on
+which the elastic mechanism stands or falls, and it is an experimental one.
+
+\begin{table}
+\centering
+\caption{The two-scale estimate, Eq.~(\ref{eq:bridge}), at $T=300$~K,
+$f=0.00246$ and $b=2.8638$~\AA{}. Second column: the resolved
+shear stress $\tau_m$ at the particle surface that reproduces the measured
+$+25\%$ creep enhancement. The remaining columns give the enhancement
+$\langle\dot\varepsilon\rangle/\dot\varepsilon_0-1$ that
+Eq.~(\ref{eq:bridge}) predicts if $\tau_m$ were 147~MPa (the earlier
+estimate), 41~MPa (the interior value of the analytical sphere held at 0.194\%, which
+is also the amplitude of its inverse-cube far field; 41.45 unrounded) or 15~MPa (the maximum on the ridge axis in the interface
+cell, 15.45 unrounded, Section~\ref{sec:sigma_r}). The observed value is 0.25.}
+\label{tab:bridge}
+\small
+\begin{tabular}{lcccc}
+\hline
+$V^{*}$ & $\tau_m$ for $+25\%$ (MPa) & at 147~MPa & at 41~MPa & at 15~MPa \\
+\hline
+$19\,b^{3}$  & 62.7 & $6.8\times10^{2}$  & 0.045 & 0.004 \\
+$30\,b^{3}$  & 39.7 & $3.9\times10^{6}$  & 0.31 & 0.010 \\
+$50\,b^{3}$  & 23.8 & $3.9\times10^{13}$ & 17 & 0.042 \\
+$70\,b^{3}$  & 17.0 & $4.8\times10^{20}$ & $1.2\times10^{3}$ & 0.16 \\
+$100\,b^{3}$ & 11.9 & $2.4\times10^{31}$ & $9.3\times10^{5}$ & 1.2 \\
+$142\,b^{3}$ & 8.4  & $2.7\times10^{46}$ & $1.2\times10^{10}$ & 31 \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Three stresses, and the identity of the magnetic phase}
+\label{sec:phase}
+
+Three stresses appear in this paper and must be kept apart. The first is the
+147~MPa of Ref.~\cite{Friha2024JMMM}. It is an estimate of the stress at the
+inclusion surface, obtained from the field through an empirical coefficient;
+it is not a measured stress, not a resolved shear stress on any slip plane,
+and not a result of the present calculations. If it were the shear stress on
+a slip plane it would exceed the 95--105~MPa at which the lower
+partner of the dislocation pair of Section~\ref{sec:thresholds} breaks away,
+so the loaded cells cannot test it by comparison with a threshold; what they
+test is whether a strained inclusion produces anything of that order in the
+matrix. The second is what
+a bonded elastic inclusion strained by 0.194\% supplies. The exact solution
+for a bonded sphere \cite{Eshelby1957}---no sliding at the interface: the
+atoms on both sides interact through the same potential, and no artificial
+constraint is applied there---gives 41~MPa of resolved shear inside the particle,
+falling as $(a/r)^{3}$ outside (Fig.~\ref{fig:rss}). The third is the field
+measured in the cell for the same strain held fixed
+(Section~\ref{sec:sigma_r}): 15~MPa of resolved shear just above
+the crest of the ridge, falling within 80~\AA{} to $2.5\pm0.5$~MPa, the resolution of the
+calculation; averaged over the width of the cell the peak is
+5.0~MPa, because the ridge occupies less than half of that
+width. The second and the third stress are of one order and together
+bracket the amplitude entered in Eq.~(\ref{eq:bridge}). The first exceeds
+them by a factor of 3.6--10 because $E\varepsilon$ is the stress of a rod held
+at that strain, not of an inclusion embedded in a matrix that deforms with
+it.
+
+A separate difficulty concerns the phase itself. In the batch studied, X-ray
+diffraction identifies the inclusions as Al$_{13}$Fe$_4$ (written
+Fe$_4$Al$_{13}$ in Ref.~\cite{Friha2024JMMM}; the form Al$_{13}$Fe$_4$ is
+used throughout here), and the magnetization of the samples shows a
+hysteresis loop, i.e.\ the inclusions contain a ferromagnetic constituent
+\cite{Friha2024JMMM}; earlier work in the same series gives the composition
+of the inclusions as Fe$_x$Al$_{1-x}$ with $x=86$--$87$~at.\%
+\cite{Skvortsov2019JAP,Nikolaev2025SciRep}. Stoichiometric Al$_{13}$Fe$_4$,
+however, shows no magnetic order down to 2~K---neither in its magnetization
+nor in M\"ossbauer spectra, which probe the magnetic state of the iron atoms
+directly \cite{Avers2025Crystals,Albedah2015Mossbauer}: the
+ideal compound does not magnetize and cannot change shape through
+magnetization (which does not, by itself, guarantee a strictly zero strain of
+any other origin). The measured ferromagnetism of the inclusions therefore
+belongs not to the ideal Al$_{13}$Fe$_4$ lattice but to some other
+constituent of them---iron-rich regions of the kind noted in
+Refs.~\cite{Skvortsov2019JAP,Nikolaev2025SciRep}, for example---and it is the
+strain of that constituent under field that matters for the mechanism. That
+strain has not been measured for the inclusions of this alloy; the $10^{-4}$
+used above is the largest value reported for bulk iron--aluminium alloys
+\cite{Hall1959,BormioNunes2012}. The simulation cell represents the
+inclusion by Al$_{13}$Fe$_4$ as the phase identified in this batch, with a
+known structure \cite{Liu2024CIF}; the strain applied to it is taken as a
+given. Measuring the strain of the actual inclusions under field is the
+decisive experimental step.
+
+\subsection{Why the mechanism cannot be simulated directly, and what MD can
+measure instead}
+
+A dislocation behaves as a line under tension. To bow it through a stressed
+region of size $L$ the stress must exceed about $\mu b/L$, where $\mu$ is
+the shear modulus and $b$ the Burgers vector \cite{CaillardMartin2003}. If
+the whole claimed 147~MPa acted as resolved shear stress---the assumption most
+favourable to the mechanism---this criterion gives $L\approx52$~nm (about
+$180\,b$), i.e.\ a cell of some $2\times10^{8}$ atoms once the surrounding
+matrix is included, against the roughly $10^{5}$ atoms of the cells used here.
+At 41~MPa the corresponding size is about 0.2~$\mu$m, and at 15~MPa
+about 0.5~$\mu$m. The mechanism therefore cannot be simulated directly at the
+atomic scale. What molecular dynamics can supply is the quantities that a
+description on the larger scale consumes: the stress at the interface and its
+decay with distance (Section~\ref{sec:sigma_r}), the stresses at which
+dislocations are set in motion or created
+(Sections~\ref{sec:thresholds}--\ref{sec:mobility}), and, through
+Eq.~(\ref{eq:bridge}), a check that the whole chain is self-consistent.
+
+\subsection{The memory protocol}
+\label{sec:memory}
+
+In the experiments the field is absent during creep. The sample is held in the
+field for 30~min, the field is removed, and only then is the load applied
+\cite{Skvortsov2019PSS,Nikolaev2025SciRep}; what is measured is a memory of
+the exposure.
+Whatever the field does must therefore persist for tens of minutes after it
+is gone. An elastic strain of the inclusion cannot: once the field is removed
+the inclusion returns to its original shape and the stress around it
+disappears within nanoseconds. The present calculations contain an inclusion held at its strain while the
+matrix relaxes (the interface cell), one relaxed from it (the free cell) and
+loaded cells with the inclusion free (unstrained) or held (unstrained and strained); none of them represents the
+state of the material after the field has been removed. What could last
+for tens of minutes is a slow rearrangement of atoms---for instance of the Mg
+and Si atoms that pin the dislocations (Section~\ref{sec:mobility})---set in
+motion while the field acted. Such a rearrangement has not been established
+here. Supporting it would require the thermal history and the vacancy content
+of the samples, an estimate of the diffusion rates, and a separate calculation
+in which the field is switched on, held, switched off and the load then
+applied. It is therefore stated here as one hypothesis that can be tested,
+not as a result.
+
+\subsection{Limitations}
+\label{sec:limitations}
+
+Two features of the geometry limit the transfer of these numbers to a real
+particle. In the cell the inclusion is a ridge---a bar of half-elliptic cross
+section running the full length of the cell along $y$
+(Section~\ref{sec:cell})---rather than a compact particle. The stress outside
+such a bar falls off with distance more slowly than the $(a/r)^{3}$ of a
+compact particle, and its reach---some 30~\AA{} at full strength, 80~\AA{} in all
+(Section~\ref{sec:sigma_r})---is set by the cross section of the ridge; it is a property of this cell, not of a micron-sized inclusion, whose
+field would extend correspondingly further. Equation~(\ref{eq:bridge}) takes
+its spatial statistics from the three-dimensional solution for a compact
+particle and its amplitude either from that solution (41~MPa) or from the
+ridge cell (15~MPa); the two differ by a factor of about
+2.7, which is the effect of the geometry and is carried
+through Table~\ref{tab:bridge} as the difference between its last two
+columns. A two-dimensional elastic calculation for the ridge alone, with
+the same strain and elastic constants but in an unbounded matrix of the same
+stiffness, gives 20~MPa at the ridge surface falling to 5~MPa
+within 10~\AA{}; the atomistic ridge, held rigid on its rigid layer, gives a
+smaller surface value and a flatter profile. The atomistic and the continuum
+description of the ridge thus agree in magnitude, and the difference from
+the sphere is geometric, not an artefact of the cell.
+
+The interatomic potential \cite{Jelinek2012} was chosen for its coverage of
+Al, Fe, Mg and Si; how well it reproduces the Al/Al$_{13}$Fe$_4$ interface,
+the stress needed to create dislocations, the structure of the dislocation
+core and the pinning by Mg and Si has not been checked independently here, so
+the absolute thresholds should be regarded as model-dependent. The residual
+mismatch between the two lattices is the same in the control and strained
+cells and cancels to first order in their difference; nonlinear relaxation may
+prevent exact cancellation.
+
+The thresholds of Section~\ref{sec:thresholds} are observations in a single
+cell, with one set of initial atomic velocities and one loading rate; they
+should be repeated with independent sets of starting velocities and at least a
+second rate. The pinning result rests on two random arrangements of Mg and Si atoms,
+only one of which completed the staircase, and one set of starting
+velocities each; a statistical pinning threshold
+would require three to five independent arrangements and velocity sets. This
+is also why the pinning is reported as an observation and no activation
+volume is extracted from it. The thermostat---the algorithm that holds the
+cell at 300~K---acts on all mobile atoms and may itself influence the
+thresholds and the temperature rise when the two dislocations meet and
+annihilate; the dynamic stage should
+be repeated either with the thermostat switched off after the temperature has
+been established, or with it acting only on the atoms at the cell boundaries.
+
+The field is represented only mechanically, as a strain of the inclusion.
+Mechanisms in which the field acts directly on the dislocation or on the
+obstacle, as in the theories of Refs.~\cite{Alshits2003,Molotskii2000}, are
+outside the scope of the calculation. It is worth noting that the changes of
+barrier height invoked by those theories, 0.01--0.1~eV, correspond through
+$V^{*}\Delta\tau$ to 0.97--9.7~MPa at $V^{*}=70\,b^{3}$, and to
+0.48--35.9~MPa over the whole range of $V^{*}$---overlapping the stresses
+found here rather than coinciding with them. The stresses themselves are
+computed from the atomic forces and positions (the virial expression
+\cite{Thompson2022LAMMPS}) averaged over slices 4~\AA{} thick parallel to the
+interface; this is an approximation whose resolution, after the six stress
+components have been averaged over each slice, is $2.5\pm0.5$~MPa. Finally,
+Eq.~(\ref{eq:bridge}) is a separate model relating a local stress to a change
+of creep rate; it does not remove the dependence of the MD thresholds
+themselves on the loading rate.
+
+\section{Conclusions}
+\label{sec:conclusions}
+
+The stress that a strained inclusion produces in the matrix was computed in
+an Al/Al$_{13}$Fe$_4$ interface cell of 91\,428 atoms for an elongation of
+the inclusion by 0.194\% along the field direction at constant volume, the
+strain corresponding to the earlier estimate of 147~MPa, with the inclusion
+held at that strain. The resolved shear stress in the matrix reaches
+15~MPa just above the inclusion and falls to the far-field level
+of $2.5\pm0.5$~MPa within 80~\AA{}; averaged over the width of the cell the
+peak is 5.0~MPa. The analytical solution for a compact particle
+held at the same strain gives 41~MPa inside it, falling as the inverse
+cube of the distance, so that for a micron-sized inclusion the same field
+extends over a fraction of a micron. An inclusion that is not held relaxes
+most of the strain.
+
+In the loaded cells, a pre-existing pair of dislocations next to the ridge
+is torn apart at an applied shear of 95--105~MPa with the inclusion free to relax; with the inclusion held, the strained and the unstrained cell coincide within one frame of the ramp, 9~MPa, at every stage; no new dislocation forms at the interface up to the end of the ramp at 400~MPa in the unstrained cell; and a random
+arrangement of Mg and Si atoms holds a dislocation through 75~MPa. The first picoseconds of every ramp, at zero applied stress, answer the question whether the field of the strained ridge alone moves a dislocation placed next to it: the same partner moves in the same way with the ridge strained and unstrained, driven by the coherency field of the interface, not by the strain of the ridge.
+These values are specific to the cells, the loading rate and the potential
+and are not material constants.
+
+The two-scale estimate, Eq.~(\ref{eq:bridge}), requires a resolved shear
+stress of 8.4--62.7~MPa at the inclusion surface to raise the creep rate by
+25\% at $f=0.00246$ and $V^{*}=19$--$142\,b^{3}$. The computed amplitudes,
+41~MPa for the particle and 15~MPa for the ridge, reproduce the
+observed enhancement for $V^{*}$ of 30--75$\,b^{3}$, a range
+that contains the value measured for Al--Mg--Si; 147~MPa acting as resolved
+shear would exceed the observed enhancement by a factor of at least
+$2.7\times10^{3}$. The elastic mechanism is therefore quantitatively viable
+if, and only if, the inclusions strain by about 0.2\% in the field: the
+magnetostriction measured for bulk iron--aluminium alloys is twenty times
+smaller and would give an enhancement below 0.4\%.
+
+Because the field is off during the creep test, whatever it does must persist
+for tens of minutes; an elastic strain cannot, and a slow rearrangement of
+atoms is indicated as the remaining possibility---a hypothesis not tested by
+the present calculations. The decisive next steps are the identification of
+the ferromagnetic constituent of the inclusions, a direct measurement of their
+strain under field, and a calculation in which the field is switched on, held,
+switched off and the load then applied.

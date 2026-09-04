@@ -1,0 +1,149 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{Alshits2003}
+V.~I. Alshits, E.~V. Darinskaya, M.~V. Koldaeva, E.~A. Petrzhik, Magnetoplastic
+  effect: Basic properties and physical mechanisms, Crystallography Reports
+  48~(5) (2003) 768--795.
+\newblock \href {https://doi.org/10.1134/1.1612598}
+  {\path{doi:10.1134/1.1612598}}.
+
+\bibitem{Molotskii2000}
+M.~I. Molotskii, Theoretical basis for electro- and magnetoplasticity,
+  Materials Science and Engineering: A 287~(2) (2000) 248--258.
+\newblock \href {https://doi.org/10.1016/S0921-5093(00)00782-6}
+  {\path{doi:10.1016/S0921-5093(00)00782-6}}.
+
+\bibitem{Skvortsov2019JAP}
+A.~Skvortsov, D.~Pshonkin, E.~Kunitsyna, R.~Morgunov, E.~Beaugnon, Softening of
+  the {Al-Mg-Si-Fe} alloy under magnetostriction of {FeAl} microinclusions,
+  Journal of Applied Physics 125~(2) (2019) 023903.
+\newblock \href {https://doi.org/10.1063/1.5064448}
+  {\path{doi:10.1063/1.5064448}}.
+
+\bibitem{Skvortsov2019PSS}
+A.~A. Skvortsov, R.~B. Morgunov, D.~E. Pshonkin, V.~P. Piskorskii, R.~A.
+  Valeev, N.~S. Ovanesyan, V.~V. Kucheryaev, D.~V. Korolev, ``{M}agnetic
+  memory'' in plasticity of an aluminum alloy with iron inclusions, Physics of
+  the Solid State 61~(6) (2019) 1023--1029.
+\newblock \href {https://doi.org/10.1134/S1063783419060246}
+  {\path{doi:10.1134/S1063783419060246}}.
+
+\bibitem{Friha2024JMMM}
+M.~Friha, V.~K. Nikolaev, A.~A. Skvortsov, D.~E. Pshonkin, F.~Seif-Eddine,
+  P.~M. Kuznetsova, The effect of magnetic fields on the mechanical properties
+  of an aluminum alloy with iron-based inclusions, Journal of Magnetism and
+  Magnetic Materials 589 (2024) 171532.
+\newblock \href {https://doi.org/10.1016/j.jmmm.2023.171532}
+  {\path{doi:10.1016/j.jmmm.2023.171532}}.
+
+\bibitem{Nikolaev2025SciRep}
+V.~Nikolaev, M.~Friha, A.~A. Skvortsov, D.~Pshonkin, A.~Abramov, P.~Kuznetsova,
+  A.~Kazak, Magnetically stimulated transient creep processes in a
+  heterogeneous aluminum alloy with ferromagnetic inclusions, Scientific
+  Reports 15 (2025) 30585.
+\newblock \href {https://doi.org/10.1038/s41598-025-16116-z}
+  {\path{doi:10.1038/s41598-025-16116-z}}.
+
+\bibitem{Eshelby1957}
+J.~D. Eshelby, The determination of the elastic field of an ellipsoidal
+  inclusion, and related problems, Proceedings of the Royal Society of London.\
+  Series A 241~(1226) (1957) 376--396.
+\newblock \href {https://doi.org/10.1098/rspa.1957.0133}
+  {\path{doi:10.1098/rspa.1957.0133}}.
+
+\bibitem{Thompson2022LAMMPS}
+A.~P. Thompson, H.~M. Aktulga, R.~Berger, D.~S. Bolintineanu, W.~M. Brown,
+  P.~S. Crozier, P.~J. in~'t Veld, A.~Kohlmeyer, S.~G. Moore, T.~D. Nguyen,
+  R.~Shan, M.~J. Stevens, J.~Tranchida, C.~Trott, S.~J. Plimpton, {LAMMPS} -- a
+  flexible simulation tool for particle-based materials modeling at the atomic,
+  meso, and continuum scales, Computer Physics Communications 271 (2022)
+  108171.
+\newblock \href {https://doi.org/10.1016/j.cpc.2021.108171}
+  {\path{doi:10.1016/j.cpc.2021.108171}}.
+
+\bibitem{Jelinek2012}
+B.~Jelinek, S.~Groh, M.~F. Horstemeyer, J.~Houze, S.~G. Kim, G.~J. Wagner,
+  A.~Moitra, M.~I. Baskes, Modified embedded atom method potential for {Al},
+  {Si}, {Mg}, {Cu}, and {Fe} alloys, Physical Review B 85~(24) (2012) 245102.
+\newblock \href {https://doi.org/10.1103/PhysRevB.85.245102}
+  {\path{doi:10.1103/PhysRevB.85.245102}}.
+
+\bibitem{Liu2024CIF}
+Y.~Liu, C.~Fan, Z.~Xu, R.~Fu, B.~Wen, L.~Zhang, Structure refinement of
+  monoclinic {Al$_{13}$Fe$_4$}, Metals 14~(4) (2024) 463.
+\newblock \href {https://doi.org/10.3390/met14040463}
+  {\path{doi:10.3390/met14040463}}.
+
+\bibitem{Hall1959}
+R.~C. Hall, Single crystal anisotropy and magnetostriction constants of several
+  ferromagnetic materials including alloys of {NiFe}, {SiFe}, {AlFe}, {CoNi},
+  and {CoFe}, Journal of Applied Physics 30~(6) (1959) 816--819.
+\newblock \href {https://doi.org/10.1063/1.1735247}
+  {\path{doi:10.1063/1.1735247}}.
+
+\bibitem{BormioNunes2012}
+C.~Bormio-Nunes, C.~T. dos Santos, M.~B. de~Souza~Dias, M.~Doerr, S.~Granovsky,
+  M.~Loewenhaupt, Magnetostriction of the polycrystalline {Fe$_{80}$Al$_{20}$}
+  alloy doped with boron, Journal of Alloys and Compounds 539 (2012) 226--232.
+\newblock \href {https://doi.org/10.1016/j.jallcom.2012.06.034}
+  {\path{doi:10.1016/j.jallcom.2012.06.034}}.
+
+\bibitem{Stukowski2012DXA}
+A.~Stukowski, V.~V. Bulatov, A.~Arsenlis, Automated identification and indexing
+  of dislocations in crystal interfaces, Modelling and Simulation in Materials
+  Science and Engineering 20~(8) (2012) 085007.
+\newblock \href {https://doi.org/10.1088/0965-0393/20/8/085007}
+  {\path{doi:10.1088/0965-0393/20/8/085007}}.
+
+\bibitem{Stukowski2010OVITO}
+A.~Stukowski, Visualization and analysis of atomistic simulation data with
+  {OVITO} -- the {O}pen {V}isualization {T}ool, Modelling and Simulation in
+  Materials Science and Engineering 18~(1) (2010) 015012.
+\newblock \href {https://doi.org/10.1088/0965-0393/18/1/015012}
+  {\path{doi:10.1088/0965-0393/18/1/015012}}.
+
+\bibitem{Labusch1970}
+R.~Labusch, A statistical theory of solid solution hardening, Physica Status
+  Solidi (b) 41~(2) (1970) 659--669.
+\newblock \href {https://doi.org/10.1002/pssb.19700410221}
+  {\path{doi:10.1002/pssb.19700410221}}.
+
+\bibitem{Leyson2010}
+G.~P.~M. Leyson, W.~A. Curtin, L.~G. Hector, C.~F. Woodward, Quantitative
+  prediction of solute strengthening in aluminium alloys, Nature Materials 9
+  (2010) 750--755.
+\newblock \href {https://doi.org/10.1038/nmat2813}
+  {\path{doi:10.1038/nmat2813}}.
+
+\bibitem{Soula2022JALCOM}
+A.~Soula, J.-P. Couzini{\'e}, H.~Heni, J.~Bourgon, Y.~Champion, N.~Njah,
+  Activation volume and the role of solute atoms in {Al-Mg-Si} alloy processed
+  by equal channel angular extrusion, Journal of Alloys and Compounds 899
+  (2022) 163334.
+\newblock \href {https://doi.org/10.1016/j.jallcom.2021.163334}
+  {\path{doi:10.1016/j.jallcom.2021.163334}}.
+
+\bibitem{CaillardMartin2003}
+D.~Caillard, J.-L. Martin, Thermally Activated Mechanisms in Crystal
+  Plasticity, Vol.~8, 2003, pergamon, Oxford.
+
+\bibitem{Avers2025Crystals}
+K.~E. Avers, J.~A. Horn, R.~Kumar, S.~R. Saha, P.~Zavalij, Y.~Xu, B.~A.
+  Bernevig, J.~Paglione, Dilute paramagnetism and non-trivial topology in
+  quasicrystal approximant {Fe$_4$Al$_{13}$}, Crystals 15~(5) (2025) 485.
+\newblock \href {https://doi.org/10.3390/cryst15050485}
+  {\path{doi:10.3390/cryst15050485}}.
+
+\bibitem{Albedah2015Mossbauer}
+M.~A. Albedah, F.~Nejadsattari, Z.~M. Stadnik, J.~Przewo{\'z}nik, {$^{57}$Fe}
+  {M}{\"o}ssbauer spectroscopy and magnetic study of {Al$_{13}$Fe$_4$}, Journal
+  of Alloys and Compounds 619 (2015) 839--845.
+\newblock \href {https://doi.org/10.1016/j.jallcom.2014.08.225}
+  {\path{doi:10.1016/j.jallcom.2014.08.225}}.
+
+\end{thebibliography}

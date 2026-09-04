@@ -1,0 +1,65 @@
+{
+ "RIDGE_PEAK": "15",
+ "RIDGE_WIDTHAVG": "5.0",
+ "FAR": "$2.5\\pm0.5$",
+ "DECAY": "82",
+ "ETA_HELD": "$0.97\\pm0.00$",
+ "ETA_FREE": "$0.20\\pm0.11$",
+ "ENH_RIDGE_50": "0.042",
+ "ENH_RIDGE_70": "0.16",
+ "VSTAR_LO": "30",
+ "VSTAR_HI": "75",
+ "BOW_RIDGE": "0.49",
+ "RATIO_SPHERE_RIDGE": "2.7",
+ "CONT_RIDGE": "1.8",
+ "RIDGE_PEAK_RU": "15",
+ "RIDGE_WIDTHAVG_RU": "5{,}0",
+ "FAR_RU": "$2{,}5\\pm0{,}5$",
+ "ETA_HELD_RU": "$0{,}97\\pm0{,}00$",
+ "ETA_FREE_RU": "$0{,}20\\pm0{,}11$",
+ "ENH_RIDGE_50_RU": "0{,}042",
+ "ENH_RIDGE_70_RU": "0{,}16",
+ "BOW_RIDGE_RU": "0{,}49",
+ "RATIO_SPHERE_RIDGE_RU": "2{,}7",
+ "CONT_RIDGE_RU": "1{,}8",
+ "_meta": {
+  "peak_r_A": 42.0,
+  "peak_on_axis_MPa": 15.451,
+  "peak_width_avg_MPa": 5.042,
+  "far_field": [
+   2.477,
+   0.543
+  ],
+  "decay_r_A": 102.0,
+  "eta_held": [
+   0.97,
+   0.0
+  ],
+  "eta_free": [
+   0.2,
+   0.11
+  ],
+  "enh_ridge": {
+   "19": 0.003685879253647435,
+   "30": 0.01037463072220671,
+   "50": 0.04241983441812004,
+   "70": 0.15566841272268786,
+   "100": 1.2497652895840548,
+   "142": 30.600377231178843
+  },
+  "vstar_for_0.25": {
+   "sphere_41MPa": 28.736675916917285,
+   "ridge": 77.09114081653104
+  },
+  "bow_out_um": 0.49117015079930104,
+  "continuum_ridge_at_same_d": {
+   "d_A": 22.0,
+   "window_20A_MPa": 1.788,
+   "on_axis_MPa": 2.026,
+   "rigid_factor": 1.62,
+   "window_20A_rigid_MPa": 2.89656
+  },
+  "g10_label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2); profile to 20 A below the free surface",
+  "g10_cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes"
+ }
+}

@@ -70,9 +70,14 @@ docs/paper/revise_*.py
 docs/paper/apply_fixes.py
 docs/paper/fix_units.py
 docs/paper/make_pdf.py
-# Superseded reading copies and regenerable packaging.
-docs/paper/manuscript_en.pdf
-docs/paper/manuscript_ru.pdf
+# Superseded reading copies and regenerable packaging. The two current reading
+# copies (manuscript_en.pdf, manuscript_ru.pdf) ARE published; the Word and
+# Overleaf exports are not - make_docx.py and a zip of the tracked files
+# reproduce them in seconds.
+docs/paper/main_en_compiled.pdf
+docs/paper/main_ru_compiled.pdf
+docs/paper/manuscript_en_v2.pdf
+docs/paper/manuscript_ru_v2.pdf
 docs/paper/manuscript_*_editable.docx
 docs/paper/overleaf_*.zip
 docs/paper/*.spl
@@ -93,7 +98,19 @@ docs/reports/pdf/stageF_pdf_*
 potentials/**/*.tar.gz
 
 # ------------------------------------------------------------- the manuscript
-# Held back until co-author review is finished and the paper is submitted. It
-# lands here as its own commit at that point, together with the audit that
-# checks its every number against docs/reports/.
-docs/paper/
+# Published as of the third revision round (4 Sept 2026): sources, figures,
+# both reading copies and the drafting apparatus. What stays out is the LaTeX
+# build detritus, the spliced intermediates (splice_drafts.py rebuilds
+# main_v2.tex / main_ru_v2.tex from main.tex and _drafts/ in one command) and
+# the Word/Overleaf exports listed above.
+docs/paper/*.aux
+docs/paper/*.log
+docs/paper/*.out
+docs/paper/*.blg
+docs/paper/*.toc
+docs/paper/main_v2.tex
+docs/paper/main_ru_v2.tex
+docs/paper/_docx_build/
+# Stage B session material that happens to sit in this directory; it has
+# nothing to do with the manuscript.
+docs/paper/visualization_event_pipeline.md

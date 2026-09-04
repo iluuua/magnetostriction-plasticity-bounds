@@ -1,0 +1,65 @@
+\section{Introduction}
+\label{sec:intro}
+
+Weak magnetic fields, whose energy per atom is negligible compared with the
+thermal energy $kT$, nevertheless change the plasticity of nonmagnetic
+crystals; the broad class of such observations is known as the magnetoplastic
+effect \cite{Alshits2003,Molotskii2000}. Aluminum alloys with Fe-bearing
+inclusions occupy a special place in this class because, if such an inclusion
+is ferromagnetic, they offer a seemingly straightforward mechanical route from
+the field to plastic flow: the field magnetizes the inclusion;
+magnetostriction---the change of shape that a magnetized body
+undergoes---strains it; and the stress caused by the mismatch between the
+strained inclusion and the surrounding matrix is transferred to the matrix.
+Whether the inclusions in these alloys are in fact ferromagnetic is considered
+in Section~\ref{sec:phase}. A series of experiments on a commercial
+Al--Mg--Si alloy with iron-bearing microinclusions has documented the effect
+in detail: a 30~min exposure to $B=0.4$--$0.7$~T, applied \emph{before}
+mechanical testing, increases the subsequent room-temperature creep
+strain---the slow deformation under a constant load---at 160~MPa by roughly a
+quarter, increases the heat release during deformation several-fold, and
+shifts the Taylor--Quinney coefficient, the fraction of the work of plastic
+deformation that is released as heat, from 0.07 to 0.25
+\cite{Skvortsov2019JAP,Skvortsov2019PSS,Friha2024JMMM,Nikolaev2025SciRep}.
+Because the effect remains after the field is removed, it has been described
+as ``magnetic memory'' in plasticity \cite{Skvortsov2019PSS}.
+
+The interpretation advanced in these works rests on a single estimate. The
+stress at the inclusion--matrix interface produced by magnetostriction of the
+inclusion, obtained from the field strength through an empirical
+proportionality coefficient, is put at about 147~MPa for $B=0.7$~T
+\cite{Friha2024JMMM}. This exceeds the 120~MPa yield stress of the matrix,
+and the conclusion drawn is that the matrix around every inclusion is
+plastically deformed and its density of dislocations---the line defects of
+the crystal lattice whose motion produces plastic flow---is raised. This chain
+of reasoning has never been examined at the scale on which it is supposed to
+act. Whether a stress of this magnitude actually appears in the matrix, over
+what distance from the interface it persists, and whether it is capable of
+nucleating dislocations or of setting existing ones in motion are questions
+about {\aa}ngstr{\"o}ms and picoseconds---the native domain of classical
+molecular dynamics (MD), in which the atoms move according to Newton's
+equations under forces derived from an interatomic potential.
+
+In the present work the magnetostrictive mechanism is subjected to a
+quantitative atomistic test at the interface between aluminum and the
+intermetallic compound Al$_{13}$Fe$_4$. A magnetic field has no direct
+representation in classical MD, so its action is represented mechanically:
+based on the earlier experimental work \cite{Friha2024JMMM}, the inclusion
+is taken to elongate along the field direction by
+$\varepsilon=1.94\times10^{-3}$ (0.194\%) at constant volume, the strain
+corresponding to the 147~MPa interface stress estimated there. A direct
+reproduction of the macroscopic effect in a simulation cell is not attempted;
+the reason is set out in Section~\ref{sec:discussion}. Instead, each link of
+the proposed chain is examined separately. The following quantities are
+computed: the stress field that the elongated inclusion creates in the matrix
+and its decay with distance from the interface; the applied shear stress at
+which a dislocation already present in the matrix starts to move, and that
+and whether new dislocations are nucleated at the interface up to the highest stress applied; and the resistance
+that Mg and Si solute atoms dissolved in the aluminum oppose to dislocation
+motion. The chain is then closed from the opposite end: a two-scale estimate
+gives the interface stress that the measured 25\% creep enhancement
+\emph{requires}, assuming thermally activated glide---dislocation motion in
+which obstacles are overcome with the help of thermal fluctuations, so that
+the glide rate depends exponentially on the stress---and the decay as
+$r^{-3}$ of the elastic field outside a strained inclusion
+\cite{Eshelby1957}.
