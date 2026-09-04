@@ -1,0 +1,93 @@
+{
+  "run_dir": "runs\\stageG15_unified\\20260904-021832-814770_held",
+  "cases_analyzed": [
+    "G15_ctl",
+    "G15_fld"
+  ],
+  "created_at": "2026-09-04T11:36:45+03:00",
+  "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
+  "cases": {
+    "G15_ctl": {
+      "case": "G15_ctl",
+      "sigma_s_A": 9.163175957401526,
+      "threshold_A": 54.97905574440915,
+      "baseline_fit": {
+        "slope_A_per_step": 0.0025058124352093595,
+        "intercept_A": 40.02744081798993
+      },
+      "per_line": {
+        "plus": {
+          "x_at_start_A": 144.31934075413253,
+          "displacement_in_first_6ps_A": 0.4252322384678564,
+          "baseline_sigma_A": 5.368870163443695,
+          "threshold_A": 32.21322098066217,
+          "baseline_slope_A_per_step": 0.0015344953632570257,
+          "onset": {
+            "step": 40000,
+            "tau_nominal_MPa": 122.72727272727272,
+            "x_A": 164.64363339058167,
+            "dev_A": -34.82478472249932
+          },
+          "line_gone_at_step": 10000
+        },
+        "minus": {
+          "x_at_start_A": 117.93790432386886,
+          "displacement_in_first_6ps_A": -31.037213438500373,
+          "baseline_sigma_A": 3.891863684710139,
+          "threshold_A": 23.351182108260836,
+          "baseline_slope_A_per_step": -0.00018073708518659957,
+          "onset": {
+            "step": 38000,
+            "tau_nominal_MPa": 113.63636363636363,
+            "x_A": 43.13971954356283,
+            "dev_A": -36.31422125829407
+          },
+          "line_gone_at_step": null
+        }
+      },
+      "onset": null,
+      "csv": "docs\\reports\\stageG2_depinning_G15_ctl_G15held.csv"
+    },
+    "G15_fld": {
+      "case": "G15_fld",
+      "sigma_s_A": 4.698045307843722,
+      "threshold_A": 28.18827184706233,
+      "baseline_fit": {
+        "slope_A_per_step": 0.003597531878780957,
+        "intercept_A": 35.33117810369939
+      },
+      "per_line": {
+        "plus": {
+          "x_at_start_A": 144.27886413772552,
+          "displacement_in_first_6ps_A": -2.7258637596760025,
+          "baseline_sigma_A": 2.938519095320084,
+          "threshold_A": 17.631114571920506,
+          "baseline_slope_A_per_step": 0.002108185124404077,
+          "onset": {
+            "step": 28000,
+            "tau_nominal_MPa": 68.18181818181817,
+            "x_A": 163.52370313460946,
+            "dev_A": -25.516676961865528
+          },
+          "line_gone_at_step": 10000
+        },
+        "minus": {
+          "x_at_start_A": 116.98664895090319,
+          "displacement_in_first_6ps_A": -33.244305657584206,
+          "baseline_sigma_A": 3.504582873948051,
+          "threshold_A": 21.027497243688305,
+          "baseline_slope_A_per_step": -0.0007936668094684216,
+          "onset": {
+            "step": 40000,
+            "tau_nominal_MPa": 122.72727272727272,
+            "x_A": 32.19339123000514,
+            "dev_A": -21.603431961342203
+          },
+          "line_gone_at_step": 44000
+        }
+      },
+      "onset": null,
+      "csv": "docs\\reports\\stageG2_depinning_G15_fld_G15held.csv"
+    }
+  }
+}
