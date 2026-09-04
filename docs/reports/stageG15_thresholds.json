@@ -1,0 +1,11 @@
+{
+ "pair_lower_onset_MPa": {
+  "ctl": [
+   95,
+   105
+  ]
+ },
+ "nucleation_MPa": null,
+ "ramp_max_MPa": 400,
+ "note": "untethered control ramp of the unified loaded cell (stageG2_depinning_summary_G15ctl_free.json); tethered pair: no resolvable difference between strained and unstrained"
+}

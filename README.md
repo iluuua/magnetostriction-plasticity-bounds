@@ -1,25 +1,31 @@
 # Atomistic bounds on the magnetostrictive mechanism in Al–Mg–Si
 
 Molecular-dynamics test of a specific published claim: that pre-exposing an
-Al–Mg–Si alloy containing Fe-bearing inclusions to a static 0.7 T field raises
+Al–Mg–Si alloy containing Al₁₃Fe₄ inclusions to a static 0.7 T field raises
 its subsequent room-temperature creep by about 25% because magnetostriction of
 the inclusion generates ≈147 MPa at the interface — above the 120 MPa yield
 stress of the matrix — and plastifies the surrounding aluminium.
 
-The claim does not survive the test. This repository holds the calculations that
-establish that and the analysis code that turns them into numbers. The manuscript
-built from them is still in co-author review and is added here on submission.
+This repository holds the calculations and the analysis code that turn them
+into numbers. The manuscript built from them is in co-author review and is
+added on submission.
 
-**The short version.** A magnetic field cannot be simulated in classical MD, so
-its effect enters as a volume-preserving affine strain applied to the inclusion
-before an unconstrained minimisation. At an amplitude 19–97× larger than any
-magnetostriction measured in Fe–Al, the resolved shear stress this produces in
-the matrix peaks at **6.3 MPa**, and beyond 60 Å from the interface its mean is
-0.5 ± 0.6 MPa. The same cells, loaded in applied shear, place dislocation
-activity at **77–86 MPa** (dipole motion), **≈195 MPa** (heterogeneous
-nucleation at the interface) and **≥75 MPa** (depinning from a random Mg/Si
-solute configuration). The field-induced stress falls one to two orders of
-magnitude short of every threshold it would have to cross.
+**The short version.** A magnetic field cannot be simulated in classical MD.
+The inclusion is therefore elongated along the field by 0.194 % — the strain
+that corresponds to the 147 MPa estimate — and held at that strain while the
+matrix relaxes; the stress field is the difference between that cell and an
+identical control. In one 91,428-atom cell (Al/Al₁₃Fe₄ interface with a
+half-elliptical ridge) the resolved shear stress in the matrix is **15 MPa**
+directly above the inclusion, decays to the far-field level within 80 Å,
+and averages 5 MPa over the cell width; the analytical sphere held at the same
+strain gives 41 MPa at its surface. The same cell, loaded in applied shear,
+tears a pre-existing dislocation pair apart at **95--105 MPa** (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa);
+a random Mg/Si configuration pins a dislocation through **≥75 MPa**. The field of the strained ridge at the pair's position is 5–10 MPa, below the 9 MPa frame resolution of the ramp.
+A two-scale estimate with the alloy's inclusion fraction reproduces the measured
++25 % creep for activation volumes of 30–75 b³ **if** the
+inclusions really strain by 0.194 % — the magnetostriction measured for bulk
+Fe–Al alloys is twenty times smaller, and the 30-minute field-off memory is not
+an elastic effect.
 
 ---
 
@@ -27,39 +33,43 @@ magnitude short of every threshold it would have to cross.
 
 | Quantity | Value | Where it comes from |
 |---|---|---|
-| Peak resolved shear from the strain surrogate | 6.3 MPa at *r* = 30 Å | `stageG10_field_profile.py` |
-| Noise floor, mean over *r* ≥ 60 Å | 0.5 ± 0.6 MPa | same |
-| Fraction of the imposed distortion that survives minimisation | η = 0.30 ± 0.10 | `stageG12_eigenstrain_retention.py` |
-| Maintained-eigenstrain amplitude at λ<sub>s</sub> = 100 ppm | ≤ 2.4 MPa | `stageG8_eshelby3d.py` |
-| Generous analytical scale 2μ<sub>Al</sub>λ<sub>s</sub> | ≤ 5.3 MPa | analytic |
-| Onset of dipole motion | 77–86 MPa applied shear | Stage G1/G6 |
-| Heterogeneous nucleation at the interface | ≈195 MPa applied shear | Stage G1 |
+| Resolved shear stress above the held ridge (on its axis) | 15 MPa at 22 Å above the crest, 11–15 MPa out to 30 Å | `stageG10_field_profile.py` |
+| Same, averaged over the cell width | 5.0 MPa peak | same |
+| Far-field level beyond 60 Å (resolution of the minimisation) | 2.5 ± 0.5 MPa | same |
+| Fraction of the imposed strain the held ridge retains | 0.97 ± 0.01 (free ridge: 0.2–0.4) | `stageG12_eigenstrain_retention.py` |
+| Eshelby sphere held at 0.194 % | 41 MPa at its surface, ∝ r⁻³ outside | `stageG8_eshelby3d.py` |
+| 2D continuum solution for the ridge alone | 20 MPa at the surface, 5 MPa at 10 Å | `stageG17_ridge_continuum.py` |
+| Onset of motion of the pre-existing pair (lower partner) | 95--105 MPa applied shear (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa) | `stageG2_depinning.py` on stage G15 |
+| Heterogeneous nucleation at the interface | none up to 400 MPa (end of ramp) | same |
 | Solute pinning bound | ≥ 75 MPa | `stageG7_pinning_stats.py` |
-| Stress the measured +25% creep actually requires | 8.7–65.2 MPa | `stageG5_two_scale_bridge.py` |
-| What 147 MPa would predict instead | 2.2 × 10³ × the observed effect | same |
+| Stress the measured +25 % creep requires (f = 0.00246) | 8.4–62.7 MPa for V* = 19–142 b³ | `stageG5_two_scale_bridge.py` |
+| What the computed 41 / 15 MPa predict | +25 % at V* ≈ 30 / 75 b³ | same |
+| What 147 MPa would predict instead | ≥ 2.7 × 10³ × the observed effect | same |
 
-Three stresses are kept apart throughout and should not be conflated: the
-**147 MPa** interface estimate from the experimental papers, the **≤5.3 MPa**
-elastic scale that real Fe–Al magnetostriction can supply, and the **6.3 MPa**
-relaxed response of the MD surrogate at a deliberately inflated amplitude.
+Three stresses are kept apart throughout: the **147 MPa** interface estimate
+of the experimental papers (E·ε of a rod, not of an embedded inclusion), the
+**41 MPa** of a compact particle held at that strain, and the **15 MPa**
+measured above the atomistic ridge held at the same strain.
 
 ## Reproducing the published numbers
 
 The two minimised interface cells that every stress number is measured from are
-in `data/stageG4_clean/` (gzipped, ~2 MB each). Nothing else is needed:
+in `data/stageG4_clean/` (gzipped LAMMPS dumps, ~4 MB each: the control and the
+cell with the ridge held at 0.194 %, built from the same relaxed control).
+Nothing else is needed for the stress field:
 
 ```bash
-python analysis/python/stageG10_field_profile.py        # Fig. 1, the σ(r) profile
-python analysis/python/stageG12_eigenstrain_retention.py # Table 1, retained strain
-python analysis/python/stageG8_eshelby3d.py             # the analytic 3D comparison
-python analysis/python/stageG5_two_scale_bridge.py      # Table 2, the two-scale bridge
-python analysis/python/stageG11_figures.py              # all three figures
+python analysis/python/stageG10_field_profile.py --r-max 110   # Fig. 3, the σ(r) profile
+python analysis/python/stageG12_eigenstrain_retention.py       # retained strain
+python analysis/python/stageG8_eshelby3d.py                    # the analytical sphere
+python analysis/python/stageG17_ridge_continuum.py             # the 2D ridge solution
+python analysis/python/stageG5_two_scale_bridge.py             # Table 2, the two-scale estimate
+python analysis/python/stageG11_figures.py                     # Figs. 3-5
 ```
 
 Each script writes a JSON record into `docs/reports/`, and the figures are drawn
-from those records rather than from anything held in a notebook. A companion
-check re-derives every number quoted in the manuscript from the same records and
-fails if the two disagree; it ships with the manuscript.
+from those records. The loaded-cell trajectories (stages G15/G16, ~400 MB each)
+are not in the repository; their records are.
 
 ## Layout
 
@@ -160,15 +170,20 @@ Moscow Polytechnic University.
 
 ### Кратко по-русски
 
-Проверка методами молекулярной динамики конкретного published-утверждения: что
-выдержка сплава Al–Mg–Si с железосодержащими включениями в поле 0,7 Тл повышает
-последующую ползучесть на ~25%, поскольку магнитострикция включения создаёт на
-границе ≈147 МПа. Утверждение проверки не выдерживает: при амплитуде, в 19–97
-раз завышенной относительно измеренной магнитострикции Fe–Al, разрешённое
-касательное напряжение достигает лишь 6,3 МПа, тогда как дислокационный отклик в
-тех же ячейках начинается с 75–195 МПа. Двухмасштабная оценка показывает, что
-эксперименту требуется 8,7–65,2 МПа, а заявленные 147 МПа предсказали бы эффект
-в 2,2·10³ раза больше наблюдаемого.
+Проверка методами молекулярной динамики конкретного опубликованного
+утверждения: что выдержка сплава Al–Mg–Si с включениями Al₁₃Fe₄ в поле 0,7 Тл
+повышает последующую ползучесть на ~25 %, поскольку магнитострикция включения
+создаёт на границе ≈147 МПа. Включение удлинено вдоль поля на 0,194 % —
+деформация, отвечающая этой оценке, — и удерживается при ней. В единой ячейке
+из 91 428 атомов разрешённое касательное напряжение над включением составляет
+15 МПа и спадает до уровня дальнего поля в пределах 80 Å (в среднем по
+ширине ячейки — 5 МПа); аналитическая сфера при той же деформации даёт 41 МПа.
+Существующая пара дислокаций разрывается при 95--105 МПа приложенного
+сдвига (включение свободно релаксирует; при жёстко удерживаемом включении пара неустойчива уже при нулевом напряжении, и ячейки с деформацией и без совпадают в пределах одного кадра, 9 МПа); примеси Mg/Si удерживают дислокацию до 75 МПа. Поле деформированного гребня в позиции пары — 5–10 МПа, ниже разрешения рампы в 9 МПа.
+Двухмасштабная оценка воспроизводит наблюдаемые +25 % при V* = 30–75 b³,
+если включения действительно деформируются на 0,194 %; измеренная
+магнитострикция Fe–Al в двадцать раз меньше, а 30-минутная память после
+снятия поля упругим механизмом не объясняется.
 
 Рукопись готовится и будет добавлена сюда после вычитки соавторами и подачи.
 Пока репозиторий — это расчётная запись: всё, что статья утверждает, считается
