@@ -166,7 +166,7 @@ def main() -> int:
     res = {
         "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "supersedes": ["stageG4_rss_profile.json", "stageG4_clean_sigma_profile.csv"],
-        "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, "
+        "cell": "Al matrix + Al13Fe4 ridge, unified cell of 91428 atoms (perturbation pair), CG minimisation only, "
                 "no dislocations, no solutes",
         "atom_filter": "Al only (type 1); Fe excluded",
         "bin_A": BIN,

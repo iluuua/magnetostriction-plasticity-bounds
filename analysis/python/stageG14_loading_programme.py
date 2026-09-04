@@ -15,9 +15,9 @@ PAPER = Path(__file__).resolve().parents[2] / "docs" / "paper"
 L = {"en": dict(x="time (ps)", y="applied shear stress (MPa)",
                 a="(a) interface cell with the dislocation pair: ramp to 400 MPa",
                 b="(b) alloy cell: constant-stress steps"),
-     "ru": dict(x="время, пс", y="приложенное касательное напряжение, МПа",
-                a="(а) ячейка границы с парой дислокаций: рост до 400 МПа",
-                b="(б) ячейка сплава: ступени постоянного напряжения")}
+     "ru": dict(x="время, пс", y="касательное напряжение, МПа",
+                a="(а) ячейка границы: рост до 400 МПа",
+                b="(б) ячейка сплава: ступени напряжения")}
 
 
 def ramp(t_ps, taumax=400.0, pre=5.0, nramp=96.0, ts=16.0):
@@ -48,7 +48,7 @@ def main():
             ax.tick_params(labelsize=8); ax.grid(alpha=0.3)
         fig.tight_layout()
         for ext in ("png", "pdf"):
-            fig.savefig(PAPER / f"fig_loading_programme_{lg}.{ext}", dpi=150)
+            fig.savefig(PAPER / f"fig_loading_programme_{lg}.{ext}", dpi=150, bbox_inches="tight")
         plt.close(fig)
         print("fig_loading_programme_%s written" % lg)
 

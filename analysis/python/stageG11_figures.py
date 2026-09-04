@@ -77,7 +77,7 @@ L = {
     "ru": dict(
         f1title="Напряжение в матрице Al в зависимости от расстояния от границы с Al$_{13}$Fe$_4$",
         f1y1="напряжение фон Мизеса, МПа",
-        f1y2="разность напряжений, деформированная минус контрольная, МПа",
+        f1y2="разность напряжений, МПа",
         f1x="расстояние от плоскости границы, $r$ (Å)",
         ctl="контрольная ячейка (включение не деформировано)",
         fld="включение удлинено на 0,194 %, деформация удерживается",
@@ -95,7 +95,7 @@ L = {
         noload="без нагрузки", mpa="МПа",
         f3title="Напряжение от деформированного включения\nи напряжения отклика дислокаций",
         f3x="расстояние от ближайшей поверхности включения, $d$ (Å)",
-        f3y="касательное напряжение в наиболее благоприятной системе, RSS$_{\\max}$, МПа",
+        f3y="RSS$_{\\max}$, МПа",
         md="ячейка границы (МД), среднее по ширине ячейки",
         md_axis="ячейка границы (МД), в пределах 10 Å от оси гребня",
         esh="аналитическая сфера, удерживаемая при 0,194 %",
@@ -155,7 +155,7 @@ def fig_sigma(lang: str) -> None:
             fontsize=8.2, color="#c07000", ha="left", va="bottom")
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(PAPER / ("fig_sigma_profile_%s.%s" % (lang, ext)), dpi=150)
+        fig.savefig(PAPER / ("fig_sigma_profile_%s.%s" % (lang, ext)), dpi=150, bbox_inches="tight")
     plt.close(fig)
     print("fig_sigma_profile_%s written" % lang)
 
@@ -199,7 +199,7 @@ def fig_traj(lang: str) -> None:
     ax.grid(alpha=0.3)
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(PAPER / ("fig_trajectories_%s.%s" % (lang, ext)), dpi=150)
+        fig.savefig(PAPER / ("fig_trajectories_%s.%s" % (lang, ext)), dpi=150, bbox_inches="tight")
     plt.close(fig)
     print("fig_trajectories_%s written" % lang)
 
@@ -255,7 +255,7 @@ def fig_rss(lang: str) -> None:
     ax.grid(alpha=0.3, which="both")
     fig.tight_layout()
     for ext in ("png", "pdf"):
-        fig.savefig(PAPER / ("fig_rss_vs_thresholds_%s.%s" % (lang, ext)), dpi=150)
+        fig.savefig(PAPER / ("fig_rss_vs_thresholds_%s.%s" % (lang, ext)), dpi=150, bbox_inches="tight")
     plt.close(fig)
     print("fig_rss_vs_thresholds_%s written" % lang)
 

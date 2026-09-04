@@ -1,0 +1,43 @@
+{
+ "created_at": "2026-09-04T09:30:00+03:00",
+ "source": "held perturbation pair of the unified cell (data/stageG4_clean); difference field fld_held - ctl_held, Al atoms",
+ "convention": "pressure-positive (negative = tension); sign opposite to the LAMMPS virial",
+ "windows": {
+  "lower_plus_b_partner": {
+   "centre_A": [
+    139.32,
+    49.23
+   ],
+   "box_10x6_A": {
+    "n": 910,
+    "d_sigma_xz_MPa": 5.01
+   },
+   "box_25x11_A": {
+    "n": 3342,
+    "d_sigma_xz_MPa": 9.53
+   }
+  },
+  "upper_minus_b_partner": {
+   "centre_A": [
+    115.92,
+    72.61
+   ],
+   "box_10x6_A": {
+    "n": 910,
+    "d_sigma_xz_MPa": 9.58
+   },
+   "box_25x11_A": {
+    "n": 4095,
+    "d_sigma_xz_MPa": 5.94
+   }
+  },
+  "on_axis_d22_A": {
+   "centre_A": [
+    77.32,
+    62.0
+   ],
+   "d_sigma_xz_MPa": -15.45
+  }
+ },
+ "note": "the field of the held ridge at the initial positions of the dislocation pair of the loaded cell is 5-10 MPa (opposite in sign to the on-axis value); where the upper partner comes to rest after its zero-stress drift (x ~ 84-87, z ~ 72, d ~ 32 A above the crest) the on-axis profile gives 13-14 MPa"
+}

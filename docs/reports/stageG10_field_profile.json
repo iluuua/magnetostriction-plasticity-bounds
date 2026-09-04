@@ -4,7 +4,7 @@
     "stageG4_rss_profile.json",
     "stageG4_clean_sigma_profile.csv"
   ],
-  "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes",
+  "cell": "Al matrix + Al13Fe4 ridge, unified cell of 91428 atoms (perturbation pair), CG minimisation only, no dislocations, no solutes",
   "atom_filter": "Al only (type 1); Fe excluded",
   "bin_A": 4.0,
   "z_interface_A": 20.0,

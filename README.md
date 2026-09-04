@@ -19,8 +19,8 @@ half-elliptical ridge) the resolved shear stress in the matrix is **15 MPa**
 directly above the inclusion, decays to the far-field level within 80 Å,
 and averages 5 MPa over the cell width; the analytical sphere held at the same
 strain gives 41 MPa at its surface. The same cell, loaded in applied shear,
-tears a pre-existing dislocation pair apart at **95--105 MPa** (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa);
-a random Mg/Si configuration pins a dislocation through **≥75 MPa**. The field of the strained ridge at the pair's position is 5–10 MPa, below the 9 MPa frame resolution of the ramp.
+tears a pre-existing dislocation pair apart at **95–105 MPa** (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa);
+a random Mg/Si configuration pins a dislocation through **≥75 MPa**. The field of the strained ridge where the pair sits is 5–14 MPa, comparable with the 9 MPa frame resolution of the ramp, so no shift of the onset is resolvable.
 A two-scale estimate with the alloy's inclusion fraction reproduces the measured
 +25 % creep for activation volumes of 30–75 b³ **if** the
 inclusions really strain by 0.194 % — the magnetostriction measured for bulk
@@ -39,7 +39,7 @@ an elastic effect.
 | Fraction of the imposed strain the held ridge retains | 0.97 ± 0.01 (free ridge: 0.2–0.4) | `stageG12_eigenstrain_retention.py` |
 | Eshelby sphere held at 0.194 % | 41 MPa at its surface, ∝ r⁻³ outside | `stageG8_eshelby3d.py` |
 | 2D continuum solution for the ridge alone | 20 MPa at the surface, 5 MPa at 10 Å | `stageG17_ridge_continuum.py` |
-| Onset of motion of the pre-existing pair (lower partner) | 95--105 MPa applied shear (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa) | `stageG2_depinning.py` on stage G15 |
+| Onset of motion of the pre-existing pair (lower partner) | 95–105 MPa applied shear (inclusion free to relax; with the inclusion held rigid the pair is not stable even at zero stress, and strained and unstrained cells then coincide within one frame, 9 MPa) | `stageG2_depinning.py` on stage G15 |
 | Heterogeneous nucleation at the interface | none up to 400 MPa (end of ramp) | same |
 | Solute pinning bound | ≥ 75 MPa | `stageG7_pinning_stats.py` |
 | Stress the measured +25 % creep requires (f = 0.00246) | 8.4–62.7 MPa for V* = 19–142 b³ | `stageG5_two_scale_bridge.py` |
@@ -68,8 +68,9 @@ python analysis/python/stageG11_figures.py                     # Figs. 3-5
 ```
 
 Each script writes a JSON record into `docs/reports/`, and the figures are drawn
-from those records. The loaded-cell trajectories (stages G15/G16, ~400 MB each)
-are not in the repository; their records are.
+from those records. The loaded-cell trajectories (stage G15, three ramps, 180–400 MB each) are
+not in the repository; their records are (`stageG2_depinning_summary_G15ctl_free.json`,
+`stageG2_depinning_summary_G15held.json` and the per-frame CSVs).
 
 ## Layout
 
@@ -151,15 +152,17 @@ through co-author review and submitted. Until then this repository is the
 calculation record: everything the paper will assert can be recomputed from what
 is here.
 
-The conclusion it will carry is a refutation with a constructive remainder. The
-direct elastic magnetostrictive mechanism is quantitatively unsupported. But the
-stress the experiment actually requires, 8.7–65.2 MPa, is the same order as what
-real magnetostriction supplies — so if the effect is real it acts by lowering a
-thermally activated barrier, not by exceeding a yield stress. Two open problems
-remain: Al₁₃Fe₄ as identified is a dilute paramagnet and cannot carry Joule
-magnetostriction at all, so the magnetic phase needs identifying; and the
-30-minute field-off protocol is a *memory*, which points to a slow diffusional
-channel these calculations do not test.
+The conclusion it carries is conditional. The stress the experiment requires,
+8.4–62.7 MPa at the inclusion surface for activation volumes of 19–142 b³, is
+reproduced by the computed 15–41 MPa for V* = 30–75 b³ — a range that contains
+the value measured for Al–Mg–Si — but only if the inclusions really strain by
+0.194 % in the field: the magnetostriction measured for bulk Fe–Al alloys is
+twenty times smaller and would give an enhancement below 0.4 %. Two open
+problems remain: the ferromagnetic constituent of the inclusions has not been
+identified (stoichiometric Al₁₃Fe₄ does not order magnetically), and the
+30-minute field-off protocol is a *memory*, which an elastic stress cannot
+carry; a slow diffusional channel is the remaining candidate and these
+calculations do not test it.
 
 ## Licence and contact
 
@@ -178,8 +181,8 @@ Moscow Polytechnic University.
 из 91 428 атомов разрешённое касательное напряжение над включением составляет
 15 МПа и спадает до уровня дальнего поля в пределах 80 Å (в среднем по
 ширине ячейки — 5 МПа); аналитическая сфера при той же деформации даёт 41 МПа.
-Существующая пара дислокаций разрывается при 95--105 МПа приложенного
-сдвига (включение свободно релаксирует; при жёстко удерживаемом включении пара неустойчива уже при нулевом напряжении, и ячейки с деформацией и без совпадают в пределах одного кадра, 9 МПа); примеси Mg/Si удерживают дислокацию до 75 МПа. Поле деформированного гребня в позиции пары — 5–10 МПа, ниже разрешения рампы в 9 МПа.
+Существующая пара дислокаций разрывается при 95–105 МПа приложенного
+сдвига (включение свободно релаксирует; при жёстко удерживаемом включении пара неустойчива уже при нулевом напряжении, и ячейки с деформацией и без совпадают в пределах одного кадра, 9 МПа); примеси Mg/Si удерживают дислокацию до 75 МПа. Поле деформированного гребня там, где находится пара, — 5–14 МПа, сравнимо с разрешением рампы (9 МПа), поэтому сдвиг порога не разрешается.
 Двухмасштабная оценка воспроизводит наблюдаемые +25 % при V* = 30–75 b³,
 если включения действительно деформируются на 0,194 %; измеренная
 магнитострикция Fe–Al в двадцать раз меньше, а 30-минутная память после
