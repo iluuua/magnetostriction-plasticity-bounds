@@ -188,13 +188,15 @@ def main() -> int:
     if args.label:
         res["label"] = args.label
         res["inputs"] = {"control": args.control, "field": args.field}
-    (Path(args.out) if args.out else REPORTS / "stageG10_field_profile.json").write_text(
-        json.dumps(res, indent=2) + chr(10), encoding="utf-8")
+    out_json = Path(args.out) if args.out else REPORTS / "stageG10_field_profile.json"
+    out_json.write_text(json.dumps(res, indent=2) + chr(10), encoding="utf-8")
 
     keys = ("r_A", "above_apex", "vm_control_MPa", "vm_field_MPa", "vm_of_difference_MPa",
             "diff_of_vm_MPa", "max_RSS_MPa", "system", "d_sigma_xz_MPa", "n_atoms")
     lines = [",".join(keys)] + [",".join(str(r[k]) for k in keys) for r in rows]
-    (REPORTS / "stageG10_field_profile.csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    # the CSV follows --out: writing it to one fixed name let a --out run for a
+    # different cell silently overwrite the CSV belonging to the default record
+    out_json.with_suffix(".csv").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     print("%6s %4s %10s %10s %10s %10s %9s %8s %6s" %
           ("r", "apex", "vM_ctl", "vM_fld", "vM[dT]", "d[vM]", "maxRSS", "d_sxz", "N"))

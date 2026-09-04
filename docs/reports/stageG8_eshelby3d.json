@@ -87,7 +87,7 @@
     "peak_max_RSS": 5.042,
     "at_r_A": 50.0,
     "system": "(111)[1-10]",
-    "cell": "Al matrix + Fe4Al13 ridge, 66698 atoms, CG minimisation only, no dislocations, no solutes",
+    "cell": "Al matrix + Al13Fe4 ridge, unified cell of 91428 atoms (perturbation pair), CG minimisation only, no dislocations, no solutes",
     "label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2); profile to 20 A below the free surface",
     "on_axis_max_abs_d_sigma_xz": 15.45
   },

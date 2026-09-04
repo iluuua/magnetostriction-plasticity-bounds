@@ -126,20 +126,12 @@ if free_axis and max(free_axis) >= 5.0:
 held = rec("stageG12_eigenstrain_retention")
 fre = rec("stageG12_eigenstrain_retention_free")
 frecg = rec("stageG12_eigenstrain_retention_free_cg")
-# the text may round an uncertainty UP but never down, so accept either the
-# record's own two-decimal form or the next centesimal above it
+# the text calls this uncertainty the standard error of the fit, so it must be
+# the standard error the record holds, at the precision the record holds it
 _hse = held["eta_used_for_rescaling_se"]
-_hcands = sorted({g(_hse, 2), g(math.ceil(_hse * 100.0) / 100.0, 2)})
-checks += 1
-if not any(("$%s\\pm%s$" % (g(held["eta_used_for_rescaling"], 2), c)) in EN
-           for c in _hcands):
-    fails.append("retention held                       missing in EN: eta %s +- one of %s"
-                 % (g(held["eta_used_for_rescaling"], 2), _hcands))
-checks += 1
-if not any(("$%s \\pm %s$" % (ru_num(g(held["eta_used_for_rescaling"], 2)), ru_num(c))) in RU
-           for c in _hcands):
-    fails.append("retention held                       missing in RU: eta %s +- one of %s"
-                 % (g(held["eta_used_for_rescaling"], 2), _hcands))
+both("retention held",
+     "$%s\\pm%s$" % (g(held["eta_used_for_rescaling"], 2), g(_hse, 3)),
+     "$%s \\pm %s$" % (ru_num(g(held["eta_used_for_rescaling"], 2)), ru_num(g(_hse, 3))))
 for tag, r in (("free", fre), ("free CG", frecg)):
     both("retention %s" % tag,
          "$%s\\pm%s$" % (g(r["eta_used_for_rescaling"], 2),
