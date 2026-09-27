@@ -60,7 +60,7 @@ trajectory.
 
 | Location | Contents |
 |---|---|
-| `docs/paper/` | Authoritative LaTeX sources, current PDFs, four figures and bibliography |
+| `docs/paper/` | Authoritative LaTeX sources, current PDFs, four figures in both languages and bibliography |
 | `docs/reports/` | Numerical records and per-frame tables used by the paper |
 | `data/stageG4_clean/` | Complete control/strained virial dumps for the static stress calculation |
 | `data/publication/` | Initial/final states, loading logs, G15 positions, complete alloy trajectory and checksums |
@@ -90,6 +90,7 @@ python analysis/python/stageG12_eigenstrain_retention.py
 python analysis/python/stageG8_eshelby3d.py
 python analysis/python/stageG5_two_scale_bridge.py
 python analysis/python/publication_figures.py
+python analysis/python/publication_figures.py --language ru
 python -m pytest tests
 ```
 
@@ -150,5 +151,3 @@ for the parameter source. Cite the scientific sources in `references.bib`
 and identify the repository revision when reusing a calculation.
 
 The manuscripts are research drafts by I. Mikhailovskiy and D. Pshonkin.
-Editorial selection, coauthor approval, funding information and journal-specific
-submission declarations remain the authors' responsibility.

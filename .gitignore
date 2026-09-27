@@ -22,11 +22,9 @@ potentials/**/*.tar.gz
 !data/**/*.gz
 
 # Editor state and local working notes
-/.codex/
-/.firecrawl/
+/.*/
+!/.github/
 /docs/_local/
-agent_report*.md
-prompt*.txt
 *.stackdump
 *.tmp
 *.swp

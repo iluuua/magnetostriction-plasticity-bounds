@@ -5,6 +5,7 @@ Run with the repository's Python environment::
 
     python analysis/python/publication_figures.py
     python analysis/python/publication_figures.py --only field dynamics bridge
+    python analysis/python/publication_figures.py --language ru
 
 Inputs are two archived LAMMPS atomic-style files, their geometry metadata, and
 the G10, G15, G5 and G8 records in docs/reports. Paths can be overridden for
@@ -16,7 +17,8 @@ integral uses SI units internally and returns a fractional rate increase.
 
 Outputs are fig_model.png (600 dpi) and fig_field, fig_dynamics, fig_bridge
 as PDF and PNG (300 dpi). PDF text uses embedded TrueType fonts. No MD,
-record editing, downloads or intermediate image files are required.
+record editing, downloads or intermediate image files are required. Russian
+figures use the same numerical inputs and geometry, with a _ru filename suffix.
 
 The model panels show real atoms in 1 nm central sections of the relaxed
 interface reference and the as-built loaded cell, each containing 91,428
@@ -43,6 +45,7 @@ import csv
 import hashlib
 import json
 import math
+from dataclasses import dataclass
 from pathlib import Path
 
 import matplotlib
@@ -72,6 +75,28 @@ FAULT = "#459E75"
 STEP_PS = 0.001
 PRELOAD_PS = 5.0
 SEAM_MARGIN_A = 15.0
+
+
+@dataclass(frozen=True)
+class FigureLabels:
+    """Choose figure text and filenames without modifying numerical data."""
+
+    language: str
+
+    def __post_init__(self):
+        if self.language not in ("en", "ru"):
+            raise ValueError(f"Unsupported figure language: {self.language}")
+
+    def __call__(self, english: str, russian: str) -> str:
+        return russian if self.language == "ru" else english
+
+    def number(self, value: float, precision: str) -> str:
+        """Apply the decimal separator only to a displayed number."""
+        text = format(value, precision)
+        return text.replace(".", ",") if self.language == "ru" else text
+
+    def stem(self, name: str) -> str:
+        return name + ("_ru" if self.language == "ru" else "")
 
 
 def read_json(path: Path) -> dict:
@@ -226,9 +251,13 @@ def render_atoms(path: Path, meta: dict, loaded: bool) -> tuple:
 
 def figure_model(args) -> None:
     """Two real-coordinate views with boundaries, crystallographic axes and scale."""
+    text = FigureLabels(args.language)
     metas = [read_json(args.interface_metadata), read_json(args.loaded_metadata)]
-    fig, axes = plt.subplots(1, 2, figsize=(7.2, 4.7))
-    fig.subplots_adjust(left=0.005, right=0.995, bottom=0.19, top=0.9, wspace=0.02)
+    russian = args.language == "ru"
+    fig, axes = plt.subplots(1, 2, figsize=(7.2, 5.0 if russian else 4.7))
+    fig.subplots_adjust(
+        left=0.005, right=0.995, bottom=0.26 if russian else 0.19, top=0.9, wspace=0.02
+    )
     for index, (ax, path, meta) in enumerate(
         zip(axes, [args.interface, args.loaded], metas, strict=True)
     ):
@@ -238,8 +267,12 @@ def figure_model(args) -> None:
         ax.set_ylim(extent[2:])
         ax.axis("off")
         ax.set_title(
-            ("(a) Relaxed interface reference" if index == 0 else "(b) As-built loaded cell")
-            + "\n91,428 atoms",
+            (
+                text("(a) Relaxed interface reference", "(а) Релаксированная граница")
+                if index == 0
+                else text("(b) As-built loaded cell", "(б) Исходная ячейка с дислокациями")
+            )
+            + text("\n91,428 atoms", "\n91 428 атомов"),
             fontsize=10,
             pad=7,
         )
@@ -253,7 +286,7 @@ def figure_model(args) -> None:
         ax.text(
             lx / 2,
             0.95,
-            "Fixed base",
+            text("Fixed base", "Закреплённое основание"),
             ha="center",
             fontsize=7.5,
             bbox={"facecolor": "white", "edgecolor": "none", "pad": 1},
@@ -261,14 +294,19 @@ def figure_model(args) -> None:
         ax.text(
             cx,
             10.1,
-            "Al matrix",
+            text("Al matrix", "Матрица Al"),
             ha="center",
             fontsize=9,
             bbox={"facecolor": "white", "edgecolor": "none", "pad": 1.5},
         )
-        note(ax, r"Al$_{13}$Fe$_4$ ridge", (cx, 3.1), (1.0, 5.2))
+        note(ax, text(r"Al$_{13}$Fe$_4$ ridge", r"Выступ Al$_{13}$Fe$_4$"), (cx, 3.1), (1.0, 5.2))
         ax.text(
-            0.1, 15.5, "Free surface / vacuum" if index == 0 else r"Surface shear $+x$", fontsize=8
+            0.1,
+            15.5,
+            text("Free surface / vacuum", "Свободная поверхность / вакуум")
+            if index == 0
+            else text(r"Surface shear $+x$", r"Сдвиг $+x$"),
+            fontsize=8,
         )
         if index:
             for line in projected_lines:
@@ -282,8 +320,20 @@ def figure_model(args) -> None:
             split = float(np.median(centres[:, 2]))
             lower = centres[centres[:, 2] < split].mean(axis=0)
             upper = centres[centres[:, 2] > split].mean(axis=0)
-            note(ax, "Upper partner", (upper[0], upper[2]), (7.8, 8.6), color=BLUE)
-            note(ax, "Lower partner", (lower[0], lower[2]), (10.4, 5.9), color=BLUE)
+            note(
+                ax,
+                text("Upper partner", "Верхняя линия"),
+                (upper[0], upper[2]),
+                (7.8, 8.6),
+                color=BLUE,
+            )
+            note(
+                ax,
+                text("Lower partner", "Нижняя линия"),
+                (lower[0], lower[2]),
+                (10.4, 5.9),
+                color=BLUE,
+            )
         else:
             ax.annotate(
                 "",
@@ -291,49 +341,73 @@ def figure_model(args) -> None:
                 xytext=(cx - 0.5, 2.5),
                 arrowprops={"arrowstyle": "->", "lw": 1.3, "color": TEAL},
             )
-            note(ax, r"Strain axis, $45^\circ$", (cx + 1.1, 4.1), (8.9, 6.1), color=TEAL)
+            note(
+                ax,
+                text(r"Strain axis, $45^\circ$", r"Ось деформации $45^\circ$"),
+                (cx + 1.1, 4.1),
+                (8.9, 6.1),
+                color=TEAL,
+            )
         ax.plot([1, 3], [-0.65, -0.65], color=INK, lw=2.5, solid_capstyle="butt")
-        ax.text(3.35, -0.65, "2 nm", fontsize=8, ha="left", va="center")
-        ax.text(10, -0.7, r"Periodic $x,y$", fontsize=8, ha="center")
+        ax.text(3.35, -0.65, text("2 nm", "2 нм"), fontsize=8, ha="left", va="center")
+        ax.text(10, -0.7, text(r"Periodic $x,y$", r"Периодичность $x,y$"), fontsize=8, ha="center")
     handles = [
         Line2D([], [], marker="o", ls="", color=c, label=t, ms=5)
         for c, t in (
-            (MATRIX, "Matrix Al"),
-            (INCLUSION_AL, "Inclusion Al"),
+            (MATRIX, text("Matrix Al", "Al матрицы")),
+            (INCLUSION_AL, text("Inclusion Al", "Al включения")),
             (IRON, "Fe"),
-            (FAULT, "Stacking fault"),
+            (FAULT, text("Stacking fault", "Дефект упаковки")),
         )
     ]
-    handles.append(Line2D([], [], color=BLUE, label="DXA partial lines", lw=1.2))
+    handles.append(
+        Line2D(
+            [],
+            [],
+            color=BLUE,
+            label=text("DXA partial lines", "Частичные дислокации (DXA)"),
+            lw=1.2,
+        )
+    )
     fig.legend(
         handles=handles,
         loc="lower center",
-        bbox_to_anchor=(0.5, 0.055),
-        ncol=5,
+        bbox_to_anchor=(0.5, 0.1 if russian else 0.055),
+        ncol=3 if russian else 5,
         columnspacing=0.9,
         handletextpad=0.3,
     )
     fig.text(
         0.5,
-        0.045,
-        r"$x\parallel[1\bar{1}0]$ (right)     $y\parallel[11\bar{2}]$ (view direction)"
-        r"     $z\parallel[111]$ (up)",
+        0.08 if russian else 0.045,
+        text(
+            r"$x\parallel[1\bar{1}0]$ (right)     $y\parallel[11\bar{2}]$ (view direction)"
+            r"     $z\parallel[111]$ (up)",
+            r"$x\parallel[1\bar{1}0]$ (вправо)     $y\parallel[11\bar{2}]$ (направление взгляда)"
+            r"     $z\parallel[111]$ (вверх)",
+        ),
         ha="center",
         fontsize=8,
     )
     fig.text(
         0.5,
         0.005,
-        "Central 1 nm atomic section; full periodic thickness 6.45 nm."
-        "  DXA lines from the full loaded cell.",
+        text(
+            "Central 1 nm atomic section; full periodic thickness 6.45 nm."
+            "  DXA lines from the full loaded cell.",
+            "Центральный срез толщиной 1 нм. Полная периодическая толщина 6,45 нм.\n"
+            "Линии дислокаций определены методом DXA по всей ячейке.",
+        ),
         ha="center",
         fontsize=7.5,
     )
-    fig.savefig(args.output / "fig_model.png", dpi=600, bbox_inches="tight", pad_inches=0.07)
+    fig.savefig(
+        args.output / f"{text.stem('fig_model')}.png", dpi=600, bbox_inches="tight", pad_inches=0.07
+    )
     plt.close(fig)
 
 
-def coordinate_diagram(ax, record: dict, meta: dict) -> None:
+def coordinate_diagram(ax, record: dict, meta: dict, text: FigureLabels) -> None:
     """Draw an explicitly labelled coordinate diagram, not an atomistic image."""
     height = (meta["ridge"]["apex_z_A"] - record["z_interface_A"]) / 10
     radius = meta["ridge"]["rx_A"] / 10
@@ -361,22 +435,25 @@ def coordinate_diagram(ax, record: dict, meta: dict) -> None:
         arrowprops={"arrowstyle": "<->", "color": INK, "lw": 0.8},
     )
     ax.text(4.4, 3.2, r"$r$", fontsize=10)
-    ax.text(0, -1.2, "Support layer", ha="center", fontsize=8)
-    ax.text(0, 0.65, "Ridge", ha="center", fontsize=8)
+    ax.text(0, -1.2, text("Support layer", "Подложка"), ha="center", fontsize=8)
+    ax.text(0, 0.65, text("Ridge", "Выступ"), ha="center", fontsize=8)
     ax.text(-4.5, 4.7, "Al", fontsize=9)
-    ax.text(0, 8.1, "2 nm axial window", ha="center", fontsize=8, color=TEAL)
-    ax.text(-4.6, 6.55, "0.4 nm slice", fontsize=7.5, color=BLUE)
+    ax.text(
+        0, 8.1, text("2 nm axial window", "Осевое окно 2 нм"), ha="center", fontsize=8, color=TEAL
+    )
+    ax.text(-4.6, 6.55, text("0.4 nm slice", "Слой 0,4 нм"), fontsize=7.5, color=BLUE)
     ax.set_xlim(-5, 5.4)
     ax.set_ylim(-2, 9)
     ax.set_xticks([-4, 0, 4])
     ax.set_yticks([0, 2, 4, 6, 8])
-    ax.set_xlabel(r"$x-x_c$ (nm)")
-    ax.set_ylabel(r"$r=z-z_0$ (nm)")
-    ax.set_title("(a) Coordinate diagram", loc="left")
+    ax.set_xlabel(text(r"$x-x_c$ (nm)", r"$x-x_c$ (нм)"))
+    ax.set_ylabel(text(r"$r=z-z_0$ (nm)", r"$r=z-z_0$ (нм)"))
+    ax.set_title(text("(a) Coordinate diagram", "(а) Координаты"), loc="left")
 
 
 def figure_field(args) -> None:
     """Use nominal-crest distances with the record's actual-apex slice filter."""
+    text = FigureLabels(args.language)
     record = read_json(args.reports / "stageG10_field_profile.json")
     meta = read_json(args.interface_metadata)
     rows = [row for row in record["profile"] if row["above_apex"]]
@@ -389,46 +466,70 @@ def figure_field(args) -> None:
         1, 2, figsize=(7.2, 3.65), gridspec_kw={"width_ratios": [1, 2.2]}
     )
     fig.subplots_adjust(left=0.08, right=0.99, bottom=0.2, top=0.82, wspace=0.35)
-    coordinate_diagram(left, record, meta)
+    coordinate_diagram(left, record, meta, text)
     ax.axhline(0, color="#7E878D", lw=0.75)
     ax.axvline(0, color=ORANGE, ls="--", lw=0.8)
-    ax.plot(distance, axial, "o-", color=TEAL, label=r"Axial $|x-x_c|<1$ nm")
-    ax.plot(distance, width, "s-", color=BLUE, label="Full layer average")
+    ax.plot(
+        distance,
+        axial,
+        "o-",
+        color=TEAL,
+        label=text(r"Axial $|x-x_c|<1$ nm", r"На оси $|x-x_c|<1$ нм"),
+    )
+    ax.plot(
+        distance,
+        width,
+        "s-",
+        color=BLUE,
+        label=text("Full layer average", "Среднее по ширине слоя"),
+    )
     ax.set_xlim(-0.2, max(distance) + 0.35)
     ax.set_ylim(-18, 8)
     ax.set_yticks([-15, -10, -5, 0, 5])
-    ax.set_xlabel(r"Height above nominal crest, $d$ (nm)")
-    ax.set_ylabel(r"Signed $\Delta\sigma_{xz}$ (MPa)")
-    ax.set_title("(b) Maintained ridge deformation", loc="left")
+    ax.set_xlabel(text(r"Height above nominal crest, $d$ (nm)", r"Высота над вершиной $d$ (нм)"))
+    ax.set_ylabel(text(r"Signed $\Delta\sigma_{xz}$ (MPa)", r"$\Delta\sigma_{xz}$ со знаком (МПа)"))
+    ax.set_title(
+        text("(b) Maintained ridge deformation", "(б) Удерживаемая деформация выступа"), loc="left"
+    )
     ax.grid(axis="y", color="#DDE2E5", lw=0.5)
     ax.legend(loc="lower right")
     peak = int(np.argmax(np.abs(axial)))
     note(
         ax,
-        f"{axial[peak]:.2f} MPa",
+        f"{text.number(axial[peak], '.2f')} " + text("MPa", "МПа"),
         (distance[peak], axial[peak]),
-        (distance[peak] + 0.85, axial[peak] - 1.5),
+        (distance[peak] + (0.85 if args.language == "en" else -1.1), axial[peak] - 1.5),
         color=TEAL,
     )
     fig.text(
         0.5,
         0.96,
-        rf"Prescribed strain $\varepsilon={100 * record['eigenstrain_used']:.3f}\%$;"
-        r" $\Delta\sigma=\sigma_{\mathrm{strained}}-\sigma_{\mathrm{control}}$",
+        text("Prescribed strain", "Заданная деформация")
+        + rf" $\varepsilon={text.number(100 * record['eigenstrain_used'], '.3f')}\%$;"
+        + text(
+            r" $\Delta\sigma=\sigma_{\mathrm{strained}}-\sigma_{\mathrm{control}}$",
+            r" $\Delta\sigma=\sigma_{\varepsilon}-\sigma_0$",
+        ),
         ha="center",
         fontsize=9,
     )
     fig.text(
         0.5,
         0.02,
-        rf"Nominal crest {nominal_crest / 10:.3f} nm; "
-        rf"$d=r-{crest_r / 10:g}\,\mathrm{{nm}}$. "
-        rf"Inclusion envelope {record['ridge_apex_A'] / 10:.3f} nm; "
-        "compression-positive convention.",
+        text(
+            rf"Nominal crest {nominal_crest / 10:.3f} nm; "
+            rf"$d=r-{crest_r / 10:g}\,\mathrm{{nm}}$. "
+            rf"Inclusion envelope {record['ridge_apex_A'] / 10:.3f} nm; "
+            "compression-positive convention.",
+            f"Номинальная вершина {text.number(nominal_crest / 10, '.3f')} нм. "
+            rf"$d=r-{text.number(crest_r / 10, 'g')}$ нм. "
+            f"Граница включения {text.number(record['ridge_apex_A'] / 10, '.3f')} нм.\n"
+            "Сжатие принято положительным.",
+        ),
         ha="center",
         fontsize=8,
     )
-    save_plot(fig, args.output, "fig_field")
+    save_plot(fig, args.output, text.stem("fig_field"))
 
 
 def trajectory(path: Path, lx_a: float) -> dict:
@@ -460,6 +561,7 @@ def trajectory(path: Path, lx_a: float) -> dict:
 
 def figure_dynamics(args) -> None:
     """Compare held G15 trajectories, recorded departure brackets and loading."""
+    text = FigureLabels(args.language)
     summary = read_json(args.reports / "stageG2_depinning_summary_G15held.json")
     lx_a = read_json(args.loaded_metadata)["box_A"]["lx"]
     fig, (ax, stress) = plt.subplots(
@@ -471,7 +573,10 @@ def figure_dynamics(args) -> None:
         ("G15_ctl", "G15_fld"),
         colours,
         ("o", "s"),
-        ("Held control", "Held strained ridge"),
+        (
+            text("Held control", "Удерживаемый контроль"),
+            text("Held strained ridge", "Удерживаемый деформированный выступ"),
+        ),
         strict=True,
     ):
         data = trajectory(args.reports / f"stageG2_depinning_{case}_G15held.csv", lx_a)
@@ -498,7 +603,13 @@ def figure_dynamics(args) -> None:
             arrowprops={"arrowstyle": "|-|", "lw": 1, "color": colour},
         )
         ax.text(
-            lo - 0.8, y, f"{lo:.0f}-{hi:.0f} ps", color=colour, ha="right", va="center", fontsize=8
+            lo - 0.8,
+            y,
+            f"{lo:.0f}-{hi:.0f} " + text("ps", "пс"),
+            color=colour,
+            ha="right",
+            va="center",
+            fontsize=8,
         )
         print(
             f"{case}: departure {lo:g}-{hi:g} ps, {tau_lo:.3f}-{tau_hi:.3f} MPa;"
@@ -512,34 +623,56 @@ def figure_dynamics(args) -> None:
         panel.grid(axis="y", color="#DEE3E6", lw=0.5)
         panel.set_xlim(0, 44)
     ax.set_ylim(-10.4, 1.3)
-    ax.set_ylabel(r"Upper-partner $x(t)-x(0)$ (nm)")
-    ax.set_title("(a) Displacement and departure brackets", loc="left")
+    ax.set_ylabel(text(r"Upper-partner $x(t)-x(0)$ (nm)", "Верхняя линия\n" + r"$x(t)-x(0)$ (нм)"))
+    ax.set_title(
+        text("(a) Displacement and departure brackets", "(а) Смещение и интервалы ухода линии"),
+        loc="left",
+    )
     ax.legend(loc="lower left")
-    ax.text(2.5, 0.6, "Preload", fontsize=7.5, ha="center")
-    ax.text(18, 0.6, "Shear ramp", fontsize=8, ha="center")
+    ax.text(2.5, 0.6, text("Preload", "Выдержка"), fontsize=7.5, ha="center")
+    ax.text(18, 0.6, text("Shear ramp", "Рост сдвиговой нагрузки"), fontsize=8, ha="center")
     stress.set_ylim(-5, 160)
     stress.set_yticks([0, 75, 150])
-    stress.set_ylabel(r"$\tau_{\mathrm{applied}}$ (MPa)")
-    stress.set_xlabel("Time (ps)")
-    stress.text(0.02, 0.8, "(b) Shared loading programme", transform=stress.transAxes, fontsize=9)
+    stress.set_ylabel(text(r"$\tau_{\mathrm{applied}}$ (MPa)", r"$\tau$ (МПа)"))
+    stress.set_xlabel(text("Time (ps)", "Время (пс)"))
+    stress.text(
+        0.02,
+        0.8,
+        text("(b) Shared loading programme", "(б) Общая программа нагружения"),
+        transform=stress.transAxes,
+        fontsize=9,
+    )
     fig.text(
-        0.5, 0.96, "91,428 atoms; inclusion held in both runs; 300 K", ha="center", fontsize=10
+        0.5,
+        0.96,
+        text(
+            "91,428 atoms; inclusion held in both runs; 300 K",
+            "91 428 атомов; включение удерживается в обоих расчётах; 300 К",
+        ),
+        ha="center",
+        fontsize=10,
     )
     fig.text(
         0.5,
         0.055,
-        "DXA centroids intersecting a 1.5 nm periodic-seam margin are omitted.",
+        text(
+            "DXA centroids intersecting a 1.5 nm periodic-seam margin are omitted.",
+            "Положения линий DXA, заходящих в зону 1,5 нм у периодического шва, исключены.",
+        ),
         ha="center",
         fontsize=8,
     )
     fig.text(
         0.5,
         0.01,
-        "Shading marks the 2 ps sampling brackets of the recorded departure criterion.",
+        text(
+            "Shading marks the 2 ps sampling brackets of the recorded departure criterion.",
+            "Заливка отмечает интервалы регистрации ухода линии с шагом записи 2 пс.",
+        ),
         ha="center",
         fontsize=8,
     )
-    save_plot(fig, args.output, "fig_dynamics")
+    save_plot(fig, args.output, text.stem("fig_dynamics"))
 
 
 def creep_enhancement(stress_mpa: float, volume_b3: float, constants: dict) -> float:
@@ -564,6 +697,7 @@ def creep_enhancement(stress_mpa: float, volume_b3: float, constants: dict) -> f
 
 def figure_bridge(args) -> None:
     """Plot the conditional G5 response using recorded MD and sphere stress scales."""
+    text = FigureLabels(args.language)
     bridge = read_json(args.reports / "stageG5_two_scale_bridge.json")
     constants = bridge["constants"]
     field = read_json(args.reports / "stageG10_field_profile.json")
@@ -575,8 +709,23 @@ def figure_bridge(args) -> None:
     fig, ax = plt.subplots(figsize=(7.2, 4.15))
     fig.subplots_adjust(left=0.12, right=0.99, top=0.85, bottom=0.22)
     for stress, colour, style, label in (
-        (md, TEAL, "-", f"MD axial peak, {md:.3f} MPa"),
-        (eshelby, ORANGE, "--", f"Sphere interior, {eshelby:.2f} MPa"),
+        (
+            md,
+            TEAL,
+            "-",
+            text(
+                f"MD axial peak, {md:.3f} MPa", f"Осевой максимум МД, {text.number(md, '.3f')} МПа"
+            ),
+        ),
+        (
+            eshelby,
+            ORANGE,
+            "--",
+            text(
+                f"Sphere interior, {eshelby:.2f} MPa",
+                f"Внутри сферы, {text.number(eshelby, '.2f')} МПа",
+            ),
+        ),
     ):
         rates = [100 * creep_enhancement(stress, v, constants) for v in volumes]
         ax.semilogy(volumes, rates, color=colour, ls=style, label=label, lw=1.8)
@@ -586,49 +735,63 @@ def figure_bridge(args) -> None:
         ax.plot([crossing], [100 * target], "o", color=colour, ms=5)
         ax.vlines(crossing, 1e-3, 100 * target, color=colour, ls=":", lw=0.9)
         ax.annotate(
-            f"{crossing:.1f} $b^3$",
+            f"{text.number(crossing, '.1f')} $b^3$",
             xy=(crossing, 100 * target),
             xytext=(crossing + 5, 250),
             color=colour,
             fontsize=8,
             arrowprops={"arrowstyle": "-", "color": colour, "lw": 0.7},
         )
-        print(f"Bridge {label}: 25% at V*={crossing:.6f} b^3")
+        print(f"Bridge stress {stress:.3f} MPa: 25% at V*={crossing:.6f} b^3")
     ax.axhline(100 * target, color=INK, ls=(0, (5, 3)), lw=1)
-    ax.text(139, 100 * target * 1.6, "25% target", ha="right", fontsize=8)
+    ax.text(139, 100 * target * 1.6, text("25% target", "Уровень 25%"), ha="right", fontsize=8)
     ax.set_xlim(10, 142)
     ax.set_ylim(1e-3, 1e13)
     ax.set_xticks([20, 40, 60, 80, 100, 120, 140])
     ax.set_yticks([1e-2, 1, 1e2, 1e4, 1e6, 1e8, 1e10, 1e12])
-    ax.set_xlabel(r"Assumed activation volume, $V^*/b^3$")
-    ax.set_ylabel("Relative creep-rate increase (%)")
-    ax.set_title("Conditional two-scale response", loc="left", pad=10)
+    ax.set_xlabel(
+        text(r"Assumed activation volume, $V^*/b^3$", r"Принятый активационный объём $V^*/b^3$")
+    )
+    ax.set_ylabel(text("Relative creep-rate increase (%)", "Прирост скорости ползучести (%)"))
+    ax.set_title(
+        text("Conditional two-scale response", "Условный двухмасштабный отклик"), loc="left", pad=10
+    )
     ax.grid(axis="y", color="#DEE3E6", lw=0.5)
     ax.legend(loc="upper left")
     temperature = constants["kT_300K_J"] / 1.380649e-23
     fig.text(
         0.99,
         0.91,
-        rf"$T={temperature:.0f}$ K; $f={constants['volume_fraction']:.5f}$; "
-        rf"prescribed strain ${100 * field['eigenstrain_used']:.3f}\%$",
+        rf"$T={temperature:.0f}$ "
+        + text("K", "К")
+        + rf"; $f={text.number(constants['volume_fraction'], '.5f')}$; "
+        + text("prescribed strain", "заданная деформация")
+        + rf" ${text.number(100 * field['eigenstrain_used'], '.3f')}\%$",
         ha="right",
         fontsize=8,
     )
     fig.text(
         0.5,
         0.06,
-        r"Both stress scales enter the same assumed $r^{-3}$ distribution and two-scale integral.",
+        text(
+            r"Both stress scales enter the same assumed $r^{-3}$ distribution "
+            "and two-scale integral.",
+            r"Для обеих оценок принято распределение $r^{-3}$ и один двухмасштабный интеграл.",
+        ),
         ha="center",
         fontsize=8,
     )
     fig.text(
         0.5,
         0.013,
-        "Activation volume and inclusion strain are conditional inputs to this comparison.",
+        text(
+            "Activation volume and inclusion strain are conditional inputs to this comparison.",
+            "Активационный объём и деформация включения заданы условно.",
+        ),
         ha="center",
         fontsize=8,
     )
-    save_plot(fig, args.output, "fig_bridge")
+    save_plot(fig, args.output, text.stem("fig_bridge"))
 
 
 def input_files(args) -> list[Path]:
@@ -684,6 +847,7 @@ def main() -> int:
     )
     parser.add_argument("--reports", type=Path, default=ROOT / "docs" / "reports")
     parser.add_argument("--output", type=Path, default=ROOT / "docs" / "paper")
+    parser.add_argument("--language", choices=("en", "ru"), default="en")
     parser.add_argument("--list-inputs", action="store_true")
     args = parser.parse_args()
     for path in input_files(args):
@@ -703,7 +867,7 @@ def main() -> int:
     }
     for name in args.only:
         builders[name](args)
-        print(f"Wrote fig_{name}", flush=True)
+        print(f"Wrote {FigureLabels(args.language).stem(f'fig_{name}')}", flush=True)
     return 0
 
 

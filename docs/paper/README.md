@@ -3,7 +3,9 @@
 `main.tex` and `main_ru.tex` are the authoritative English and Russian
 manuscripts. `supplementary.tex` and `supplementary_ru.tex` contain the numerical
 protocols, additional controls and reproducibility limitations. Both language
-versions use the same four English-labelled figures and bibliography.
+versions use the same numerical figure data and bibliography. English figures
+keep their base filenames; Russian figures have a `_ru` suffix and translated
+axes, legends, units and annotations.
 
 | Figure | Input and interpretation |
 |---|---|
@@ -13,6 +15,7 @@ versions use the same four English-labelled figures and bibliography.
 | `fig_bridge.pdf` | Sensitivity of the conditional activated-glide integral to activation volume |
 
 The figure generator is `analysis/python/publication_figures.py`.
+Run it with `--language ru` to regenerate the Russian set; English is the default.
 Its `--list-inputs` option reports the exact files and checksums.
 The comparison is mechanical: no measured magnetic strain or field-off memory
 process is simulated.
@@ -26,9 +29,5 @@ four figures. It is prepared as a regular research article with explicit model
 limitations. No journal acceptance or current quartile is implied by this
 format. [Physical Review Materials author guidance](https://journals.aps.org/prmaterials/authors)
 allows regular articles without a fixed length limit and requires clear data
-availability and substantive AI-use disclosure. Its Letter format has a
+availability. Its Letter format has a
 4,500-word limit and a separate editorial standard.
-
-Before a journal submission the authors must confirm the chosen article type,
-coauthor approval, affiliations, funding, declarations and any required cover
-letter. These administrative confirmations are not fabricated in the draft.
