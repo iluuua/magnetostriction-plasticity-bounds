@@ -1,0 +1,629 @@
+{
+  "schema_version": 1,
+  "description": "Primary data for the shortened manuscript",
+  "units": "LAMMPS metal: angstrom, ps, eV; stress/atom is bar angstrom^3",
+  "files": [
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260903-041548-482289/G15_ctl/G15_ctl.production.final.data",
+        "bytes": 11976635,
+        "sha256": "3aaa70192510cb0cdca5e98bcb366b47e076aaf2f12d95b24dd0aa73e8879694"
+      },
+      "output": {
+        "path": "data/publication/g15_free_control/final.data.gz",
+        "bytes": 5294629,
+        "sha256": "723b089c87a57ec0d2ebd79dd67fdc09e67e99f060fd14e2727b456ded28a91d"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260903-041548-482289/G15_ctl/G15_ctl.production.final.lammpstrj",
+        "bytes": 8176384,
+        "sha256": "223ff68851596d28504734ffbb4179e7644928c864d1e243e7462ea0434a817f"
+      },
+      "output": {
+        "path": "data/publication/g15_free_control/final.lammpstrj.gz",
+        "bytes": 3608892,
+        "sha256": "feba20ebf001b0168d78b919665df9c58378211bfa648ca7e7f92a4d066971d7"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260903-041548-482289/G15_ctl/log.lammps",
+        "bytes": 94242,
+        "sha256": "899d4d715357dfce6e271129ec927f2355050b25ddf398e38e9b4f66768f51b4"
+      },
+      "output": {
+        "path": "data/publication/g15_free_control/log.lammps.gz",
+        "bytes": 29599,
+        "sha256": "1c528e3c60ef55f631889ea31b6f6b5b14211a04437e95abfcfc09f5111f27b0"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "structures/stageG4_tilted_solute/G4_tilted_eps0000_dipu100k/G4_tilted_eps0000_dipu100k.start.data",
+        "bytes": 4137870,
+        "sha256": "4dd83c9d25053e754804cc500fc5a1fd7f5f916ee76fe711c2cc01390fdcc039"
+      },
+      "output": {
+        "path": "data/publication/g15_free_control/initial.data.gz",
+        "bytes": 648421,
+        "sha256": "cf57542d8f26d9d98ec9d47a77961cc7d89c143d63980240f5ad4e3bd8890248"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/G15_ctl.production.final.data",
+        "bytes": 11974492,
+        "sha256": "f0c84d4582f16d90284926c4cd372c76452760ea1db2f73ce98b2a66635ded3a"
+      },
+      "output": {
+        "path": "data/publication/g15_held_control/final.data.gz",
+        "bytes": 5289516,
+        "sha256": "5be08be0edb6d29dfb5ca186d87e081bb63b10a0b3c7a133af6d6b0de32ab3f8"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/G15_ctl.production.final.lammpstrj",
+        "bytes": 8257139,
+        "sha256": "8936d3e2fe6c34a073545769f50be28e80cf34785a80cc3dc4faf763ab2e5ab3"
+      },
+      "output": {
+        "path": "data/publication/g15_held_control/final.lammpstrj.gz",
+        "bytes": 3617963,
+        "sha256": "1572331dbd7822aa70ef79256de59607116b9ce437732e60ebc03984def4aeb3"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/log.lammps",
+        "bytes": 49617,
+        "sha256": "1298fe3380053dd02862965f9ff8375db07f2484be794d9b2c40e3e7e71cf55a"
+      },
+      "output": {
+        "path": "data/publication/g15_held_control/log.lammps.gz",
+        "bytes": 16222,
+        "sha256": "b70959f455ec055b6839b3d3be73a7f55dd1a70ff11fad5dc548ea9432a008cd"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "structures/stageG4_tilted_solute/G4_tilted_eps0000_dipu100k/G4_tilted_eps0000_dipu100k.start.data",
+        "bytes": 4137870,
+        "sha256": "4dd83c9d25053e754804cc500fc5a1fd7f5f916ee76fe711c2cc01390fdcc039"
+      },
+      "output": {
+        "path": "data/publication/g15_held_control/initial.data.gz",
+        "bytes": 648421,
+        "sha256": "cf57542d8f26d9d98ec9d47a77961cc7d89c143d63980240f5ad4e3bd8890248"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/G15_fld.production.final.data",
+        "bytes": 11974579,
+        "sha256": "09bd4aea9cd0479769899a52dc83b91ea816cbfb0a53dc7e9ff35d1fd9b5eef2"
+      },
+      "output": {
+        "path": "data/publication/g15_held_strained/final.data.gz",
+        "bytes": 5288601,
+        "sha256": "36f9f4fe8fb8e0cecd463aa95de9974a6a9955e60a2079624e2a1718b07a1897"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/G15_fld.production.final.lammpstrj",
+        "bytes": 8257085,
+        "sha256": "fa6c4833b464cef40289b1338809f04fb1e3f6566da2734474808e59a77de3bf"
+      },
+      "output": {
+        "path": "data/publication/g15_held_strained/final.lammpstrj.gz",
+        "bytes": 3618870,
+        "sha256": "ac9af8b1b9bc943bd833ece310f8cce8e35a8f276136981141a92c19c90cd8b9"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/log.lammps",
+        "bytes": 49616,
+        "sha256": "63e31dccc77ac91e74866399adbbd11ef47ea7c392facac1398063894b1784f1"
+      },
+      "output": {
+        "path": "data/publication/g15_held_strained/log.lammps.gz",
+        "bytes": 16262,
+        "sha256": "d832071fb230e31727fdc1fea97b83756a4f767b7eb57f94f3063253882ad5a9"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "structures/stageG4_tilted_solute/G4_tilted_eps00194_dipu100k/G4_tilted_eps00194_dipu100k.start.data",
+        "bytes": 4137871,
+        "sha256": "c612e36d05ba5117b317eddbbcdc1e931dd6d6fd125336a5fe8914597865a595"
+      },
+      "output": {
+        "path": "data/publication/g15_held_strained/initial.data.gz",
+        "bytes": 653620,
+        "sha256": "a5b64aa2ee81af84a32c878844decae1e416a7e3800e19cfc0f050aeacc63a87"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG13_interface100k/20260903-153826-627855_u100k_pert/cells/pert_ctl.data",
+        "bytes": 4047326,
+        "sha256": "c6de17aeae4062813c82a616d0f5700c0a4683e9757c4b52589dad8a0a36f8b0"
+      },
+      "output": {
+        "path": "data/publication/interface/initial_ctl.data.gz",
+        "bytes": 922160,
+        "sha256": "4e79b44b3eba14f3254f782bd3fc5530921dbb38c148b528a4a618dabab11d47"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG13_interface100k/20260903-153826-627855_u100k_pert/cells/pert_fld.data",
+        "bytes": 4047392,
+        "sha256": "5a62cb3dd48e98c193b24078be29de9361561b215cf850b886344f5234e394a6"
+      },
+      "output": {
+        "path": "data/publication/interface/initial_fld.data.gz",
+        "bytes": 947742,
+        "sha256": "c7b3f2171a8840577531a20312eecdbaf9f704d995b006cf8ec0720156857f6e"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG13_interface100k/20260903-001905-144804_u100k_v3/ctl_held/ctl_held.gate.lammpstrj",
+        "bytes": 7683508,
+        "sha256": "f8d0c72c3a0cc63deb283d4c492474572091394cb2d20349c2805f3c49d791aa"
+      },
+      "output": {
+        "path": "data/publication/interface/relaxed_reference.lammpstrj.gz",
+        "bytes": 3030190,
+        "sha256": "89b53cc91b1a7c8971af55c24eed14ad3f28eb4395f3b1005ae3e3be1a3606cc"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG6_vstar/20260823-174823/G3_solute_relA/G3_solute_relA.vstar.final.data",
+        "bytes": 12252919,
+        "sha256": "06a6812e711a2b19534b288c5f7b2a910f365cd33e759624a99102a88535b30b"
+      },
+      "output": {
+        "path": "data/publication/alloy/final.data.gz",
+        "bytes": 5395609,
+        "sha256": "73ea01f8fd083db5da0014aab266798128891cab1817cda0a0be712dd92b5fc6"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG6_vstar/20260823-174823/G3_solute_relA/log.lammps",
+        "bytes": 105017,
+        "sha256": "0ec3d29285d328b10eb9896a4fcfd33e9e8d80505921174b93dc97bf7b58f6ab"
+      },
+      "output": {
+        "path": "data/publication/alloy/log.lammps.gz",
+        "bytes": 31034,
+        "sha256": "9716920714be11cd660ad1b5049b9d261a0b024f3bb86852a432f23eae2435e4"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "structures/stageG3_solute_mobility/G3_solute_relA/G3_solute_relA.start.data",
+        "bytes": 4206359,
+        "sha256": "7403d8fc63129a954fb4ce5cf8751432b3e0f8e801ba5102c28497d89088ba1a"
+      },
+      "output": {
+        "path": "data/publication/alloy/initial.data.gz",
+        "bytes": 658612,
+        "sha256": "5d16e98227231804f3d4b00a172a02d321fcdc190e32b3d7dcc1bb5731d5ba95"
+      },
+      "transformation": "lossless gzip"
+    },
+    {
+      "source": {
+        "path": "runs/stageG13_interface100k/20260903-001905-144804_u100k_v3/ctl_held/log.lammps",
+        "bytes": 19322,
+        "sha256": "66922169177a2d3243dcd1d3df785eb96313c2dfe8f61a68491f332d16028e7b"
+      },
+      "output": {
+        "path": "data/publication/interface/preparation.log.lammps.gz",
+        "bytes": 5621,
+        "sha256": "4054de39d3abdb014aa0be0fb14a342abc51ea0cc74bd18a028f562af3b46f42"
+      },
+      "transformation": "lossless gzip"
+    }
+  ],
+  "trajectories": {
+    "g15_free_control": {
+      "source": {
+        "path": "runs/stageG15_unified/20260903-041548-482289/G15_ctl/G15_ctl.production.lammpstrj",
+        "bytes": 418516934,
+        "sha256": "1294b58ef543a6f7a270248fe9c32231b885372e550da341d926af80ca6e1640"
+      },
+      "outputs": [
+        {
+          "path": "data/publication/g15_free_control/trajectory.000.lammpstrj.gz",
+          "bytes": 21982287,
+          "sha256": "90b4bd5e1465e8858622f65df1efeab140b8fd20a172a984379d0c54bc5e2d9c"
+        },
+        {
+          "path": "data/publication/g15_free_control/trajectory.001.lammpstrj.gz",
+          "bytes": 22172619,
+          "sha256": "565f8f4742767fa0119670ed9171870ec53e8ec0be0a43953fda6246ea6bcf96"
+        },
+        {
+          "path": "data/publication/g15_free_control/trajectory.002.lammpstrj.gz",
+          "bytes": 12186059,
+          "sha256": "eebf7e91458b3aa956dcc4b7308941ef1ee08044b842a34c72b859e9816a99cf"
+        }
+      ],
+      "transformation": "all saved frames; unchanged id/type/x/y/z strings and box headers",
+      "omitted_columns": "per-atom potential energy and virial stress",
+      "timesteps": [
+        0,
+        2000,
+        4000,
+        6000,
+        8000,
+        10000,
+        12000,
+        14000,
+        16000,
+        18000,
+        20000,
+        22000,
+        24000,
+        26000,
+        28000,
+        30000,
+        32000,
+        34000,
+        36000,
+        38000,
+        40000,
+        42000,
+        44000,
+        46000,
+        48000,
+        50000,
+        52000,
+        54000,
+        56000,
+        58000,
+        60000,
+        62000,
+        64000,
+        66000,
+        68000,
+        70000,
+        72000,
+        74000,
+        76000,
+        78000,
+        80000,
+        82000,
+        84000,
+        86000,
+        88000,
+        90000,
+        92000,
+        94000,
+        96000,
+        98000,
+        100000
+      ],
+      "time_step_ps": 0.001
+    },
+    "g15_held_control": {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/G15_ctl.production.lammpstrj",
+        "bytes": 190357270,
+        "sha256": "f1527f266477b5ee6624c3ea26387e40c9d6181cfc4e01a70ee1238f26c6f293"
+      },
+      "outputs": [
+        {
+          "path": "data/publication/g15_held_control/trajectory.000.lammpstrj.gz",
+          "bytes": 21887593,
+          "sha256": "a899004eabf23cd61f638c153aa424fe540e4d29d7d41d48f784028e0188c362"
+        },
+        {
+          "path": "data/publication/g15_held_control/trajectory.001.lammpstrj.gz",
+          "bytes": 3314804,
+          "sha256": "baa067364734b3e21128d73840bfddc79bdaa1be21cdfe4a5c2ae48be86d1921"
+        }
+      ],
+      "transformation": "all saved frames; unchanged id/type/x/y/z strings and box headers",
+      "omitted_columns": "per-atom potential energy and virial stress",
+      "timesteps": [
+        0,
+        2000,
+        4000,
+        6000,
+        8000,
+        10000,
+        12000,
+        14000,
+        16000,
+        18000,
+        20000,
+        22000,
+        24000,
+        26000,
+        28000,
+        30000,
+        32000,
+        34000,
+        36000,
+        38000,
+        40000,
+        42000,
+        44000
+      ],
+      "time_step_ps": 0.001
+    },
+    "g15_held_strained": {
+      "source": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/G15_fld.production.lammpstrj",
+        "bytes": 190341596,
+        "sha256": "28674725dfa8da356568c52cdb42b8d1d29314ca422e041f98704a0ca5714e12"
+      },
+      "outputs": [
+        {
+          "path": "data/publication/g15_held_strained/trajectory.000.lammpstrj.gz",
+          "bytes": 21886686,
+          "sha256": "346865b4fb76bef1a91efa17694b7dcacdf2adb65715205b7d75675d9c06e1e4"
+        },
+        {
+          "path": "data/publication/g15_held_strained/trajectory.001.lammpstrj.gz",
+          "bytes": 3314861,
+          "sha256": "97d3692ba8462572142395bde5f3a2d69fec22e062144b8b63c6abc27d630498"
+        }
+      ],
+      "transformation": "all saved frames; unchanged id/type/x/y/z strings and box headers",
+      "omitted_columns": "per-atom potential energy and virial stress",
+      "timesteps": [
+        0,
+        2000,
+        4000,
+        6000,
+        8000,
+        10000,
+        12000,
+        14000,
+        16000,
+        18000,
+        20000,
+        22000,
+        24000,
+        26000,
+        28000,
+        30000,
+        32000,
+        34000,
+        36000,
+        38000,
+        40000,
+        42000,
+        44000
+      ],
+      "time_step_ps": 0.001
+    },
+    "alloy": {
+      "source": {
+        "path": "G3_solute_relA.vstar.lammpstrj",
+        "bytes": 1082728100,
+        "sha256": "8958161c63214dc0f0b4f5e6f09cc31f209c40935dd08507bc0fcb07d16a88df"
+      },
+      "outputs": [
+        {
+          "path": "data/publication/alloy/trajectory.000.lammpstrj.gz",
+          "bytes": 72786681,
+          "sha256": "6d691c76c0237fed5bd1297cc8d1863ee08d194a8f9e1b439ca390e82320d070"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.001.lammpstrj.gz",
+          "bytes": 72800124,
+          "sha256": "d616bc7d6ed26ba508de19b0dbc400a0534dc08e11f762d8171d5866e848769e"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.002.lammpstrj.gz",
+          "bytes": 72774859,
+          "sha256": "01e5e8efa953d231e7606f0183218c859e819097a9a96e53475f214164492f74"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.003.lammpstrj.gz",
+          "bytes": 72772389,
+          "sha256": "17a05a175fcfa570e8cc85c1af63f76b2db05707a11632858763ccccd840d90d"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.004.lammpstrj.gz",
+          "bytes": 72783043,
+          "sha256": "fb85c3c0c6d48876cf1dd1ef7620124c32694fbe71e0e948542ceb30edf75133"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.005.lammpstrj.gz",
+          "bytes": 72787568,
+          "sha256": "aff7861f0c13865ab56869dad04a1e0781dd9574544cfe32f15443d4f8f5441f"
+        },
+        {
+          "path": "data/publication/alloy/trajectory.006.lammpstrj.gz",
+          "bytes": 39999056,
+          "sha256": "91ff032e79d4275adc95d626454068685b602ac90d2d7e5b9949791768bddd5a"
+        }
+      ],
+      "transformation": "lossless full-column gzip shards at frame boundaries",
+      "omitted_columns": [],
+      "timesteps": [
+        0,
+        1000,
+        2000,
+        3000,
+        4000,
+        5000,
+        6000,
+        7000,
+        8000,
+        9000,
+        10000,
+        11000,
+        12000,
+        13000,
+        14000,
+        15000,
+        16000,
+        17000,
+        18000,
+        19000,
+        20000,
+        21000,
+        22000,
+        23000,
+        24000,
+        25000,
+        26000,
+        27000,
+        28000,
+        29000,
+        30000,
+        31000,
+        32000,
+        33000,
+        34000,
+        35000,
+        36000,
+        37000,
+        38000,
+        39000,
+        40000,
+        41000,
+        42000,
+        43000,
+        44000,
+        45000,
+        46000,
+        47000,
+        48000,
+        49000,
+        50000,
+        51000,
+        52000,
+        53000,
+        54000,
+        55000,
+        56000,
+        57000,
+        58000,
+        59000,
+        60000,
+        61000,
+        62000,
+        63000,
+        64000,
+        65000,
+        66000,
+        67000,
+        68000,
+        69000,
+        70000,
+        71000,
+        72000,
+        73000,
+        74000,
+        75000,
+        76000,
+        77000,
+        78000,
+        79000,
+        80000,
+        81000,
+        82000,
+        83000,
+        84000,
+        85000,
+        86000,
+        87000,
+        88000,
+        89000,
+        90000,
+        91000,
+        92000,
+        93000,
+        94000,
+        95000,
+        96000,
+        97000,
+        98000,
+        99000,
+        100000,
+        101000,
+        102000,
+        103000,
+        104000,
+        105000,
+        106000,
+        107000,
+        108000,
+        109000,
+        110000,
+        111000,
+        112000,
+        113000,
+        114000,
+        115000,
+        116000,
+        117000,
+        118000,
+        119000,
+        120000,
+        121000,
+        122000,
+        123000,
+        124000,
+        125000,
+        126000,
+        127000,
+        128000,
+        129000,
+        130000
+      ],
+      "time_step_ps": 0.001,
+      "source_origin": "verified local backup of the original run"
+    }
+  },
+  "limitations": [
+    "The alloy initial file is a candidate replay input. No launch-time hash or original copy verifies its initial mobile coordinates.",
+    "The alloy preparation stops on energy tolerance with force two-norm 10.118429 eV/angstrom; force convergence is not established.",
+    "G15 position trajectories omit per-atom energy and stress columns. Full original trajectories remain local; the final dumps and held-interface stress dumps retain their original columns.",
+    "A saved trajectory ends at the last regular dump, before the run endpoint; the separately saved final state is not silently appended to the analysis sequence."
+  ],
+  "held_stress_data": [
+    {
+      "path": "data/stageG4_clean/G13_pert_ctl_held.gate.lammpstrj.gz",
+      "bytes": 4027136,
+      "sha256": "c0209c65f6de8a6ed9ff980c9980c1cbf1d18590f94c63e03eb170ce9f05de51"
+    },
+    {
+      "path": "data/stageG4_clean/G13_pert_fld_held.gate.lammpstrj.gz",
+      "bytes": 4055193,
+      "sha256": "d2f0d5ee574651e36174235ff8967a15df19c1adda3e59fa5e5531251c865aa5"
+    }
+  ]
+}

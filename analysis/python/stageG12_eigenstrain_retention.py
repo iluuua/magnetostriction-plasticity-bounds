@@ -1,74 +1,53 @@
 #!/usr/bin/env python3
-"""Stage G12: how much of the nominal eigenstrain survives minimisation?
+"""Fit retained inclusion strain between paired LAMMPS snapshots.
 
-The external review raised the one question that decides whether the whole
-rescaling to 20-100 ppm is meaningful. Section 2.2 applies
-
-    r -> r + eps* . (r - r_c)      (volume conserving, trace zero)
-
-to the Fe4Al13 atoms and then minimises WITHOUT any constraint holding that
-distortion. The equilibrium metric of the MEAM potential is untouched, so the
-inclusion is free to relax the imposed mode back out. If it relaxes most of it
-away, then "eps* = 1.94e-3" labels a perturbation that was applied, not one
-that was carried, and every stress rescaled from it is referenced to the wrong
-amplitude.
-
-The retained fraction is measurable. For the inclusion atoms we fit the best
-affine map between the MINIMISED control and the MINIMISED field state,
-
-    F = argmin sum_i || (x_i - x_bar) - F (X_i - X_bar) ||^2
-    E_res = 0.5 (F^T F - I)
-    eta   = (E_res : eps*) / (eps* : eps*)
-
-eta = 1 means the mode is carried in full; eta = 0 means it was relaxed away.
-The Fe sublattice is used for the fit: an affine map acts on every sublattice
-alike, and the Fe positions are unambiguous inclusion markers.
+Atom IDs establish correspondence. Fe coordinates (angstroms) define the
+affine fit x - mean(x) = F (X - mean(X)); the dimensionless Green strain is
+E = (F.T F - I) / 2. Its projection onto the imposed strain gives eta.
+JSON contains subset tensors and formal least-squares errors, not a spread
+over independent simulations. The default pair uses a tethered inclusion.
 """
+
 from __future__ import annotations
 
-import io
+import argparse
 import json
 import math
 from datetime import datetime
 from pathlib import Path
+from typing import TextIO
 
 import numpy as np
+from _g4clean import (
+    CONTROL,
+    FIELD,
+    DumpFrame,
+    file_provenance,
+    open_text,
+    read_snapshot,
+    resolve_dump,
+    source_dir,
+    validate_pair,
+)
 
 REPO = Path(__file__).resolve().parents[2]
-from _g4clean import source_dir, open_dump, CONTROL, FIELD
 EPS_NOM = 1.94e-3
 TILT_DEG = 45.0
 Z_SUP, RIDGE_H, RIDGE_RX = 20.0, 20.0, 35.0
 
 
 def eigenstrain_tensor() -> np.ndarray:
+    """Trace-free imposed strain, amplitude 0.00194, tilted 45 degrees from z."""
     t = math.radians(TILT_DEG)
     u = np.array([math.sin(t), 0.0, math.cos(t)])
     return EPS_NOM * (1.5 * np.outer(u, u) - 0.5 * np.eye(3))
 
 
-def load(path: Path):
-    rows, started, box = [], False, []
-    for ln in path:
-        if ln.startswith("ITEM: BOX"):
-            started = "box"
-            continue
-        if started == "box" and len(box) < 3:
-            box.append([float(v) for v in ln.split()])
-            continue
-        if ln.startswith("ITEM: ATOMS"):
-            started = True
-            continue
-        if started is True:
-            p = ln.split()
-            if len(p) >= 5:
-                rows.append([float(p[0]), float(p[1]), float(p[2]), float(p[3]), float(p[4])])
-    a = np.array(rows)
-    order = np.argsort(a[:, 0])
-    a = a[order]
-    lx = box[0][1] - box[0][0]
-    ly = box[1][1] - box[1][0]
-    return a[:, 0].astype(int), a[:, 1].astype(int), a[:, 2:5], lx, ly
+def load(path: TextIO):
+    """Return sorted IDs, types, coordinates, Lx and Ly (legacy API)."""
+    frame = read_snapshot(path)
+    lengths = frame.bounds[:, 1] - frame.bounds[:, 0]
+    return frame.ids, frame.types, frame.positions, lengths[0], lengths[1]
 
 
 def affine_fit(X: np.ndarray, x: np.ndarray) -> np.ndarray:
@@ -79,31 +58,22 @@ def affine_fit(X: np.ndarray, x: np.ndarray) -> np.ndarray:
 
 
 def green(F: np.ndarray) -> np.ndarray:
+    """Return the dimensionless Green strain of a deformation gradient."""
     return 0.5 * (F.T @ F - np.eye(3))
 
 
-def main() -> int:
-    import argparse, gzip
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--control"); ap.add_argument("--field"); ap.add_argument("--out")
-    ap.add_argument("--n-al", type=int, help="matrix atoms; ids above are inclusion (default: Fe sublattice by type)")
-    ap.add_argument("--label", default="")
-    args = ap.parse_args()
-    def _open(pth):
-        pth = Path(pth)
-        return (io.TextIOWrapper(gzip.open(pth, "rb"), encoding="utf-8", errors="replace")
-                if pth.suffix == ".gz" else io.open(pth, encoding="utf-8", errors="replace"))
-    src = source_dir()
-    ctl_fh = _open(args.control) if args.control else open_dump(src, CONTROL)
-    fld_fh = _open(args.field) if args.field else open_dump(src, FIELD)
-    with ctl_fh as fh:
-        ids_c, ty_c, X, lx, ly = load(fh)
-    with fld_fh as fh:
-        ids_f, ty_f, x, _, _ = load(fh)
-    assert np.array_equal(ids_c, ids_f) and np.array_equal(ty_c, ty_f)
+def retention(control: DumpFrame, field: DumpFrame, n_al: int | None = None) -> dict:
+    """Fit Fe subsets in a fixed box with minimum-image x/y displacements.
 
-    # minimum image in the periodic directions: the two minimised states differ
-    # by ~0.1 A, so anything larger is a wrap, not a displacement
+    The covariance uses pooled residual variance over 3N - 12 degrees of
+    freedom and the small-strain linear projection used in the paper.
+    Spatial correlations and simulation-to-simulation variation are excluded.
+    """
+    validate_pair(control, field)
+    ty_c, X, x = control.types, control.positions, field.positions
+    lx, ly = (control.bounds[:, 1] - control.bounds[:, 0])[:2]
+
+    # This correspondence assumes displacements smaller than half a box length.
     d = x - X
     for k, L in ((0, lx), (1, ly)):
         d[:, k] -= np.round(d[:, k] / L) * L
@@ -111,17 +81,20 @@ def main() -> int:
 
     eps = eigenstrain_tensor()
     eps_norm2 = float(np.sum(eps * eps))
-    cx = lx / 2.0
+    cx = float(control.bounds[0].mean())
 
     fe = ty_c == 2
+    if n_al is not None and np.any(fe & (control.ids <= n_al)):
+        raise ValueError("Fe atoms occur within the specified matrix ID range")
     zc = X[:, 2]
     inside_ridge = (np.abs(X[:, 0] - cx) < RIDGE_RX) & (zc >= Z_SUP)
     subsets = {
         "whole_inclusion_Fe_sublattice": fe,
         "support_slab_only_z_lt_18": fe & (zc < 18.0),
         "ridge_only_z_gt_22": fe & (zc > 22.0) & inside_ridge,
-        "ridge_interior_z22_34_x_within_25": (fe & (zc > 22.0) & (zc < 34.0)
-                                              & (np.abs(X[:, 0] - cx) < 25.0)),
+        "ridge_interior_z22_34_x_within_25": (
+            fe & (zc > 22.0) & (zc < 34.0) & (np.abs(X[:, 0] - cx) < 25.0)
+        ),
     }
 
     out = {}
@@ -140,11 +113,17 @@ def main() -> int:
         # formal least-squares standard error: the three rows of F are separate
         # regressions on the common centred design matrix, s^2 pooled over
         # 3N - 12 degrees of freedom (nine for F, three for the centroid)
-        s2 = float((resid ** 2).sum() / (3 * n - 12))
+        s2 = float((resid**2).sum() / (3 * n - 12))
         C = np.linalg.inv(G)
         W = eps / eps_norm2
-        var = float(sum(W[a, b] * W[a, bb] * s2 * C[b, bb]
-                        for a in range(3) for b in range(3) for bb in range(3)))
+        var = float(
+            sum(
+                W[a, b] * W[a, bb] * s2 * C[b, bb]
+                for a in range(3)
+                for b in range(3)
+                for bb in range(3)
+            )
+        )
         out[name] = {
             "n_atoms": n,
             "F_minus_I": np.round(F - np.eye(3), 6).tolist(),
@@ -153,73 +132,112 @@ def main() -> int:
             "eta_standard_error": round(math.sqrt(var), 4),
             "E_res_norm": round(float(math.sqrt(np.sum(E * E))), 6),
             "eps_star_norm": round(float(math.sqrt(eps_norm2)), 6),
-            "rms_nonaffine_A": round(float(np.sqrt((resid ** 2).sum(axis=1).mean())), 4),
+            "rms_nonaffine_A": round(float(np.sqrt((resid**2).sum(axis=1).mean())), 4),
         }
 
-    # The ridge is the part of the inclusion that radiates the field sampled
-    # above the crest, so its retention is the one the manuscript quotes. The
-    # interior subset is a tighter but noisier probe of the same thing.
     ridge = out["ridge_only_z_gt_22"]
+    if "eta_retained_fraction" not in ridge:
+        raise ValueError("Too few Fe atoms in the ridge to estimate retention")
     eta_main = ridge["eta_retained_fraction"]
     se_main = ridge["eta_standard_error"]
     res = {
         "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-        "question": "Does the nominal eigenstrain survive unconstrained minimisation?",
+        "quantity": "Projection of the fitted Fe-sublattice strain onto the imposed strain",
         "method": "best-fit affine map between minimised control and minimised field "
-                  "on the Fe sublattice; E_res = 0.5(F^T F - I); eta = (E_res:eps*)/(eps*:eps*)",
+        "on the Fe sublattice; E_res = 0.5(F^T F - I); eta = (E_res:eps*)/(eps*:eps*)",
         "eigenstrain_nominal": EPS_NOM,
         "eigenstrain_tensor": np.round(eigenstrain_tensor(), 8).tolist(),
         "subsets": out,
-        "eta_used_for_rescaling": round(eta_main, 2),
-        "eta_used_for_rescaling_se": round(se_main, 2),
-        "eta_note": ("The ridge radiates the field sampled above the crest, so its "
-                     "retention governs the quoted value. The support slab retains "
-                     "more because periodicity in x and y stops it relaxing "
-                     "laterally."),
-        "error_definition": ("formal least-squares standard error, Cov(f_alpha) = "
-                             "s^2 (Xc^T Xc)^-1 per row with s^2 pooled over 3N-12 "
-                             "degrees of freedom, propagated linearly to eta; not a "
-                             "bootstrap and not a spread over seeds"),
-        "atom_correspondence": "by atom id; both cells written by the same generator and seed",
+        "eta_used_for_rescaling": eta_main,
+        "eta_used_for_rescaling_se": se_main,
+        "eta_note": (
+            "Legacy rescaling keys report the ridge subset (z > 22 A). "
+            "Eta is a projection diagnostic and does not calibrate the stress field."
+        ),
+        "error_definition": (
+            "formal least-squares standard error, Cov(f_alpha) = "
+            "s^2 (Xc^T Xc)^-1 per row with s^2 pooled over 3N-12 "
+            "degrees of freedom, propagated linearly to eta; not a "
+            "bootstrap and not a spread over seeds"
+        ),
+        "atom_correspondence": "validated identical atom IDs and types in both snapshots",
+        "box_bounds_A": control.bounds.tolist(),
+        "snapshot_steps": {"control": control.timestep, "field": field.timestep},
+        "matrix_id_limit": n_al,
         "pbc": "minimum image applied to the x and y displacement components before fitting",
         "components_table_1e3": {
-            k: {"N": v["n_atoms"],
+            k: {
+                "N": v["n_atoms"],
                 "Exx": round(v["E_res"][0][0] * 1e3, 3),
                 "Eyy": round(v["E_res"][1][1] * 1e3, 3),
                 "Ezz": round(v["E_res"][2][2] * 1e3, 3),
                 "Exz": round(v["E_res"][0][2] * 1e3, 3),
                 "eta": v["eta_retained_fraction"],
-                "se": v["eta_standard_error"]}
-            for k, v in out.items() if "eta_retained_fraction" in v},
-        "nominal_1e3": {"Exx": round(eigenstrain_tensor()[0][0] * 1e3, 3),
-                        "Eyy": round(eigenstrain_tensor()[1][1] * 1e3, 3),
-                        "Ezz": round(eigenstrain_tensor()[2][2] * 1e3, 3),
-                        "Exz": round(eigenstrain_tensor()[0][2] * 1e3, 3)},
+                "se": v["eta_standard_error"],
+            }
+            for k, v in out.items()
+            if "eta_retained_fraction" in v
+        },
+        "nominal_1e3": {
+            "Exx": round(eigenstrain_tensor()[0][0] * 1e3, 3),
+            "Eyy": round(eigenstrain_tensor()[1][1] * 1e3, 3),
+            "Ezz": round(eigenstrain_tensor()[2][2] * 1e3, 3),
+            "Exz": round(eigenstrain_tensor()[0][2] * 1e3, 3),
+        },
         "interpretation": (
-            "The construction is an initial affine perturbation followed by "
-            "unconstrained minimisation, not a maintained eigenstrain: the potential's "
-            "equilibrium metric is unchanged, so the inclusion relaxes back toward it. "
-            "eta is reported as a diagnostic of that relaxation only. The residual "
-            "tensor is not proportional to the imposed one - the shear survives while "
-            "the normal components do not - so no single scalar can rescale the field "
-            "to a physical magnetostriction; that amplitude comes from the analytic "
-            "Eshelby solution of stageG8 instead."),
+            "A coordinate-strain fit measures the retained deformation. "
+            "Boundary constraints and convergence must be established from "
+            "the simulation inputs and logs, not inferred from eta."
+        ),
     }
+    return res
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--src", type=Path, help="directory containing the curated pair")
+    ap.add_argument("--control", type=Path)
+    ap.add_argument("--field", type=Path)
+    ap.add_argument(
+        "--out", type=Path, default=REPO / "docs/reports/stageG12_eigenstrain_retention.json"
+    )
+    ap.add_argument("--n-al", type=int, help="optional matrix ID limit, checked against Fe IDs")
+    ap.add_argument(
+        "--protocol", choices=("held", "free", "unspecified"), help="constraint provenance"
+    )
+    ap.add_argument("--label", default="")
+    args = ap.parse_args()
+    if bool(args.control) != bool(args.field):
+        ap.error("--control and --field must be supplied together")
+    src = source_dir(args.src)
+    paths = {
+        "control": resolve_dump(args.control or src / CONTROL),
+        "field": resolve_dump(args.field or src / FIELD),
+    }
+    with open_text(paths["control"]) as stream:
+        control = read_snapshot(stream)
+    with open_text(paths["field"]) as stream:
+        field = read_snapshot(stream)
+    res = retention(control, field, args.n_al)
+    res["inputs"] = {key: file_provenance(path) for key, path in paths.items()}
+    res["constraint_protocol"] = args.protocol or ("held" if not args.control else "unspecified")
     if args.label:
         res["label"] = args.label
-        res["inputs"] = {"control": args.control, "field": args.field}
-    p = Path(args.out) if args.out else REPO / "docs" / "reports" / "stageG12_eigenstrain_retention.json"
+    p = args.out
+    p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(res, indent=2) + chr(10), encoding="utf-8")
 
-    print("nominal eps* = %.3e, ||eps*|| = %.4e" % (EPS_NOM, math.sqrt(eps_norm2)))
-    for k, v in out.items():
+    eps = eigenstrain_tensor()
+    print(f"Nominal eps* = {EPS_NOM:.3e}, norm = {np.linalg.norm(eps):.4e}")
+    for k, v in res["subsets"].items():
         if "eta_retained_fraction" in v:
-            print("%-36s N=%6d  eta = %+.4f +- %.4f   nonaffine rms = %.3f A"
-                  % (k, v["n_atoms"], v["eta_retained_fraction"],
-                     v["eta_standard_error"], v["rms_nonaffine_A"]))
+            print(
+                f"{k:<36} N={v['n_atoms']:6d} eta = {v['eta_retained_fraction']:+.4f} "
+                f"+- {v['eta_standard_error']:.4f}, nonaffine RMS = {v['rms_nonaffine_A']:.3f} A"
+            )
     print()
     print("E_res of the ridge (x1e3):")
-    print(np.round(np.array(ridge["E_res"]) * 1e3, 4))
+    print(np.round(np.array(res["subsets"]["ridge_only_z_gt_22"]["E_res"]) * 1e3, 4))
     print("eps* (x1e3):")
     print(np.round(eigenstrain_tensor() * 1e3, 4))
     return 0

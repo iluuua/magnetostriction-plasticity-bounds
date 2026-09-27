@@ -1,6 +1,11 @@
 {
-  "created_at": "2026-09-03T20:00:42+03:00",
-  "purpose": "Does the simulated 2D ridge over- or under-estimate the field of a compact 3D particle carrying the same eigenstrain?",
+  "created_at": "2026-09-27T16:43:36+03:00",
+  "purpose": "Homogeneous isotropic inclusion comparison at the same nominal strain",
+  "quadrature": {
+    "order_per_coordinate": 24,
+    "automatic_convergence_check": false
+  },
+  "comparison_limits": "Interior values are not exterior maxima; tethered MD and homogeneous eigenstrain impose different constraints",
   "elastic_constants": {
     "mu_GPa": 26.5,
     "nu": 0.347
@@ -83,21 +88,26 @@
     }
   ],
   "md_ridge_measurement_MPa": {
-    "source": "docs/reports/stageG10_field_profile.json",
-    "peak_max_RSS": 5.042,
-    "at_r_A": 50.0,
-    "system": "(111)[1-10]",
-    "cell": "Al matrix + Al13Fe4 ridge, unified cell of 91428 atoms (perturbation pair), CG minimisation only, no dislocations, no solutes",
-    "label": "stage G13 perturbation pair, unified 91,428-atom cell, eigenstrain on the ridge only, built from the v3-relaxed control, CG to a force two-norm of 0.02; inclusion tethered (spring/self 20 eV/A^2); profile to 20 A below the free surface",
+    "source": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG10_field_profile.json",
+    "provenance": {
+      "path": "docs/reports/stageG10_field_profile.json",
+      "size_bytes": 16300,
+      "sha256": "2b286b509262abb611d181009c6be471aa2863e90f013a048045facfa812c7b9"
+    },
+    "peak_max_RSS": 5.651,
+    "at_r_A": 22.0,
+    "system": "(1-1-1)[101]",
+    "cell": "Al matrix + Al13Fe4 ridge, 91428 atoms",
+    "label": null,
     "on_axis_max_abs_d_sigma_xz": 15.45
   },
   "at_measured_FeAl_magnetostriction": {
-    "note": "what the same sphere would carry if its strain were the largest magnetostriction reported for bulk Fe-Al alloys (Hall 1959; Bormio-Nunes 2012), i.e. 20-100 times less than 0.194 %",
+    "note": "Sensitivity values using 20-100 ppm from bulk Fe-Al comparisons; these are not measurements of the simulated Al13Fe4 phase",
     "sphere_interior_MPa": {
       "20 ppm": 0.427,
       "40 ppm": 0.855,
       "100 ppm": 2.137
     }
   },
-  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD ridge cell (docs/reports/stageG10_field_profile.json) gives a peak max-RSS of 5.0 MPa at r = 50 A from the interface plane, and 15.4 MPa within 10 A of the ridge axis. At the largest magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere would carry 2.14 MPa."
+  "verdict": "At identical eigenstrain the compact 3D inclusion carries an interior max-RSS of 41.5 MPa against 39.0 MPa for the infinite cylinder, a ratio of 1.06. The exterior field of the sphere falls to 11.34 MPa at r = 1.5a and 1.43 MPa at r = 3a. The MD profile gives width-averaged max-RSS 5.7 MPa at r = 22 A, and axial-window shear 15.4 MPa. At the largest magnetostriction measured for bulk Fe-Al alloys (1e-4) the same sphere would carry 2.14 MPa."
 }

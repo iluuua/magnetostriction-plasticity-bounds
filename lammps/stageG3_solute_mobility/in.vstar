@@ -1,17 +1,20 @@
-# Stage G6: activation-volume measurement. Al + Mg/Si solutes + edge dipole,
-# NO inclusion, NO eigenstrain. Constant-stress staircase ABOVE the solute
-# strength (~38 MPa) and above the 22 MPa dipole passing stress: the partners
-# separate and each line glides steadily against solute friction; v(tau) over
-# four rungs yields V* = kT dln(v)/dtau - the number that closes the two-scale
-# bridge (stageG5) with our own potential instead of literature values.
+# Dislocation motion in an Al-Mg-Si cell under a shear-traction staircase.
+# The deposited cell contains one edge-dislocation dipole and substitutional
+# solutes. Dislocation displacement is determined from the saved trajectories.
+# The bottom layer is fixed; a force along x acts on the top layer. All other
+# atoms, including the driven layer, are thermostatted at 300 K.
 #
-# Protocol fixes from the G4 post-mortem (audit g4-results-scrutiny):
-# - rung transitions are SMOOTHSTEP over TRANS steps (a hard step pumped the
-#   slab's standing shear wave resonantly; rung-mean stress was non-monotonic)
-# - the stress axis for the V* fit is the MEASURED rung-mean of the local
-#   monitor (v_tauprobe), not the nominal setting
-# - region bounds match THIS cell (bottom < 8 A frozen, driven slab z > 259 A)
-# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, SEED
+# Metal units: angstrom, eV, ps, K and bar. Each time step is 1 fs.
+# The layer bounds and probe region refer to the deposited 92,800-atom cell.
+# Variables supplied with -var:
+#   DATA_FILE, POT_DIR, OUT_PREFIX  input data, MEAM directory, output prefix
+#   SEED                           initial velocity seed
+#   PRE, HOLD, TRANS               preload, rung and transition lengths in steps
+#   TAU0, DTAU                     first traction level and increment in MPa
+# Default duration: 130 ps, including 10 ps at zero applied traction.
+# The archived run stopped minimisation on energy, with fnorm = 10.118429 eV/A.
+# These original settings are retained for protocol reproduction; they do not
+# demonstrate force convergence or an equilibrated pinning threshold.
 
 units           metal
 atom_style      atomic
@@ -51,16 +54,14 @@ thermo_style    custom step atoms temp pe press pxz
 minimize        1.0e-8 1.0e-10 2000 20000
 
 reset_timestep  0
-# validated KOKKOS neighbor workaround (milestone 2026-06-11)
 neigh_modify    delay 0 every 10 check no
 timestep        0.001
 velocity        mobile create 300.0 ${SEED} mom yes rot yes dist gaussian
 fix             nvt_mobile mobile nvt temp 300.0 300.0 0.1
 fix             ztop mobile wall/reflect zhi EDGE units box
 
-# --- smooth staircase ----------------------------------------------------
-# k = rung index; within the first TRANS steps of each rung tau interpolates
-# from the previous level with smoothstep f^2(3-2f); rung 0 rises from 0.
+# Within TRANS steps of each rung, the nominal traction changes from the
+# previous level with smoothstep f^2(3-2f). The first rung starts from zero.
 variable        sp equal step-v_PRE
 variable        kk equal floor(v_sp/v_HOLD)
 variable        rr equal v_sp-v_kk*v_HOLD
@@ -75,7 +76,8 @@ variable        ntop equal count(topgrab)
 variable        fxa equal 10.0*v_taumpa*lx*ly*6.241509e-7/v_ntop
 fix             pull topgrab addforce v_fxa 0.0 0.0
 
-# --- local stress monitor at the probe glide plane (z = 29.2 A) ----------
+# The fixed probe layer spans x and y around the initial lower glide plane.
+# tauprobe = -sum(c_st[5]) / region volume / 10, in MPa.
 region          rprobe block INF INF INF INF 23.0 35.0 units box
 compute         tp all reduce/region rprobe sum c_st[5]
 variable        vprobe equal lx*ly*12.0

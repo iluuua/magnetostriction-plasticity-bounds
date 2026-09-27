@@ -1,24 +1,24 @@
-# Межатомные потенциалы
+# Interatomic potential
 
-| Потенциал | Тип | Элементы | Источник | Файлы | Запустился? | Держит Al? | Держит Fe4Al13? | Комментарий |
-|---|---|---|---|---|---|---|---|---|
-| Zhou Al | EAM/alloy | Al | локально загружен ранее | `potentials/eam/Al_zhou.eam.alloy` | да | да | нет, нет Fe и Al-Fe | Использован только для baseline чистого Al. Не подходит для Al-Fe интерфейса. |
-| Jelinek/Groh/Horstemeyer et al. 2012 | MEAM | Al, Si, Mg, Cu, Fe | NIST IPR / OpenKIM; DOI `10.1103/PhysRevB.85.245102` | `potentials/meam/Jelinek_2012/Jelinek_2012_meamf`, `potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe` | да | не перепроверялся в этой сессии для pure Al | sanity-run да | Содержит Al-Fe cross-interaction. Подходит как baseline-кандидат, но не как окончательная физическая валидация Fe4Al13. |
+The published calculations use the original Jelinek et al. Al-Si-Mg-Cu-Fe
+modified embedded-atom method parameterisation:
 
-## MEAM pair_coeff
+B. Jelinek et al., *Physical Review B* 85, 245102 (2012),
+[doi:10.1103/PhysRevB.85.245102](https://doi.org/10.1103/PhysRevB.85.245102).
 
-Проверено по файлам потенциала и тестовому архиву NIST:
+The two files in `meam/Jelinek_2012/` are the element library
+(`Jelinek_2012_meamf`) and interaction parameters
+(`Jelinek_2012_meam.alsimgcufe`). They are retained unchanged with their
+original headers. The [NIST Interatomic Potentials Repository entry](https://www.ctcms.nist.gov/potentials/entry/2012--Jelinek-B-Groh-S-Horstemeyer-M-F-et-al--Al-Si-Mg-Cu-Fe/)
+identifies the author-supplied files and accompanying tests. No new licence is
+asserted over these third-party parameters.
 
-```lammps
-pair_style meam
-pair_coeff * * ../../potentials/meam/Jelinek_2012/Jelinek_2012_meamf AlS SiS MgS CuS FeS ../../potentials/meam/Jelinek_2012/Jelinek_2012_meam.alsimgcufe AlS FeS
-```
+The library element order is `AlS SiS MgS CuS FeS`. Interface-cell atom types
+map to `AlS FeS MgS SiS`; the separate alloy cell maps to `AlS MgS SiS`.
+The actual mapping is explicit in each retained LAMMPS input. A type number
+must not be interpreted as the same chemical element across these two cells.
 
-Порядок LAMMPS atom types для текущего `al13fe4.data`:
-
-```json
-{
-  "Al": 1,
-  "Fe": 2
-}
-```
+The potential supports a mechanical comparison in the chosen geometry.
+Independent validation of the Al/Al13Fe4 interface and Mg/Si dislocation
+barriers has not been established by this work. Reproducing a deposited run
+does not establish the model's predictive accuracy for a real alloy.

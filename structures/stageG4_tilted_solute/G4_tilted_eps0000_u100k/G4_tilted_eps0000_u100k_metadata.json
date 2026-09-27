@@ -2,7 +2,7 @@
   "case_id": "G4_tilted_eps0000_u100k",
   "created_at": "2026-09-03T04:27:20+03:00",
   "git_head_at_generation": "794d16228c6418cb52ab2aa4ff8e6ac93fd485d2",
-  "model": "Al matrix + Fe4Al13 ridge inclusion + Mg/Si solutes",
+  "model": "Al matrix + Al13Fe4 ridge inclusion; no solutes",
   "orientation": {
     "x": "[1-10]",
     "y": "[11-2]",
@@ -32,7 +32,7 @@
       0.0,
       0.7071067811865476
     ],
-    "tensor": "lambda*(1.5 u(x)u - 0.5 I), trace = 0 (volume conserving)",
+    "tensor": "eps*(1.5 outer(u,u) - 0.5 I); zero trace, volume conserving to first order",
     "tensor_matrix": [
       [
         0.0,
@@ -54,8 +54,9 @@
     "note": "a z-axis eigenstrain would give Schmid 0.00000"
   },
   "solutes": {
-    "Mg_at_pct": 1.0,
-    "Si_at_pct": 0.6,
+    "Mg_at_pct": 0.0,
+    "Si_at_pct": 0.0,
+    "note": "Actual composition; the original builder recorded unused 1.0/0.6 percent defaults.",
     "seed": 12345,
     "n_Mg": 0,
     "n_Si": 0
@@ -114,5 +115,6 @@
     "folded_pbc": true
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\AppData\\Local\\Temp\\claude\\C--Users-dille-Documents-ilua-system-projects-physics-md-al-fe\\a390cfa3-c161-46d3-b945-106caf7d16ac\\scratchpad\\regen\\G4_tilted_eps0000_u100k\\G4_tilted_eps0000_u100k.start.data"
+  "data_file": "data/publication/interface/initial_ctl.data.gz",
+  "data_file_note": "Deposited static initial state is relaxed; this metadata describes the construction geometry."
 }

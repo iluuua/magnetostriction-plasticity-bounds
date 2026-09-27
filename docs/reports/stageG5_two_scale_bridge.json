@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-09-02T16:22:01+03:00",
+  "created_at": "2026-09-27T16:19:15+03:00",
   "model": "Eshelby r^-3 exterior field + thermally activated glide; <rate>/rate0 - 1 = f*x0*INT_0^x0 (cosh u - 1)/u^2 du, x0 = V* sigma_m / kT",
   "constants": {
     "kT_300K_J": 4.141947e-21,
@@ -8,30 +8,37 @@
     "volume_fraction": 0.00246,
     "target_enhancement": 0.25
   },
+  "assumptions": {
+    "stress_amplitude": "scalar resolved shear in Pa",
+    "activation_volumes": "assumed sensitivity range, not MD measurements",
+    "bias_average": "equal positive and negative biases, giving cosh",
+    "radial_lower_limit": "zero, dilute approximation",
+    "volume_fraction": "0.35 wt%, densities 3.85/2.70 g/cm^3, approximately 0.00246"
+  },
   "required_interface_stress": {
     "V*=19b^3": {
       "sigma_m_MPa": 62.7,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     },
     "V*=30b^3": {
       "sigma_m_MPa": 39.7,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     },
     "V*=50b^3": {
       "sigma_m_MPa": 23.8,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     },
     "V*=70b^3": {
       "sigma_m_MPa": 17.0,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     },
     "V*=100b^3": {
       "sigma_m_MPa": 11.9,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     },
     "V*=142b^3": {
       "sigma_m_MPa": 8.4,
-      "note": "interface stress needed to explain the measured +25% creep"
+      "note": "resolved-shear amplitude needed for +25% within the stated model"
     }
   },
   "forward_prediction_at_claimed_147MPa": {
@@ -63,25 +70,19 @@
   "what_real_magnetostriction_gives": {
     "lambda_s=2e-05": {
       "sigma_matrix_MPa": 1.06,
-      "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)"
+      "route": "2*mu_Al*lambda_s elastic scale; not a geometry-resolved interface stress"
     },
     "lambda_s=4e-05": {
       "sigma_matrix_MPa": 2.12,
-      "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)"
+      "route": "2*mu_Al*lambda_s elastic scale; not a geometry-resolved interface stress"
     },
     "lambda_s=1e-04": {
       "sigma_matrix_MPa": 5.3,
-      "route": "sigma ~ 2*mu_Al*lambda_s (Eshelby matrix-side estimate)"
+      "route": "2*mu_Al*lambda_s elastic scale; not a geometry-resolved interface stress"
     }
   },
   "claimed_by_manuscript_MPa": 147.0,
   "our_eigenstrain_eps": 0.00194,
   "our_eigenstrain_in_ppm": 1940,
-  "measured_field_gate_MPa": 136.1,
-  "field_gate_rescaled_to_real_lambda": {
-    "lambda_s=2e-05": 1.4,
-    "lambda_s=4e-05": 2.81,
-    "lambda_s=1e-04": 7.02
-  },
-  "verdict": "The experiment requires sigma_m = 8-63 MPa. Real Fe-Al magnetostriction supplies 1.1-5.3 MPa. The manuscript's 147 MPa overshoots the requirement by 2.3-18x and, fed forward, predicts enhancements of order 1e6-1e31 instead of 25%. Two independent routes therefore place the true interface stress at a few to a few tens of MPa."
+  "verdict": "Under the model assumptions, +25% requires 8.4-62.7 MPa for the assumed activation volumes. The comparison scale 2*mu*lambda spans 1.1-5.3 MPa. Neither calculation measures the actual strain or the stress distribution of an Al13Fe4 inclusion."
 }

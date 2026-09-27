@@ -1,50 +1,34 @@
-# Рукопись: сборка и состав
+# Manuscripts and figures
 
-Статья в двух версиях: английская (`main.tex`, elsarticle, Computational
-Materials Science) и русская (`main_ru.tex`, формат ФТТ). Обе собираются
-локально через pdflatex.
+`main.tex` and `main_ru.tex` are the authoritative English and Russian
+manuscripts. `supplementary.tex` and `supplementary_ru.tex` contain the numerical
+protocols, additional controls and reproducibility limitations. Both language
+versions use the same four English-labelled figures and bibliography.
 
-## Как собрать
+| Figure | Input and interpretation |
+|---|---|
+| `fig_model.png` | OVITO rendering of deposited atomic coordinates; interface and loaded cells |
+| `fig_field.pdf` | Signed shear increment from the common held-state pair, with coordinate definitions |
+| `fig_dynamics.pdf` | Restrained G15 upper-line motion and the applied loading programme |
+| `fig_bridge.pdf` | Sensitivity of the conditional activated-glide integral to activation volume |
 
-```
-cd docs/paper
-python splice_drafts.py                 # _drafts/*.tex -> main_v2.tex, main_ru_v2.tex
-pdflatex main_v2 && bibtex main_v2 && pdflatex main_v2 && pdflatex main_v2
-pdflatex main_ru_v2 && pdflatex main_ru_v2
-```
+The figure generator is `analysis/python/publication_figures.py`.
+Its `--list-inputs` option reports the exact files and checksums.
+The comparison is mechanical: no measured magnetic strain or field-off memory
+process is simulated.
 
-Готовые PDF копируются в `manuscript_en.pdf` и `manuscript_ru.pdf` (они
-лежат в репозитории). `python make_docx.py` делает из них Word-версии для
-правки соавтором, `highlights.tex` собирается отдельно.
+Run `python scripts/build_manuscript.py` from the repository root after
+regenerating figures. It writes the two manuscript PDFs, two supplement PDFs
+and local Overleaf archives. Intermediate TeX files stay in `build/paper`.
 
-MiKTeX в этой системе не может перестроить `pdftex.map` (`initexmf` падает
-на записи PATH), поэтому оба преамбула сами подгружают шрифты cm-super:
-`\pdfmapfile{+cm-super-t1.map}`, для русской версии дополнительно
-`+cm-super-t2a.map`. Без этих строк pdflatex подставляет растровые шрифты
-Type 3, и в PDF пропадает поиск по тексту. В Overleaf строки безвредны.
+The compact draft has an abstract below 150 English words, five keywords and
+four figures. It is prepared as a regular research article with explicit model
+limitations. No journal acceptance or current quartile is implied by this
+format. [Physical Review Materials author guidance](https://journals.aps.org/prmaterials/authors)
+allows regular articles without a fixed length limit and requires clear data
+availability and substantive AI-use disclosure. Its Letter format has a
+4,500-word limit and a separate editorial standard.
 
-## Overleaf
-
-Загрузить `main.tex` (или `main_ru.tex` под именем `main.tex`),
-`references.bib`, `main.bbl`, `highlights.tex` и все файлы `fig_*`.
-Подробности в `README_overleaf.txt`.
-
-## Состав
-
-| Файл | Что это |
-| --- | --- |
-| `main.tex`, `main_ru.tex` | итоговые версии, собираются из черновиков |
-| `_drafts/Section_*.tex` | исходные разделы, по языку на файл |
-| `_drafts/*_notes.md` | какие термины и как объяснены, что удалено и почему |
-| `_drafts/patch_*.py` | раунды правок: анкеры и замены каждого прохода |
-| `_drafts/numbers_round*.json` | числа, подставляемые в текст из записей `docs/reports/` |
-| `splice_drafts.py` | сборка `main_v2.tex` / `main_ru_v2.tex` из черновиков |
-| `audit_v4.py` | сверка чисел в тексте с JSON-записями расчётов |
-| `make_docx.py` | экспорт в Word через pypandoc |
-| `fig_cell_*` | рендеры ячеек (OVITO), `analysis/python/stageG14_render_cells.py` |
-| `fig_sigma_profile_*`, `fig_rss_vs_thresholds_*`, `fig_trajectories_*` | `analysis/python/stageG11_figures.py` |
-| `fig_loading_programme_*` | `analysis/python/stageG14_loading_programme.py` |
-
-Каждое число в тексте восходит к записи в `docs/reports/`. Раунды правок
-(три содержательных плюс две многоагентные проверки) описаны в истории
-коммитов, а не в отдельном файле.
+Before a journal submission the authors must confirm the chosen article type,
+coauthor approval, affiliations, funding, declarations and any required cover
+letter. These administrative confirmations are not fabricated in the draft.

@@ -1,7 +1,22 @@
 {
   "tag": "relA",
-  "dump": "runs\\stageG6_vstar\\20260823-174823\\G3_solute_relA\\G3_solute_relA.vstar.lammpstrj",
+  "dump": "data/publication/alloy/trajectory.*.lammpstrj.gz",
+  "stress_atom_filter": "type != 2: historical Al/Si selection, excluding Mg",
+  "stress_convention": "Compression-positive; opposite to tensile-positive Cauchy stress",
+  "initial_state_provenance": "Candidate structure only; no launch-time hash verifies initial mobile coordinates",
+  "preparation_converged_by_force": false,
+  "preparation_final_force_two_norm_eV_per_A": 10.118429,
+  "fit_interpretation": "Diagnostic drift fit; sustained glide and physical activation volume are not established",
+  "selection_comparison": "stageG6_stress_selection_relA.json",
   "n_frames": 131,
+  "loading_motion": {
+    "start_step": 10000,
+    "end_step": 130000,
+    "n_frames": 121,
+    "net_displacement_A": 1.975434393179448,
+    "position_std_A": 0.6252085041116336,
+    "interpretation": "Loading interval only; initial zero-load motion is excluded"
+  },
   "created_at": "2026-08-24T18:50:03+03:00",
   "quiet_box": {
     "x0": 5.0,
@@ -55,6 +70,7 @@
       "displacement_A": 0.1711497875949206
     }
   ],
+  "V_star_validated": false,
   "V_star_b3": -12.317853225962807,
   "V_star_err_b3": 21.307751910051,
   "kT_over_Vstar_MPa": null

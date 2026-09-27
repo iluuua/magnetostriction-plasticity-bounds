@@ -4,90 +4,186 @@
     "G15_ctl",
     "G15_fld"
   ],
-  "created_at": "2026-09-04T11:36:45+03:00",
-  "protocol": "adversarial-review v2: oriented-Burgers families, unwrapped s(t), baseline tau<40 MPa, onset 6*sigma_s (min 8 A) sustained 3 frames",
+  "created_at": "2026-09-27T16:21:02+03:00",
+  "protocol": "oriented Burgers families; baseline tau<40 MPa; departure >6*sigma (minimum 8 A), checked in two subsequent frames; reacquisition after a gap invalidates original-line onset",
   "cases": {
     "G15_ctl": {
-      "case": "G15_ctl",
-      "sigma_s_A": 9.163175957401526,
-      "threshold_A": 54.97905574440915,
+      "sigma_s_A": 9.163176095501521,
+      "threshold_A": 54.97905657300913,
       "baseline_fit": {
-        "slope_A_per_step": 0.0025058124352093595,
-        "intercept_A": 40.02744081798993
+        "slope_A_per_step": 0.0025058126428570944,
+        "intercept_A": 40.02744026426228
       },
       "per_line": {
         "plus": {
-          "x_at_start_A": 144.31934075413253,
-          "displacement_in_first_6ps_A": 0.4252322384678564,
-          "baseline_sigma_A": 5.368870163443695,
-          "threshold_A": 32.21322098066217,
-          "baseline_slope_A_per_step": 0.0015344953632570257,
-          "onset": {
+          "x_at_start_A": 144.31934075413258,
+          "displacement_in_first_6ps_A": 0.42523223846819747,
+          "baseline_sigma_A": 5.368870415521672,
+          "threshold_A": 32.21322249313003,
+          "baseline_slope_A_per_step": 0.0015344956057333904,
+          "onset": null,
+          "candidate_onset": {
             "step": 40000,
-            "tau_nominal_MPa": 122.72727272727272,
-            "x_A": 164.64363339058167,
-            "dev_A": -34.82478472249932
+            "tau_nominal_MPa": 122.7234375,
+            "x_A": 164.64363643608232,
+            "dev_A": -34.82479030915357
           },
+          "lineage_status": "untrusted_after_gap",
+          "first_reacquired_step": 12000,
+          "onset_trusted": false,
           "line_gone_at_step": 10000
         },
         "minus": {
           "x_at_start_A": 117.93790432386886,
-          "displacement_in_first_6ps_A": -31.037213438500373,
-          "baseline_sigma_A": 3.891863684710139,
-          "threshold_A": 23.351182108260836,
-          "baseline_slope_A_per_step": -0.00018073708518659957,
+          "displacement_in_first_6ps_A": -31.037213438499805,
+          "baseline_sigma_A": 3.8918636847103003,
+          "threshold_A": 23.351182108261803,
+          "baseline_slope_A_per_step": -0.0001807370851866087,
           "onset": {
             "step": 38000,
-            "tau_nominal_MPa": 113.63636363636363,
-            "x_A": 43.13971954356283,
-            "dev_A": -36.31422125829407
+            "tau_nominal_MPa": 113.6328125,
+            "x_A": 43.13971954356214,
+            "dev_A": -36.31422125829391
           },
+          "candidate_onset": {
+            "step": 38000,
+            "tau_nominal_MPa": 113.6328125,
+            "x_A": 43.13971954356214,
+            "dev_A": -36.31422125829391
+          },
+          "lineage_status": "continuous_until_disappearance",
+          "first_reacquired_step": null,
+          "onset_trusted": true,
           "line_gone_at_step": null
         }
       },
       "onset": null,
-      "csv": "docs\\reports\\stageG2_depinning_G15_ctl_G15held.csv"
+      "candidate_onset": null,
+      "interpretation": "Burgers-family departure candidates. Family continuity does not establish segment identity or confirm nucleation.",
+      "case": "G15_ctl",
+      "inputs": [
+        {
+          "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/G15_ctl.production.lammpstrj",
+          "size_bytes": 190357270
+        }
+      ],
+      "nominal_ramp": {
+        "pre_steps": 5000,
+        "smooth_steps": 16000,
+        "total_steps": 45000,
+        "tau_max_mpa": 145.45,
+        "timestep_ps": 0.001
+      },
+      "cell_length_x_A": 154.6442530455,
+      "coverage": {
+        "available_frames": 23,
+        "analyzed_frames": 23,
+        "last_analyzed_step": 44000,
+        "last_nominal_MPa": 140.9046875,
+        "subset_only": false
+      },
+      "log_input": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_ctl/log.lammps",
+        "size_bytes": 49617,
+        "sha256": "1298fe3380053dd02862965f9ff8375db07f2484be794d9b2c40e3e7e71cf55a"
+      },
+      "ramp_parameter_sources": {
+        "pre_steps": "in.ramp default; not independently verified",
+        "smooth_steps": "in.ramp default; not independently verified",
+        "total_steps": "explicit CLI parameter",
+        "tau_max_mpa": "explicit CLI parameter",
+        "timestep_ps": "in.ramp default; not independently verified"
+      },
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG2_depinning_G15_ctl_G15held.csv"
     },
     "G15_fld": {
-      "case": "G15_fld",
-      "sigma_s_A": 4.698045307843722,
-      "threshold_A": 28.18827184706233,
+      "sigma_s_A": 4.698045261188759,
+      "threshold_A": 28.188271567132553,
       "baseline_fit": {
-        "slope_A_per_step": 0.003597531878780957,
-        "intercept_A": 35.33117810369939
+        "slope_A_per_step": 0.003597532093612214,
+        "intercept_A": 35.33117747158491
       },
       "per_line": {
         "plus": {
-          "x_at_start_A": 144.27886413772552,
-          "displacement_in_first_6ps_A": -2.7258637596760025,
-          "baseline_sigma_A": 2.938519095320084,
-          "threshold_A": 17.631114571920506,
-          "baseline_slope_A_per_step": 0.002108185124404077,
-          "onset": {
+          "x_at_start_A": 144.2788641377255,
+          "displacement_in_first_6ps_A": -2.725863759670574,
+          "baseline_sigma_A": 2.9385193166918926,
+          "threshold_A": 17.631115900151357,
+          "baseline_slope_A_per_step": 0.0021081853920980505,
+          "onset": null,
+          "candidate_onset": {
             "step": 28000,
-            "tau_nominal_MPa": 68.18181818181817,
-            "x_A": 163.52370313460946,
-            "dev_A": -25.516676961865528
+            "tau_nominal_MPa": 68.1796875,
+            "x_A": 163.52370618010926,
+            "dev_A": -25.516680059094085
           },
+          "lineage_status": "untrusted_after_gap",
+          "first_reacquired_step": 14000,
+          "onset_trusted": false,
           "line_gone_at_step": 10000
         },
         "minus": {
-          "x_at_start_A": 116.98664895090319,
-          "displacement_in_first_6ps_A": -33.244305657584206,
-          "baseline_sigma_A": 3.504582873948051,
-          "threshold_A": 21.027497243688305,
-          "baseline_slope_A_per_step": -0.0007936668094684216,
+          "x_at_start_A": 116.98664895090245,
+          "displacement_in_first_6ps_A": -33.244305657583,
+          "baseline_sigma_A": 3.504582888352256,
+          "threshold_A": 21.027497330113533,
+          "baseline_slope_A_per_step": -0.0007936668084330574,
           "onset": {
             "step": 40000,
-            "tau_nominal_MPa": 122.72727272727272,
-            "x_A": 32.19339123000514,
-            "dev_A": -21.603431961342203
+            "tau_nominal_MPa": 122.7234375,
+            "x_A": 32.193391230006334,
+            "dev_A": -21.60343197651698
           },
+          "candidate_onset": {
+            "step": 40000,
+            "tau_nominal_MPa": 122.7234375,
+            "x_A": 32.193391230006334,
+            "dev_A": -21.60343197651698
+          },
+          "lineage_status": "continuous_until_disappearance",
+          "first_reacquired_step": null,
+          "onset_trusted": true,
           "line_gone_at_step": 44000
         }
       },
       "onset": null,
-      "csv": "docs\\reports\\stageG2_depinning_G15_fld_G15held.csv"
+      "candidate_onset": null,
+      "interpretation": "Burgers-family departure candidates. Family continuity does not establish segment identity or confirm nucleation.",
+      "case": "G15_fld",
+      "inputs": [
+        {
+          "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/G15_fld.production.lammpstrj",
+          "size_bytes": 190341596
+        }
+      ],
+      "nominal_ramp": {
+        "pre_steps": 5000,
+        "smooth_steps": 16000,
+        "total_steps": 45000,
+        "tau_max_mpa": 145.45,
+        "timestep_ps": 0.001
+      },
+      "cell_length_x_A": 154.6442530455,
+      "coverage": {
+        "available_frames": 23,
+        "analyzed_frames": 23,
+        "last_analyzed_step": 44000,
+        "last_nominal_MPa": 140.9046875,
+        "subset_only": false
+      },
+      "log_input": {
+        "path": "runs/stageG15_unified/20260904-021832-814770_held/G15_fld/log.lammps",
+        "size_bytes": 49616,
+        "sha256": "63e31dccc77ac91e74866399adbbd11ef47ea7c392facac1398063894b1784f1"
+      },
+      "ramp_parameter_sources": {
+        "pre_steps": "in.ramp default; not independently verified",
+        "smooth_steps": "in.ramp default; not independently verified",
+        "total_steps": "explicit CLI parameter",
+        "tau_max_mpa": "explicit CLI parameter",
+        "timestep_ps": "in.ramp default; not independently verified"
+      },
+      "csv": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\docs\\reports\\stageG2_depinning_G15_fld_G15held.csv"
     }
   }
 }

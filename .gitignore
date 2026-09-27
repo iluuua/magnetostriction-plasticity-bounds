@@ -1,116 +1,47 @@
-# ---------------------------------------------------------------- raw MD data
-# Trajectories and restarts are large and regenerable from the inputs that are
-# published here. They stay on the machine that produced them.
-*.lammpstrj
-*.xyz
-dump.*
-restart.*
-data.*
-*.start.data
-data.*_final
-log.smoke*.lammps
-log.short*.lammps
-log.production*.lammps
-
-# The one exception, and it is deliberate: the two minimized Stage G4 interface
-# cells are the primary data behind Fig. 1, Table 1 and every stress number the
-# manuscript quotes, so they ARE published, gzipped, under data/stageG4_clean/.
-# The rule above does not match the .gz suffix today; this negation keeps that
-# true if the pattern is ever tightened.
-!data/stageG4_clean/**
-
-# The whole run tree: 14 GB of production output. This used to live only in
-# .git/info/exclude, which is per-clone and never published - so a fresh clone
-# elsewhere would have seen runs/ as untracked-but-not-ignored and swept it into
-# the next `git add -A`.
-runs/
-
-# ------------------------------------------------------- private and copyright
-# Supervisor source materials: copyrighted PDFs and an unpublished manuscript.
-pshonkin_materials_ishodniki/
-# Local notes, drafts and correspondence prepared for the supervisor.
-docs/_local/
-
-# ------------------------------------------------------------- session debris
-# Reports written by the AI agents that ran the campaign, to hand work between
-# sessions. Useful at the time, noise in a published repository.
-agent_report*.md
-prompt*.txt
-pr_body.md
-release_commit_manifest.md
-# Frozen agent state and verbatim third-party web scrapes.
-.codex/
-.firecrawl/
-# Operator babysitting output: watchdog CSVs, PowerShell transcripts, pagefile
-# probes and disk-cleanup manifests. Machine-specific, no scientific content.
-diagnostics/
-monitor_snapshots/
-status_dump_*.txt
-
-# ------------------------------------------------------------------- tooling
+# Local environments and caches
+.venv/
 __pycache__/
 *.py[cod]
-*$py.class
 .pytest_cache/
-.venv/
-_docx_build/
-*.stackdump
-*.tmp
-*.temp
-*.swp
-*.swo
+.ruff_cache/
 .cache/
 .DS_Store
 
-# --------------------------------------------- retired manuscript tooling
-# One-shot text patchers from the revision rounds. Every one is a flat list of
-# literal replacements whose anchors no longer exist in the sources, so running
-# one now does nothing or half-applies. The revision history is in the git log.
-docs/paper/revise_*.py
-docs/paper/apply_fixes.py
-docs/paper/fix_units.py
-docs/paper/make_pdf.py
-# Superseded reading copies and regenerable packaging. The two current reading
-# copies (manuscript_en.pdf, manuscript_ru.pdf) ARE published; the Word and
-# Overleaf exports are not - make_docx.py and a zip of the tracked files
-# reproduce them in seconds.
-docs/paper/main_en_compiled.pdf
-docs/paper/main_ru_compiled.pdf
-docs/paper/manuscript_en_v2.pdf
-docs/paper/manuscript_ru_v2.pdf
-docs/paper/manuscript_*_editable.docx
-docs/paper/overleaf_*.zip
-docs/paper/*.spl
-
-# ------------------------------------------------- correspondence drafts
-docs/reports/pshonkin_message_*.md
-
-# ------------------------------- stage F debugging debris (no results in it)
-docs/reports/stageF_dual_lane_preflight.*
-docs/reports/stageF_gpu_fix_*
-docs/reports/stageF_F0_*
-docs/reports/*.log
-docs/reports/pdf/*.html
-docs/reports/pdf/preview_*.png
-docs/reports/pdf/stageF_pdf_*
-
-# --------------------------------- third-party archives we do not redistribute
+# Uncurated simulation output and third-party source material
+/runs/
+/pshonkin_materials_ishodniki/
+/diagnostics/
+/monitor_snapshots/
+*.lammpstrj
+*.start.data
+restart.*
+*.restart.*
 potentials/**/*.tar.gz
 
-# ------------------------------------------------------------- the manuscript
-# Published as of the third revision round (4 Sept 2026): sources, figures,
-# both reading copies and the drafting apparatus. What stays out is the LaTeX
-# build detritus, the spliced intermediates (splice_drafts.py rebuilds
-# main_v2.tex / main_ru_v2.tex from main.tex and _drafts/ in one command) and
-# the Word/Overleaf exports listed above.
-docs/paper/*.aux
+# Published primary data are compressed and checksummed under data/.
+!data/**/*.gz
+
+# Editor state and local working notes
+/.codex/
+/.firecrawl/
+/docs/_local/
+agent_report*.md
+prompt*.txt
+*.stackdump
+*.tmp
+*.swp
+
+# Manuscript build products; current reading PDFs are tracked deliberately.
+/build/
+*.aux
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.spl
 docs/paper/*.log
 docs/paper/*.out
-docs/paper/*.blg
 docs/paper/*.toc
-docs/paper/main_v2.tex
-docs/paper/main_ru_v2.tex
 docs/paper/_docx_build/
-# Stage B session material that happens to sit in this directory; it has
-# nothing to do with the manuscript.
-docs/paper/visualization_event_pipeline.md
+docs/paper/*_editable.docx
+docs/paper/overleaf_*.zip

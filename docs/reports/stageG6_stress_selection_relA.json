@@ -1,0 +1,223 @@
+{
+  "inputs": [
+    {
+      "path": "G3_solute_relA.vstar.lammpstrj",
+      "size_bytes": 1082728100,
+      "sha256": "8958161c63214dc0f0b4f5e6f09cc31f209c40935dd08507bc0fcb07d16a88df",
+      "published_equivalent": "data/publication/alloy/trajectory.*.lammpstrj.gz",
+      "provenance": "Full original from verified local backup; shard checksums in data/publication/manifest.json"
+    }
+  ],
+  "coverage": {
+    "available_frames": 131,
+    "analyzed_frames": 131,
+    "subset_only": false
+  },
+  "method": "Same DXA positions and rung fits; only the stress atom mask changes",
+  "atomic_volume_A3": 16.6072,
+  "stress_convention": "Compression-positive; opposite to tensile-positive Cauchy stress",
+  "selections": {
+    "legacy": {
+      "atom_filter": "type != 2: historical Al/Si selection, excluding Mg",
+      "rungs": [
+        {
+          "nominal_MPa": 45,
+          "tau_actual_MPa": -92.63467804060721,
+          "tau_actual_sem_MPa": 10.937669527209108,
+          "v_A_per_ps": 0.029080294774581936,
+          "v_sem_A_per_ps": 0.01627084429928034,
+          "v_m_per_s": 2.908029477458194,
+          "autocorr_rho": -0.02519012346576392,
+          "n_frames": 25,
+          "displacement_A": 0.583468302445354,
+          "position_residual_std_A": 0.5626983983955016,
+          "displacement_over_b": 0.2037404411192658,
+          "mean_sampled_atoms": 6463.04
+        },
+        {
+          "nominal_MPa": 55,
+          "tau_actual_MPa": -91.22409315991504,
+          "tau_actual_sem_MPa": 10.934315537024126,
+          "v_A_per_ps": 0.05777181667668257,
+          "v_sem_A_per_ps": 0.021047486013724137,
+          "v_m_per_s": 5.777181667668256,
+          "autocorr_rho": 0.41604162558901214,
+          "n_frames": 25,
+          "displacement_A": 1.5575430889936328,
+          "position_residual_std_A": 0.4674323384003824,
+          "displacement_over_b": 0.5438761877617976,
+          "mean_sampled_atoms": 6495.2
+        },
+        {
+          "nominal_MPa": 65,
+          "tau_actual_MPa": -78.32596423413716,
+          "tau_actual_sem_MPa": 8.859079220991982,
+          "v_A_per_ps": 0.010643381101147363,
+          "v_sem_A_per_ps": 0.017429251949270173,
+          "v_m_per_s": 1.0643381101147364,
+          "autocorr_rho": -0.11044369135172814,
+          "n_frames": 25,
+          "displacement_A": -1.5277525034676671,
+          "position_residual_std_A": 0.6027598799848254,
+          "displacement_over_b": 0.5334736568773887,
+          "mean_sampled_atoms": 6451.64
+        },
+        {
+          "nominal_MPa": 75,
+          "tau_actual_MPa": -92.46953202729996,
+          "tau_actual_sem_MPa": 6.590425061298691,
+          "v_A_per_ps": 0.0060603014724652324,
+          "v_sem_A_per_ps": 0.02264349552937587,
+          "v_m_per_s": 0.6060301472465233,
+          "autocorr_rho": 0.4409406522604212,
+          "n_frames": 25,
+          "displacement_A": 0.17114978770656109,
+          "position_residual_std_A": 0.48776987032843677,
+          "displacement_over_b": 0.05976354344985055,
+          "mean_sampled_atoms": 6429.96
+        }
+      ],
+      "diagnostic_fit": {
+        "V_star_b3": -12.317853066222519,
+        "V_star_err_b3": 21.307751847047864,
+        "kT_over_Vstar_MPa": null,
+        "fit_status": "diagnostic only; sustained glide not established"
+      }
+    },
+    "aluminium": {
+      "atom_filter": "type == 1: aluminium atoms only",
+      "rungs": [
+        {
+          "nominal_MPa": 45,
+          "tau_actual_MPa": -93.89278945530924,
+          "tau_actual_sem_MPa": 11.237920199846192,
+          "v_A_per_ps": 0.029080294774581936,
+          "v_sem_A_per_ps": 0.01627084429928034,
+          "v_m_per_s": 2.908029477458194,
+          "autocorr_rho": -0.02519012346576392,
+          "n_frames": 25,
+          "displacement_A": 0.583468302445354,
+          "position_residual_std_A": 0.5626983983955016,
+          "displacement_over_b": 0.2037404411192658,
+          "mean_sampled_atoms": 6418.4
+        },
+        {
+          "nominal_MPa": 55,
+          "tau_actual_MPa": -92.9270195279666,
+          "tau_actual_sem_MPa": 11.198831312488943,
+          "v_A_per_ps": 0.05777181667668257,
+          "v_sem_A_per_ps": 0.021047486013724137,
+          "v_m_per_s": 5.777181667668256,
+          "autocorr_rho": 0.41604162558901214,
+          "n_frames": 25,
+          "displacement_A": 1.5575430889936328,
+          "position_residual_std_A": 0.4674323384003824,
+          "displacement_over_b": 0.5438761877617976,
+          "mean_sampled_atoms": 6450.52
+        },
+        {
+          "nominal_MPa": 65,
+          "tau_actual_MPa": -78.09974293655414,
+          "tau_actual_sem_MPa": 8.351859577584479,
+          "v_A_per_ps": 0.010643381101147363,
+          "v_sem_A_per_ps": 0.017429251949270173,
+          "v_m_per_s": 1.0643381101147364,
+          "autocorr_rho": -0.11044369135172814,
+          "n_frames": 25,
+          "displacement_A": -1.5277525034676671,
+          "position_residual_std_A": 0.6027598799848254,
+          "displacement_over_b": 0.5334736568773887,
+          "mean_sampled_atoms": 6407.04
+        },
+        {
+          "nominal_MPa": 75,
+          "tau_actual_MPa": -93.61286462689894,
+          "tau_actual_sem_MPa": 6.428286001755905,
+          "v_A_per_ps": 0.0060603014724652324,
+          "v_sem_A_per_ps": 0.02264349552937587,
+          "v_m_per_s": 0.6060301472465233,
+          "autocorr_rho": 0.4409406522604212,
+          "n_frames": 25,
+          "displacement_A": 0.17114978770656109,
+          "position_residual_std_A": 0.48776987032843677,
+          "displacement_over_b": 0.05976354344985055,
+          "mean_sampled_atoms": 6385.48
+        }
+      ],
+      "diagnostic_fit": {
+        "V_star_b3": -13.536495651272384,
+        "V_star_err_b3": 19.186704990577287,
+        "kT_over_Vstar_MPa": null,
+        "fit_status": "diagnostic only; sustained glide not established"
+      }
+    },
+    "alloy": {
+      "atom_filter": "types 1, 2, 3: all Al, Mg and Si atoms",
+      "rungs": [
+        {
+          "nominal_MPa": 45,
+          "tau_actual_MPa": -92.98015105440976,
+          "tau_actual_sem_MPa": 10.71354783088134,
+          "v_A_per_ps": 0.029080294774581936,
+          "v_sem_A_per_ps": 0.01627084429928034,
+          "v_m_per_s": 2.908029477458194,
+          "autocorr_rho": -0.02519012346576392,
+          "n_frames": 25,
+          "displacement_A": 0.583468302445354,
+          "position_residual_std_A": 0.5626983983955016,
+          "displacement_over_b": 0.2037404411192658,
+          "mean_sampled_atoms": 6537.36
+        },
+        {
+          "nominal_MPa": 55,
+          "tau_actual_MPa": -91.70528137530924,
+          "tau_actual_sem_MPa": 10.893983702198357,
+          "v_A_per_ps": 0.05777181667668257,
+          "v_sem_A_per_ps": 0.021047486013724137,
+          "v_m_per_s": 5.777181667668256,
+          "autocorr_rho": 0.41604162558901214,
+          "n_frames": 25,
+          "displacement_A": 1.5575430889936328,
+          "position_residual_std_A": 0.4674323384003824,
+          "displacement_over_b": 0.5438761877617976,
+          "mean_sampled_atoms": 6569.52
+        },
+        {
+          "nominal_MPa": 65,
+          "tau_actual_MPa": -77.64145565144105,
+          "tau_actual_sem_MPa": 9.050252578878261,
+          "v_A_per_ps": 0.010643381101147363,
+          "v_sem_A_per_ps": 0.017429251949270173,
+          "v_m_per_s": 1.0643381101147364,
+          "autocorr_rho": -0.11044369135172814,
+          "n_frames": 25,
+          "displacement_A": -1.5277525034676671,
+          "position_residual_std_A": 0.6027598799848254,
+          "displacement_over_b": 0.5334736568773887,
+          "mean_sampled_atoms": 6525.32
+        },
+        {
+          "nominal_MPa": 75,
+          "tau_actual_MPa": -93.39402739194156,
+          "tau_actual_sem_MPa": 6.968054685395179,
+          "v_A_per_ps": 0.0060603014724652324,
+          "v_sem_A_per_ps": 0.02264349552937587,
+          "v_m_per_s": 0.6060301472465233,
+          "autocorr_rho": 0.4409406522604212,
+          "n_frames": 25,
+          "displacement_A": 0.17114978770656109,
+          "position_residual_std_A": 0.48776987032843677,
+          "displacement_over_b": 0.05976354344985055,
+          "mean_sampled_atoms": 6503.0
+        }
+      ],
+      "diagnostic_fit": {
+        "V_star_b3": -12.319249706566195,
+        "V_star_err_b3": 19.834433661566393,
+        "kT_over_Vstar_MPa": null,
+        "fit_status": "diagnostic only; sustained glide not established"
+      }
+    }
+  },
+  "interpretation": "The selection affects stress and the diagnostic activation-volume fit. It does not change the tracked displacement or establish sustained glide."
+}

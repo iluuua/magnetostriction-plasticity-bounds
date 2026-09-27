@@ -47,5 +47,5 @@
     "top_grab": 12.0
   },
   "boundary_conditions": "p p f",
-  "data_file": "C:\\Users\\dille\\Documents\\ilua-system\\projects\\physics_md_al_fe\\structures\\stageG3_solute_mobility\\G3_solute_relA\\G3_solute_relA.start.data"
+  "data_file": "data/publication/alloy/initial.data.gz"
 }

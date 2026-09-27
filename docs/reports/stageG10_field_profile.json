@@ -1,33 +1,66 @@
 {
-  "created_at": "2026-09-04T21:41:01+03:00",
-  "supersedes": [
-    "stageG4_rss_profile.json",
-    "stageG4_clean_sigma_profile.csv"
-  ],
-  "cell": "Al matrix + Al13Fe4 ridge, unified cell of 91428 atoms (perturbation pair), CG minimisation only, no dislocations, no solutes",
-  "atom_filter": "Al only (type 1); Fe excluded",
+  "created_at": "2026-09-27T16:37:47+03:00",
+  "cell": "Al matrix + Al13Fe4 ridge, 91428 atoms",
+  "atom_filter": "Control-selected type 1 atoms; below the apex this includes inclusion Al",
   "bin_A": 4.0,
+  "r_max_requested_A": 110.0,
+  "last_bin_edge_A": 112.0,
+  "axis_window": {
+    "center_x_A": 77.322130675496,
+    "width_A": 20.0,
+    "center_definition": "midpoint of control atom x-extents",
+    "selection": "abs(x - center_x) < width / 2; full y extent"
+  },
+  "distance_definition": "r = z - z_interface; height, not nearest-surface distance",
+  "stress_definition": "-mean(c_st[1:6]) / 16.6072 A^3 / 10; MPa; field minus control",
+  "stress_convention": "compression-positive pressure convention; tensile-positive Cauchy tensor has the opposite sign",
+  "matrix_atom_count": 72532,
+  "box_bounds_A": [
+    [
+      0.0,
+      154.6442530455
+    ],
+    [
+      0.0,
+      64.4828174788
+    ],
+    [
+      -10.0,
+      165.9430410522
+    ]
+  ],
+  "snapshot_steps": {
+    "control": 235,
+    "field": 310
+  },
   "z_interface_A": 20.0,
-  "ridge_apex_A": 40.24,
+  "ridge_apex_A": 39.718591,
+  "inclusion_max_z_A": {
+    "control": 39.707546,
+    "field": 39.718591
+  },
+  "apex_definition": "Maximum z over all inclusion IDs in both snapshots, including Al and Fe",
   "eigenstrain_used": 0.00194,
   "peak": {
-    "r_A": 50.0,
+    "r_A": 22.0,
     "above_apex": true,
-    "vm_control_MPa": 141.645,
-    "vm_field_MPa": 140.765,
-    "vm_of_difference_MPa": 8.887,
-    "diff_of_vm_MPa": -0.879,
-    "max_RSS_MPa": 5.042,
-    "system": "(111)[1-10]",
-    "d_sigma_xz_MPa": 5.042,
-    "d_sigma_xz_axis_MPa": -14.263,
-    "n_axis": 195,
-    "n_atoms": 2244
+    "n_inclusion_al_atoms": 0,
+    "vm_control_MPa": 849.934,
+    "vm_field_MPa": 844.095,
+    "vm_of_difference_MPa": 10.799,
+    "diff_of_vm_MPa": -5.84,
+    "max_RSS_MPa": 5.651,
+    "system": "(1-1-1)[101]",
+    "d_sigma_xz_MPa": 4.002,
+    "d_sigma_xz_axis_MPa": -12.295,
+    "n_axis": 207,
+    "n_atoms": 2154
   },
   "apex_straddling_bins_excluded": [
     {
       "r_A": 2.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 872,
       "vm_control_MPa": 2215.075,
       "vm_field_MPa": 2217.103,
       "vm_of_difference_MPa": 51.571,
@@ -42,6 +75,7 @@
     {
       "r_A": 6.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 960,
       "vm_control_MPa": 1188.143,
       "vm_field_MPa": 1202.421,
       "vm_of_difference_MPa": 108.321,
@@ -56,6 +90,7 @@
     {
       "r_A": 10.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 808,
       "vm_control_MPa": 1724.54,
       "vm_field_MPa": 1743.624,
       "vm_of_difference_MPa": 104.133,
@@ -70,6 +105,7 @@
     {
       "r_A": 14.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 616,
       "vm_control_MPa": 848.217,
       "vm_field_MPa": 880.156,
       "vm_of_difference_MPa": 69.46,
@@ -84,6 +120,7 @@
     {
       "r_A": 18.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 408,
       "vm_control_MPa": 845.004,
       "vm_field_MPa": 834.877,
       "vm_of_difference_MPa": 29.476,
@@ -94,31 +131,18 @@
       "d_sigma_xz_axis_MPa": -90.111,
       "n_axis": 283,
       "n_atoms": 1917
-    },
-    {
-      "r_A": 22.0,
-      "above_apex": false,
-      "vm_control_MPa": 849.934,
-      "vm_field_MPa": 844.095,
-      "vm_of_difference_MPa": 10.799,
-      "diff_of_vm_MPa": -5.84,
-      "max_RSS_MPa": 5.651,
-      "system": "(1-1-1)[101]",
-      "d_sigma_xz_MPa": 4.002,
-      "d_sigma_xz_axis_MPa": -12.295,
-      "n_axis": 207,
-      "n_atoms": 2154
     }
   ],
   "noise_floor_beyond_60A": {
     "mean_max_RSS_MPa": 2.477,
     "std_MPa": 0.543,
-    "n_bins": 13
+    "n_bins": 13,
+    "interpretation": "Legacy key: spatial mean and population SD; not a calibrated noise floor"
   },
   "peak_rescaled_to_real_magnetostriction_MPa": {
-    "20 ppm": 0.052,
-    "40 ppm": 0.104,
-    "100 ppm": 0.2599
+    "20 ppm": 0.0583,
+    "40 ppm": 0.1165,
+    "100 ppm": 0.2913
   },
   "sigma_char_2_mu_lambda_MPa": {
     "20 ppm": 1.06,
@@ -129,6 +153,7 @@
     {
       "r_A": 2.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 872,
       "vm_control_MPa": 2215.075,
       "vm_field_MPa": 2217.103,
       "vm_of_difference_MPa": 51.571,
@@ -143,6 +168,7 @@
     {
       "r_A": 6.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 960,
       "vm_control_MPa": 1188.143,
       "vm_field_MPa": 1202.421,
       "vm_of_difference_MPa": 108.321,
@@ -157,6 +183,7 @@
     {
       "r_A": 10.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 808,
       "vm_control_MPa": 1724.54,
       "vm_field_MPa": 1743.624,
       "vm_of_difference_MPa": 104.133,
@@ -171,6 +198,7 @@
     {
       "r_A": 14.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 616,
       "vm_control_MPa": 848.217,
       "vm_field_MPa": 880.156,
       "vm_of_difference_MPa": 69.46,
@@ -185,6 +213,7 @@
     {
       "r_A": 18.0,
       "above_apex": false,
+      "n_inclusion_al_atoms": 408,
       "vm_control_MPa": 845.004,
       "vm_field_MPa": 834.877,
       "vm_of_difference_MPa": 29.476,
@@ -198,7 +227,8 @@
     },
     {
       "r_A": 22.0,
-      "above_apex": false,
+      "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 849.934,
       "vm_field_MPa": 844.095,
       "vm_of_difference_MPa": 10.799,
@@ -213,6 +243,7 @@
     {
       "r_A": 26.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 105.967,
       "vm_field_MPa": 105.12,
       "vm_of_difference_MPa": 6.896,
@@ -227,6 +258,7 @@
     {
       "r_A": 30.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 185.467,
       "vm_field_MPa": 184.362,
       "vm_of_difference_MPa": 7.236,
@@ -241,6 +273,7 @@
     {
       "r_A": 34.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 156.631,
       "vm_field_MPa": 156.779,
       "vm_of_difference_MPa": 4.535,
@@ -255,6 +288,7 @@
     {
       "r_A": 38.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 28.3,
       "vm_field_MPa": 29.291,
       "vm_of_difference_MPa": 6.942,
@@ -269,6 +303,7 @@
     {
       "r_A": 42.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 7.857,
       "vm_field_MPa": 10.952,
       "vm_of_difference_MPa": 5.33,
@@ -283,6 +318,7 @@
     {
       "r_A": 46.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 168.146,
       "vm_field_MPa": 167.382,
       "vm_of_difference_MPa": 1.468,
@@ -297,6 +333,7 @@
     {
       "r_A": 50.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 141.645,
       "vm_field_MPa": 140.765,
       "vm_of_difference_MPa": 8.887,
@@ -311,6 +348,7 @@
     {
       "r_A": 54.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 5.657,
       "vm_field_MPa": 8.804,
       "vm_of_difference_MPa": 4.145,
@@ -325,6 +363,7 @@
     {
       "r_A": 58.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 26.715,
       "vm_field_MPa": 27.557,
       "vm_of_difference_MPa": 3.356,
@@ -339,6 +378,7 @@
     {
       "r_A": 62.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 42.641,
       "vm_field_MPa": 42.821,
       "vm_of_difference_MPa": 4.393,
@@ -353,6 +393,7 @@
     {
       "r_A": 66.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 4.784,
       "vm_field_MPa": 7.632,
       "vm_of_difference_MPa": 3.251,
@@ -367,6 +408,7 @@
     {
       "r_A": 70.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 4.75,
       "vm_field_MPa": 7.171,
       "vm_of_difference_MPa": 2.815,
@@ -381,6 +423,7 @@
     {
       "r_A": 74.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 4.672,
       "vm_field_MPa": 7.004,
       "vm_of_difference_MPa": 2.774,
@@ -395,6 +438,7 @@
     {
       "r_A": 78.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 4.363,
       "vm_field_MPa": 7.041,
       "vm_of_difference_MPa": 3.169,
@@ -409,6 +453,7 @@
     {
       "r_A": 82.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 3.763,
       "vm_field_MPa": 7.259,
       "vm_of_difference_MPa": 4.07,
@@ -423,6 +468,7 @@
     {
       "r_A": 86.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 3.1,
       "vm_field_MPa": 7.486,
       "vm_of_difference_MPa": 5.0,
@@ -437,6 +483,7 @@
     {
       "r_A": 90.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 2.66,
       "vm_field_MPa": 7.316,
       "vm_of_difference_MPa": 5.37,
@@ -451,6 +498,7 @@
     {
       "r_A": 94.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 2.349,
       "vm_field_MPa": 6.855,
       "vm_of_difference_MPa": 5.354,
@@ -465,6 +513,7 @@
     {
       "r_A": 98.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 1.938,
       "vm_field_MPa": 6.224,
       "vm_of_difference_MPa": 5.046,
@@ -479,6 +528,7 @@
     {
       "r_A": 102.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 1.551,
       "vm_field_MPa": 5.94,
       "vm_of_difference_MPa": 4.987,
@@ -493,6 +543,7 @@
     {
       "r_A": 106.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 1.203,
       "vm_field_MPa": 5.841,
       "vm_of_difference_MPa": 5.146,
@@ -507,6 +558,7 @@
     {
       "r_A": 110.0,
       "above_apex": true,
+      "n_inclusion_al_atoms": 0,
       "vm_control_MPa": 0.91,
       "vm_field_MPa": 5.432,
       "vm_of_difference_MPa": 4.99,
@@ -518,5 +570,18 @@
       "n_axis": 338,
       "n_atoms": 2808
     }
-  ]
+  ],
+  "rescaling_note": "Linear-amplitude comparisons only; a measured retention fraction does not establish a magnetostriction calibration",
+  "inputs": {
+    "control": {
+      "path": "data/stageG4_clean/G13_pert_ctl_held.gate.lammpstrj.gz",
+      "size_bytes": 4027136,
+      "sha256": "c0209c65f6de8a6ed9ff980c9980c1cbf1d18590f94c63e03eb170ce9f05de51"
+    },
+    "field": {
+      "path": "data/stageG4_clean/G13_pert_fld_held.gate.lammpstrj.gz",
+      "size_bytes": 4055193,
+      "sha256": "d2f0d5ee574651e36174235ff8967a15df19c1adda3e59fa5e5531251c865aa5"
+    }
+  }
 }

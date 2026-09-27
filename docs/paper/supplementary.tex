@@ -1,0 +1,532 @@
+% Protocol and provenance for the accompanying regular article.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+\ifx\pdfmapfile\undefined\else
+\pdfmapfile{+cm-super-t1.map}\pdfmapfile{+cm-super-ts1.map}\fi
+\setlength{\emergencystretch}{2em}
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{Supplementary Information\\
+Stress transfer and dislocation response near a constrained
+Al$_{13}$Fe$_4$ inclusion in aluminium}
+\author{I.~Mikhailovskiy \and D.~Pshonkin}
+\date{Moscow Polytechnic University, Moscow, Russia\\
+\texttt{ilyamihailovsy@gmail.com}}
+
+\begin{document}
+\maketitle
+
+\section{Structure and preparation}
+
+The interface cell contains 91\,428 atoms. Matrix atoms have identifiers
+1--72\,532; the remaining 18\,896 belong to the inclusion. Elemental
+types are Al, Fe, Mg and Si in that order in the LAMMPS input mapping,
+although the interface configurations contain no Mg or Si.
+There are 87\,076 Al and 4352 Fe atoms in the complete cell.
+The fcc aluminium axes are $[1\bar{1}0]$, $[11\bar{2}]$ and $[111]$,
+with lattice parameter 4.05~\AA{}.
+The Al$_{13}$Fe$_4$ cell is monoclinic
+\cite{Liu2024CIF}; the same Jelinek interaction potential is used across
+the interface and within each phase \cite{Jelinek2012}.
+
+The initial box has $L_x=154.644253$~\AA{},
+$L_y=64.482817$~\AA{} and $z$ limits $-10.0$ and
+165.943041~\AA{}. The matrix construction uses 56 (111) layers.
+Its upper material surface differs from the box boundary and moves
+during preparation, so a single exact free-surface height is not
+assumed throughout. The support layer extends to $z=20$~\AA{}.
+The ridge is centred at $x=77.3221$~\AA{} and has semi-axes
+35 and 20~\AA{} in the $xz$ plane.
+
+The inclusion is scaled in-plane by factors 0.9978336 and 0.9973955
+to match the periodic cell. Matrix atoms closer than 2.2~\AA{} to
+inclusion atoms are removed during construction. The resulting
+minimum separation is approximately 2.219~\AA{} within the cell
+and 2.292~\AA{} across the periodic seam. These geometric checks
+exclude initial overlaps at that distance scale; they do not
+validate the relaxed interface energy or structure. The lower
+region $z<6$~\AA{} is fixed.
+
+LAMMPS uses metal units, an atomic particle style and boundaries
+periodic in $x$ and $y$ and fixed in $z$
+\cite{Thompson2022LAMMPS}. The neighbour skin is 2~\AA{}.
+For minimisation, neighbours are rebuilt at every step.
+The prepared control undergoes conjugate-gradient minimisation with
+requested force two-norm 1~eV/\AA{}, followed by 6~ps at 300~K
+using a Nos\'e--Hoover damping time of 0.1~ps. Langevin cooling
+then lowers the target temperature to 0.5~K over 12~ps, with
+damping time 0.2~ps. The velocity and cooling seeds are 4242 and
+4243. Velocities are zeroed before a final minimisation whose
+requested force two-norm is 0.05~eV/\AA{}. A reflecting wall at
+the upper box edge is present during the thermal preparation.
+This preparation defines the starting state of the paired static
+calculation.
+
+Both members of the static pair are reconstructed from that same
+control snapshot. The 4816 inclusion atoms above $z=20$~\AA{}
+form the displaced ridge subset. Their recorded centroid is
+approximately $(77.258,32.201,28.678)$~\AA{}.
+The perturbation tensor is
+\begin{equation}
+\mathbf E_0=
+\begin{pmatrix}
+0.000485&0&0.001455\\
+0&-0.000970&0\\
+0.001455&0&0.000485
+\end{pmatrix}.
+\label{eq:tensor}
+\end{equation}
+A reference coordinate changes by
+$\delta\mathbf r=\mathbf E_0(\mathbf r-\mathbf r_c)$.
+The largest imposed displacement is 0.05412~\AA{}.
+The determinant of $\mathbf I+\mathbf E_0$ is
+$(1+\varepsilon_0)(1-\varepsilon_0/2)^2$, with
+$\varepsilon_0=0.00194$. Its departure from unity is about
+$2.82\times10^{-6}$, consistent with volume conservation only
+to first order in strain.
+
+All inclusion atoms are restrained by
+\begin{equation}
+U_{\mathrm s}=\frac{K}{2}\sum_{i\in\mathrm{inclusion}}
+ |\mathbf r_i-\mathbf r_i^{\mathrm{ref}}|^2,
+\qquad K=20~\mathrm{eV}/\text{\AA}^2 .
+\label{eq:spring}
+\end{equation}
+The support references are unshifted in both copies; the ridge
+references differ by Eq.~\eqref{eq:tensor}. The spring energy is
+included in minimisation. Conjugate gradients use maximum displacement
+0.05~\AA{}, zero energy tolerance, force two-norm tolerance
+0.02~eV/\AA{}, at most 6000 iterations and 60\,000 force
+evaluations. The held control stops on force tolerance after
+235 iterations, with final force two-norm 0.019779915~eV/\AA{}.
+The held perturbed state also stops on force tolerance, after
+310 iterations at 0.019879873~eV/\AA{}.
+These values verify the stated stopping criterion.
+They do not establish convergence of a stress profile with respect
+to force tolerance, geometry or starting state.
+
+\section{Stress evaluation and distances}
+
+The stored per-atom quantities are the six components from
+\texttt{compute stress/atom NULL virial}, in the order
+$xx,yy,zz,xy,xz,yz$. For a control-selected set of $N$ Al atoms,
+the analysis conversion is
+\begin{equation}
+\sigma_{\alpha\beta}
+ =-\frac{1}{10N\Omega}\sum_{i=1}^{N}S_{i,\alpha\beta},
+\qquad \Omega=16.6072~\text{\AA}^3,
+\label{eq:stress}
+\end{equation}
+where the stored $S_i$ are in bar~\AA$^3$ and the result is in
+MPa. This conversion makes normal compression positive and gives the
+negative of the tensile-positive Cauchy tensor. Signed MD quantities in
+the manuscript retain this pressure convention. The continuum comparison
+uses absolute shear projections, which are unaffected by a global sign change.
+No kinetic term is included. This configurational measure excludes
+an interpretation of the profile as a directly measured temperature
+or heat flux.
+
+Atom identities and element types are matched between snapshots.
+The control coordinates determine membership in each layer and
+in the 20~\AA{} axial window. The window centre is obtained from
+the midpoint of the control atom $x$ extents. Layers contain
+type-1 atoms and span 4~\AA{} in $z$. A layer is retained only
+when its lower edge lies above every inclusion atom in both snapshots.
+Inclusion IDs exceed 72\,532 and comprise both Al and Fe.
+Their maximum heights are 39.707546~\AA{} in the control and
+39.718591~\AA{} in the perturbed state. The 23 retained centres run
+from $r=22$ to 110~\AA{}, where $r=z-20$~\AA{}.
+The last layer edges are $r=108$ and 112~\AA{}.
+This choice omits layers containing inclusion aluminium and the
+uppermost free-surface layers.
+
+The tensor average is formed separately for each member of the pair
+and then subtracted. With
+$\mathbf D=\Delta\boldsymbol\sigma-
+\operatorname{tr}(\Delta\boldsymbol\sigma)\mathbf I/3$,
+the von Mises measure is $\sqrt{3\mathbf D:\mathbf D/2}$.
+The largest absolute slip-system projection is
+$\max_\alpha|\mathbf s_\alpha\cdot
+\Delta\boldsymbol\sigma\,\mathbf n_\alpha|$.
+The $xz$ projection and its sign are preserved independently.
+Consequently, a small width-averaged shear can coexist with
+a larger axial-window shear of the opposite sign.
+
+The far-layer statistics are evaluated over thirteen retained
+layers with $r>60$~\AA{}. The mean maximum projection is
+2.477~MPa and its spatial standard deviation is 0.543~MPa.
+The bins are not independent replicas of a homogeneous state.
+These statistics quantify spatial variation and cannot be used
+as standard errors, numerical noise estimates or a physical
+detection threshold. Residual stress at the largest sampled
+distance is reported explicitly.
+
+An attenuation height can be defined only relative to a stated
+stress level. If $h_m(s)$ denotes the height above the nominal
+crest at which the descending axial-window magnitude reaches
+$s$, linear interpolation between adjacent retained bins gives
+approximately 4.69, 6.69 and 8.55~nm for $s=10$, 5 and
+2~MPa, respectively. These are operational profile descriptors,
+with 0.4~nm sampling, rather than independently determined
+material lengths. No zero-stress attenuation height is inferred.
+
+\section{Deformation retention and free diagnostics}
+
+A least-squares affine map relates the positions of corresponding
+Fe atoms in the two minimised configurations. After removing
+translations, the fit gives a deformation gradient $\mathbf F$.
+Minimum-image displacements are used along the periodic directions.
+The retained strain is represented by
+\begin{equation}
+\mathbf E_{\mathrm{res}}=
+ \tfrac12(\mathbf F^{\mathsf T}\mathbf F-\mathbf I),
+\qquad
+\eta=\frac{\mathbf E_{\mathrm{res}}:\mathbf E_0}
+                 {\mathbf E_0:\mathbf E_0}.
+\label{eq:eta}
+\end{equation}
+For the 1008 Fe atoms with control $z>22$~\AA{},
+$\eta=0.9728$. The principal reported components are
+$E_{xx}=0.000482$, $E_{yy}=-0.000887$,
+$E_{zz}=0.000460$ and $E_{xz}=0.001435$.
+The fit residual has root-mean-square magnitude 0.0035~\AA{}.
+
+The formal standard error 0.0038 propagates the least-squares
+coefficient covariance, using pooled residual variance over
+$3N-12$ degrees of freedom. The atomic residuals are spatially
+correlated; this fit statistic does not include model error or
+variation between independent trajectories. A scalar projection
+also does not guarantee that every tensor component retains
+the same fraction of the imposed deformation.
+
+Unrestrained minimisations are retained only as diagnostics.
+For the perturbation pair without springs, the ridge projection
+is $0.4364\pm0.1019$ in the saved output. Both minimisations
+stop at 6000 iterations with final force two-norms
+0.8660473 and 0.48161949~eV/\AA{} for control and perturbed
+states, respectively, above the requested 0.02~eV/\AA{}.
+A separate direct minimisation record gives
+$0.2007\pm0.1064$ for a differently prepared pair.
+Neither record establishes an equilibrium retained fraction,
+a relaxation time or a field after magnetic removal.
+Their stress profiles are excluded from the main quantitative
+comparison.
+
+\section{Loading and line tracking}
+
+The loaded interface geometry retains 91\,428 atoms and has
+the same orientation and inclusion shape as the static cell.
+The initially inserted lower and upper edge lines are centred
+at approximately $(139.322,49.228)$ and
+$(115.922,72.611)$~\AA{} in the $xz$ plane.
+Their displacements are generated by a periodic Volterra
+construction. These insertion coordinates differ from the
+coordinates after minimisation and initial dynamics.
+
+The loading input first minimises the constructed cell with a
+requested force two-norm of 1~eV/\AA{} and a 2000-iteration
+limit. It then assigns velocities at 300~K using seed 88004
+and integrates with a 1~fs step. The bottom region is fixed,
+mobile atoms are coupled to a Nos\'e--Hoover thermostat with
+damping time 0.1~ps, and a reflecting wall is placed at the
+upper box boundary. Equal forces along $x$ on the top selected
+atoms transmit the nominal shear traction. The inclusion is
+either unrestrained or attached to springs of
+20~eV/\AA$^2$, as specified by the case.
+
+Let $s$ be the number of steps after the 5000-step preload,
+$T_s=16\,000$ steps and $N$ the total run length. The nominal
+stress in MPa is
+\begin{equation}
+\tau(s)=
+\begin{cases}
+0,&s<0,\\
+q\left[\dfrac{s}{2}-\dfrac{T_s}{2\pi}
+ \sin\left(\dfrac{\pi s}{T_s}\right)\right],
+ &0\le s<T_s,\\
+q(s-T_s/2),&s\ge T_s,
+\end{cases}
+\qquad
+q=\frac{\tau_{\max}}{N-5000-T_s/2}.
+\label{eq:ramp}
+\end{equation}
+The unrestrained control uses $N=101\,000$ and
+$\tau_{\max}=400$~MPa. The restrained control and perturbed
+runs use $N=45\,000$ and $\tau_{\max}=145.45$~MPa.
+Their post-onset rates agree to the precision of these rounded
+inputs. Regular snapshots are saved every 2000 steps.
+The analysis tables use the actual endpoint for each run, giving
+9.0909~MPa between late frames in the free control and
+9.090625~MPa in the restrained pair.
+
+DXA identifies Burgers vectors and line segments
+\cite{Stukowski2012DXA,Stukowski2010OVITO}. Line positions are
+unwrapped in $x$ using $L_x=154.644253$~\AA{}.
+For each Burgers-vector family, a linear baseline is fitted
+over steps at or above 4000 with nominal stress below 40~MPa.
+The departure criterion is a residual magnitude greater than
+$\max(6s_x,8~\text{\AA})$, where $s_x$ is the baseline residual
+standard deviation. The subsequent two sampled positions are
+checked where available; a missing line is accepted by the
+stored detector. The numerical criterion therefore requires
+a separate continuity check near boundaries and after
+segment disappearance.
+
+The upper-line baseline residual standard deviations are
+3.8919 and 3.5046~\AA{} in the restrained control and
+perturbed runs. The corresponding thresholds are
+23.351 and 21.027~\AA{}. The first accepted samples are
+at 38 and 40~ps, respectively. The same criterion consequently
+uses different fitted baselines and displacement thresholds.
+Its one-frame difference cannot be interpreted as an
+independently measured 9.09~MPa strengthening increment.
+
+The lower family disappears by 10~ps in both restrained runs.
+Its later family-labelled positions can belong to seam
+segments and do not provide a valid second onset for the
+original line. At the last analysed control frame, 44~ps,
+the total extracted length is 39.344~\AA{} in three segments.
+The family-aggregated lengths are 26.191 and 13.153~\AA{};
+these are not necessarily lengths of individual connected
+lines. No segment is extracted from the corresponding
+perturbed frame. The results distinguish absence of a
+detected line from proof of an atomistic reaction pathway.
+
+For the unrestrained control the lower-line departure is
+at the 36~ps sample, 104.545~MPa, preceded by
+95.455~MPa. The upper-line criterion is met at 40~ps,
+122.727~MPa. The final regular analysis frame is
+100~ps, 395.455~MPa; the nominal 400~MPa endpoint is
+not covered by that table. Short seam signals occur
+transiently around 232--241~MPa and again above
+377~MPa. They do not establish persistent interface
+nucleation. A scalar threshold exceeding 395.455~MPa
+is not inferred from the absence of a confirmed event.
+
+\section{Separate alloy comparator}
+
+The alloy cell contains 92\,800 atoms with dimensions
+$114.5513\times49.6022$~\AA{} in-plane and box limits
+$z=-8.0$ and 283.2392~\AA{}.
+Its counts are 91\,315 Al, 928 Mg and 557 Si atoms.
+The nominal whole-cell concentrations are therefore
+1.0~at.\% Mg and approximately 0.6~at.\% Si.
+Substitution is restricted to the mobile region; the boundary
+layers remain aluminium. The bottom fixed layer is
+8~\AA{} thick and the top loaded layer 12~\AA{}.
+The edge partners are separated by 205.768~\AA{} along
+the interface normal.
+
+The initial minimisation stopped on energy tolerance with force two-norm
+10.118429~eV/\AA{} and maximum force component 1.9509711~eV/\AA{}.
+It did not reach the requested force tolerance. The subsequent
+300~K trajectory was completed, but this preparation does not demonstrate
+mechanical equilibration of the initial dislocation arrangement.
+The trajectory has
+10~ps without applied shear and successive nominal
+levels of 45, 55, 65 and 75~MPa, each held for 30~ps.
+Each increase is smoothed over 4~ps.
+The recorded net displacement of the lower line is
+1.98~\AA{} from 10 to 130~ps, with a position standard deviation
+of 0.63~\AA{}. The preceding zero-load interval is excluded;
+the displacement across the complete 0--130~ps trajectory is 6.99~\AA{}.
+The per-level net displacements
+are 0.58, 1.56, $-1.53$ and 0.17~\AA{}.
+The net motion over the settled portion of each level is less than
+one Burgers-vector magnitude in this one solute realisation.
+
+These observations are conditional on the sampled solute
+arrangement, internal stress and short observation time.
+The applied stress is not a measurement of the local
+resolved traction on the dislocation. The trajectories
+therefore support a statement of limited motion under
+the applied programme, without establishing an intrinsic
+75~MPa obstacle strength. No activation volume is
+extracted from the fitted slopes.
+
+The public comparator package contains the complete saved
+atomic trajectory, including its original coordinate and stress
+columns, in compressed shards under
+\path{data/publication/alloy/trajectory.*.lammpstrj.gz}.
+The derived 131-frame position table, summaries, initial and final
+structures and log are also provided. The available initial file was
+saved after the recorded run date. Its atom identities, types and fixed
+boundary coordinates agree with the trajectory, but no launch-time hash
+or original copy certifies its mobile coordinates. It is therefore a
+candidate starting structure, not a certified exact replay input.
+The saved trajectory allows independent
+DXA reconstruction and reassessment of the spatial selection used
+in the comparator analysis. An activation volume remains
+unidentified by these observations.
+
+The original quiet-region stress selection included Al and Si while
+excluding Mg (type 2). Reanalysis of all 131 saved frames reproduces the
+archived displacements and stresses. Selecting only Al or all alloy atoms
+changes the mean stress on a loading level by less than 1.71~MPa.
+The corresponding diagnostic estimates of $V^*/b^3$ are
+$-12.32\pm21.31$ for the original selection, $-13.54\pm19.19$
+for Al and $-12.32\pm19.83$ for all atoms in the pressure-sign convention.
+Using tensile-positive shear reverses these fitted signs. These fits to fluctuating
+positions do not determine a physical activation volume. The comparison
+is recorded in \path{stageG6_stress_selection_relA.json}.
+
+\section{Continuum and activated-glide estimates}
+
+The sphere reference has the same small-strain tensor as
+Eq.~\eqref{eq:tensor}, radius 35~\AA{}, shear modulus
+26.5~GPa and Poisson ratio 0.347. The inclusion and
+unbounded matrix have identical isotropic stiffness.
+For the Eshelby tensor $\mathbf S$ and stiffness
+$\mathbf C$, the interior stress is
+\begin{equation}
+\boldsymbol\sigma_{\mathrm{in}}
+ =\mathbf C:(\mathbf S:\mathbf E_0-\mathbf E_0).
+\label{eq:eshelby}
+\end{equation}
+The maximum interior slip-system projection is
+41.45~MPa \cite{Eshelby1957}. This is an interior
+value for a transformation-strain problem. It is not
+the surface amplitude of every exterior component.
+The ridge in the main calculation has different
+constraints, a support and a nearby free surface,
+so the comparison is not an ordering theorem or a
+validation of the atomistic boundary condition.
+
+The scalar creep calculation assumes a compact-particle
+exterior amplitude $\tau_m(a/R)^3$ and volume fraction
+$f$. To leading order in $f$, the spatial weight of
+stress magnitudes between $s$ and $s+\mathrm ds$ is
+$f\tau_m s^{-2}\mathrm ds$ for $0<s<\tau_m$.
+This weight is used only under an integral for the
+excess rate. It is not a normalised probability density
+extended to zero stress. Equal positive and negative
+stress weights and a stress-independent activation
+volume give
+\begin{equation}
+H=f x\int_0^x\frac{\cosh u-1}{u^2}\,\mathrm du
+ =f\{x\,\mathrm{Shi}(x)-[\cosh(x)-1]\},
+\qquad
+x=\frac{V^*\tau_m}{k_{\mathrm B}T}.
+\label{eq:rate}
+\end{equation}
+Here $\mathrm{Shi}(x)=\int_0^x\sinh(u)/u\,\mathrm du$.
+The integrand has the finite limit $1/2$ at the origin.
+Particle overlap, grain-orientation distributions and
+stress-dependent barrier shapes are omitted.
+
+For the numerical sensitivity calculation,
+$k_{\mathrm B}T=4.141947\times10^{-21}$~J at 300~K,
+$b=2.86378246$~\AA{} and $f=0.00246$.
+The volume fraction is a modelling scenario.
+For a mass fraction $w=0.0035$, densities
+$\rho_i=3.85$ and $\rho_m=2.70$~g/cm$^3$ give
+\begin{equation}
+f=\frac{w/\rho_i}{w/\rho_i+(1-w)/\rho_m}
+ \simeq0.00246 .
+\end{equation}
+These assumed densities and composition do not establish
+the volume fraction of every experimental specimen.
+The activation-volume range $19b^3$--$142b^3$ is
+a sensitivity interval. The reported value
+$70b^3$ for an Al--Mg--Si alloy processed by
+equal-channel angular extrusion provides a comparison
+from a different material state \cite{Soula2022JALCOM}.
+
+At $H=0.25$, Eq.~\eqref{eq:rate} gives
+$x=6.754241794$. The required amplitudes are
+62.691, 39.705, 23.823, 17.016, 11.911 and
+8.388~MPa for $V^*/b^3=19$, 30, 50, 70, 100
+and 142, respectively. Conversely,
+$\tau_m=15.451$ and 41.45~MPa require
+$V^*/b^3=77.091$ and 28.737.
+The first amplitude is an axial-window ridge maximum;
+the second is the sphere interior projection.
+Their substitution into the scalar exterior model
+is explicit and conditional. It does not calibrate
+magnetostriction or demonstrate the experimental
+creep rate.
+
+\section{Records and reproducibility}
+
+The publication data and code are located at
+\par\noindent\url{https://github.com/iluuua/magnetostriction-plasticity-bounds}.
+The manifest under \path{data/publication} records
+the source configurations, retained columns and checksums.
+It distinguishes the complete atomic-virial snapshots of
+the static pair, the full-column alloy trajectory and position-only
+projections of the three interface loading trajectories.
+The interface projections preserve particle
+identifiers, types, coordinates, frame times and cell
+bounds for every saved regular frame.
+These projections do not provide all original per-atom stress
+and energy columns.
+
+The stress results derive from
+\path{stageG10_field_profile.json} and its associated
+CSV, calculated from the held control and perturbed
+atomic-virial snapshots. The layer selection,
+signed projections and reported peaks can therefore
+be recomputed from the primary static data.
+The deformation-retention components and formal
+fit error are in
+\path{stageG12_eigenstrain_retention.json}.
+The diagnostic free outputs are identified by
+\path{stageG12_eigenstrain_retention_free.json}
+and \path{stageG12_eigenstrain_retention_free_cg.json};
+their lack of convergence limits their use as set
+out in Section~S3.
+
+Interface motion is recorded in
+\path{stageG2_depinning_summary_G15held.json} and
+\path{stageG2_depinning_summary_G15ctl_free.json}.
+The associated tables
+\path{stageG2_depinning_G15_ctl_G15held.csv},
+\path{stageG2_depinning_G15_fld_G15held.csv} and
+\path{stageG2_depinning_G15_ctl_G15ctl_free.csv}
+contain frame times, nominal stresses and
+family-resolved positions and lengths.
+The published coordinate trajectories allow
+independent reconstruction of line content.
+The detector summaries require the continuity
+qualification in Section~S4; later entries for a
+family need not represent the same original line.
+
+The alloy comparator uses
+\path{stageG6_vstar_relA_frames.csv} and
+\path{stageG6_vstar_relA_summary.json}.
+Only the position history and the completed
+loading range are used here. The fitted activation
+volume stored in a diagnostic summary is not
+treated as a physical estimate.
+The sphere interior comes from
+\path{stageG8_eshelby3d.json}.
+The integral and inverse-stress results are
+defined by Eq.~\eqref{eq:rate}, with numerical
+inputs specified above; the corresponding
+archived calculation is
+\path{stageG5_two_scale_bridge.json}.
+Narrative fields in records do not substitute
+for these definitions or for convergence evidence.
+
+The figure-generation code operates on these
+configurations and records. Model renderings use
+OVITO and represent simulated atomic positions.
+No simulated image is presented as an experimental
+micrograph. The four main figures contain the
+geometry, static field, interface trajectories
+and conditional activated-glide dependence.
+The English labels are shared by both language
+versions.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\end{document}

@@ -1,14 +1,16 @@
-# Stage G13, perturbation gate: minimise a cell that was built from the
-# RELAXED control by displacing the ridge atoms (scripts/make_perturbed_cell.py).
-# No thermal stage: the interfacial Al layer and the slab breathing mode are
-# then identical in the control and the strained cell by construction, and
-# conjugate gradients only has to relax the local response to the ridge.
+# Static response of an Al/Al13Fe4 interface to a prescribed ridge displacement.
+# The saved control and strained inputs share a relaxed reference configuration.
+# Optional springs tether inclusion atoms to their input coordinates during
+# minimisation. The interatomic potential is unchanged. There is no thermal stage.
 #
-# Kokkos rules (see lammps-kokkos-pitfalls): two-norm criterion only,
-# neighbour list rebuilt every step with no distance check.
-#
-# Variables (-var): DATA_FILE, POT_DIR, OUT_PREFIX, N_AL, HOLD_INCL (0/1),
-#   KSPRING, CG_MAX, CG_FTOL
+# Metal units: angstrom, eV, ps, K and bar; stress/atom values are in bar*A^3.
+# Variables supplied with -var:
+#   DATA_FILE, POT_DIR, OUT_PREFIX  input data, MEAM directory, output prefix
+#   N_AL                           matrix atom count; higher IDs are inclusion
+#   HOLD_INCL                      1 enables inclusion springs, 0 disables them
+#   KSPRING                        spring constant in eV/A^2
+#   CG_MAX, CG_FTOL                 iteration limit and force two-norm in eV/A
+# Atom types: 1 Al, 2 Fe, 3 Mg, 4 Si. The cell is periodic in x and y.
 
 units           metal
 atom_style      atomic

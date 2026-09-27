@@ -1,0 +1,70 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Liu et~al.(2024)Liu, Fan, Xu, Fu, Wen, and Zhang]{Liu2024CIF}
+Yibo Liu, Changzeng Fan, Zhefeng Xu, Ruidong Fu, Bin Wen, and Lifeng Zhang.
+\newblock Orientation relationship of the intergrowth {Al$_{13}$Fe$_3$} and
+  {Al$_{13}$Fe$_4$} intermetallics determined by single-crystal x-ray
+  diffraction.
+\newblock \emph{Metals}, 14\penalty0 (4):\penalty0 463, 2024.
+\newblock \doi{10.3390/met14040463}.
+
+\bibitem[Jelinek et~al.(2012)Jelinek, Groh, Horstemeyer, Houze, Kim, Wagner,
+  Moitra, and Baskes]{Jelinek2012}
+B.~Jelinek, S.~Groh, M.~F. Horstemeyer, J.~Houze, S.~G. Kim, G.~J. Wagner,
+  A.~Moitra, and M.~I. Baskes.
+\newblock Modified embedded atom method potential for {Al}, {Si}, {Mg}, {Cu},
+  and {Fe} alloys.
+\newblock \emph{Physical Review B}, 85\penalty0 (24):\penalty0 245102, 2012.
+\newblock \doi{10.1103/PhysRevB.85.245102}.
+
+\bibitem[Thompson et~al.(2022)Thompson, Aktulga, Berger, Bolintineanu, Brown,
+  Crozier, in~'t Veld, Kohlmeyer, Moore, Nguyen, Shan, Stevens, Tranchida,
+  Trott, and Plimpton]{Thompson2022LAMMPS}
+Aidan~P. Thompson, H.~Metin Aktulga, Richard Berger, Dan~S. Bolintineanu,
+  W.~Michael Brown, Paul~S. Crozier, Pieter~J. in~'t Veld, Axel Kohlmeyer,
+  Stan~G. Moore, Trung~Dac Nguyen, Ray Shan, Mark~J. Stevens, Julien Tranchida,
+  Christian Trott, and Steven~J. Plimpton.
+\newblock {LAMMPS} -- a flexible simulation tool for particle-based materials
+  modeling at the atomic, meso, and continuum scales.
+\newblock \emph{Computer Physics Communications}, 271:\penalty0 108171, 2022.
+\newblock \doi{10.1016/j.cpc.2021.108171}.
+
+\bibitem[Stukowski et~al.(2012)Stukowski, Bulatov, and
+  Arsenlis]{Stukowski2012DXA}
+Alexander Stukowski, Vasily~V. Bulatov, and Athanasios Arsenlis.
+\newblock Automated identification and indexing of dislocations in crystal
+  interfaces.
+\newblock \emph{Modelling and Simulation in Materials Science and Engineering},
+  20\penalty0 (8):\penalty0 085007, 2012.
+\newblock \doi{10.1088/0965-0393/20/8/085007}.
+
+\bibitem[Stukowski(2010)]{Stukowski2010OVITO}
+Alexander Stukowski.
+\newblock Visualization and analysis of atomistic simulation data with {OVITO}
+  -- the {O}pen {V}isualization {T}ool.
+\newblock \emph{Modelling and Simulation in Materials Science and Engineering},
+  18\penalty0 (1):\penalty0 015012, 2010.
+\newblock \doi{10.1088/0965-0393/18/1/015012}.
+
+\bibitem[Eshelby(1957)]{Eshelby1957}
+J.~D. Eshelby.
+\newblock The determination of the elastic field of an ellipsoidal inclusion,
+  and related problems.
+\newblock \emph{Proceedings of the Royal Society of London.\ Series A},
+  241\penalty0 (1226):\penalty0 376--396, 1957.
+\newblock \doi{10.1098/rspa.1957.0133}.
+
+\bibitem[Soula et~al.(2022)Soula, Couzini{\'e}, Heni, Bourgon, Champion, and
+  Njah]{Soula2022JALCOM}
+A.~Soula, J.-P. Couzini{\'e}, H.~Heni, J.~Bourgon, Y.~Champion, and N.~Njah.
+\newblock Activation volume and the role of solute atoms in {Al-Mg-Si} alloy
+  processed by equal channel angular extrusion.
+\newblock \emph{Journal of Alloys and Compounds}, 899:\penalty0 163334, 2022.
+\newblock \doi{10.1016/j.jallcom.2021.163334}.
+
+\end{thebibliography}

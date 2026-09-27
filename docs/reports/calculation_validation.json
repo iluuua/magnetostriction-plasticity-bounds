@@ -1,0 +1,75 @@
+{
+  "checked_on": "2026-09-27",
+  "scope": "Retained LAMMPS protocols, primary output and numerical post-processing; no new MD run",
+  "static_pair": {
+    "atoms": 91428,
+    "matrix_atoms": 72532,
+    "input": "lammps/stageG4_tilted_solute/in.fieldgate_pert",
+    "logs": [
+      "data/stageG4_clean/log.G13_pert_ctl_held",
+      "data/stageG4_clean/log.G13_pert_fld_held"
+    ],
+    "stopping_criterion": "force tolerance in both states",
+    "requested_force_two_norm_eV_per_A": 0.02,
+    "final_force_two_norm_eV_per_A": [0.019779915, 0.019879873],
+    "force_tolerance_reached": true,
+    "boundary_condition": "External coordinate springs, K = 20 eV/A^2, with spring energy included in minimisation",
+    "material_eigenstrain_or_magnetostriction_validated": false
+  },
+  "profile_correction": {
+    "record": "stageG10_field_profile.json",
+    "issue": "A fixed historical cutoff at z = 40.24 A excluded the nearest pure matrix layer",
+    "correction": "Use the maximum height over all inclusion IDs in both snapshots, including Al and Fe",
+    "inclusion_envelope_z_A": 39.718591,
+    "first_retained_slice_z_A": [40, 44],
+    "retained_matrix_slices": 23,
+    "nearest_layer_control_von_mises_MPa": 849.934,
+    "width_max_absolute_resolved_shear_MPa": 5.651,
+    "width_max_absolute_xz_MPa": 5.042,
+    "axial_max_absolute_xz_MPa": 15.451,
+    "signed_md_convention": "Positive normal compression; opposite to tensile-positive Cauchy stress",
+    "new_md_required_for_correction": false
+  },
+  "interface_loading": {
+    "input": "lammps/stageG4_tilted_solute/in.ramp",
+    "element_mapping": "1 Al, 2 Fe, 3 Mg, 4 Si; only Al and Fe populated",
+    "applied_force_conversion": "tau_MPa * 10 * Lx_A * Ly_A * 6.241509e-7 / N_top, eV/A per driven atom",
+    "time_step_ps": 0.001,
+    "completed_run_steps": {"free_control": 101000, "held_control": 45000, "held_strained": 45000},
+    "last_regular_dxa_steps": {"free_control": 100000, "held_control": 44000, "held_strained": 44000},
+    "upper_line_departure_steps": {"held_control": 38000, "held_strained": 40000},
+    "upper_line_departure_MPa": {"held_control": 113.6328125, "held_strained": 122.7234375},
+    "interpretation": "Adjacent sampling intervals in single trajectories; early motion and seam fragments prevent a material-threshold or null-effect claim"
+  },
+  "alloy_comparator": {
+    "input": "lammps/stageG3_solute_mobility/in.vstar",
+    "log": "data/publication/alloy/log.lammps.gz",
+    "atoms": 92800,
+    "element_mapping": "1 Al, 2 Mg, 3 Si",
+    "preparation_stop": "energy tolerance",
+    "final_force_two_norm_eV_per_A": 10.118429,
+    "final_force_max_component_eV_per_A": 1.9509711,
+    "force_tolerance_reached": false,
+    "completed_steps": 130000,
+    "frames_reanalysed": 131,
+    "full_column_shards_reconstruct_original_sha256": "8958161c63214dc0f0b4f5e6f09cc31f209c40935dd08507bc0fcb07d16a88df",
+    "legacy_stress_mask": "Al and Si, excluding Mg",
+    "alternative_masks": ["Al only", "all alloy atoms"],
+    "largest_rung_mean_stress_change_MPa": 1.71,
+    "stress_change_note": "Conservative rounded bound; exact per-rung values in stageG6_stress_selection_relA.json",
+    "initial_state_provenance": "IDs, types and fixed-bottom coordinates agree, but the later-saved initial file has no launch-time hash verifying mobile coordinates",
+    "physical_activation_volume_identified": false
+  },
+  "remaining_limits": [
+    "No independent size, loading-rate, seed, force-tolerance or spring-stiffness convergence study",
+    "The MEAM parameter mapping is checked; quantitative transferability to this interface is not independently validated",
+    "Prescribed strain is an assumed mechanical input, not a measured magnetic response",
+    "Short DXA fragments do not establish nucleation or a reaction pathway",
+    "Passing regression tests verifies the implemented analysis, not the underlying physical model"
+  ],
+  "reference_definitions": [
+    "https://docs.lammps.org/compute_stress_atom.html",
+    "https://docs.lammps.org/minimize.html",
+    "https://docs.lammps.org/fix_spring_self.html"
+  ]
+}
