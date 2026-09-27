@@ -31,9 +31,10 @@ G15 centroids that intersect a 1.5 nm periodic-seam margin are omitted:
 the CSV does not resolve the original partner from seam fragments there.
 Departure brackets reproduce the recorded per-line criterion; they are
 sampling intervals, not confidence intervals or nucleation thresholds.
-The bridge applies the same assumed r^-3 stress distribution to two scalar
-stress scales. Neither the activation volume nor the imposed strain is
-validated as a material property by that comparison.
+The bridge inverts the assumed r^-3 activated-glide model for the shear
+amplitude needed to reach a 25% rate increase. Two recorded stress scales
+are shown as horizontal references. Neither the activation volume nor the
+imposed strain is validated as a material property by that comparison.
 
 Dependencies: numpy, scipy, matplotlib, Pillow; OVITO and PySide6 for model.
 """
@@ -695,8 +696,27 @@ def creep_enhancement(stress_mpa: float, volume_b3: float, constants: dict) -> f
     return constants["volume_fraction"] * x * integral
 
 
+def required_shear_amplitude(volume_b3: float, constants: dict) -> float:
+    """Invert the G5 rate integral for a shear amplitude in MPa, up to 500 MPa.
+
+    The manuscript samples 19--142 b^3. The bracket matches the independent
+    stageG5 inverse calculation; tighter root tolerance keeps labels stable.
+    """
+    if not math.isfinite(volume_b3) or volume_b3 <= 0:
+        raise ValueError("Activation volume must be finite and positive.")
+    target = constants["target_enhancement"]
+    if not math.isfinite(target) or target < 0:
+        raise ValueError("Target enhancement must be finite and nonnegative.")
+    return brentq(
+        lambda stress: creep_enhancement(stress, volume_b3, constants) - target,
+        0.0,
+        500.0,
+        xtol=1e-10,
+    )
+
+
 def figure_bridge(args) -> None:
-    """Plot the conditional G5 response using recorded MD and sphere stress scales."""
+    """Plot the required shear amplitude and two recorded reference stresses."""
     text = FigureLabels(args.language)
     bridge = read_json(args.reports / "stageG5_two_scale_bridge.json")
     constants = bridge["constants"]
@@ -705,9 +725,17 @@ def figure_bridge(args) -> None:
     md = max(abs(row["d_sigma_xz_axis_MPa"]) for row in field["profile"] if row["above_apex"])
     eshelby = sphere["interior_stress_MPa"]["sphere_3D"]["max_RSS_MPa"]
     target = constants["target_enhancement"]
-    volumes = np.linspace(10, 142, 529)
+    volumes = np.linspace(19, 142, 493)
+    required = np.array([required_shear_amplitude(v, constants) for v in volumes])
     fig, ax = plt.subplots(figsize=(7.2, 4.15))
     fig.subplots_adjust(left=0.12, right=0.99, top=0.85, bottom=0.22)
+    ax.plot(
+        volumes,
+        required,
+        color=INK,
+        lw=1.8,
+        label=text("Required amplitude", "Требуемая амплитуда"),
+    )
     for stress, colour, style, label in (
         (
             md,
@@ -727,37 +755,37 @@ def figure_bridge(args) -> None:
             ),
         ),
     ):
-        rates = [100 * creep_enhancement(stress, v, constants) for v in volumes]
-        ax.semilogy(volumes, rates, color=colour, ls=style, label=label, lw=1.8)
+        ax.axhline(stress, color=colour, ls=style, label=label, lw=1.5)
         crossing = brentq(
             lambda v, amplitude=stress: creep_enhancement(amplitude, v, constants) - target, 1, 200
         )
-        ax.plot([crossing], [100 * target], "o", color=colour, ms=5)
-        ax.vlines(crossing, 1e-3, 100 * target, color=colour, ls=":", lw=0.9)
+        ax.plot([crossing], [stress], "o", color=colour, ms=5)
+        ax.vlines(crossing, 0, stress, color=colour, ls=":", lw=0.9)
         ax.annotate(
-            f"{text.number(crossing, '.1f')} $b^3$",
-            xy=(crossing, 100 * target),
-            xytext=(crossing + 5, 250),
+            f"{text.number(crossing, '.2f')} $b^3$",
+            xy=(crossing, stress),
+            xytext=(crossing + 8, stress + 6),
             color=colour,
             fontsize=8,
             arrowprops={"arrowstyle": "-", "color": colour, "lw": 0.7},
         )
         print(f"Bridge stress {stress:.3f} MPa: 25% at V*={crossing:.6f} b^3")
-    ax.axhline(100 * target, color=INK, ls=(0, (5, 3)), lw=1)
-    ax.text(139, 100 * target * 1.6, text("25% target", "Уровень 25%"), ha="right", fontsize=8)
-    ax.set_xlim(10, 142)
-    ax.set_ylim(1e-3, 1e13)
+    print(f"Required amplitude across 19--142 b^3: {required[0]:.6f}--{required[-1]:.6f} MPa")
+    ax.set_xlim(19, 142)
+    ax.set_ylim(0, 70)
     ax.set_xticks([20, 40, 60, 80, 100, 120, 140])
-    ax.set_yticks([1e-2, 1, 1e2, 1e4, 1e6, 1e8, 1e10, 1e12])
+    ax.set_yticks(np.arange(0, 71, 10))
     ax.set_xlabel(
         text(r"Assumed activation volume, $V^*/b^3$", r"Принятый активационный объём $V^*/b^3$")
     )
-    ax.set_ylabel(text("Relative creep-rate increase (%)", "Прирост скорости ползучести (%)"))
+    ax.set_ylabel(text(r"Required $\tau_m$ (MPa)", r"Требуемая амплитуда $\tau_m$ (МПа)"))
     ax.set_title(
-        text("Conditional two-scale response", "Условный двухмасштабный отклик"), loc="left", pad=10
+        text("Stress required for 25% rate increase", "Напряжение для прироста скорости на 25%"),
+        loc="left",
+        pad=10,
     )
     ax.grid(axis="y", color="#DEE3E6", lw=0.5)
-    ax.legend(loc="upper left")
+    ax.legend(loc="upper right")
     temperature = constants["kT_300K_J"] / 1.380649e-23
     fig.text(
         0.99,
@@ -765,8 +793,7 @@ def figure_bridge(args) -> None:
         rf"$T={temperature:.0f}$ "
         + text("K", "К")
         + rf"; $f={text.number(constants['volume_fraction'], '.5f')}$; "
-        + text("prescribed strain", "заданная деформация")
-        + rf" ${text.number(100 * field['eigenstrain_used'], '.3f')}\%$",
+        + rf"$H={text.number(target, '.2f')}$",
         ha="right",
         fontsize=8,
     )

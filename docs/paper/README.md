@@ -12,7 +12,7 @@ axes, legends, units and annotations.
 | `fig_model.png` | OVITO rendering of deposited atomic coordinates; interface and loaded cells |
 | `fig_field.pdf` | Signed shear increment from the common held-state pair, with coordinate definitions |
 | `fig_dynamics.pdf` | Restrained G15 upper-line motion and the applied loading programme |
-| `fig_bridge.pdf` | Sensitivity of the conditional activated-glide integral to activation volume |
+| `fig_bridge.pdf` | Shear amplitude needed for a 25% modelled rate increase, with ridge and sphere reference stresses |
 
 The figure generator is `analysis/python/publication_figures.py`.
 Run it with `--language ru` to regenerate the Russian set; English is the default.

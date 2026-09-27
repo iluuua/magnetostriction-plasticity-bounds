@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "analysis" / "python"))
 
 import publication_figures as figures  # noqa: E402
+import stageG5_two_scale_bridge as bridge  # noqa: E402
 
 
 def test_labels_preserve_english_filenames_and_localize_russian_numbers():
@@ -55,6 +56,22 @@ def test_localization_preserves_every_plotted_value(name, monkeypatch):
         (english, en_stem), (russian, ru_stem) = captured
         assert en_stem == f"fig_{name}"
         assert ru_stem == f"fig_{name}_ru"
+        if name == "bridge":
+            ax = english.axes[0]
+            curve = ax.lines[0].get_xydata()
+            constants = figures.read_json(args.reports / "stageG5_two_scale_bridge.json")[
+                "constants"
+            ]
+            assert ax.get_yscale() == "linear"
+            np.testing.assert_array_equal(curve[[0, -1], 0], [19, 142])
+            np.testing.assert_allclose(curve[[0, -1], 1], [62.691327, 8.388276], atol=1e-6)
+            assert np.all(np.diff(curve[:, 1]) < 0)
+            for volume, amplitude in curve:
+                assert figures.creep_enhancement(amplitude, volume, constants) == pytest.approx(
+                    constants["target_enhancement"], abs=1e-10
+                )
+            for line, reference in zip((ax.lines[1], ax.lines[3]), (15.451, 41.45), strict=True):
+                np.testing.assert_allclose(line.get_ydata(), reference, atol=0.001)
         assert len(english.axes) == len(russian.axes)
         for en_ax, ru_ax in zip(english.axes, russian.axes, strict=True):
             assert en_ax.get_xlim() == ru_ax.get_xlim()
@@ -89,3 +106,20 @@ def test_manuscripts_select_their_own_figure_language():
         source = (ROOT / "docs/paper" / filename).read_text(encoding="utf-8")
         expected = [f"{Path(name).stem}{suffix}{Path(name).suffix}" for name in base]
         assert re.findall(pattern, source) == expected
+
+
+@pytest.mark.parametrize("volume", [19, 30, 50, 70, 100, 142])
+def test_required_amplitude_agrees_with_the_independent_bridge_analysis(volume):
+    constants = figures.read_json(ROOT / "docs/reports/stageG5_two_scale_bridge.json")["constants"]
+    amplitude = figures.required_shear_amplitude(volume, constants)
+    assert amplitude == pytest.approx(
+        bridge.required_sigma(volume, constants["target_enhancement"], constants["volume_fraction"])
+        / 1e6,
+        abs=0.001,
+    )
+
+
+@pytest.mark.parametrize("volume", [0, -1, float("nan"), float("inf")])
+def test_inverse_model_rejects_invalid_activation_volumes(volume):
+    with pytest.raises(ValueError, match="Activation volume"):
+        figures.required_shear_amplitude(volume, {})

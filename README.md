@@ -113,7 +113,7 @@ No DOI or external data deposit is claimed.
 ## Build the documents
 
 Install a TeX distribution providing pdfLaTeX, BibTeX, the article class,
-AMS mathematics, graphicx, natbib and Russian Babel support. Then run:
+AMS mathematics, graphicx, placeins, natbib and Russian Babel support. Then run:
 
 ```sh
 python scripts/build_manuscript.py

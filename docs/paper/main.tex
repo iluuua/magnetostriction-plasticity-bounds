@@ -5,6 +5,7 @@
 \usepackage[english]{babel}
 \usepackage[margin=25mm]{geometry}
 \usepackage{amsmath,amssymb,graphicx}
+\usepackage{placeins}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[hyphens]{url}
 \usepackage[hidelinks]{hyperref}
@@ -30,10 +31,10 @@ inclusion in aluminium was examined using atomistic calculations. A ridge
 in a 91\,428-atom interface cell was elongated by 0.194\% and restrained
 while the matrix relaxed. The additional shear stress reached a magnitude of
 15.45~MPa above the ridge axis, with substantial cancellation upon
-averaging across the cell. In matched loading runs, departure of an existing
-upper dislocation was detected at 113.6~MPa in the control and 122.7~MPa
-with the ridge deformed. Early motion and residual segments at the periodic
-seam limit attribution of this difference. A separate activated-glide model
+averaging across the cell. In matched loading runs, the upper-dislocation
+departure criterion is met one saved frame apart. A single pair of
+trajectories is insufficient to establish a systematic effect of inclusion
+deformation on dislocation motion. A separate activated-glide model
 quantifies the sensitivity of creep to the assumed stress amplitude and
 activation volume. The calculations establish a conditional mechanical
 response; magnetic deformation of the inclusions and persistence after
@@ -66,15 +67,15 @@ dislocation. The pre-existing interface field and the distribution of
 obstacles also affect the response of a line placed near the inclusion.
 
 The present calculations address the mechanical part of this problem using
-an aluminium matrix and an Al$_{13}$Fe$_4$ inclusion. A prescribed
-elongation of 0.194\% sets the amplitude of a controlled perturbation.
+an aluminium matrix and an Al$_{13}$Fe$_4$ inclusion. We prescribe
+an inclusion elongation of 0.194\% and calculate the matrix response.
 This value follows the modelling estimate associated with the earlier
 147~MPa stress scale \cite{Friha2024JMMM}; it has not been measured for the
 inclusions under magnetic exposure. The applied constraint fixes reference
 coordinates for the inclusion atoms. Consequently, the resulting field is
-the response to a specified mechanical boundary condition. Identification
-of that condition with a magnetic transformation requires additional
-evidence.
+the response to a specified mechanical boundary condition. Whether the
+imposed deformation represents magnetostriction of real inclusions requires
+separate verification.
 
 The study combines a paired static stress calculation with trajectories of
 existing dislocations in the same interface geometry. Attention is given
@@ -82,9 +83,7 @@ to the distinction between signed shear near the inclusion axis and
 averages across the simulation cell. The trajectories are examined through
 their initial relaxation, subsequent motion and interaction with the
 periodic seam. A separate activated-glide estimate then relates assumed
-stress amplitudes to a conditional change in creep rate. This restricted
-scope allows the calculated response and its limitations to be stated
-without assigning a microscopic origin to the experimental memory effect.
+stress amplitudes to a conditional change in creep rate.
 
 \section{Methods}
 
@@ -112,6 +111,7 @@ and $y$; the upper aluminium surface faces vacuum and the bottom
 bonding and any atomic rearrangement across the interface are governed by
 the interatomic potential.
 
+\FloatBarrier
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.92\linewidth]{fig_model.png}
@@ -123,6 +123,7 @@ oppositely signed edge-dislocation pair. The upper layers transmit the
 applied shear and the bottom layer is fixed.}
 \label{fig:model}
 \end{figure}
+\FloatBarrier
 
 The ridge atoms are displaced about their centroid using the small-strain
 tensor
@@ -139,25 +140,21 @@ maximises the imposed $xz$ shear component, $E_{0,xz}=0.001455$, within
 this family of deformations. It defines one favourable orientation.
 The support layer receives no imposed displacement.
 
-After preparing a relaxed reference structure, control and perturbed
-copies are minimised with identical settings. Inclusion atoms are attached
-to their respective reference coordinates by harmonic springs of stiffness
-$20$~eV/\AA$^2$. The matrix remains free to relax. The potential itself is
-unchanged, so the constraint supplies forces needed to maintain the
-deformation. A material eigenstrain would instead alter the stress-free
-state of the inclusion. The spring reactions remain part of the paired
-response even though the same stiffness is used in both calculations.
+Preparation includes conjugate-gradient minimisation, 6~ps at 300~K,
+12~ps of cooling to 0.5~K and a final minimisation. Both static configurations
+are constructed from one relaxed control structure, preserving atom
+identities. Inclusion atoms are attached to their respective reference
+coordinates by harmonic springs of stiffness $20$~eV/\AA$^2$, while the
+matrix remains free to relax. The two copies are minimised with identical
+settings and both reach the requested force two-norm of 0.02~eV/\AA{}.
+This comparison uses one prepared state; sensitivity to initial structure
+and minimisation tolerance has not been established.
+
+The potential is unchanged, so the springs supply the forces that maintain
+the deformation. A material eigenstrain would alter the stress-free state
+of the inclusion. Spring reactions remain part of the paired response.
 Full preparation and convergence information is given in the
 Supplementary Information.
-
-Preparation includes conjugate-gradient minimisation, 6~ps at 300~K,
-12~ps of cooling to 0.5~K and a final minimisation. The static pair is
-then constructed from one prepared control, with matching atom identities.
-Both copies reach the requested force two-norm of
-0.02~eV/\AA{} after their separate minimisations. This pairing reduces
-differences arising from independently relaxed interfaces. It does not
-demonstrate insensitivity to the initial structure or to minimisation
-tolerance; the reported comparison is for this one prepared state.
 
 \subsection{Stress and dislocation measurements}
 
@@ -166,9 +163,10 @@ before forming stress invariants. The conversion uses the aluminium atomic
 volume $16.61$~\AA$^3$. Profiles compare the perturbed and control tensors,
 $\Delta\boldsymbol\sigma=\boldsymbol\sigma_\varepsilon-
 \boldsymbol\sigma_0$, in layers 4~\AA{} thick. The stored tensor uses
-positive normal stress in compression. Its sign is opposite to the
-tensile-positive Cauchy convention; absolute shear projections and
-invariants are unchanged. The coordinate $r=z-20$~\AA{}
+positive normal stress in compression. The tensor has the opposite sign to
+the tensile-positive Cauchy convention. Reversing its sign leaves absolute
+resolved shear stresses and the von Mises stress unchanged.
+The coordinate $r=z-20$~\AA{}
 measures height above the nominal interface plane; $d=r-20$~\AA{} is
 height above the nominal ridge crest. For a layer spanning the cell,
 $d$ is not a nearest-surface distance.
@@ -255,6 +253,7 @@ $\mathrm{RSS}_{\max}$, 5.651~MPa. The remaining layers select
 $(111)[1\bar{1}0]$. The local minimum is therefore partly a consequence
 of tensor projection and spatial averaging.
 
+\FloatBarrier
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.96\linewidth]{fig_field.pdf}
@@ -269,6 +268,7 @@ convention is used. The opposite signs show the
 sensitivity of the reported stress to the averaging region.}
 \label{fig:field}
 \end{figure}
+\FloatBarrier
 
 In the thirteen layers at $r>60$~\AA{}, the width-averaged
 $\mathrm{RSS}_{\max}$ has mean 2.477~MPa and standard deviation
@@ -322,19 +322,6 @@ observation leaves the size and reproducibility of a deformation-induced
 shift unresolved. A statistical null effect or a material critical stress
 cannot be extracted from it.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.96\linewidth]{fig_dynamics.pdf}
-\caption{Existing-line motion in the interface cells. Upper-line positions
-are followed through preconditioning and shear loading, with the applied
-stress shown alongside. The restrained control and perturbed cases cross
-the departure criterion one saved frame apart. The initial motion towards
-the ridge and the retained DXA segments at the periodic seam constrain
-interpretation of the later trajectories. Segment disappearance or
-reassignment is not evidence of a new interface dislocation.}
-\label{fig:dynamics}
-\end{figure}
-
 The lower line in both restrained runs is no longer separately identified
 by 10~ps. Later DXA segments appear near the periodic seam. Assigning these
 segments to the original line by Burgers-vector family alone would create
@@ -353,6 +340,21 @@ at the periodic seam at higher loads. The nominal run endpoint is
 400~MPa, beyond the last analysed regular frame. This single run gives a
 restricted observation of interface activity under its own boundary
 conditions; it does not measure a universal nucleation threshold.
+
+\FloatBarrier
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.96\linewidth]{fig_dynamics.pdf}
+\caption{Existing-line motion in the interface cells. Upper-line positions
+are followed through preconditioning and shear loading, with the applied
+stress shown alongside. The restrained control and perturbed cases cross
+the departure criterion one saved frame apart. The initial motion towards
+the ridge and the retained DXA segments at the periodic seam constrain
+interpretation of the later trajectories. Segment disappearance or
+reassignment is not evidence of a new interface dislocation.}
+\label{fig:dynamics}
+\end{figure}
+\FloatBarrier
 
 \section{Conditional connection to creep}
 
@@ -374,8 +376,8 @@ to leading order in inclusion volume fraction $f$. The tensor field,
 grain orientations and interactions between particles are reduced to
 a single assumed amplitude.
 
-The evaluation uses $T=300$~K and $f=0.00246$ as a representative dilute
-scenario. A target $H=0.25$ serves as a reference motivated by the scale
+The model evaluation uses $T=300$~K and inclusion volume fraction
+$f=0.00246$. A target $H=0.25$ serves as a reference motivated by the scale
 of the reported creep changes. Activation volumes from $19b^3$ to
 $142b^3$ are explored as a sensitivity range. The value $70b^3$, reported
 for a differently processed Al--Mg--Si alloy
@@ -392,6 +394,20 @@ description applies. Treating the experimental change as a fixed target
 therefore introduces a second level of modelling beyond the atomistic
 stress calculation.
 
+\FloatBarrier
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{fig_bridge.pdf}
+\caption{Shear-stress amplitude required for a modelled 25\% creep-rate
+increase as a function of activation volume at $T=300$~K and $f=0.00246$.
+The curve is calculated from Eq.~\eqref{eq:bridge}. Horizontal lines mark
+two illustrative amplitudes: 15.451~MPa above the ridge axis and
+41.45~MPa inside the sphere. Their use in the scalar spatial model is
+an additional assumption.}
+\label{fig:bridge}
+\end{figure}
+\FloatBarrier
+
 Solving Eq.~\eqref{eq:bridge} gives required amplitudes from 62.69 to
 8.39~MPa as $V^*$ increases across the selected range
 (Fig.~\ref{fig:bridge}). If 15.451~MPa is inserted as a representative
@@ -399,19 +415,6 @@ amplitude, $H=0.25$ occurs at $V^*=77.09b^3$. Using 41.45~MPa instead
 gives $28.74b^3$. The conditional range for these inputs is therefore
 about 29--77$\,b^3$. At $70b^3$,
 the 15.451~MPa scenario gives $H=0.156$.
-
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=0.92\linewidth]{fig_bridge.pdf}
-\caption{Conditional activated-glide estimate at 300~K and
-$f=0.00246$. The required shear amplitude for a 25\% rate increase
-depends strongly on activation volume. The amplitudes 15.451 and
-41.45~MPa are taken as separate illustrative inputs from the ridge
-profile and sphere interior. Their use in the scalar spatial model is
-an additional assumption. The curve is not fitted to a measured
-activation volume or a simulated creep rate.}
-\label{fig:bridge}
-\end{figure}
 
 The axial ridge maximum and the sphere interior value belong to different
 physical and spatial definitions. Substituting either into
@@ -458,7 +461,10 @@ establish stress overlap between inclusions several micrometres apart.
 The alloy comparator adds evidence of limited line mobility in one
 random solute configuration. The tracked line accumulates 1.98~\AA{}
 net displacement during the completed loading history through 75~MPa,
-below one Burgers-vector magnitude. Its configuration, time window and
+below one Burgers-vector magnitude. The preparation minimisation did not
+reach the requested force tolerance. This trajectory is therefore used
+only as a supplementary observation, not as a quantitative measure of
+pinning. Its configuration, time window and
 internal stresses differ from those of the interface runs. It therefore
 provides no transferable pinning constant or calibration of $V^*$.
 The trajectory, analysis procedure and limitations of the comparator
@@ -481,7 +487,8 @@ calculation maintains the mechanical constraint and the dynamic runs
 do not reproduce its removal followed by delayed loading.
 Irreversible defect rearrangement, retained deformation and changes
 in obstacle populations could each alter the subsequent response,
-but none is established by these records. The results identify
+but the calculations do not establish which process accounts for the
+memory. The results identify
 mechanical quantities that such an explanation would need to reproduce.
 They leave the origin and lifetime of the experimental memory open.
 
@@ -496,8 +503,8 @@ decreases to about 2~MPa at a height of 8.6~nm above the crest.
 The matched loading trajectories show substantial initial motion of
 existing lines and an upper-line departure difference of one saved
 frame. Periodic-seam segments and limited sampling restrict quantitative
-attribution. The separate activated-glide calculation expresses
-sensitivity to assumed stress and activation volume. Together these
+attribution. A separate model shows how the creep-rate increase depends
+on the assumed stress and activation volume. Together these
 results characterise the response to a maintained mechanical constraint
 and delimit its interpretation as a possible contribution to
 magnetically modified creep.
