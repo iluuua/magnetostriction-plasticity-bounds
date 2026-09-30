@@ -1,9 +1,9 @@
 # Strained inclusions and dislocation motion in aluminium
 
-Research data and analysis for the English and Russian manuscripts in
-[docs/paper](docs/paper). The study asks how a prescribed deformation of an
-Al13Fe4 inclusion transfers shear stress to an aluminium matrix, and how that
-stress compares with the motion of existing dislocations.
+Simulation data and analysis for the English and Russian manuscripts in
+[docs/paper](docs/paper). The study examines how imposed deformation of an
+Al13Fe4 inclusion transfers shear stress to an aluminium matrix, then compares
+that stress with the observed motion of existing dislocations.
 
 The inclusion strain is a modelling input, 0.00194 (0.194%). It is motivated by
 an earlier stress estimate and is not a measurement of Al13Fe4 magnetostriction.
@@ -48,7 +48,7 @@ conditions. There is no cell-size, rate or independent-seed convergence study.
 Short DXA fragments are not evidence of a newly nucleated dislocation. Spatial
 scatter between stress bins is not an estimate of numerical uncertainty.
 
-The maintained static pair reaches its requested force tolerance. The separate
+Both restrained static states meet the requested force tolerance. The separate
 alloy preparation stops on energy tolerance with a force two-norm of
 10.12 eV/angstrom, so its limited-motion trajectory is not an equilibrated
 pinning-threshold measurement. The archived alloy starting file also lacks a
@@ -71,14 +71,13 @@ trajectory.
 | `potentials/` | Original MEAM files and their attribution |
 | `tests/` | Focused checks of the published analysis |
 
-The source of truth is `main.tex` / `main_ru.tex`, with technical details in the
-two supplementary sources. No section-splicing or text-replacement pipeline is
-required. Repository documentation is in English; the Russian manuscript is
-maintained as an explicit language counterpart.
+The main papers are `main.tex` / `main_ru.tex`; the two supplementary sources
+contain the technical details. Repository documentation is in English. The
+Russian manuscript is maintained alongside the English version.
 
 ## Reproduce the analysis
 
-Python 3.12 and the packages in `requirements.txt` are used. OVITO is required
+Use Python 3.12 with the packages in `requirements.txt`. OVITO is required
 for dislocation analysis and the atomistic render. LAMMPS is only required to
 rerun molecular dynamics.
 
@@ -102,8 +101,9 @@ share one basename.
 Signed MD tensors use positive normal compression, from `-S / volume` where
 `S` is LAMMPS `stress/atom`. Tensile-positive Cauchy tensors have the opposite
 sign. Maximum absolute resolved shear and von Mises values are unchanged.
-The retained matrix layers are selected using the actual inclusion envelope
-in both snapshots, including Al and Fe, rather than a fixed crest cutoff.
+The analysis selects retained matrix layers from the actual inclusion envelope
+in both snapshots, including Al and Fe. The cutoff follows that envelope
+instead of a fixed crest height.
 
 The data guide in [data/publication/README.md](data/publication/README.md)
 identifies transformations, sampling intervals, units and analysis limitations.
@@ -120,15 +120,15 @@ python scripts/build_manuscript.py
 python scripts/validate_publication.py
 ```
 
-Intermediate files go to `build/paper`. Current reading PDFs are written to
-`docs/paper`; local Overleaf ZIPs contain the relevant source, figures and
-bibliography. Bibliography and figure changes require rebuilding both languages.
+The build writes intermediate files to `build/paper` and current PDFs to
+`docs/paper`. Local Overleaf ZIPs contain the source, figures and bibliography.
+Rebuild both language versions after changing the bibliography or figures.
 
 ## Replay a calculation
 
-The launcher starts from a deposited initial configuration. The alloy input
-has the provenance limitation described above. It prints an
-explicit command unless `--execute` is supplied:
+The launcher uses a deposited initial configuration. The alloy input has the
+checksum limitation described above. By default, it prints the command to run;
+pass `--execute` to start the calculation:
 
 ```sh
 python scripts/run_calculation.py interface_control
