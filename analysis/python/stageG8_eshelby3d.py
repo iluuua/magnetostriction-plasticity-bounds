@@ -120,53 +120,36 @@ def max_rss(sig: np.ndarray, systems) -> tuple[float, str]:
 
 
 def exterior_sphere(
-    x: np.ndarray, a: float, e: np.ndarray, C: np.ndarray, order: int = 40
+    x: np.ndarray, a: float, e: np.ndarray, C: np.ndarray, order: int = 0
 ) -> np.ndarray:
-    """Return sphere exterior stress [Pa]; x and radius a use the same units."""
-    if a <= 0 or np.linalg.norm(x) <= a or order < 2:
-        raise ValueError("Exterior quadrature requires |x| > a > 0 and order >= 2")
-    # Gauss-Legendre nodes on the unit ball via spherical coordinates
-    gr, wr = np.polynomial.legendre.leggauss(order)
-    gt, wt = np.polynomial.legendre.leggauss(order)
-    gp, wp = np.polynomial.legendre.leggauss(order)
-    r = 0.5 * a * (gr + 1.0)
-    wr = 0.5 * a * wr
-    ct = gt
-    phi = math.pi * (gp + 1.0)
-    wp = math.pi * wp
+    """Exterior stress [Pa] of a spherical eigenstrain inclusion at |x| > a.
 
-    c1 = 1.0 / (16.0 * math.pi * MU * (1.0 - NU))
-    D = np.zeros((3, 3, 3, 3))
+    Closed-form exterior Eshelby tensor of a sphere (Ju and Sun 1999; Mura 1987,
+    Sect. 11): eps = D(x) : e, sigma = C : eps. Corrected 2026-10-21: the
+    Gauss-Legendre volume quadrature used before had a wrong kernel (it gave a
+    nearly hydrostatic field for a dilatational inclusion, whose exact exterior
+    field is traceless) and overestimated the exterior decay by 1.7-2.3 times.
+    The closed form agrees with an independent FFT solution to about 1 %.
+    The order argument is kept for compatibility and is not used.
+    """
+    r = float(np.linalg.norm(x))
+    if a <= 0 or r <= a:
+        raise ValueError("Exterior evaluation requires |x| > a > 0")
+    n = x / r
+    p2 = (a / r) ** 2
+    pre = (a / r) ** 3 / (30.0 * (1.0 - NU))
     d = np.eye(3)
-    for ir, rr in enumerate(r):
-        for it, cc in enumerate(ct):
-            st = math.sqrt(max(0.0, 1.0 - cc * cc))
-            for ip, pp in enumerate(phi):
-                y = np.array([rr * st * math.cos(pp), rr * st * math.sin(pp), rr * cc])
-                w = wr[ir] * wt[it] * wp[ip] * rr * rr
-                z = x - y
-                R2 = float(z @ z)
-                R1 = math.sqrt(R2)
-                if R1 < 1e-14:
-                    continue
-                zz = z / R1
-                # G_ki,lj for the isotropic Kelvin solution, contracted below
-                for i in range(3):
-                    for j in range(3):
-                        for k in range(3):
-                            for ell in range(3):
-                                term = (
-                                    (1.0 - 2.0 * NU)
-                                    * (d[i, j] * zz[k] * zz[ell] + d[k, ell] * zz[i] * zz[j])
-                                    + 3.0 * zz[i] * zz[j] * zz[k] * zz[ell]
-                                    - d[i, k] * zz[j] * zz[ell]
-                                    - d[j, ell] * zz[i] * zz[k]
-                                    - d[i, ell] * zz[j] * zz[k]
-                                    - d[j, k] * zz[i] * zz[ell]
-                                )
-                                D[i, j, k, ell] += w * c1 * term / (R1**3) * (2.0 * MU)
-    Se = np.einsum("ijkl,kl->ij", D, e)
-    return np.einsum("ijkl,kl->ij", C, Se)
+    tr = float(np.trace(e))
+    ne = float(n @ e @ n)
+    en = e @ n
+    nn = np.outer(n, n)
+    eps = pre * ((3 * p2 + 10 * NU - 5) * tr * d
+                 + 2 * (3 * p2 - 10 * NU + 5) * e
+                 + 15 * (1 - p2) * ne * d
+                 + 15 * (1 - 2 * NU - p2) * tr * nn
+                 + 30 * (NU - p2) * (np.outer(n, en) + np.outer(en, n))
+                 + 15 * (7 * p2 - 5) * ne * nn)
+    return np.einsum("ijkl,kl->ij", C, eps)
 
 
 def main() -> int:
@@ -218,7 +201,9 @@ def main() -> int:
     res = {
         "created_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         "purpose": "Homogeneous isotropic inclusion comparison at the same nominal strain",
-        "quadrature": {"order_per_coordinate": args.order, "automatic_convergence_check": False},
+        "exterior_method": ("closed-form exterior Eshelby tensor (Ju and Sun 1999); corrected "
+                            "2026-10-21, the earlier volume quadrature had a wrong kernel and "
+                            "overestimated the exterior field by 1.7-2.3 times"),
         "comparison_limits": (
             "Interior values are not exterior maxima; tethered MD and homogeneous "
             "eigenstrain impose different constraints"
