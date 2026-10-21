@@ -1,0 +1,125 @@
+# Reference cell: an Al13Fe4 inclusion inside a fully periodic Al box, no strain.
+#
+# The inclusion keeps the Al13Fe4 lattice of the crystal structure (CIF) and is
+# held fixed throughout; only the matrix atoms move. With this potential a free
+# Al13Fe4 crystal would relax to a lattice about 8 % larger in volume (a +7.5 %,
+# b -2.5 %), so a free inclusion would press on the aluminium at the GPa level
+# and could emit defects. The box keeps the Al lattice of the potential
+# (a0 = 4.05 A), at which bulk Al is stress free.
+#
+# 1. CG of the matrix, coarse, to remove the overlaps left by the construction.
+# 2. NVT of the matrix at 300 K, so the matrix side of the interface can rearrange.
+# 3. Langevin cooling of the matrix from 300 K to 0.5 K.
+# 4. CG of the matrix to force two-norm CG_FTOL, in chunks of CHUNK iterations
+#    (a restart resets the conjugate directions and breaks silent stalls).
+# 5. One correction of the box for the mean stress of the matrix atoms far from
+#    the inclusion (r > R + 15 A): only matrix coordinates are rescaled, so the
+#    held inclusion is not strained; then step 4 again.
+#
+# Metal units: angstrom, eV, ps, K, bar. Time step 1 fs.
+# Variables (-var): DATA_FILE POT_DIR OUT_PREFIX N_AL RADIUS
+#   CG1_MAX     iterations of the first CG       (default 3000)
+#   NVT_STEPS   steps at 300 K                    (default 10000)
+#   COOL_STEPS  cooling steps 300 -> 0.5 K        (default 10000)
+#   CG_FTOL     final force two-norm, eV/A        (default 0.0003)
+#   CHUNK       CG iterations per chunk           (default 2000)
+#   NCHUNK      maximum chunks per CG stage       (default 12)
+#   K_AL_BAR    bulk modulus of Al used for the box correction (default 7.74e5 bar)
+# Atom types: 1 Al, 2 Fe, 3 Mg, 4 Si. Periodic in x, y and z.
+
+units           metal
+atom_style      atomic
+boundary        p p p
+
+variable        CG1_MAX index 3000
+variable        NVT_STEPS index 10000
+variable        COOL_STEPS index 10000
+variable        CG_FTOL index 0.0003
+variable        CHUNK index 2000
+variable        NCHUNK index 12
+variable        K_AL_BAR index 7.74e5
+variable        SEED index 4242
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+compute         st all stress/atom NULL virial
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+group           matrix subtract all inclusion
+fix             hold inclusion setforce 0.0 0.0 0.0
+
+# matrix atoms far from the inclusion, for the mean-stress check
+variable        xc equal xcm(inclusion,x)
+variable        yc equal xcm(inclusion,y)
+variable        zc equal xcm(inclusion,z)
+variable        rfar equal ${RADIUS}+15.0
+variable        isfar atom sqrt((x-v_xc)^2+(y-v_yc)^2+(z-v_zc)^2)>v_rfar
+group           far dynamic matrix var isfar every 1
+compute         sfar far reduce sum c_st[1] c_st[2] c_st[3]
+variable        nfar equal count(far)
+# mean normal stress of the far matrix, bar (tension positive), from the virial
+# per atom over the atomic volume of Al
+variable        smean equal (c_sfar[1]+c_sfar[2]+c_sfar[3])/(3.0*v_nfar*16.6075)
+
+thermo          200
+thermo_style    custom step temp pe press pxx pyy pzz fnorm fmax v_smean
+thermo_modify   flush yes
+
+# --- 1. coarse CG ----------------------------------------------------------
+neigh_modify    delay 0 every 1 check no
+min_style       cg
+min_modify      dmax 0.05
+minimize        0.0 1.0 ${CG1_MAX} 60000
+
+# --- 2-3. anneal and cool the matrix ----------------------------------------
+reset_timestep  0
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+velocity        matrix create 300.0 ${SEED} mom yes rot no dist gaussian
+velocity        inclusion set 0.0 0.0 0.0
+fix             md matrix nvt temp 300.0 300.0 0.1
+run             ${NVT_STEPS}
+unfix           md
+fix             lang matrix langevin 300.0 0.5 0.5 ${SEED}
+fix             nve matrix nve
+run             ${COOL_STEPS}
+unfix           lang
+unfix           nve
+velocity        all set 0.0 0.0 0.0
+
+# --- 4. CG in chunks ----------------------------------------------------------
+neigh_modify    delay 0 every 1 check no
+variable        k loop ${NCHUNK}
+label           cgA
+minimize        0.0 ${CG_FTOL} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK A $k fnorm $(v_fn) smean $(v_smean)"
+if "$(v_fn) < ${CG_FTOL}" then "jump SELF doneA"
+next            k
+jump            SELF cgA
+label           doneA
+variable        k delete
+
+# --- 5. box correction for the far-field mean stress, then CG again ---------
+variable        s0 equal $(v_smean)
+variable        scl equal 1.0-v_s0/(3.0*${K_AL_BAR})
+print           "BOX CORRECTION far mean stress ${s0} bar, scale $(v_scl:%.8f)"
+change_box      matrix x scale $(v_scl) y scale $(v_scl) z scale $(v_scl) remap
+variable        k loop ${NCHUNK}
+label           cgB
+minimize        0.0 ${CG_FTOL} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK B $k fnorm $(v_fn) smean $(v_smean)"
+if "$(v_fn) < ${CG_FTOL}" then "jump SELF doneB"
+next            k
+jump            SELF cgB
+label           doneB
+
+run             0
+write_dump      all custom ${OUT_PREFIX}.control.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+write_data      ${OUT_PREFIX}.control.data

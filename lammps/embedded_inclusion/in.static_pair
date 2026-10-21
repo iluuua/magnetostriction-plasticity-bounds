@@ -1,0 +1,83 @@
+# Static response of the aluminium matrix to a given strain of the inclusion.
+#
+# The input is either the relaxed reference cell or the same cell after
+# scripts/make_strained_inclusion.py has moved the inclusion atoms by the
+# magnetostrictive strain (and, optionally, the matrix atoms by the continuum
+# displacement as a starting guess). The inclusion atoms are kept where they
+# are (zero force); only the matrix atoms relax, by conjugate gradients, at a
+# fixed box (zero mean strain). Both members of a pair go through this input.
+# There is no thermal stage.
+#
+# The box is not relaxed on purpose: with the inclusion held, the virial of the
+# cell contains the inclusion's own elastic stress but not the holding forces,
+# so driving it to zero would not describe a stress-free body. A fixed box is a
+# clean boundary condition that the continuum reference reproduces exactly.
+#
+# CG runs in chunks of CHUNK iterations (a restart resets the conjugate
+# directions and breaks silent stalls), first to FTOL_A, with a dump, then on
+# to FTOL_B; comparing the two dumps shows whether the field still changes.
+#
+# Metal units: angstrom, eV, bar. stress/atom values are in bar*A^3.
+# Variables (-var): DATA_FILE POT_DIR OUT_PREFIX N_AL
+#   FTOL_A, FTOL_B   force two-norms of the two stages, eV/A   (0.001, 0.0003)
+#   CHUNK, NCHUNK    iterations per chunk, maximum chunks      (2000, 12)
+# Atom types: 1 Al, 2 Fe, 3 Mg, 4 Si. Periodic in x, y and z.
+
+units           metal
+atom_style      atomic
+boundary        p p p
+
+variable        FTOL_A index 0.001
+variable        FTOL_B index 0.0003
+variable        CHUNK index 2000
+variable        NCHUNK index 12
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+compute         st all stress/atom NULL virial
+
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+group           matrix subtract all inclusion
+fix             freeze inclusion setforce 0.0 0.0 0.0
+
+thermo          200
+thermo_style    custom step pe press pxx pyy pzz pxz pxy pyz fnorm fmax
+thermo_modify   flush yes
+min_style       cg
+min_modify      dmax 0.05
+
+variable        k loop ${NCHUNK}
+label           cgA
+minimize        0.0 ${FTOL_A} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK A $k fnorm $(v_fn)"
+if "$(v_fn) < ${FTOL_A}" then "jump SELF doneA"
+next            k
+jump            SELF cgA
+label           doneA
+variable        k delete
+write_dump      all custom ${OUT_PREFIX}.static1.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+
+variable        k loop ${NCHUNK}
+label           cgB
+minimize        0.0 ${FTOL_B} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK B $k fnorm $(v_fn)"
+if "$(v_fn) < ${FTOL_B}" then "jump SELF doneB"
+next            k
+jump            SELF cgB
+label           doneB
+write_dump      all custom ${OUT_PREFIX}.static.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+write_data      ${OUT_PREFIX}.static.data
+
+# Forces that keep the inclusion in its shape: release the constraint and
+# evaluate the forces once, at the minimised positions, without moving atoms.
+unfix           freeze
+run             0
+write_dump      inclusion custom ${OUT_PREFIX}.forces.lammpstrj id type x y z fx fy fz modify sort id format float %.8g

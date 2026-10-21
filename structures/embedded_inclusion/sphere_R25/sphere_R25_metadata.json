@@ -1,0 +1,70 @@
+{
+ "created_at": "2026-10-21T15:58:54+03:00",
+ "git_head": "bb179ba",
+ "builder": "scripts/build_embedded_inclusion.py",
+ "shape": "sphere",
+ "radius_A": 25.0,
+ "box_A": [
+  126.00642840744275,
+  124.00541822839837,
+  126.26650387177116
+ ],
+ "periods": {
+  "nx": 44,
+  "ny": 25,
+  "nl": 54
+ },
+ "centre_A": [
+  63.00321420372138,
+  62.002709114199185,
+  63.13325193588558
+ ],
+ "orientation": {
+  "x": "[1-10]",
+  "y": "[11-2]",
+  "z": "[111]",
+  "Al13Fe4": "a along x, b along y"
+ },
+ "n_atoms": 118861,
+ "n_matrix": 114374,
+ "n_inclusion": 4487,
+ "N_AL": 114374,
+ "inclusion": {
+  "source": "structures\\converted\\Al13Fe4\\al13fe4.data",
+  "cell_vectors_A": [
+   [
+    15.498,
+    0.0,
+    0.0
+   ],
+   [
+    -6.223699476362758e-16,
+    8.0814,
+    0.0
+   ],
+   [
+    -3.8154476802796933,
+    4.70831763342142e-16,
+    11.890857958913154
+   ]
+  ],
+  "n_al": 3429,
+  "n_fe": 1058,
+  "al_to_fe": 3.2410207939508506,
+  "ideal_al_to_fe": 3.25
+ },
+ "volume_fraction": 0.03317318084977096,
+ "clearance_A": 2.2,
+ "min_distance_A": {
+  "matrix_inclusion": 2.2017013490891766,
+  "inclusion_inclusion": 2.3706010344495416,
+  "matrix_matrix": 2.863782463805503
+ },
+ "matrix_removed": 4426,
+ "types": {
+  "1": "Al",
+  "2": "Fe",
+  "3": "Mg (absent)",
+  "4": "Si (absent)"
+ }
+}
