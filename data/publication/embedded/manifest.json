@@ -1,0 +1,310 @@
+{
+ "created_at": "2026-10-22T02:52:22+03:00",
+ "description": "Al13Fe4 sphere (R = 25 A) held at a given magnetostrictive strain in a periodic Al cell: static field pair, cells at 4 and 10 times the strain, an edge dislocation above the inclusion, and the sweep of a straight edge dislocation without an inclusion",
+ "files": [
+  {
+   "source": "sphere_R25.control.data",
+   "source_bytes": 9794838,
+   "source_sha256": "18bdea1d3e6900ed5e27827b3ebf6ee4958a183ff9c0d3db3a34e4bd71f5bf6b",
+   "file": "data/publication/embedded/field/reference_relax.sphere_R25.control.data.gz",
+   "bytes": 3550640,
+   "sha256": "0853974532f4904af97d7ed1aa98a5dc285be611e98786f501a74cd178dbafcd"
+  },
+  {
+   "source": "log.lammps",
+   "source_bytes": 37104,
+   "source_sha256": "ab3ebb571b2ddb98b01ee70f8f4a99973e8039d20e52e8bf614abcf43a8751d3",
+   "file": "data/publication/embedded/field/reference_relax.log.lammps.gz",
+   "bytes": 11268,
+   "sha256": "ae7629a65ff7ae30ab9d003c559680696e00c6468108dbcf3ee00af871520b91"
+  },
+  {
+   "source": "ref.static.lammpstrj",
+   "source_bytes": 12041104,
+   "source_sha256": "1eb5e232fe4bd3b0f1df37c7e04a9d0e21e16e36b872eedb640246baa6407f6f",
+   "file": "data/publication/embedded/field/ref.static.lammpstrj.gz",
+   "bytes": 5338113,
+   "sha256": "6ddfbbb81f46ff31c37bd7fc45cc382f229e4435072f0289e283200d349e9466"
+  },
+  {
+   "source": "ref.static.data",
+   "source_bytes": 9794305,
+   "source_sha256": "95375e181a3cc737baf86819865fedbb73dbf5eb3d64676d1d9a30f638894817",
+   "file": "data/publication/embedded/field/ref.static.data.gz",
+   "bytes": 3550350,
+   "sha256": "485b4a882f54d8bba8f3b99a72c3d2f4749c9026fa133d9fbfea233d3a5c036a"
+  },
+  {
+   "source": "ref.forces.lammpstrj",
+   "source_bytes": 336872,
+   "source_sha256": "3fa8073d44418d5a17ffb33bc586502f4c02ffb4017ced99c0169d178dd2b562",
+   "file": "data/publication/embedded/field/ref.forces.lammpstrj.gz",
+   "bytes": 98714,
+   "sha256": "20897a6d6beeb91194265ccf217fa7b77ad81914592e53f920c36383e1b29fdc"
+  },
+  {
+   "source": "log.ref",
+   "source_bytes": 13167,
+   "source_sha256": "4b18a1f0590351dc6bf9c6514357de85d4b3818f9aeeccb9ff3ea0bfe738abab",
+   "file": "data/publication/embedded/field/log.ref.gz",
+   "bytes": 3584,
+   "sha256": "c43557f7bd603968e054c401436e104b6d54810a42b160bd5ff18c35f46bd6a9"
+  },
+  {
+   "source": "plus.static.lammpstrj",
+   "source_bytes": 12039565,
+   "source_sha256": "1a96d0c81aaf3c780809e3249c9a56d154d815f41a181293fc05c7f15f768533",
+   "file": "data/publication/embedded/field/plus.static.lammpstrj.gz",
+   "bytes": 5338981,
+   "sha256": "19085c24cad3343015dcffee6859a9d158a90280b6c46bf4e73cc449c585a849"
+  },
+  {
+   "source": "plus.static.data",
+   "source_bytes": 9821593,
+   "source_sha256": "5941e18e982328db7f4d6cb3d0925328eef7ddd138a1c8cf592bda0783c0fe9d",
+   "file": "data/publication/embedded/field/plus.static.data.gz",
+   "bytes": 3557483,
+   "sha256": "83e062e7d05402db8cd78c89f4e1771092fe3e93ab2f93ba69143ad2eebd7739"
+  },
+  {
+   "source": "plus.forces.lammpstrj",
+   "source_bytes": 336103,
+   "source_sha256": "5c3d840ef81d67770e8bf64cd63f9419367357fe284127f19a454cbda9329da6",
+   "file": "data/publication/embedded/field/plus.forces.lammpstrj.gz",
+   "bytes": 98889,
+   "sha256": "8896a675fba296478b61c24446777e09ec91ccb87ed12660a2b32b9769b688ed"
+  },
+  {
+   "source": "log.plus",
+   "source_bytes": 13303,
+   "source_sha256": "974f8dfad5a21fc92a554be638007a9bbeb6d8fd95c63b78ae7706f696d411d8",
+   "file": "data/publication/embedded/field/log.plus.gz",
+   "bytes": 3716,
+   "sha256": "28092bd609c0d1e30f22fda02564508e5d7e284eb7482d53b36967827c4455f8"
+  },
+  {
+   "source": "minus.static.lammpstrj",
+   "source_bytes": 12038193,
+   "source_sha256": "ea58ea0e6f332d03a1e28a7867e913fcb389870cc72b16f4ba4cc9f616b22595",
+   "file": "data/publication/embedded/field/minus.static.lammpstrj.gz",
+   "bytes": 5339476,
+   "sha256": "581dad3358c396adce147bfc08843a66acebb1b5f72d5ea70f8b9d34a1821bfb"
+  },
+  {
+   "source": "minus.static.data",
+   "source_bytes": 9821178,
+   "source_sha256": "ed0c1fc69befd6db3863c81e97d7629ecb309313b47749a058fd597a2988123a",
+   "file": "data/publication/embedded/field/minus.static.data.gz",
+   "bytes": 3554796,
+   "sha256": "8c1ca6d8544b268794ea92d26c98cee1038c9e0c24bf27aac0358ecec7dafc10"
+  },
+  {
+   "source": "minus.forces.lammpstrj",
+   "source_bytes": 336048,
+   "source_sha256": "9a1b0afc0f5c01deb03b85271d187bf037517600db76339538fca0b0b98e81f0",
+   "file": "data/publication/embedded/field/minus.forces.lammpstrj.gz",
+   "bytes": 99192,
+   "sha256": "c05227f7934c4f75cb48153a157c8faa111ebf0a6dcc87fe579991ba85016f9e"
+  },
+  {
+   "source": "log.minus",
+   "source_bytes": 13307,
+   "source_sha256": "f5a8f68c1a925ce7b3c99447565bb1fea37089c59af1d77b7ca03c0cbbff7a3a",
+   "file": "data/publication/embedded/field/log.minus.gz",
+   "bytes": 3726,
+   "sha256": "484571604e99aeeda84d5aca327d4b8f11c258b7d702ad83522d884bb32abbba"
+  },
+  {
+   "source": "log.relax",
+   "source_bytes": 18609,
+   "source_sha256": "63b420306ece3ec0c01d75c418507e52d092069f7ca02dea0992aa6daa61ad09",
+   "file": "data/publication/embedded/peierls/log.relax.gz",
+   "bytes": 4361,
+   "sha256": "d6fc453e20e5ca341af60a069c2f6faeb603894af01024ca2478221f1aefe540"
+  },
+  {
+   "source": "log.sweep",
+   "source_bytes": 123891,
+   "source_sha256": "c1a68d7e8e3d47eef1d228b234b2b4fe05dc8601482c9625597039776b765d2d",
+   "file": "data/publication/embedded/peierls/log.sweep.gz",
+   "bytes": 11730,
+   "sha256": "fc28b4eca574566aa2434a86ea8749f0214220555f48411314f238d4e46ae2f5"
+  },
+  {
+   "source": "slab.relaxed.data",
+   "source_bytes": 1500271,
+   "source_sha256": "9ed7d19914525c156c4a65cc1fb57ff7c26c38673a8ebf8e61d6fbf4c9df9356",
+   "file": "data/publication/embedded/peierls/slab.relaxed.data.gz",
+   "bytes": 420884,
+   "sha256": "085ac1594b09acceac90aacb82227f5c09b40fe2f41fb512531ddabc94787c3d"
+  },
+  {
+   "source": "sweep.full.0000.lammpstrj",
+   "source_bytes": 603914,
+   "source_sha256": "34766feada61f8064bce2379b2d2314c8022baeddb2449768fee56312afa1bc2",
+   "file": "data/publication/embedded/peierls/sweep.full.0000.lammpstrj.gz",
+   "bytes": 130734,
+   "sha256": "70cfc0aa9bd257d80930f2fbabd85c0c3234f1f4aa141005ef00202693cb6584"
+  },
+  {
+   "source": "sweep.full.0010.lammpstrj",
+   "source_bytes": 603946,
+   "source_sha256": "8e116a17ed1ae5296d42de9411544b738072424c918b0cf2a649b98d51e906bf",
+   "file": "data/publication/embedded/peierls/sweep.full.0010.lammpstrj.gz",
+   "bytes": 139863,
+   "sha256": "388319065935869c9546d25576a671fc79d7d845d151f85fa2d79b022207f76a"
+  },
+  {
+   "source": "sweep.full.0020.lammpstrj",
+   "source_bytes": 604023,
+   "source_sha256": "7c169e96d41b642219692a4f87907a7ca7cbece1e4b96ae22960facd4d3f95ca",
+   "file": "data/publication/embedded/peierls/sweep.full.0020.lammpstrj.gz",
+   "bytes": 139648,
+   "sha256": "bf80f28e120d2a1e097ce39265895d570c219b1b6bfc44a01e31f73eed9ba578"
+  },
+  {
+   "source": "sweep.full.0030.lammpstrj",
+   "source_bytes": 603788,
+   "source_sha256": "cc2315bc1bcc67e0c9a88117cc2418504efbd9edaeb25118671daa20472324cd",
+   "file": "data/publication/embedded/peierls/sweep.full.0030.lammpstrj.gz",
+   "bytes": 139932,
+   "sha256": "d46fb6dfea48412add93f071fc2e400302b6cdeeae38ff7874759b742f10656a"
+  },
+  {
+   "source": "x4.static.lammpstrj",
+   "source_bytes": 12047397,
+   "source_sha256": "d12f99edffc635884d791a8c1996ac9b0c1ffbff267a3163c21322899d3195b8",
+   "file": "data/publication/embedded/margin/x4.static.lammpstrj.gz",
+   "bytes": 5339471,
+   "sha256": "92525bedbc9d2fd3cbbb1461e3ec1c09bd1726baddca3d8e827b6aa47ab062b0"
+  },
+  {
+   "source": "x4.static.data",
+   "source_bytes": 9821869,
+   "source_sha256": "bfae1b68cc09b02cef516730b3fce1677b3ba5878ffcfea818cdda47b37f7348",
+   "file": "data/publication/embedded/margin/x4.static.data.gz",
+   "bytes": 3563175,
+   "sha256": "902f019a7b54f8e5ed925487ed031db99992a2ea116e90618731ab32845c32ba"
+  },
+  {
+   "source": "log.x4",
+   "source_bytes": 13277,
+   "source_sha256": "b4e6569fb84f936152f4a1c494f2b718c2188e8b23fea8001aa1b7430dc845c1",
+   "file": "data/publication/embedded/margin/log.x4.gz",
+   "bytes": 3736,
+   "sha256": "ba16b3766bfaa9452a3e48bfed77b6ed327e83d6cd1f34a4369aa6337a039318"
+  },
+  {
+   "source": "x10.static.lammpstrj",
+   "source_bytes": 12053036,
+   "source_sha256": "e60a2e4e1a6e0e097abf845f9b7cdf2b2a1f7a08e6a2f3301d3ab569300658fb",
+   "file": "data/publication/embedded/margin/x10.static.lammpstrj.gz",
+   "bytes": 5358967,
+   "sha256": "90960bbb50fc24eee576335366053ab03b855d87b334fd79121e3f8176fd1647"
+  },
+  {
+   "source": "x10.static.data",
+   "source_bytes": 9821354,
+   "source_sha256": "4ca04861120b9826faa7e9181b1f3cd347728fba264c4b5e9ba5787fbdf206a0",
+   "file": "data/publication/embedded/margin/x10.static.data.gz",
+   "bytes": 3578500,
+   "sha256": "f8aa4ea9eb84b51857cc05fd9d255c861005c92d0f19ac0437a997443aef9eda"
+  },
+  {
+   "source": "log.x10",
+   "source_bytes": 13452,
+   "source_sha256": "37b82576873c10052f3a0f6c0e0dd385273c4aac206744e2d54f92edb204a670",
+   "file": "data/publication/embedded/margin/log.x10.gz",
+   "bytes": 3823,
+   "sha256": "b67de968c728eb8420a8b9564031e51624815ca0405a343f8d4fee346f18a0bf"
+  },
+  {
+   "source": "log.ctl_relax",
+   "source_bytes": 20689,
+   "source_sha256": "f298305a9091ac6d87ef3ee5762c8bf32288f4b2a903c163f0f9542b4768aa84",
+   "file": "data/publication/embedded/dislocation/log.ctl_relax.gz",
+   "bytes": 5238,
+   "sha256": "b8adcbc9791d4ca0cb797c30fd14eaa8861d58cda9f0485249005e61b3e0867b"
+  },
+  {
+   "source": "log.fld_relax",
+   "source_bytes": 12361,
+   "source_sha256": "9018a550ae7cde1ec4ce98c8aab4274feac8ae5bae630130812023212fa8d6b1",
+   "file": "data/publication/embedded/dislocation/log.fld_relax.gz",
+   "bytes": 3925,
+   "sha256": "67893f99a9fc413ef71347b32efdb52b12c94b49b525e19f0eb5104f0d3c1030"
+  },
+  {
+   "source": "log.rev_relax",
+   "source_bytes": 12261,
+   "source_sha256": "5055517afca12bcaa1e4e4940254276d18c50f6e466af2567beedabd0889d04a",
+   "file": "data/publication/embedded/dislocation/log.rev_relax.gz",
+   "bytes": 3877,
+   "sha256": "ecaf5c762db43a6fa660e49f25a1b2c7d14139849ecdd117caf515f693ace760"
+  },
+  {
+   "source": "log.ctl.sweep",
+   "source_bytes": 88977,
+   "source_sha256": "e53050a645b8b80a3c452dd14a025ad5d92b71d51159a91135de726d5875e716",
+   "file": "data/publication/embedded/dislocation/log.ctl.sweep.gz",
+   "bytes": 10653,
+   "sha256": "338689fbb23598e8013d2c4e3d3255c9f90f6b3b0c0d0255303720d81a9d739b"
+  },
+  {
+   "source": "log.fld.sweep",
+   "source_bytes": 89055,
+   "source_sha256": "cc94d568a683771bdf9dfd2e895bbff970f0eaf19caed3449650f3101c06dfe5",
+   "file": "data/publication/embedded/dislocation/log.fld.sweep.gz",
+   "bytes": 10762,
+   "sha256": "9c03af764b355958fec1efb644ed19387398d2551bb324e3c951b7efcab8644e"
+  },
+  {
+   "source": "ctl.relaxed.data",
+   "source_bytes": 9444496,
+   "source_sha256": "ce61563f12e593dd3117f8ef98d3866d4a6cdf923f0019ccf6b3fc4e08637ac3",
+   "file": "data/publication/embedded/dislocation/ctl.relaxed.data.gz",
+   "bytes": 3275198,
+   "sha256": "82b913187319b3d5211360c368697e42f16e6dcc38bcce6acd81b33d267cc472"
+  },
+  {
+   "source": "fld.relaxed.data",
+   "source_bytes": 9465758,
+   "source_sha256": "fe995fb1fdaa161e76cf392f7a47c35aa17ce5172bf2cc53e1202debc6158a08",
+   "file": "data/publication/embedded/dislocation/fld.relaxed.data.gz",
+   "bytes": 3280930,
+   "sha256": "bcf53c118c9b024c74b0c3c8c2bfd251189e70092eb3ac4c3ffd40b462904e27"
+  },
+  {
+   "source": "rev.relaxed.data",
+   "source_bytes": 9444212,
+   "source_sha256": "3dc1735b859ce0a3ffcea19a177e70414d761df417ceabe99503e6b64cf02466",
+   "file": "data/publication/embedded/dislocation/rev.relaxed.data.gz",
+   "bytes": 3274577,
+   "sha256": "b91680914b78c6e2ab96bc82ca586c4799228eb375e0bd8a59079d9223166958"
+  },
+  {
+   "source": "ctl.relaxed.lammpstrj",
+   "source_bytes": 11898799,
+   "source_sha256": "b57e1d37516bcc31edbeb805cb8838dffd1736e1ef544cfe7e7213f3eb37288e",
+   "file": "data/publication/embedded/dislocation/ctl.relaxed.lammpstrj.gz",
+   "bytes": 5078676,
+   "sha256": "c65e94b94171fc8f752e12bb1cfff3b5f44a801bc914fe079d4fcfacdbb55ece"
+  },
+  {
+   "source": "fld.relaxed.lammpstrj",
+   "source_bytes": 11900096,
+   "source_sha256": "a0d0bcb7dcab09a57960c83aa016c0edece57b0635390392d7a5a02d328f2b77",
+   "file": "data/publication/embedded/dislocation/fld.relaxed.lammpstrj.gz",
+   "bytes": 5077783,
+   "sha256": "16df4c30382bf28590d54ff149efef298916b0a39d07fe3313ddb9ce3eb93f12"
+  },
+  {
+   "source": "rev.relaxed.lammpstrj",
+   "source_bytes": 11898888,
+   "source_sha256": "188e2708bb2871d38ebf96752e7692f05674cf672e60a37e89c65c38a1544db0",
+   "file": "data/publication/embedded/dislocation/rev.relaxed.lammpstrj.gz",
+   "bytes": 5078705,
+   "sha256": "0059d9698f54474a68f1704b80f6fa0dac3248959df83c3b5e5321e15fc0be04"
+  }
+ ]
+}

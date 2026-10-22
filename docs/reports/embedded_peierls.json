@@ -1,0 +1,47 @@
+{
+ "what": "straight edge dislocation, MEAM (Jelinek 2012) Al slab, T = 0, strain-controlled quasi-static sweep",
+ "run_dir": "runs/embedded_inclusion/20261021-165353_peierls",
+ "delta_A": 0.00455,
+ "sign_convention": "tau is the applied sigma_xz = -(top + bottom block reactions)/2",
+ "peak_steps": [
+  14,
+  21,
+  28
+ ],
+ "peak_tau_MPa": [
+  9.13,
+  9.0,
+  9.01
+ ],
+ "peierls_stress_MPa": 9.05,
+ "valley_positions_after_jumps_A": [
+  35.15,
+  36.57,
+  37.97
+ ],
+ "valley_spacing_A": [
+  1.59,
+  1.42,
+  1.41
+ ],
+ "valley_spacing_expected_A": 1.432,
+ "top_bottom_difference_max_MPa": 0.95,
+ "dxa_mean_core_x_A": {
+  "0": 32.96,
+  "10": 33.9,
+  "20": 35.09,
+  "30": 37.97
+ },
+ "inferred_x_A_at_dxa_steps": {
+  "0": 32.96,
+  "10": 33.81,
+  "20": 35.33,
+  "30": 37.98
+ },
+ "dxa_partials_per_dump": {
+  "0": 2,
+  "10": 2,
+  "20": 2,
+  "30": 2
+ }
+}

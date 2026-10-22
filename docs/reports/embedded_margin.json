@@ -1,0 +1,39 @@
+{
+ "run_dir": "runs/embedded_inclusion/20261021-162934_sphere_R25_control_held/margin",
+ "cases": {
+  "x4": {
+   "strain_percent": 0.776,
+   "dxa_segments": [
+    0,
+    0
+   ],
+   "matrix_nonfcc_beyond_6A": 37,
+   "field_over_multiple_of_1x": {
+    "median": 1.0083911268000585,
+    "min": 0.9686643841080204,
+    "max": 1.0545725815269156
+   },
+   "max_lobe_shear_MPa_d5_10": 118.15372406155258,
+   "max_lobe_shear_MPa_any": 136.92924719999783,
+   "max_von_mises_MPa_any": 884.1218534143667,
+   "final_fnorm": 0.000750482637708934
+  },
+  "x10": {
+   "strain_percent": 1.94,
+   "dxa_segments": [
+    0,
+    0
+   ],
+   "matrix_nonfcc_beyond_6A": 32,
+   "field_over_multiple_of_1x": {
+    "median": 0.9921843870873391,
+    "min": 0.9454249990606535,
+    "max": 1.2271884000667714
+   },
+   "max_lobe_shear_MPa_d5_10": 305.61602793133807,
+   "max_lobe_shear_MPa_any": 305.61602793133807,
+   "max_von_mises_MPa_any": 2815.1835041733657,
+   "final_fnorm": 0.000974513901548702
+  }
+ }
+}
