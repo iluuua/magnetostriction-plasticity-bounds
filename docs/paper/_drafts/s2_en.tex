@@ -1,0 +1,63 @@
+Each cell is minimised in two stages, to a force norm of $10^{-3}$ and then
+$3\times10^{-4}$~eV/\AA. Between the stages the stresses in shells more than
+5~\AA{} from the inclusion surface change by at most «G1_MAX»~MPa.
+
+The $+\varepsilon$ cell starts the minimisation from the elastic solution and
+the $-\varepsilon$ cell from the atom positions of the reference cell. Half
+the sum of the responses to $+\varepsilon$ and $-\varepsilon$ therefore
+measures both nonlinearity and the dependence on the starting point. In
+shells more than 5~\AA{} from the surface it is at most «G3_MAX»~MPa, about
+1\% of the stresses along and across the field. The main text uses half
+the difference of the two responses.
+
+No matrix atom jumps to a new position. The number of matrix atoms whose
+displacement differs from the elastic solution by more than 0.1~\AA{} is
+«EV_PLUS» in the $+\varepsilon$ cell and «EV_MINUS» in the $-\varepsilon$ cell.
+All such atoms lie within «EV_MINUS_D»~\AA{} of the surface and depart by at
+most «EV_MINUS_MAX»~\AA; no atom departs this much in both cells.
+
+Defects are searched for with DXA (the dislocation extraction algorithm)
+\cite{Stukowski2012DXA}, which finds dislocation lines from the distortion of
+the lattice around them, and with a nearest-neighbour analysis, which
+identifies the crystal surroundings of each atom. The search covers the
+reference and $\pm\varepsilon$ cells, after each minimisation stage, with and
+without the inclusion atoms. No dislocation segment is found in any cell. The
+aluminium atoms without FCC (face-centred cubic) surroundings more than 6~\AA{}
+from the surface are nearly the same in all three cells: «NONFCC_FAR» atoms
+6--7.5~\AA{} from it, at the edge of the interface layer.
+
+The mean added stress over the matrix atoms ($xx$, $yy$, $zz$) is
+$«G4_MD»$~MPa; the elastic solution for the same cell gives $«G4_CT»$~MPa.
+Their ratio, about «G4_RATIO», is close to the factor «A_FIT» with which the
+atomistic field matches the elastic solution (Section~3.2 of the main text).
+
+The atomistic field is weaker than the elastic solution because of a compliant
+aluminium layer at the interface. The displacements
+of the matrix atoms, relative to those of the elastic solution for the same
+cell, are «KIN_RAD»\% along the surface normal and «KIN_TAN»\% along the
+surface in the first layer ($d<2$~\AA), «D46R»\% and «D46T»\% at
+$d=4$--6~\AA, and «D1214R»\% and «D1214T»\% at $d=12$--14~\AA. The strain of
+each atom is obtained from the displacements of its neighbours within 3.2~\AA{} (the twelve nearest in FCC).
+For $d>8$~\AA{} the virial stress equals the cubic elastic constants of the
+potential times this strain with a slope of «VIR_FAR» (correlation at least
+«VIR_CORR»); for $d<3$~\AA{} the slope is «VIR_NEAR», so the layer at the
+interface carries less stress for the same strain. The aluminium density at
+$r=25.0$--$25.5$~\AA{} is «DENS_FIRST» of bulk. The cavity left for the
+inclusion after removing the aluminium atoms within 2.2~\AA{} of it is
+«CAV_PCT»\% larger than the inclusion in volume. The far field alone does not
+tell such a compliant layer from a perfectly bonded sphere of smaller radius:
+the factor «A_FIT» corresponds to a radius of «R_EQ»~\AA. The tangential
+displacement in the first layer is «KIN_TAN»\% of the elastic one, so at 0~K
+the interface does not slide freely.
+
+With the inclusion strain 4 and 10 times the given one (0.78 and 1.94\%,
+minimised to $10^{-3}$~eV/\AA) there are no defects either: DXA finds no
+dislocations, there are no more atoms without FCC surroundings beyond 6~\AA{}
+from the surface than in the reference cell, and the field divided by the
+strain multiple equals the field at $\varepsilon$ (median ratios «X4_LIN» and
+«X10_LIN»). At $10\varepsilon$ the shear stress in the lobes reaches
+«X10_SHEAR»~MPa. The calculation is static and at 0~K, so it does not include
+thermally activated nucleation of dislocations. Nor does the cell contain
+pre-existing dislocations, whose motion sets the yield stress of the alloy,
+so the absence of defects does not mean that the alloy near such an
+inclusion deforms only elastically.

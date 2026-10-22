@@ -1,0 +1,250 @@
+% English supplement, embedded-inclusion version; values in guillemets are filled by fill_embedded.py.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,graphicx}
+\usepackage{placeins}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hyphens]{url}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{2em}
+\ifx\pdfmapfile\undefined\else
+\pdfmapfile{+cm-super-t1.map}\pdfmapfile{+cm-super-ts1.map}\fi
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\theequation}{S\arabic{equation}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\title{Supplementary material to ``Stresses in aluminium around an
+Al$_{13}$Fe$_4$ inclusion with a given magnetostrictive strain''}
+\author{I.~Mikhailovskiy, D.~Pshonkin}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Building and preparing the cell}
+
+The matrix is a periodic aluminium crystal with lattice parameter
+$a_0=4.05$~\AA{}, at which bulk aluminium is stress free with this potential.
+The cell has 44 periods of 2.864~\AA{} along $x\parallel[1\bar10]$, 25 periods
+of 4.960~\AA{} along $y\parallel[11\bar2]$ and 54 $(111)$ layers of 2.338~\AA{}
+along $z\parallel[111]$; its size is $126.0\times124.0\times126.3$~\AA{}. The inclusion is a
+ball of radius 25~\AA{} cut from an Al$_{13}$Fe$_4$ crystal with its $a$ axis
+along $x$ and $b$ axis along $y$. It contains 4\,487 atoms, 3\,429 Al and
+1\,058 Fe (ratio 3.24 against the stoichiometric 3.25). The aluminium atoms
+inside the ball and all those closer than 2.2~\AA{} to an inclusion atom were
+removed (4\,426 atoms). The shortest distances after construction are
+2.20~\AA{} between matrix and inclusion and 2.37~\AA{} inside the inclusion.
+
+With this potential a freely relaxed Al$_{13}$Fe$_4$ crystal changes its
+lattice with respect to the measured one: $a$ by $+7.5\%$, $b$ by $-2.5\%$,
+the cell height by $+3.0\%$, the volume by $+7.9\%$. The inclusion
+atoms are therefore fixed at the measured lattice at every stage. In a trial run with a
+free inclusion the cell stretched unevenly along its axes at 300~K, which
+points to the inclusion swelling inside the aluminium; that run was stopped
+and is not used.
+
+Preparation of the reference cell: minimisation of the matrix energy to a
+force two-norm of 1~eV/\AA{}; 10~ps at 300~K (Nos\'e--Hoover thermostat,
+matrix atoms only, fixed cell size); cooling to 0.5~K over 10~ps (Langevin
+thermostat); minimisation in chunks of 2000 iterations to a force two-norm of
+$3\times10^{-4}$~eV/\AA{}. The mean normal stress of the matrix atoms more than
+15~\AA{} from the inclusion surface is then $\sigma_0=«CTL_FAR_MEAN»$~MPa.
+All cell dimensions are multiplied by $1-\sigma_0/3K=«CTL_BOX_SCALE»$, where
+$K=77.4$~GPa is the bulk modulus of aluminium with the potential (only matrix
+atoms are moved), and the minimisation is repeated. The mean stress far from
+the inclusion is then $«CTL_FAR_AFTER»$~MPa.
+
+\section{Convergence and linearity}
+
+«S2_TEXT»
+
+\section{Given strain and free magnetostriction}
+
+The inclusion atoms are fixed, so the strain (1) of the main text is
+the actual strain of the inclusion inside the matrix. The matrix field depends
+only on the displacement of the inclusion surface and on the elasticity of the
+matrix. Consider an elastic spherical particle with shear modulus $k\mu$,
+where $\mu$ is the shear modulus of aluminium, and free magnetostriction
+$\lambda$ of the same form as (1), that is, the strain the particle would have
+in the field without the matrix. Its actual strain inside the matrix is
+smaller than $\lambda$. Eshelby's solution for an inhomogeneous inclusion, one
+whose elastic constants differ from those of the matrix
+\cite{Eshelby1957,Mura1987}, gives for a deviatoric strain (one that does not
+change the volume, like (1))
+\begin{equation}
+\varepsilon=A\lambda,\qquad A=\frac{\beta k}{1+\beta(k-1)},\qquad
+\beta=\frac{2(4-5\nu)}{15(1-\nu)} ,
+\end{equation}
+where $\nu$ is Poisson's ratio (taken equal for inclusion and matrix for
+simplicity); for $\nu=0.344$, $\beta=0.463$. For a given $\lambda$ all matrix
+stresses equal the computed ones multiplied by $A\lambda/\varepsilon$. For an
+inclusion as stiff as the matrix ($k=1$) $A=0.46$; for inclusions 2 and 2.5 times
+stiffer, $A=0.63$ and $0.68$; for a rigid inclusion $A=1$. This
+potential gives the elastic constants of Al$_{13}$Fe$_4$ at the equilibrium
+lattice it predicts for this compound, which is overestimated (Section S1), so
+they are not used to estimate $k$.
+
+\section{Elastic solutions}
+
+\paragraph{Single sphere.} A spherical inclusion of radius $R$ with a uniform
+transformation strain $\boldsymbol\varepsilon^*$ (the strain it would take if
+it were removed from the matrix) in an infinite isotropic matrix
+has a uniform strain $\boldsymbol\varepsilon=\mathbf S:\boldsymbol\varepsilon^*$
+inside, where $\mathbf S$ is the Eshelby tensor \cite{Eshelby1957,Mura1987}. To
+make the interior strain equal the given (1), the transformation strain is set to
+$\boldsymbol\varepsilon^*=\mathbf S^{-1}:\boldsymbol\varepsilon$; for a
+deviatoric strain this is $\boldsymbol\varepsilon/\beta$. The strain outside,
+$\varepsilon_{ij}(\mathbf x)=D_{ijkl}(\mathbf x)\,\varepsilon^*_{kl}$, follows
+from the exterior Eshelby tensor \cite{JuSun1999}; with $\rho=R/r$ and
+$\mathbf n=\mathbf x/r$
+\begin{multline}
+30(1-\nu)\rho^{-3}D_{ijkl}=(3\rho^2+10\nu-5)\delta_{ij}\delta_{kl}
++(3\rho^2-10\nu+5)(\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk})
++15(1-\rho^2)\delta_{ij}n_kn_l\\
++15(1-2\nu-\rho^2)\delta_{kl}n_in_j
++15(\nu-\rho^2)(\delta_{ik}n_jn_l+\delta_{jl}n_in_k+\delta_{il}n_jn_k+\delta_{jk}n_in_l)
++15(7\rho^2-5)n_in_jn_kn_l .
+\end{multline}
+The stress is $\sigma_{ij}=\lambda_L\varepsilon_{kk}\delta_{ij}+2\mu\varepsilon_{ij}$
+with the isotropic constants of aluminium for the potential ($\mu=26.9$~GPa,
+$\nu=0.344$, Voigt--Reuss--Hill average of $C_{11}$, $C_{12}$, $C_{44}$). The
+program was checked on a centre of dilatation
+($\boldsymbol\varepsilon^*=10^{-3}\mathbf I$): at $r=1.5R$ it gives
+$\sigma_{rr}=-21.77$ and $\sigma_{\theta\theta}=10.89$~MPa, in agreement with Love's exact
+solution.
+
+\paragraph{The same periodic cell.} For a periodic array of inclusions with the
+cell period the equilibrium equations are solved in Fourier space
+\cite{MoulinecSuquet1998}. For a homogeneous medium of stiffness $\mathbf C$
+(the cubic constants of aluminium for the potential, rotated to the cell axes)
+and a transformation strain field $\chi(\mathbf x)\boldsymbol\varepsilon^*$, with
+$\chi$ equal to one in the inclusion,
+\begin{equation}
+\hat\varepsilon_{ij}(\mathbf k)=\tfrac12\bigl[\xi_iN_{jm}(\boldsymbol\xi)
++\xi_jN_{im}(\boldsymbol\xi)\bigr]\tau_{ml}\xi_l\,\hat\chi(\mathbf k),
+\qquad \mathbf N=(\boldsymbol\xi\cdot\mathbf C\cdot\boldsymbol\xi)^{-1},
+\quad \boldsymbol\tau=\mathbf C:\boldsymbol\varepsilon^*,
+\end{equation}
+with $\boldsymbol\xi=\mathbf k/|\mathbf k|$; the $\mathbf k=0$ term is left out,
+so the mean strain of the cell is zero, as in the fixed-size calculation. The
+grid spacing is 1~\AA{} and the inclusion boundary is smoothed over one grid
+cell. $\boldsymbol\varepsilon^*$ is adjusted until the mean strain inside the
+inclusion equals the given (1): in the periodic cell it has to be 1.07--1.11
+times larger, depending on the component, than for the single sphere. The same calculation gives the displacements
+used as the starting guess for the matrix atoms in the $+\varepsilon$ cell. The
+mean added stress in the matrix at fixed cell size is known exactly,
+$\langle\Delta\boldsymbol\sigma\rangle=-\mathbf C:\boldsymbol\varepsilon\,f/(1-f)$;
+for $f=3.3\%$ it is $«MEAN_PRED»$~MPa.
+
+\section{The creep model}
+
+A dislocation passes an obstacle by a thermal fluctuation at a rate
+$\omega_0\exp(-\Delta G/k_{\mathrm B}T)$, where $\omega_0$ is the attempt frequency
+and $\Delta G$ the height of the energy barrier. A shear stress $\tau$ does work $V^*\tau$
+along the path over the barrier, so it lowers the barrier for forward jumps and
+raises it for backward ones: $\Delta G_\pm=\Delta G_0\mp V^*\tau$
+\cite{KocksArgonAshby1975,CaillardMartin2003}. If stresses of both signs occur
+with equal weights in the volume around the inclusions, the mean rate factor is
+$\tfrac12[\exp(x)+\exp(-x)]=\cosh x$, $x=V^*\tau/k_{\mathrm B}T$. For
+dilute inclusions whose fields do not overlap, the relative increase
+of the mean rate in a material with an inclusion volume fraction $f$ is the
+integral of $\cosh x-1$ over the matrix around one inclusion times the number
+of inclusions per unit volume, $f/V_p$; this is Eq.~(2) of the main text. For a
+field $\tau(r)=\tau_m(R/r)^3$, where $\tau_m$ is the shear stress at the
+inclusion surface, the substitution $u=x_0(R/r)^3$ reduces the
+integral to
+\begin{equation}
+H=f\,x_0\int_0^{x_0}\frac{\cosh u-1}{u^2}\,\mathrm du,\qquad
+x_0=\frac{V^*\tau_m}{k_{\mathrm B}T},
+\end{equation}
+which gives the solid curve of Fig.~5. The dashed curve uses the computed field
+of the single sphere: the integral (2) is taken on a spherical grid (120 radial
+nodes evenly spaced in $(R/r)^3$, which cover the whole matrix, and
+$48\times48$ angular nodes) with the shear stresses on the
+twelve $\{111\}\langle110\rangle$ slip systems for 64 random grain orientations.
+The amplitude $\tau_m$ for which Eq.~(S4) gives the same $H$ is then found.
+A 25\% increase is reached at $V^*=«VSTAR_GRAINS»\,b^3$ (average over grain
+orientations), «VSTAR_CRYSTAL»$\,b^3$ (one orientation, that of the cell) and
+«VSTAR_MAX»$\,b^3$ (for the same orientation, the largest of the shear stresses
+on the twelve slip systems at every point). Since the field is proportional to
+$\varepsilon$, $H$ depends only on the product $V^*\varepsilon$, and at
+$V^*=70\,b^3$ a 25\% increase needs $\varepsilon\cdot«VSTAR_GRAINS»/70\approx
+«EPS_AT_70»\%$.
+
+\section{Lattice resistance to dislocation glide}
+
+To judge whether the motion of a dislocation past the inclusion can be
+followed atomistically, the stress at which a straight edge dislocation
+glides with this potential was measured in a cell without an inclusion. The
+cell is an aluminium slab of $126.0\times19.8\times125.5$~\AA{} (18\,768
+atoms), periodic along $x$ and $y$ with free surfaces along $z$; the three
+top and three bottom $(111)$ layers are rigid. An edge dislocation with
+Burgers vector $b=2.864$~\AA{} along $x$ and line along $y$ is put into the
+slip plane at a height of 91.2~\AA{}: the upper half of the slab has one
+more column of atoms along $x$ than the lower half. The top block is moved
+along $x$ in steps of 0.00455~\AA, and after each step the energy is
+minimised to a force norm of $10^{-3}$~eV/\AA{} at 0~K. The applied shear
+stress is the force of the matrix on the top and bottom blocks divided by
+the area $L_xL_y$ (the mean of the two blocks, which differ by at most
+1~MPa).
+
+The stress rises linearly while the dislocation stays put and drops when it
+jumps into the next valley of the lattice relief, that is, the next position
+of lowest dislocation energy. The valleys are
+1.41--1.42~\AA{} apart, that is $b/2$; the line positions found from the
+block displacement agree with those found by DXA \cite{Stukowski2012DXA}
+to within 0.25~\AA, and DXA finds two partial dislocations in every frame:
+in aluminium an edge dislocation splits into two partials separated by a
+ribbon where the stacking of the $(111)$ planes is faulted.
+Before each of the three jumps the stress reaches 9.13, 9.00 and 9.01~MPa,
+so with this potential a straight edge dislocation at 0~K starts to glide at
+$\tau_P\approx9$~MPa (the Peierls stress).
+
+«S6_TEXT»
+
+\section{Data and programs}
+\sloppy
+
+Programs and inputs (paths from the repository root):
+\begin{itemize}
+\item the cell: \path{scripts/build_embedded_inclusion.py}; the strained
+cells: \path{scripts/make_strained_inclusion.py}; the LAMMPS inputs:
+\path{lammps/embedded_inclusion/in.relax_control} and
+\path{lammps/embedded_inclusion/in.static_pair};
+\item stresses: \path{analysis/python/embedded_inclusion_field.py};
+convergence and linearity checks: \path{analysis/python/embedded_gates.py};
+defect search: \path{analysis/python/embedded_dxa.py}; strain, stress per
+unit strain and density at the interface:
+\path{analysis/python/embedded_interface.py};
+elastic solutions: \path{analysis/python/embedded_inclusion_continuum.py};
+\item the creep model: \path{analysis/python/embedded_creep.py}; the yield
+threshold at the particle: \path{analysis/python/embedded_yield.py}; elastic
+constants of the potential: \path{analysis/python/meam_elastic_constants.py};
+figures: \path{analysis/python/embedded_figures.py};
+\item the dislocation slab: \path{scripts/build_embedded_dislocation.py};
+relaxation: \path{lammps/embedded_inclusion/in.disl_relax}; dislocation
+positions: \path{analysis/python/embedded_disl_states.py}; shear:
+\path{lammps/embedded_inclusion/in.disl_sweep} and
+\path{analysis/python/embedded_sweep.py};
+\item the runs of the $\pm\varepsilon$ cells: \path{scripts/queue_embedded_static.sh};
+the runs after them (the dislocation above the inclusion, the cells with
+strains $4\varepsilon$ and $10\varepsilon$, shear): \path{scripts/queue_embedded_plasticity.sh};
+records of the dislocation runs and of the $4\varepsilon$ and $10\varepsilon$
+cells: \path{analysis/python/embedded_records.py}.
+\end{itemize}
+Result records: \path{docs/reports/embedded_field.json},
+\path{docs/reports/embedded_gates.json}, \path{docs/reports/embedded_continuum.json},
+\path{docs/reports/embedded_creep.json}, \path{docs/reports/embedded_yield.json},
+\path{docs/reports/embedded_peierls.json}, \path{docs/reports/embedded_dxa.json},
+\path{docs/reports/embedded_interface.json}, \path{docs/reports/embedded_margin.json},
+\path{docs/reports/embedded_disl_states.json},
+\path{docs/reports/meam_elastic_constants.json}. The configurations and run
+logs, compressed and with checksums, are in \path{data/publication/embedded}.
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\end{document}

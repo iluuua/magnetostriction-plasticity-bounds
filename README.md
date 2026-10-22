@@ -1,153 +1,110 @@
-# Strained inclusions and dislocation motion in aluminium
+# Stresses around a magnetostrictive Al13Fe4 inclusion in aluminium
 
-Simulation data and analysis for the English and Russian manuscripts in
-[docs/paper](docs/paper). The study examines how imposed deformation of an
-Al13Fe4 inclusion transfers shear stress to an aluminium matrix, then compares
-that stress with the observed motion of existing dislocations.
+Research data and analysis for the English and Russian manuscripts in
+[docs/paper](docs/paper). The study computes the stress that an Al13Fe4
+inclusion, lengthened along a magnetic field, produces in the surrounding
+aluminium, and asks whether that stress is large enough to move dislocations.
 
-The inclusion strain is a modelling input, 0.00194 (0.194%). It is motivated by
-an earlier stress estimate and is not a measurement of Al13Fe4 magnetostriction.
-LAMMPS describes the mechanical response with the Jelinek et al. MEAM potential.
-The model contains no magnetic-field dynamics.
+The inclusion is a sphere of radius 2.5 nm placed in the middle of a periodic
+aluminium cell of 12.6 x 12.4 x 12.6 nm (118,861 atoms) and surrounded by
+aluminium on all sides. It is given a magnetostrictive strain of 0.194 % along
+the field and -0.097 % across it, and held in that shape while the aluminium
+relaxes at 0 K. The strain is an input of the model: the magnetostriction of
+Al13Fe4 has not been measured, and the interatomic potential (MEAM, Jelinek et
+al. 2012, run in LAMMPS) does not describe magnetism. Every stress scales
+linearly with the strain.
 
-## Research approach
+## Main results
 
-The static calculation compares two states prepared from the same relaxed
-configuration. One ridge is displaced along an axis 45 degrees from the surface
-normal. Harmonic springs hold the inclusion near its reference coordinates
-while the matrix relaxes. The difference of the spatially averaged stress
-tensors isolates the response of this constrained model. A coordinate restraint
-is distinct from changing the material's stress-free lattice.
-
-Three shear ramps follow an existing dislocation pair in the same 91,428-atom
-interface geometry. One unstrained, unrestrained control reaches 400 MPa. Two
-restrained runs, unstrained and strained, reach 145.45 MPa at the same loading
-rate. The saved regular frames end at 395.45 and 140.91 MPa, respectively;
-separate final states contain the run endpoints. A 92,800-atom Al-Mg-Si
-calculation without an inclusion is a separate comparator, not an identical
-cell.
-
-An isotropic inclusion solution and an activated-glide integral examine the
-sensitivity of an assumed creep response to stress and activation volume.
-They do not validate the assigned strain or explain a persistent response
-after magnetic-field removal.
-
-## Main observations
-
-| Observable | Result and scope |
+| Quantity | Result |
 |---|---|
-| Axial-window shear increment | Maximum magnitude 15.45 MPa, about 2.2 nm above the ridge crest |
-| Width-averaged maximum resolved shear | Maximum 5.65 MPa across the twelve FCC slip systems; the xz component alone peaks at 5.04 MPa |
-| Retained imposed ridge strain | Projection 0.973; formal fit standard error 0.0038 |
-| Upper-line departure in the restrained pair | 105-115 MPa in the control and 115-125 MPa in the strained run |
-| Interpretability of the ramp comparison | One-frame difference; early motion and periodic-seam fragments limit inference |
-| Spherical analytical comparison | 41.45 MPa interior resolved shear for the same assumed strain and isotropic constants |
+| Normal stress next to the inclusion, 5-10 A from the surface | about -126 MPa along the field, +75 MPa across it |
+| Shear stress on the slip planes, same distance | up to 28 MPa |
+| Response of the matrix | elastic and linear: +eps and -eps give mirror responses to within 0.8 MPa; no dislocations (DXA) in any state, also at 4 and 10 times the strain |
+| Straight edge dislocation 12 A above the particle | moves 0.78 A away when the strain is applied (about half the 1.43 A valley spacing) and returns to within 0.06 A when it is removed |
+| Atomistic field against the elastic solution for the same cell | about 0.80 of it beyond 10 A from the interface (median deviation 2.5 %); the loss builds up in a compliant layer of distorted aluminium a few angstroms thick |
+| Strain at which a real particle would start local yield (elastic, single sphere) | 0.028-0.043 % for slip on {111}<110> (CRSS 13-20 MPa), 0.045-0.067 % for von Mises (40-60 MPa) |
+| Line-averaged shear stress on an edge dislocation 10 A above the particle | up to 5.8 MPa |
+| Stress at which a straight edge dislocation glides with this potential (0 K) | about 9 MPa, in jumps of b/2 |
+| Activation volume at which the field gives the observed +25 % creep rate | about 23 b^3 |
 
-These are results for one potential, one geometry and a limited set of loading
-conditions. There is no cell-size, rate or independent-seed convergence study.
-Short DXA fragments are not evidence of a newly nucleated dislocation. Spatial
-scatter between stress bins is not an estimate of numerical uncertainty.
-
-Both restrained static states meet the requested force tolerance. The separate
-alloy preparation stops on energy tolerance with a force two-norm of
-10.12 eV/angstrom, so its limited-motion trajectory is not an equilibrated
-pinning-threshold measurement. The archived alloy starting file also lacks a
-launch-time checksum; exact replay of that initial mobile configuration is
-unverified. These limitations do not prevent reanalysis of the deposited
-trajectory.
+These are results for one potential, one inclusion radius and one way of
+building the interface, at 0 K. Whether the 0.80 factor carries over to
+micron-size particles is an assumption that the calculation does not test.
 
 ## Repository map
 
 | Location | Contents |
 |---|---|
-| `docs/paper/` | Authoritative LaTeX sources, current PDFs, four figures in both languages and bibliography |
-| `docs/reports/` | Numerical records and per-frame tables used by the paper |
-| `data/stageG4_clean/` | Complete control/strained virial dumps for the static stress calculation |
-| `data/publication/` | Initial/final states, loading logs, G15 positions, complete alloy trajectory and checksums |
-| `analysis/python/` | Stress, strain, dislocation, continuum and creep analysis; figure generation |
-| `lammps/` | The three input protocols needed to replay the published calculations |
-| `scripts/` | Data packaging, portable calculation launcher, document build and validation |
-| `structures/` | Crystallographic source and retained geometry metadata |
-| `potentials/` | Original MEAM files and their attribution |
+| `docs/paper/` | LaTeX sources, reading PDFs, figures in both languages, bibliography; drafts and the fill script in `docs/paper/_drafts/` |
+| `docs/reports/` | Numerical records used by the paper (`embedded_*.json`, `meam_elastic_constants.json`) |
+| `data/publication/embedded/` | Compressed, checksummed configurations and logs of the embedded-inclusion runs |
+| `analysis/python/` | Stress, strain, defect, continuum, yield and creep analysis; figure generation |
+| `lammps/embedded_inclusion/` | LAMMPS inputs: reference relaxation, static pair, dislocation slab relaxation and sweep |
+| `scripts/` | Cell builders, strained-cell builder, run queues, data packaging, document build |
+| `structures/` | Crystallographic source and the built cells with their metadata |
+| `potentials/` | MEAM parameter files and their attribution |
 | `tests/` | Focused checks of the published analysis |
 
-The main papers are `main.tex` / `main_ru.tex`; the two supplementary sources
-contain the technical details. Repository documentation is in English. The
-Russian manuscript is maintained alongside the English version.
+The earlier version of the study (an Al13Fe4 ridge on a substrate, harmonic
+restraints, dislocation ramps) is kept for the record: its data are in
+`data/stageG4_clean/` and `data/publication/` outside `embedded/`, its scripts
+are the `stage*` and `publication_*` modules, and its manuscript is in the git
+history (commit `bb179ba`).
 
 ## Reproduce the analysis
 
-Use Python 3.12 with the packages in `requirements.txt`. OVITO is required
-for dislocation analysis and the atomistic render. LAMMPS is only required to
-rerun molecular dynamics.
+Python 3.12 and the packages in `requirements.txt` are used. OVITO is needed for
+the defect analysis and the cell render. LAMMPS is only needed to rerun the
+simulations.
 
 ```sh
 python -m pip install -r requirements.txt
-python scripts/package_publication_data.py --verify
-python analysis/python/stageG10_field_profile.py --r-max 110
-python analysis/python/stageG12_eigenstrain_retention.py
-python analysis/python/stageG8_eshelby3d.py
-python analysis/python/stageG5_two_scale_bridge.py
-python analysis/python/publication_figures.py
-python analysis/python/publication_figures.py --language ru
+python scripts/package_embedded_data.py --verify
+python scripts/build_embedded_inclusion.py --shape sphere --radius 25 --out structures/embedded_inclusion/sphere_R25
+python analysis/python/embedded_inclusion_continuum.py --box 125.9382 123.9383 126.1981 --out docs/reports/embedded_continuum.json
+python analysis/python/embedded_yield.py --out docs/reports/embedded_yield.json
+python analysis/python/embedded_figures.py
+python analysis/python/embedded_figures.py --language ru
+python docs/paper/_drafts/fill_embedded.py
 python -m pytest tests
 ```
 
-The default static inputs are the compressed dumps in `data/stageG4_clean`.
-The stress profile is restricted to the published range; comparisons must use
-the same atom selection, bin width and tensor convention. JSON and CSV outputs
-share one basename.
+The built cells are not tracked; the builder line above recreates the one the
+cell figure needs (the dislocation slabs come from
+`scripts/build_embedded_dislocation.py`). The field, gate, defect and interface
+records are computed from the static dumps (`ref`, `plus`, `minus`) by
+`embedded_inclusion_field.py`, `embedded_gates.py`, `embedded_dxa.py` and
+`embedded_interface.py`, and the dislocation and margin records by
+`embedded_disl_states.py` and `embedded_records.py`; each script states its
+inputs in its docstring. Stresses are per-atom virials divided by
+16.6075 A^3, tension positive, in MPa.
 
-Signed MD tensors use positive normal compression, from `-S / volume` where
-`S` is LAMMPS `stress/atom`. Tensile-positive Cauchy tensors have the opposite
-sign. Maximum absolute resolved shear and von Mises values are unchanged.
-The analysis selects retained matrix layers from the actual inclusion envelope
-in both snapshots, including Al and Fe. The cutoff follows that envelope
-instead of a fixed crest height.
+## Run the simulations
 
-The data guide in [data/publication/README.md](data/publication/README.md)
-identifies transformations, sampling intervals, units and analysis limitations.
-Source checksums distinguish deposited simulation output from derived tables.
-No DOI or external data deposit is claimed.
+The cell is built by `scripts/build_embedded_inclusion.py`. The reference cell
+is relaxed by `lammps/embedded_inclusion/in.relax_control`, and
+`scripts/queue_embedded_static.sh` then builds and relaxes the +eps and -eps
+cells and runs the field analyses. `scripts/queue_embedded_plasticity.sh` runs
+the dislocation slab next to the particle and the cells with 4 and 10 times the
+strain. The original runs used LAMMPS 22 July 2025 with Kokkos on one GPU.
 
 ## Build the documents
 
-Install a TeX distribution providing pdfLaTeX, BibTeX, the article class,
-AMS mathematics, graphicx, placeins, natbib and Russian Babel support. Then run:
+Install a TeX distribution with pdfLaTeX, BibTeX, the article class, AMS
+mathematics, graphicx, placeins, natbib and Russian Babel support, then run:
 
 ```sh
 python scripts/build_manuscript.py
 python scripts/validate_publication.py
 ```
 
-The build writes intermediate files to `build/paper` and current PDFs to
-`docs/paper`. Local Overleaf ZIPs contain the source, figures and bibliography.
-Rebuild both language versions after changing the bibliography or figures.
-
-## Replay a calculation
-
-The launcher uses a deposited initial configuration. The alloy input has the
-checksum limitation described above. By default, it prints the command to run;
-pass `--execute` to start the calculation:
-
-```sh
-python scripts/run_calculation.py interface_control
-python scripts/run_calculation.py g15_held_strained --executable /path/to/lmp --kokkos --execute
-```
-
-Available cases are `interface_control`, `interface_strained`,
-`g15_free_control`, `g15_held_control`, `g15_held_strained` and `alloy`.
-The original runs used LAMMPS 22 July 2025, MEAM, a 1 fs timestep and CUDA
-Kokkos where applicable. Set `LAMMPS_EXECUTABLE` or pass `--executable`.
-GPU support is optional and must be compiled into the chosen binary.
-The launcher never overwrites an existing result directory.
-
 ## Attribution and reuse
 
-Original project code retains the [MIT licence](LICENSE). The MEAM parameters
-and crystallographic data retain their upstream attribution; the repository
-licence does not replace third-party terms. See [potentials/README.md](potentials/README.md)
-for the parameter source. Cite the scientific sources in `references.bib`
-and identify the repository revision when reusing a calculation.
+Original project code is under the [MIT licence](LICENSE). The MEAM parameters
+and crystallographic data keep their upstream attribution; see
+[potentials/README.md](potentials/README.md). Cite the sources in
+`docs/paper/references.bib` and the repository revision when reusing a
+calculation.
 
 The manuscripts are research drafts by I. Mikhailovskiy and D. Pshonkin.

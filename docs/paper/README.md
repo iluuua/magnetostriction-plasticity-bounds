@@ -1,33 +1,34 @@
 # Manuscripts and figures
 
-`main.tex` and `main_ru.tex` are the authoritative English and Russian
-manuscripts. `supplementary.tex` and `supplementary_ru.tex` contain the numerical
-protocols, additional controls and reproducibility limitations. Both language
-versions use the same numerical figure data and bibliography. English figures
-keep their base filenames; Russian figures have a `_ru` suffix and translated
-axes, legends, units and annotations.
+`main.tex` (English) and `main_ru.tex` (Russian) are the manuscripts;
+`supplementary.tex` and `supplementary_ru.tex` hold the cell preparation, the
+convergence and linearity checks, the elastic solutions, the creep model and
+the lattice resistance of a straight dislocation. `highlights.tex` lists the
+highlights.
 
-| Figure | Input and interpretation |
+These five files are generated. Edit the drafts in `_drafts/`
+(`main_*_embedded.tex`, `supp_*_embedded.tex`, `highlights_embedded.tex` and the
+text blocks `s2_*.tex`, `s6_*.tex`, `disl_*.tex`) and run
+
+```sh
+python docs/paper/_drafts/fill_embedded.py
+```
+
+which puts the numbers from `docs/reports/embedded_*.json` into the «KEY»
+places and writes the five files here. `--dry-run` prints every value and its
+source without writing.
+
+| Figure | Content |
 |---|---|
-| `fig_model.png` | OVITO rendering of deposited atomic coordinates; interface and loaded cells |
-| `fig_field.pdf` | Signed shear increment from the common held-state pair, with coordinate definitions |
-| `fig_dynamics.pdf` | Restrained G15 upper-line motion and the applied loading programme |
-| `fig_bridge.pdf` | Shear amplitude needed for a 25% modelled rate increase, with ridge and sphere reference stresses |
+| `fig_cell` | Section of the cell through the inclusion (OVITO) and a sketch of the given strain with the forces on the aluminium |
+| `fig_map` | Added von Mises stress and slip-plane shear stress in the xz plane: atomistic and elastic, same cell |
+| `fig_decay` | Added stresses against distance from the surface along the field, across it and in the shear lobes; far field of a single sphere |
+| `fig_glide` | Shear stress averaged along a straight edge dislocation above the inclusion |
+| `fig_creep` | Shear amplitude needed for a 25 % creep-rate increase against the activation volume |
 
-The figure generator is `analysis/python/publication_figures.py`.
-Run it with `--language ru` to regenerate the Russian set; English is the default.
-Its `--list-inputs` option reports the exact files and checksums.
-The comparison is mechanical: no measured magnetic strain or field-off memory
-process is simulated.
+English figures keep the base name; Russian ones end in `_ru` and use a
+decimal comma. Both sets come from `analysis/python/embedded_figures.py`
+(`--language ru` for the Russian set).
 
-Run `python scripts/build_manuscript.py` from the repository root after
-regenerating figures. It writes the two manuscript PDFs, two supplement PDFs
-and local Overleaf archives. Intermediate TeX files stay in `build/paper`.
-
-The compact draft has an abstract below 150 English words, five keywords and
-four figures. It is prepared as a regular research article with explicit model
-limitations. No journal acceptance or current quartile is implied by this
-format. [Physical Review Materials author guidance](https://journals.aps.org/prmaterials/authors)
-allows regular articles without a fixed length limit and requires clear data
-availability. Its Letter format has a
-4,500-word limit and a separate editorial standard.
+`python scripts/build_manuscript.py` from the repository root compiles the
+manuscripts and supplements; intermediate files stay in `build/paper`.

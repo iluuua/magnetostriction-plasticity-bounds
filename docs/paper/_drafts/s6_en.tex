@@ -1,0 +1,23 @@
+\paragraph{A dislocation above the inclusion.} A slab of the same cross-section,
+$126.0\times124.0\times125.5$~\AA{} (117\,363 atoms), holds an Al$_{13}$Fe$_4$
+sphere of radius 25~\AA{} in its lower half; the slip plane is 12~\AA{} above
+the top of the sphere, and as built the sphere centre is 15~\AA{} ahead of the
+line along $x$. The inclusion is held as in the field calculations, and the
+blocks are rigid, as in the calculation without an inclusion. The matrix is relaxed by conjugate gradients to a force norm
+of $10^{-3}$~eV/\AA{} without annealing, and the top block is then moved along
+$z$ until the mean $\sigma_{zz}$ of the matrix is close to zero. During this
+relaxation the line moves «DISL_RELAX»~\AA{} away from the inclusion and stops
+«DISL_D»~\AA{} from the sphere centre along $x$. The line position is the mean
+position of the two partial dislocations found by DXA; their separation is
+«DISL_SPLIT»~\AA{} in every state. The inclusion atoms are then given the strain
+$+\varepsilon$ and the matrix is relaxed again: the line moves a further
+«DISL_SHIFT»~\AA{} away from the inclusion. After the inclusion atoms are put
+back and the matrix is relaxed once more, the line is «DISL_REV»~\AA{} from
+its first position.
+
+Shearing these slabs did not give a separate measure of the effect of the
+field. Even without load the top and bottom blocks carry shear stresses of
+«BLOCK_TOP» and «BLOCK_BOT»~MPa; the held inclusion transmits the difference,
+so the stress at which the line breaks away is set mainly by the forces that
+hold the inclusion in place, and the contribution of the inclusion strain
+cannot be separated in these runs.

@@ -1,4 +1,5 @@
-% Journal-neutral source. Edit this file directly.
+% English manuscript, embedded-inclusion version (October 2026).
+% Values in guillemets are filled from the records by fill_embedded.py.
 \documentclass[11pt,a4paper]{article}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -16,8 +17,8 @@
 \renewcommand{\textfraction}{0.10}
 \renewcommand{\floatpagefraction}{0.75}
 
-\title{Stress transfer and dislocation response near a constrained
-Al$_{13}$Fe$_4$ inclusion in aluminium}
+\title{Stresses in aluminium around an Al$_{13}$Fe$_4$ inclusion with a given
+magnetostrictive strain}
 \author{I.~Mikhailovskiy\thanks{Corresponding author.
 \texttt{ilyamihailovsy@gmail.com}} \and D.~Pshonkin}
 \date{Moscow Polytechnic University, Moscow, Russia}
@@ -26,519 +27,518 @@ Al$_{13}$Fe$_4$ inclusion in aluminium}
 \maketitle
 
 \begin{abstract}
-The mechanical response to a prescribed deformation of an Al$_{13}$Fe$_4$
-inclusion in aluminium was examined using atomistic calculations. A ridge
-in a 91\,428-atom interface cell was elongated by 0.194\% and restrained
-while the matrix relaxed. The additional shear stress reached a magnitude of
-15.45~MPa above the ridge axis, with substantial cancellation upon
-averaging across the cell. In matched loading runs, the upper-dislocation
-departure criterion is met one saved frame apart. A single pair of
-trajectories is insufficient to establish a systematic effect of inclusion
-deformation on dislocation motion. A separate activated-glide model
-quantifies the sensitivity of creep to the assumed stress amplitude and
-activation volume. The calculations establish a conditional mechanical
-response; magnetic deformation of the inclusions and persistence after
-field removal remain untested.
+Molecular dynamics at 0~K gives stresses around a spherical
+Al$_{13}$Fe$_4$ inclusion of radius 2.5~nm inside aluminium, with a given
+magnetostrictive strain along the magnetic field. Near it the matrix is
+compressed by 126~MPa along the field and stretched by 75~MPa across
+it; shear stresses reach 28~MPa. The response is elastic: even
+tenfold strain forms no dislocations, and a dislocation above the
+inclusion shifts 0.78~\AA{} and returns on unloading. Compliant,
+distorted aluminium at the interface makes the atomistic field about
+80\% of the elastic solution. If this loss vanishes for micron
+particles (untested), this strain gives elastic stresses above the alloy
+yield stress in a shell about one radius thick. With the field on, the
+observed creep increase would need a third of the measured Al--Mg--Si
+activation volume, or 6--7 times the measured Fe--Al magnetostriction.
+Why the effect outlasts the field remains unexplained.
 \end{abstract}
 
-\noindent\textbf{Keywords}\quad molecular dynamics; interfacial stress;
-dislocations; aluminium alloys; constrained deformation
+\noindent\textbf{Keywords}\quad molecular dynamics; magnetostriction;
+inclusions; internal stress; aluminium alloys
 
 \section{Introduction}
 
-Changes in the plastic response of aluminium alloys after magnetic exposure
-motivate the examination of mechanical interactions between inclusions and
-dislocations. Experiments on heterogeneous Al--Mg--Si alloys containing
-iron-bearing inclusions reported changes in creep after exposure to a
-static field \cite{Skvortsov2019JAP,Skvortsov2019PSS,Friha2024JMMM}.
-In these experiments the treatment and mechanical loading were separated
-in time. Subsequent work also reported changes in transient creep and
-stress relaxation \cite{Nikolaev2025SciRep}. Any explanation of the retained
-response therefore requires a material state that persists after the
-treatment has ended.
+Al--Mg--Si alloys containing iron-rich inclusions creep faster after they
+have been held in a static magnetic field (creep is slow deformation under a
+constant load), and the effect persists after the field is removed
+\cite{Skvortsov2019JAP,Skvortsov2019PSS,Friha2024JMMM,Nikolaev2025SciRep}.
+One proposed explanation is magnetostriction of the inclusions, the change of
+their shape in the field. The matrix resists the change, and stresses appear
+around the inclusion. These stresses can move dislocations, the line defects
+whose motion carries plastic deformation. Ref.~\cite{Friha2024JMMM} estimates the
+stress at the inclusion boundary as 147~MPa in a field of 0.7~T. This estimate
+does not say how the stress is distributed around the
+particle, how fast it falls with distance, or how much of it acts on
+dislocations.
 
-A possible contribution is the stress generated when an inclusion changes
-shape within the surrounding matrix. Magnetostriction could provide the
-deformation if the inclusion contains an appropriate magnetic constituent.
-Its mechanical consequences depend on particle shape, elastic
-accommodation and crystallographic orientation. A scalar estimate of
-interfacial stress does not determine the shear acting on a particular
-dislocation. The pre-existing interface field and the distribution of
-obstacles also affect the response of a line placed near the inclusion.
+Here the stress field around one Al$_{13}$Fe$_4$ inclusion in aluminium is
+calculated. The strain of the inclusion is prescribed: molecular dynamics
+follows the atoms with an interatomic potential, a formula for the energy of
+interacting atoms, and this potential does not describe magnetism, so the
+magnetostriction cannot come out of the calculation itself. Its magnitude
+corresponds to the 147~MPa estimate \cite{Friha2024JMMM}. The atomistic
+result is compared with the elastic solution, and the field is then used to
+estimate the force on dislocations and the increase in creep rate.
 
-The present calculations address the mechanical part of this problem using
-an aluminium matrix and an Al$_{13}$Fe$_4$ inclusion. We prescribe
-an inclusion elongation of 0.194\% and calculate the matrix response.
-This value follows the modelling estimate associated with the earlier
-147~MPa stress scale \cite{Friha2024JMMM}; it has not been measured for the
-inclusions under magnetic exposure. The applied constraint fixes reference
-coordinates for the inclusion atoms. Consequently, the resulting field is
-the response to a specified mechanical boundary condition. Whether the
-imposed deformation represents magnetostriction of real inclusions requires
-separate verification.
+\section{Model and method}
 
-The study combines a paired static stress calculation with trajectories of
-existing dislocations in the same interface geometry. Attention is given
-to the distinction between signed shear near the inclusion axis and
-averages across the simulation cell. The trajectories are examined through
-their initial relaxation, subsequent motion and interaction with the
-periodic seam. A separate activated-glide estimate then relates assumed
-stress amplitudes to a conditional change in creep rate.
+\subsection{The cell}
 
-\section{Methods}
+The cell is a periodic box of aluminium, $12.6\times12.4\times12.6$~nm.
+A spherical Al$_{13}$Fe$_4$ inclusion of radius $R=2.5$~nm sits at its centre
+(Fig.~\ref{fig:cell}a). The inclusion is cut from an Al$_{13}$Fe$_4$ crystal
+with the lattice of the crystal-structure data \cite{Liu2024CIF}; aluminium
+atoms closer than 2.2~\AA{} to an inclusion atom are removed. The cell holds
+118\,861 atoms, 114\,374 in the matrix and 4\,487 in the inclusion. Aluminium surrounds the inclusion on all sides. The boundary
+conditions are periodic along all three axes, so the cell represents a
+regular array of inclusions 12.6~nm apart along $x$ and $z$ and 12.4~nm along $y$; their volume fraction is 3.3\%.
 
-\subsection{Geometry and imposed deformation}
+A sphere was chosen as the simplest compact shape; the actual shape of the
+inclusions is not reproduced. The stress
+around a sphere falls with the distance $r$ from its centre as
+$r^{-3}$ and is small two or three radii away, so a cell of $10^5$ atoms is
+large enough. A sphere also has an exact elastic solution
+\cite{Eshelby1957,Mura1987} against which the atomistic result can be checked.
 
-Calculations used LAMMPS, release 22 July 2025, with KOKKOS/CUDA acceleration
-\cite{Thompson2022LAMMPS} and the Al--Si--Mg--Cu--Fe second-neighbour
-modified embedded-atom potential of Jelinek et al.\ \cite{Jelinek2012}.
-The face-centred cubic aluminium matrix has lattice parameter
-$a_0=4.05$~\AA{} and axes
-$x\parallel[1\bar{1}0]$, $y\parallel[11\bar{2}]$ and
-$z\parallel[111]$. This orientation places a (111) glide plane parallel
-to the nominal interface and its $[1\bar{1}0]$ glide direction along $x$.
-An edge line parallel to $y$ then carries Burgers vector
-$\mathbf b=(a_0/2)[1\bar{1}0]$, with magnitude $b=2.864$~\AA{}.
+The cell axes are $x\parallel[1\bar10]$, $y\parallel[11\bar2]$ and
+$z\parallel[111]$. The $(111)$ planes on which dislocations glide in
+aluminium are then horizontal, and the slip direction $[1\bar10]$ lies along
+$x$. Atoms interact through the second-nearest-neighbour modified embedded-atom
+potential for Al--Si--Mg--Cu--Fe \cite{Jelinek2012}; the calculations use
+LAMMPS \cite{Thompson2022LAMMPS}. The elastic constants of aluminium with
+this potential, $C_{11}=110.5$, $C_{12}=60.9$ and $C_{44}=28.4$~GPa, are close
+to the measured ones.
 
-The monoclinic Al$_{13}$Fe$_4$ structure \cite{Liu2024CIF} forms a
-20~\AA{} support layer topped by a half-elliptical ridge with semi-axes
-35~\AA{} along $x$ and 20~\AA{} along $z$. The ridge spans the periodic
-$y$ direction. The interface cells contain 91\,428 atoms, comprising
-72\,532 matrix atoms and 18\,896 inclusion atoms. Their in-plane dimensions
-are $154.64\times64.48$~\AA$^2$. Periodic boundaries apply along $x$
-and $y$; the upper aluminium surface faces vacuum and the bottom
-6~\AA{} is fixed. Figure~\ref{fig:model} shows the geometry. Interfacial
-bonding and any atomic rearrangement across the interface are governed by
-the interatomic potential.
+\subsection{The given magnetostrictive strain}
+\label{sec:strain}
+
+The magnetic field points along $x$. Magnetostriction lengthens the inclusion
+along the field and shortens it across, without changing its volume
+(Fig.~\ref{fig:cell}b):
+\begin{equation}
+\varepsilon_{xx}=\varepsilon,\qquad
+\varepsilon_{yy}=\varepsilon_{zz}=-\varepsilon/2,\qquad
+\varepsilon=1.94\times10^{-3}.
+\label{eq:strain}
+\end{equation}
+This $\varepsilon$ is the 147~MPa estimate of Ref.~\cite{Friha2024JMMM}
+divided by a Young's modulus of 75.7~GPa; the modulus of aluminium along
+$[111]$ with the potential used here is 75.9~GPa. Ref.~\cite{Friha2024JMMM}
+used 70~GPa, with which 147~MPa corresponds to a strain of
+$2.1\times10^{-3}$. The magnetostriction of Al$_{13}$Fe$_4$
+inclusions has not been measured, so $\varepsilon$ is an input of the
+calculation. Every stress below is proportional to $\varepsilon$; for another
+strain $\varepsilon'$ it is multiplied by $\varepsilon'/0.194\%$ (by 1.08 for
+$2.1\times10^{-3}$).
+
+Each inclusion atom is moved by
+$\mathbf u=\boldsymbol\varepsilon(\mathbf r-\mathbf r_c)$, where $\mathbf r$ is
+the position of the atom before the move, $\mathbf r_c$ the inclusion centre
+and $\boldsymbol\varepsilon$ the strain (\ref{eq:strain}). The inclusion atoms
+then stay fixed, while the aluminium atoms move until the forces on them vanish
+(energy minimisation by conjugate gradients). This gives the inclusion the
+shape it is assumed to take inside the matrix under the field. The arrows in
+Fig.~\ref{fig:cell}b show the forces with which the inclusion acts on the
+aluminium, taken from the radial stress at the interface in the elastic
+solution for a single sphere: outward at
+the ends along the field and inward on top, at the bottom and at the sides.
+In a real inclusion magnetic forces would maintain this shape, if a
+magnetostriction of this size exists.
+
+The strain (\ref{eq:strain}) is the strain of the inclusion inside the matrix.
+A free particle would lengthen more in the same field, because no matrix
+would hold it back. If 0.194\% were the free magnetostriction of an elastic
+particle, every matrix stress below would be multiplied by
+$A=\beta k/(1+\beta(k-1))$, where $k$ is the ratio of the shear moduli of
+inclusion and aluminium and $\beta=0.46$ is a coefficient of the elastic
+solution for a sphere that depends only on Poisson's ratio (Supplementary S3);
+for an inclusion
+two to two and a half times stiffer than aluminium, $A=0.63$--$0.68$.
+
+The reference cell, without strain, is prepared once. The inclusion atoms are
+fixed from the start: with this potential the equilibrium lattice of
+Al$_{13}$Fe$_4$ is 8\% larger in volume than the measured one, and a free
+inclusion would swell. The matrix is held at 300~K for 10~ps, cooled to
+0.5~K over 10~ps and relaxed at 0~K. The cell size is then adjusted once so
+that the mean stress in the aluminium far from the inclusion vanishes. The
+cells with strain $+\varepsilon$ and $-\varepsilon$ are built from the
+reference cell by moving the inclusion atoms; only the matrix relaxes in
+them, at fixed cell size. Half the sum of the responses to $+\varepsilon$ and
+$-\varepsilon$ shows how far the response departs from linear
+(Supplementary S2).
 
 \FloatBarrier
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.92\linewidth]{fig_model.png}
-\caption{Atomistic interface geometry rendered from LAMMPS configurations
-with OVITO. The Al$_{13}$Fe$_4$ ridge extends along $y$ above a flat
-support layer. The coordinate axes identify the glide direction, line
-direction and interface normal. The loaded configuration includes an
-oppositely signed edge-dislocation pair. The upper layers transmit the
-applied shear and the bottom layer is fixed.}
-\label{fig:model}
+\includegraphics[width=\linewidth]{fig_cell}
+\caption{The model. (a)~Section of the cell by the $xz$ plane through the
+inclusion centre, a 1~nm thick slab (OVITO \cite{Stukowski2010OVITO}); grey dots are aluminium atoms of the
+matrix, orange and red ones Al and Fe atoms of the inclusion. (b)~The given
+strain of the inclusion (exaggerated): dashed circle, original shape; filled,
+shape with the strain (\ref{eq:strain}). Arrows: forces with which the
+inclusion acts on the aluminium in the single-sphere elastic solution,
+outward at the ends along the field and inward on top and at the bottom;
+arrow length is proportional to force per unit surface area, and the numbers
+give this force along and across the field.}
+\label{fig:cell}
 \end{figure}
 \FloatBarrier
 
-The ridge atoms are displaced about their centroid using the small-strain
-tensor
-\begin{equation}
-\mathbf E_0=\frac{3\varepsilon_0}{2}
- \left(\mathbf u\otimes\mathbf u-\frac{\mathbf I}{3}\right),
-\qquad
-\varepsilon_0=0.00194,\qquad
-\mathbf u=\frac{(1,0,1)}{\sqrt{2}} .
-\label{eq:strain}
-\end{equation}
-Its zero trace conserves volume to first order. The chosen direction
-maximises the imposed $xz$ shear component, $E_{0,xz}=0.001455$, within
-this family of deformations. It defines one favourable orientation.
-The support layer receives no imposed displacement.
+\subsection{How the stresses are obtained}
 
-Preparation includes conjugate-gradient minimisation, 6~ps at 300~K,
-12~ps of cooling to 0.5~K and a final minimisation. Both static configurations
-are constructed from one relaxed control structure, preserving atom
-identities. Inclusion atoms are attached to their respective reference
-coordinates by harmonic springs of stiffness $20$~eV/\AA$^2$, while the
-matrix remains free to relax. The two copies are minimised with identical
-settings and both reach the requested force two-norm of 0.02~eV/\AA{}.
-This comparison uses one prepared state; sensitivity to initial structure
-and minimisation tolerance has not been established.
+The stress at each matrix atom is its virial divided by the atomic volume of
+aluminium, 16.61~\AA$^3$. The virial of an atom is the sum of the products of
+the forces from its neighbours and the vectors joining it to them; in a uniform
+crystal the virials summed and divided by the volume give the ordinary stress. The
+quantity used is the difference between the strained cell and the reference
+cell, that is, the stress added by the magnetostriction. Tension is
+positive and compression negative. Three quantities are used. The normal
+stress along the radius, $\sigma_{rr}$, shows how hard the matrix pushes on
+the inclusion or pulls it; the 147~MPa estimate is of this kind. The
+equivalent (von Mises) stress, $\sigma_{\text{eq}}$, combines all components
+except the hydrostatic pressure into one number that is compared with the
+yield stress, the stress at which the alloy starts to deform plastically. The shear stress
+$\tau=\sigma_{xz}$ acts on the horizontal slip plane along $x$; it is the
+stress that pushes an edge dislocation with Burgers vector along $x$. The
+Burgers vector is the shift of the crystal left behind when the dislocation
+passes; for an edge dislocation it is perpendicular to the line.
 
-The potential is unchanged, so the springs supply the forces that maintain
-the deformation. A material eigenstrain would alter the stress-free state
-of the inclusion. Spring reactions remain part of the paired response.
-Full preparation and convergence information is given in the
-Supplementary Information.
+Values are averaged over atoms in spherical shells 2~\AA{} thick inside narrow
+cones about chosen directions: along the field (within 10$^\circ$), across it
+(within 10$^\circ$ of the plane $x=0$), and at 25$^\circ$, 45$^\circ$ and
+67$^\circ$ to the field (bands of $\pm7.5^\circ$). The distance $d=r-R$ is
+measured from the inclusion surface. Apart from the weak elastic anisotropy
+of aluminium (the dependence of its elasticity on direction) the field is symmetric about the $x$ axis, so for the maps in
+Fig.~\ref{fig:map} the stresses are averaged over rotations about that axis.
 
-\subsection{Stress and dislocation measurements}
+\subsection{The elastic solution}
 
-The six components of the configurational atomic virial are averaged
-before forming stress invariants. The conversion uses the aluminium atomic
-volume $16.61$~\AA$^3$. Profiles compare the perturbed and control tensors,
-$\Delta\boldsymbol\sigma=\boldsymbol\sigma_\varepsilon-
-\boldsymbol\sigma_0$, in layers 4~\AA{} thick. The stored tensor uses
-positive normal stress in compression. The tensor has the opposite sign to
-the tensile-positive Cauchy convention. Reversing its sign leaves absolute
-resolved shear stresses and the von Mises stress unchanged.
-The coordinate $r=z-20$~\AA{}
-measures height above the nominal interface plane; $d=r-20$~\AA{} is
-height above the nominal ridge crest. For a layer spanning the cell,
-$d$ is not a nearest-surface distance.
-
-Two spatial averages are retained, across the full cell width and within
-$|x-x_c|<10$~\AA{} of the ridge axis. Layers intersecting the inclusion
-are excluded from the matrix profile. The signed shear on the selected
-$(111)[1\bar{1}0]$ system is $\Delta\sigma_{xz}$. The supplementary scalar
-$\mathrm{RSS}_{\max}$ is the maximum of
-$|\mathbf s\cdot\Delta\boldsymbol\sigma\mathbf n|$ over the twelve fcc
-slip systems, with unit slip direction $\mathbf s$ and plane normal
-$\mathbf n$.
-
-Layer membership and the axial window are defined by control coordinates
-and applied to the same atom identities in both snapshots. This
-construction avoids changing the sampled population as atoms move across
-layer boundaries. The retained layers lie entirely above every inclusion
-atom in both snapshots and contain only matrix aluminium, identified by
-atom ID. No thermal kinetic
-term enters the minimised profiles. The von Mises stress of the
-difference tensor and the difference between two von Mises stresses are
-distinct quantities; only the former describes the shear invariant
-of the perturbation.
-
-The loaded interface cells also contain 91\,428 atoms. Two oppositely
-signed edge lines are inserted on parallel glide planes separated by
-23.4~\AA{}, with an initial horizontal offset of the same magnitude.
-Their motion is followed using the dislocation extraction algorithm
-(DXA) \cite{Stukowski2012DXA} in OVITO \cite{Stukowski2010OVITO}.
-Dynamics uses a 1~fs step and a 300~K Nos\'e--Hoover thermostat.
-After 5~ps without applied shear, forces on the upper atomic layers
-increase according to a ramp whose rate is smoothly introduced over
-16~ps. The matched restrained runs end at nominally 145.45~MPa.
-An additional unstrained run with an unrestrained inclusion extends to
-400~MPa. Analysis samples are spaced by 2~ps, corresponding to approximately
-9.09~MPa in the linear part of the ramp.
-
-Line positions are unwrapped along the periodic $x$ direction and grouped
-by Burgers-vector family. For an individual line, a linear baseline is
-fitted to available positions from 4~ps onward while the nominal stress
-is below 40~MPa. Departure requires a deviation larger than six times
-the baseline residual standard deviation, with a minimum of 8~\AA{},
-and persistence in the next two available sampling positions. The stored
-detector also accepts a missing line at a following frame. Accordingly,
-line continuity is examined alongside this numerical criterion, especially
-when a segment reaches the periodic seam. Quoted intervals represent
-sampling brackets rather than confidence intervals.
-
-A separate 92\,800-atom alloy cell provides a contextual mobility
-comparison. It contains 1.0~at.\% Mg and 0.6~at.\% Si and no inclusion.
-Its distinct geometry and stepwise loading are documented in the
-Supplementary Information. This comparator is not included in the
-matched interface calculation.
+The atomistic result is compared with two elastic solutions. The first is the
+exact solution for a single sphere in an infinite isotropic matrix with the
+same inclusion strain \cite{Eshelby1957,Mura1987,JuSun1999}. The second is
+obtained for the same periodic cell by a Fourier method
+\cite{MoulinecSuquet1998} with the cubic elastic constants of aluminium from
+the potential. It includes the neighbouring inclusions of the periodic array
+and the fixed cell size, so it can be compared with the atomistic result
+directly. The first shows what the field of a single inclusion in a large
+grain would be.
 
 \section{Results}
 
-\subsection{Stress transferred to the matrix}
+\subsection{How the stress is distributed}
 
-The unstrained interface already supports a substantial residual stress.
-In the nearest retained layer, at $d=2$~\AA{}, the control von Mises
-stress is approximately 850~MPa. The next three layers give 106, 185 and
-157~MPa. Such spatially averaged atomic stresses reflect the assembled
-interface and its relaxed atomic structure. Their magnitudes cannot be
-equated directly with a macroscopic uniaxial yield stress. The non-monotonic
-near-interface profile also prevents extraction of a unique decay length
-from the absolute stress alone.
-
-The imposed perturbation produces a smaller change superposed on that
-background (Fig.~\ref{fig:field}). The signed axial-window shear is negative throughout the
-retained profile, reaching $-15.451$~MPa at $d=22$~\AA{}. Its magnitude
-is about 11--15~MPa over the sampled interval $d=2$--30~\AA{}, then falls
-to 10.258~MPa at 46~\AA{}, 5.139~MPa at 66~\AA{} and 1.905~MPa at
-86~\AA{}. These values describe spatial attenuation in a minimised
-configuration. They contain no measurement of a relaxation time.
-
-Across the full width, the signed shear is mostly positive and reaches
-5.042~MPa at $r=50$~\AA{}. Its different sign and smaller magnitude show
-that the averaging region changes the mechanical quantity being
-reported. At $r=46$~\AA{}, the width-averaged $xz$ component nearly
-cancels, while $\mathrm{RSS}_{\max}=0.558$~MPa occurs on
-$(111)[01\bar{1}]$. The nearest layer, at $r=22$~\AA{}, instead selects
-$(1\bar{1}\bar{1})[101]$ and gives the largest width-averaged
-$\mathrm{RSS}_{\max}$, 5.651~MPa. The remaining layers select
-$(111)[1\bar{1}0]$. The local minimum is therefore partly a consequence
-of tensor projection and spatial averaging.
+Fig.~\ref{fig:map} shows how the added stress is distributed around the
+inclusion. Along the field, at the ends of the inclusion, the matrix is
+compressed: the inclusion pushes it apart. Across the field the matrix is in
+tension: the inclusion draws back from it. The shear stress on the slip planes
+vanishes on the $x$ and $z$ axes and is largest in four inclined lobes, at
+about 25$^\circ$ and 67$^\circ$ to the field, changing sign from lobe to lobe.
+The atomistic map and the elastic map for the same cell agree in shape, but
+the atomistic stresses are about one fifth smaller
+(Section~\ref{sec:decay}). Within 12~\AA{} of the interface the shape
+differs as well, because a continuum does not describe the atomic structure
+of the boundary.
 
 \FloatBarrier
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.96\linewidth]{fig_field.pdf}
-\caption{Distance convention and signed shear in the paired minimised
-configurations. The coordinate diagram defines $r$ from the flat
-interface and $d$ from the nominal ridge crest at $z=40$~\AA{}.
-The stress panel compares $\Delta\sigma_{xz}$ in the 20~\AA{}
-axial window with its average across the cell width. Only layers
-whose lower edge lies above all inclusion atoms in both snapshots
-($z_{\max}=39.719$~\AA{}) are retained. The compression-positive
-convention is used. The opposite signs show the
-sensitivity of the reported stress to the averaging region.}
-\label{fig:field}
+\includegraphics[width=\linewidth]{fig_map}
+\caption{Stresses added by the strain of the inclusion in the $xz$ plane
+through its centre: equivalent (von Mises) stress (top) and shear stress on
+the slip plane, $\tau=\sigma_{xz}$ (bottom). Left, atomistic calculation;
+right, elastic solution for the same periodic cell. The field points along
+$x$; the circle is the inclusion surface, and the white ring around it
+(3~\AA{} of matrix) is left blank. Dotted lines in the lower left panel:
+directions at 25$^\circ$ and 67$^\circ$ to the field.}
+\label{fig:map}
 \end{figure}
 \FloatBarrier
 
-In the thirteen layers at $r>60$~\AA{}, the width-averaged
-$\mathrm{RSS}_{\max}$ has mean 2.477~MPa and standard deviation
-0.543~MPa. These are spatial statistics of this configuration. They
-provide no independent estimate of numerical noise or a detection limit.
-The small rise in the width average at larger distances accompanies a
-continued decrease of the axial-window magnitude. A finite slab and its
-free surface can influence this profile, and the available calculation
-does not separate their contributions. No vanishing-field distance is
-assigned.
+\subsection{How the stress falls with distance}
+\label{sec:decay}
 
-An affine fit to the iron sublattice above the support gives a projection
-of 0.9728 onto the imposed ridge deformation, with formal fit standard
-error 0.0038. The springs thus maintain most of the selected deformation
-through matrix relaxation. The fit error describes residuals within one
-configuration and cannot represent uncertainty across independent
-simulations. A continuum comparison using a spherical inclusion with the
-same nominal tensor and identical isotropic elastic constants inside and
-outside gives an interior maximum resolved shear of 41.45~MPa
-\cite{Eshelby1957}. This separate boundary-value problem provides a
-reference stress scale. It supplies no upper bound for the constrained
-atomistic ridge, whose support layer, free surface and spring reactions
-are absent from the sphere model.
+Fig.~\ref{fig:decay} gives the profiles along the chosen directions. The
+atomistic values quoted here are for shells 5--10~\AA{} from the surface;
+closer in, the narrow cones along the field hold only 15--20 atoms per shell,
+and the values scatter by up to 25~MPa. Along the field the normal stress is
+compressive, about 126~MPa, which is close to the
+147~MPa estimate of Ref.~\cite{Friha2024JMMM}. The agreement is expected,
+because $\varepsilon$ was derived from that estimate. Across the field the
+normal stress is tensile, about 75~MPa. At the sides of the
+inclusion, near the plane $x=0$, the stress along the field is also large:
+as the inclusion lengthens, it pulls the aluminium next to it along, and
+$\sigma_{xx}$ right at the surface there reaches 121~MPa. The shear
+stress on the slip planes reaches 28~MPa in the lobes.
 
-\subsection{Existing dislocations during loading}
+One radius from the surface ($r=2R$) the normal stress along the field falls
+to about 54~MPa and the shear stress in the lobes to about 19~MPa; two radii away ($r=3R$) they are about
+18 and 7~MPa (single-sphere solution).
 
-The pre-existing lines change position during the start of all three
-ramps. Figure~\ref{fig:dynamics} shows the matched restrained
-upper-line histories. In the unrestrained control, the upper
-line moves approximately 38~\AA{} towards the ridge axis during the first
-6~ps. In the restrained control and perturbed cells, the corresponding
-displacements are 31.0 and 33.2~\AA{}. The upper line then lies within
-about 7--10~\AA{} of the axis. Loading starts at 5~ps, so this initial
-motion occurs predominantly during preconditioning and the smooth onset
-of the load.
+From $d\approx$~10~\AA{} on, the atomistic stresses are close to the
+elastic solution for the same cell times 0.80; after this scaling they
+differ from it by 2.5\% on average. The factor depends a little on the
+direction: 0.80 along the field, 0.82 across it, and 0.85 and 0.94
+for the shear stress in the 25$^\circ$ and 67$^\circ$ lobes. The atomic
+displacements, which do not depend on how the stress is computed, are reduced
+in the same way, and more than 8~\AA{} from the interface the stress of each
+atom equals the elastic constants of aluminium times its strain to within 3\%.
+The matrix therefore deforms less than in the elastic solution with a
+perfectly bonded interface. The deficit builds up within 5--8~\AA{} of the
+interface: in the first aluminium layer the displacement is 94\% of the
+elastic one along the surface normal and 86\% along the surface, at
+4--6~\AA{} it is already 85\% and 73\%, and further out it changes
+little. In this layer the aluminium lattice is distorted, the first layer has
+half the bulk density, and the atoms carry less stress for the same strain
+(Supplementary S2).
 
-These displacements demonstrate that the inserted pair is not stationary
-in its initial environment. Residual interface stresses, interaction
-between the lines, periodic images and boundary forces are all present.
-Because both restrained configurations move substantially at the outset,
-their later response must be interpreted relative to the relaxed line
-positions. The early interval does not isolate motion caused solely by
-the imposed ridge deformation.
+If the compliance of this layer does not depend on particle size, the
+weakening scales inversely with the radius and would be about 0.02\% for
+a particle of radius 2.5~$\mu$m, so the elastic solution is used below for
+real particles. This assumption is untested: one inclusion radius and one
+interface (aluminium atoms within 2.2~\AA{} of the inclusion removed) were
+computed, at 0~K. Sliding at the interface at service temperature would give
+a weakening that does not depend on particle size.
 
-For the upper line, departure from its low-stress trend is detected at
-113.6~MPa in the restrained control and 122.7~MPa in the perturbed cell.
-The preceding sampled stresses are 104.5 and 113.6~MPa, respectively.
-Thus the criterion is crossed in adjacent sampling intervals. Each
-configuration has only one trajectory at one loading rate. This
-observation leaves the size and reproducibility of a deformation-induced
-shift unresolved. A statistical null effect or a material critical stress
-cannot be extracted from it.
+The solution for the cell differs from the single-sphere solution: it has
+the cubic elasticity of aluminium, a fixed cell size and neighbouring
+inclusions. The shear stress in the lobes differs between them by at most
+2~MPa for $3\le d\le20$~\AA, while the normal stresses in the cell are
+13--17\% larger already at the surface and 30--44\% larger at $r=2R$. The volume
+fraction of inclusions in the alloy, 0.25\%, is more than ten times smaller
+than in the cell, so the decay far from the inclusion is shown by the
+single-sphere solution.
 
-The lower line in both restrained runs is no longer separately identified
-by 10~ps. Later DXA segments appear near the periodic seam. Assigning these
-segments to the original line by Burgers-vector family alone would create
-a spurious late departure event. At the final analysed time of 44~ps,
-about 140.9~MPa, the perturbed cell has no extracted segment. The control
-retains three segments with combined length 39.3~\AA{} near
-$x=7$--10~\AA{}. Their presence precludes describing both configurations
-as dislocation-free. Short segments are reported as local DXA signals
-without identifying a nucleation mechanism.
-
-In the unrestrained control, the lower line crosses the motion criterion
-between 95.5 and 104.5~MPa. The analysed trajectory extends to
-395.45~MPa at 100~ps. No newly formed, persistent interface dislocation is
-confirmed within those sampled configurations. Short signals also occur
-at the periodic seam at higher loads. The nominal run endpoint is
-400~MPa, beyond the last analysed regular frame. This single run gives a
-restricted observation of interface activity under its own boundary
-conditions; it does not measure a universal nucleation threshold.
+The field of a single sphere depends only on $r/R$, so the elastic solution carries over
+to inclusions of real size: for a particle 5~$\mu$m across ($R=2.5~\mu$m) the
+distances in Fig.~\ref{fig:decay} are multiplied by a thousand (upper scale).
+At the given strain the equivalent stress exceeds the yield stress of the alloy, 40--60~MPa
+\cite{Friha2024JMMM}, out to $r\approx\text{1.9--2.2}R$. The largest shear stress on the
+twelve slip systems (a slip system is a slip plane together with a slip
+direction in it) exceeds the critical value for slip, 13--20~MPa, out to
+$r\approx\text{2.2--2.6}R$. This critical value is the yield stress divided by the
+Taylor factor 3.06 \cite{StollerZinkle2000}, which accounts for the different
+orientations of the grains in a polycrystal. For a 5~$\mu$m particle the shell where the equivalent stress exceeds the yield stress is 2.2--3.1~$\mu$m
+thick. Inside this shell the elastic solution overestimates the stresses: in the
+alloy, dislocations already present would start to move, the matrix would
+flow plastically and part of the stress would relax. The atomistic
+calculation does not test this: its matrix is pure aluminium without
+pre-existing dislocations, and at 0~K no new ones form in it even at a lobe
+shear stress of 306~MPa (strain $10\varepsilon$, Supplementary S2).
 
 \FloatBarrier
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.96\linewidth]{fig_dynamics.pdf}
-\caption{Existing-line motion in the interface cells. Upper-line positions
-are followed through preconditioning and shear loading, with the applied
-stress shown alongside. The restrained control and perturbed cases cross
-the departure criterion one saved frame apart. The initial motion towards
-the ridge and the retained DXA segments at the periodic seam constrain
-interpretation of the later trajectories. Segment disappearance or
-reassignment is not evidence of a new interface dislocation.}
-\label{fig:dynamics}
+\includegraphics[width=\linewidth]{fig_decay}
+\caption{Added stresses against the distance $d$ from the inclusion surface:
+(a)~along the field, (b)~across the field, (c)~shear stress in the
+25$^\circ$ and 67$^\circ$ lobes. Symbols, atomistic calculation (mean over a
+2~\AA{} shell and its error); solid lines, elastic solution for the same cell;
+dashed lines, single sphere; hatched, the layer at the interface where they
+differ in shape. Away from the interface the symbols lie closer to zero than the solid lines:
+the atomistic field is about 80\% of the same-cell solution. The
+horizontal band is the yield stress of the
+alloy, 40--60~MPa. Upper scale: distance for a particle of radius 2.5~$\mu$m.
+(d)~Magnitude of the single-sphere stress far from it against $r/R$ on logarithmic scales;
+dotted, the slope $r^{-3}$.}
+\label{fig:decay}
 \end{figure}
 \FloatBarrier
 
-\section{Conditional connection to creep}
+\subsection{The force on dislocations}
 
-A scalar activated-glide model is used to examine the consequences of the
-computed stress scale. It assumes dilute compact particles with exterior
-shear amplitude $\tau(R)=\tau_m(a/R)^3$, where $R$ is measured from a
-particle centre. Positive and negative local stresses are assigned equal
-weights, and their effect on an elementary activated rate is represented
-by $\cosh(V^*\tau/k_{\mathrm B}T)$
-\cite{CaillardMartin2003}. Here $V^*$ describes the stress sensitivity
-of the activation barrier. These assumptions give the fractional rate
-increase
+A shear stress $\tau$ exerts on a dislocation with Burgers vector
+$b=2.86$~\AA{} a force $\tau b$ per unit length, directed along the slip plane
+(the Peach--Koehler force \cite{HirthLothe1982}). The dislocation moves if this
+force exceeds what holds it back: the lattice resistance (the Peierls stress,
+the least stress at which a straight dislocation in a pure crystal at 0~K
+moves to the next position), solute atoms and other dislocations.
+
+Fig.~\ref{fig:glide} shows the shear stress of the inclusion field averaged
+along a straight line on which an edge dislocation can lie. The line runs
+parallel to $y$ at a height $h$ above the inclusion surface. The dislocation is as long as the cell period along $y$,
+12.4~nm. The stress changes sign when $x$ is replaced by $-x$: on one side of
+the inclusion it pushes the dislocation forward, on the other side back. The averaged stress is largest,
+5.8~MPa, at $h=$~10~\AA. On the short part of the line right
+above the inclusion the stress is larger, up to 12.2~MPa, and this part
+could bow out even when the average is too small to move the whole line. The
+line average depends on the spacing of the inclusions in the model
+(12.4~nm along the line) and does not carry over directly to the alloy.
+
+In an Al--Mg--Si alloy dislocations are held by Mg and Si atoms and by
+precipitates, fine particles of Mg--Si compounds inside the grains; the critical shear stress of the alloy, from its yield stress,
+is 13--20~MPa. In the single-sphere solution at the given strain the field exceeds this
+only in a shell 1.2--1.6 radii thick next to the inclusion. Farther out the field is below this
+value and cannot by itself push dislocations past their obstacles; it can
+only speed up or slow down their thermally activated motion, in which thermal
+vibrations of the atoms carry them past the obstacles (see the creep
+estimate below).
+
+Whether the field moves a dislocation was checked directly. An aluminium slab
+contains the same held inclusion and a straight edge dislocation on the slip plane
+12~\AA{} above it (Supplementary S6). With the inclusion unstrained, the
+dislocation lies, after energy minimisation, 20.4~\AA{} from the inclusion centre along $x$,
+where the line-averaged shear stress of the field is about 4.6~MPa. When the inclusion is given the strain~(\ref{eq:strain}), the
+dislocation moves 0.78~\AA{} away from it, about half the distance
+$b/2=1.43$~\AA{} between neighbouring valleys of the lattice relief (the
+positions where the energy of the dislocation is lowest), and does not
+pass into the next valley. When the strain is removed, the dislocation
+returns to within 0.06~\AA{} of where it was, so in this calculation at
+0~K the response is elastic and reversible. The line-averaged field on the
+dislocation is about half the lattice resistance of the potential, 9~MPa
+(Supplementary S6). Where the resistance is lower, for example at
+room temperature, the same field could move the dislocation further; in the
+alloy, Mg and Si atoms and precipitates also hold dislocations, and the
+resistance there is higher (13--20~MPa).
+
+\FloatBarrier
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\linewidth]{fig_glide}
+\caption{Shear stress averaged along a straight edge dislocation 12.4~nm long
+that runs above the inclusion at a height $h$ above its surface, against the
+position $x$ of the dislocation. Symbols, atomistic calculation; lines,
+elastic solution for the same cell; shaded, the extent of the inclusion
+along $x$. Right scale: force per unit length of the dislocation, $\tau b$.}
+\label{fig:glide}
+\end{figure}
+\FloatBarrier
+
+\subsection{An estimate for creep}
+
+The link between the stress field and the creep rate is estimated with a model
+of thermally activated glide \cite{KocksArgonAshby1975,CaillardMartin2003}.
+The estimate applies to creep while the field is on and the stresses around
+the inclusions exist; the observed increase was measured after the field was
+removed (see the Discussion).
+A dislocation passes its obstacles with the help of thermal fluctuations. A
+shear stress $\tau$ makes forward jumps $\exp(V^*\tau/k_{\mathrm B}T)$ times
+more likely and backward jumps less likely by the same factor; $V^*$ is the
+activation volume, a measure of how strongly the barrier depends on stress,
+and $k_{\mathrm B}T$ is the thermal energy. If dislocations around an
+inclusion meet stresses of both signs equally often, their mean velocity grows
+by the factor $\cosh(V^*\tau/k_{\mathrm B}T)$, the mean of the factors
+$\exp(V^*\tau/k_{\mathrm B}T)$ and $\exp(-V^*\tau/k_{\mathrm B}T)$ for the two
+signs. The excess of this factor over one, integrated over the matrix around
+one inclusion and multiplied by the number of inclusions per unit volume,
+$f/V_p$, gives the relative increase in creep rate (derived in
+Supplementary S5),
 \begin{equation}
-H=f x\int_0^x\frac{\cosh u-1}{u^2}\,\mathrm du,
-\qquad x=\frac{V^*\tau_m}{k_{\mathrm B}T},
-\label{eq:bridge}
+H=\frac{f}{V_p}\int_{r>R}
+\Bigl\langle\cosh\frac{V^*\tau_s(\mathbf r)}{k_{\mathrm B}T}-1\Bigr\rangle
+\,\mathrm dV ,
+\label{eq:creep}
 \end{equation}
-to leading order in inclusion volume fraction $f$. The tensor field,
-grain orientations and interactions between particles are reduced to
-a single assumed amplitude.
+where $f$ is the volume fraction of inclusions, $V_p$ the volume of one
+inclusion, $\tau_s$ the shear stress on slip system $s$ (a slip plane together
+with a slip direction in it), and the angle
+brackets an average over the twelve slip systems and over grain orientations.
+The elastic field of a single sphere goes into the integral (the atomistic
+weakening is taken as negligible for micron-size particles,
+Section~\ref{sec:decay}); it depends only
+on $r/R$, so $H$ does not depend on particle size. The values used are
+$T=300$~K and $f=0.246\%$; the latter corresponds to 0.35~wt\% of inclusions
+\cite{Friha2024JMMM}.
 
-The model evaluation uses $T=300$~K and inclusion volume fraction
-$f=0.00246$. A target $H=0.25$ serves as a reference motivated by the scale
-of the reported creep changes. Activation volumes from $19b^3$ to
-$142b^3$ are explored as a sensitivity range. The value $70b^3$, reported
-for a differently processed Al--Mg--Si alloy
-\cite{Soula2022JALCOM}, provides context for that range.
-No activation volume is determined by the present trajectories.
-
-The chosen fraction corresponds approximately to a model mass fraction of
-0.35\% with assumed inclusion and matrix densities of 3.85 and
-2.70~g/cm$^3$, respectively. These inputs describe a representative
-dispersion and carry their own compositional uncertainty. Moreover,
-$H$ is a rate change in the activated model. Relating it to accumulated
-experimental creep also requires a loading history over which that rate
-description applies. Treating the experimental change as a fixed target
-therefore introduces a second level of modelling beyond the atomistic
-stress calculation.
+In Fig.~\ref{fig:creep} the solid curve shows the amplitude $\tau_m$ needed for
+the 25\% increase in creep rate observed after holding in the field
+\cite{Skvortsov2019JAP} at different $V^*$ if the shear stress
+falls from the inclusion surface as $\tau_m(R/r)^3$; this amplitude falls as
+the activation volume grows. The dashed curve shows the amplitude $\tau_m$ for
+which such a field gives the same increase as the computed field
+(Supplementary S5). The curves cross at $V^*\approx23\,b^3$. At $V^*=70\,b^3$, measured for
+an Al--Mg--Si alloy \cite{Soula2022JALCOM}, the computed field would raise the
+rate $10^8$ times; the model is then outside its range, and a much smaller
+strain would be enough for the observed 25\%. Because $H$ depends only on the
+product $V^*\varepsilon$, at $V^*=70\,b^3$ an inclusion strain of about
+0.065\% is needed. The measured magnetostriction of Fe--Al alloys does not
+exceed 0.01\% \cite{Hall1959,BormioNunes2012}, six to seven times less.
 
 \FloatBarrier
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.92\linewidth]{fig_bridge.pdf}
-\caption{Shear-stress amplitude required for a modelled 25\% creep-rate
-increase as a function of activation volume at $T=300$~K and $f=0.00246$.
-The curve is calculated from Eq.~\eqref{eq:bridge}. Horizontal lines mark
-two illustrative amplitudes: 15.451~MPa above the ridge axis and
-41.45~MPa inside the sphere. Their use in the scalar spatial model is
-an additional assumption.}
-\label{fig:bridge}
+\includegraphics[width=0.7\linewidth]{fig_creep}
+\caption{Shear-stress amplitude needed for a 25\% increase in creep rate
+(solid line) and the amplitude equivalent to the elastic single-sphere field of the
+inclusion with a strain of 0.194\% (dashed), against the activation volume
+$V^*$; $T=300$~K, $f=0.246\%$. Dotted line: $V^*=70\,b^3$ for Al--Mg--Si
+\cite{Soula2022JALCOM}.}
+\label{fig:creep}
 \end{figure}
 \FloatBarrier
-
-Solving Eq.~\eqref{eq:bridge} gives required amplitudes from 62.69 to
-8.39~MPa as $V^*$ increases across the selected range
-(Fig.~\ref{fig:bridge}). If 15.451~MPa is inserted as a representative
-amplitude, $H=0.25$ occurs at $V^*=77.09b^3$. Using 41.45~MPa instead
-gives $28.74b^3$. The conditional range for these inputs is therefore
-about 29--77$\,b^3$. At $70b^3$,
-the 15.451~MPa scenario gives $H=0.156$.
-
-The axial ridge maximum and the sphere interior value belong to different
-physical and spatial definitions. Substituting either into
-Eq.~\eqref{eq:bridge} tests the consequences of an assumed amplitude;
-it does not establish the exterior surface stress of real particles.
-The exponential dependence on $V^*\tau_m$ permits the target change to be
-obtained by many combinations of uncertain inputs. Agreement at a
-selected activation volume therefore supplies no independent validation
-of a magnetic mechanism.
 
 \section{Discussion}
 
-The paired static calculation quantifies how a specific constrained
-deformation changes the matrix stress. Retaining its sign reveals
-opposing contributions that are obscured in a full-width scalar
-average. This distinction matters when assessing force on a dislocation
-whose position selects only part of the field. At the height reached by
-the upper line after preconditioning, the axial-window shear change
-is approximately 13--14~MPa. Its scale is comparable to the separation
-between sampled departure stresses. A dedicated series of trajectories
-would be required to distinguish systematic changes from sensitivity
-to initial state and line identification.
+The calculation gives the stresses that an inclusion of a given shape
+produces in aluminium. Whether the inclusions take this shape in a field is
+not known: the magnetostriction of Al$_{13}$Fe$_4$ inclusions has not been
+measured, and strong ferromagnetism has not been established for bulk
+Al$_{13}$Fe$_4$ \cite{Albedah2015Mossbauer,Avers2025Crystals}. If the real
+strain of the inclusions is close to the magnetostriction of Fe--Al alloys,
+the stresses are twenty times smaller than computed, and the shell where they
+exceed the yield stress disappears. From the single-sphere solution, the largest shear
+stress on the slip systems at the particle surface exceeds the critical value of the alloy once the
+inclusion strain is above 0.028--0.043\%, and the equivalent
+stress exceeds the yield stress above 0.045--0.067\%. These are
+strains of the inclusion inside the matrix; the free magnetostriction of an
+elastic particle would have to be $1/A$ times larger
+(Section~\ref{sec:strain}).
 
-The current model includes several restrictions on that interpretation.
-The ridge is extended periodically along the line direction and rests on
-a constrained support. It does not represent an isolated particle in a
-macroscopic polycrystal. The interaction potential has broad elemental
-coverage, but transferability to this interface, its defect cores and
-solute interactions has not been independently established here.
-No cell-size study, loading-rate series or ensemble of velocity seeds
-supports extrapolation of the recorded departure stresses. The thermostat
-also acts during loading, so these runs do not determine adiabatic heating
-or the heat-release changes measured experimentally.
+The inclusion is held in its given shape, so its own elasticity does not
+enter the problem. The potential describes the
+elasticity of aluminium well but overestimates the lattice of Al$_{13}$Fe$_4$,
+which is why the inclusion is held at the measured lattice. The calculation is
+static (energy minimisation without thermal motion of the atoms) and done at
+0~K for one inclusion of one size (radius 2.5~nm) in a regular array;
+the elastic solution for the same cell includes the field of the neighbouring
+inclusions. The matrix is pure aluminium without Mg and Si atoms,
+precipitates or pre-existing dislocations, so the yield stress of the alloy
+is taken from the literature \cite{Friha2024JMMM} and plastic flow near the
+inclusion is not modelled.
 
-The nanometre span of the present profile is tied to the imposed ridge
-dimensions and to the finite simulation domain. Elastic inclusion
-solutions organise distance through the ratio of separation to particle
-size. A larger geometrically similar particle can therefore act over a
-larger absolute distance at the same dimensionless strain. Applying that
-scaling to this particular constrained ridge requires further checks of
-geometry and boundary effects. The calculated profile alone cannot
-establish stress overlap between inclusions several micrometres apart.
-
-The alloy comparator adds evidence of limited line mobility in one
-random solute configuration. The tracked line accumulates 1.98~\AA{}
-net displacement during the completed loading history through 75~MPa,
-below one Burgers-vector magnitude. The preparation minimisation did not
-reach the requested force tolerance. This trajectory is therefore used
-only as a supplementary observation, not as a quantitative measure of
-pinning. Its configuration, time window and
-internal stresses differ from those of the interface runs. It therefore
-provides no transferable pinning constant or calibration of $V^*$.
-The trajectory, analysis procedure and limitations of the comparator
-are described in the Supplementary Information.
-
-Connecting the imposed deformation to magnetism remains a separate
-question. Studies of Al$_{13}$Fe$_4$ report weak or unusual paramagnetic
-behaviour rather than establishing the strongly ferromagnetic response
-assumed for some iron-bearing inclusions
-\cite{Albedah2015Mossbauer,Avers2025Crystals}. The phase composition,
-magnetic response and field-induced shape change of the actual inclusions
-need to be established together. The chosen interatomic potential and
-coordinate restraints supply no magnetic constitutive relation.
-Consequently, neither the prescribed strain nor the calculated stress is
-a measurement of magnetostriction.
-
-The experimental sequence also places a temporal condition on any
-mechanism. Creep is measured after magnetic exposure, whereas the static
-calculation maintains the mechanical constraint and the dynamic runs
-do not reproduce its removal followed by delayed loading.
-Irreversible defect rearrangement, retained deformation and changes
-in obstacle populations could each alter the subsequent response,
-but the calculations do not establish which process accounts for the
-memory. The results identify
-mechanical quantities that such an explanation would need to reproduce.
-They leave the origin and lifetime of the experimental memory open.
+The main limitation concerns the persistence of the effect. In the experiments creep is
+measured after the field is removed, whereas the elastic stress of
+magnetostriction disappears with the field. If the field moves dislocations
+near the inclusions, the displaced dislocations may stay in their new positions
+after the field is removed; the computed shell where the stress exceeds the
+yield stress shows where to look for such changes.
+In the one case computed, a straight dislocation at 0~K, the dislocation
+returned when the strain was removed; the calculation does not show whether
+such a rearrangement of defects persists in the alloy or how it affects
+subsequent creep.
 
 \section{Conclusions}
 
-A constrained 0.194\% deformation of an Al$_{13}$Fe$_4$ ridge produces
-a signed axial shear change with peak magnitude 15.45~MPa in the
-91\,428-atom interface cell. Spatial cancellation lowers the
-full-width response and changes its sign. The sampled axial magnitude
-decreases to about 2~MPa at a height of 8.6~nm above the crest.
-
-The matched loading trajectories show substantial initial motion of
-existing lines and an upper-line departure difference of one saved
-frame. Periodic-seam segments and limited sampling restrict quantitative
-attribution. A separate model shows how the creep-rate increase depends
-on the assumed stress and activation volume. Together these
-results characterise the response to a maintained mechanical constraint
-and delimit its interpretation as a possible contribution to
-magnetically modified creep.
+An Al$_{13}$Fe$_4$ inclusion of radius 2.5~nm given a magnetostrictive strain
+of 0.194\% along the field compresses the aluminium matrix along the field by
+about 126~MPa and stretches it across the field by about
+75~MPa. The shear stress on the slip planes reaches
+28~MPa in inclined lobes. In the static atomistic calculation at 0~K the matrix responds
+elastically: no dislocations form even at ten times the strain, and a dislocation above the
+inclusion is moved by the field by 0.78~\AA{} and returns when the
+strain is removed. The atomistic field is about 80\% of the elastic
+solution for a perfectly bonded inclusion; the weakening comes from a
+compliant layer of distorted aluminium at the interface. If its compliance
+does not depend on particle size, the weakening is negligible for
+micron-size particles, but one inclusion radius at 0~K does not test this. Far from the
+inclusion the field falls as $(R/r)^3$; in the elastic solution at the
+given strain the matrix is
+stressed beyond the yield stress of the alloy in a shell about one radius
+thick, 2.2--3.1~$\mu$m for a 5~$\mu$m particle. In this shell the alloy could
+deform plastically, that is, by irreversible motion of dislocations already
+present; this case was not computed atomistically. In a model of thermally
+activated glide this field, if it acted during creep, would give the observed
+increase in creep rate for an
+activation volume of about 23$\,b^3$; at the measured $70\,b^3$ a strain of 0.065\% would
+suffice, six to seven times the measured magnetostriction of Fe--Al alloys.
+The calculation does not explain why the effect persists after the field is
+removed.
 
 \section*{Author contributions}
 
-I.~Mikhailovskiy contributed methodology, software, investigation,
-formal analysis, visualisation and the original draft.
-D.~Pshonkin contributed conceptualisation, resources, supervision,
-and review and editing.
+I.~Mikhailovskiy developed the method and software, ran the calculations,
+analysed the results, made the figures and wrote the text. D.~Pshonkin
+conceived the study, supervised it, and reviewed and edited the text.
 
-\section*{Data availability}
+\section*{Data and code availability}
 
-The repository
-\url{https://github.com/iluuua/magnetostriction-plasticity-bounds}
-provides the paired static configurations with atomic virials, the
-position trajectories of the three interface loading runs, their
-initial and final configurations, and simulation logs. The publication
-manifest specifies the retained trajectory columns and sampling.
-The alloy comparator includes its complete saved atomistic coordinate
-and stress history, the derived 131-frame position table, summaries,
-initial and final structures, and log. The Supplementary Information
-maps the reported quantities to the archived records.
+The LAMMPS inputs, the programs that build the cell, analyse the results and
+draw the figures, the reference and strained configurations with atomic
+stresses, and the result records are available at
+\url{https://github.com/iluuua/magnetostriction-plasticity-bounds}.
 
-\section*{Code availability}
+\section*{Conflict of interest}
 
-The LAMMPS inputs, launcher for the deposited initial configurations,
-analysis and figure-generation code are available in the same repository.
-The publication manifest identifies the files used for the reported
-calculations.
-
-\section*{Declaration of competing interest}
-
-The authors declare no competing financial interests.
+The authors declare no conflict of interest.
 
 \bibliographystyle{unsrtnat}
 \bibliography{references}

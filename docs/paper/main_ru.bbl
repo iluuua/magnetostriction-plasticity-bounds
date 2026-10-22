@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{21}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -43,6 +43,36 @@ Vladimir Nikolaev, Mounir Friha, Arkady~A. Skvortsov, Danila Pshonkin,
 \newblock \emph{Scientific Reports}, 15:\penalty0 30585, 2025.
 \newblock \doi{10.1038/s41598-025-16116-z}.
 
+\bibitem[Liu et~al.(2024)Liu, Fan, Xu, Fu, Wen, and Zhang]{Liu2024CIF}
+Yibo Liu, Changzeng Fan, Zhefeng Xu, Ruidong Fu, Bin Wen, and Lifeng Zhang.
+\newblock Orientation relationship of the intergrowth {Al$_{13}$Fe$_3$} and
+  {Al$_{13}$Fe$_4$} intermetallics determined by single-crystal x-ray
+  diffraction.
+\newblock \emph{Metals}, 14\penalty0 (4):\penalty0 463, 2024.
+\newblock \doi{10.3390/met14040463}.
+
+\bibitem[Eshelby(1957)]{Eshelby1957}
+J.~D. Eshelby.
+\newblock The determination of the elastic field of an ellipsoidal inclusion,
+  and related problems.
+\newblock \emph{Proceedings of the Royal Society of London.\ Series A},
+  241\penalty0 (1226):\penalty0 376--396, 1957.
+\newblock \doi{10.1098/rspa.1957.0133}.
+
+\bibitem[Mura(1987)]{Mura1987}
+Toshio Mura.
+\newblock \emph{Micromechanics of Defects in Solids}.
+\newblock Martinus Nijhoff, Dordrecht, 2nd edition, 1987.
+
+\bibitem[Jelinek et~al.(2012)Jelinek, Groh, Horstemeyer, Houze, Kim, Wagner,
+  Moitra, and Baskes]{Jelinek2012}
+B.~Jelinek, S.~Groh, M.~F. Horstemeyer, J.~Houze, S.~G. Kim, G.~J. Wagner,
+  A.~Moitra, and M.~I. Baskes.
+\newblock Modified embedded atom method potential for {Al}, {Si}, {Mg}, {Cu},
+  and {Fe} alloys.
+\newblock \emph{Physical Review B}, 85\penalty0 (24):\penalty0 245102, 2012.
+\newblock \doi{10.1103/PhysRevB.85.245102}.
+
 \bibitem[Thompson et~al.(2022)Thompson, Aktulga, Berger, Bolintineanu, Brown,
   Crozier, in~'t Veld, Kohlmeyer, Moore, Nguyen, Shan, Stevens, Tranchida,
   Trott, and Plimpton]{Thompson2022LAMMPS}
@@ -55,32 +85,6 @@ Aidan~P. Thompson, H.~Metin Aktulga, Richard Berger, Dan~S. Bolintineanu,
 \newblock \emph{Computer Physics Communications}, 271:\penalty0 108171, 2022.
 \newblock \doi{10.1016/j.cpc.2021.108171}.
 
-\bibitem[Jelinek et~al.(2012)Jelinek, Groh, Horstemeyer, Houze, Kim, Wagner,
-  Moitra, and Baskes]{Jelinek2012}
-B.~Jelinek, S.~Groh, M.~F. Horstemeyer, J.~Houze, S.~G. Kim, G.~J. Wagner,
-  A.~Moitra, and M.~I. Baskes.
-\newblock Modified embedded atom method potential for {Al}, {Si}, {Mg}, {Cu},
-  and {Fe} alloys.
-\newblock \emph{Physical Review B}, 85\penalty0 (24):\penalty0 245102, 2012.
-\newblock \doi{10.1103/PhysRevB.85.245102}.
-
-\bibitem[Liu et~al.(2024)Liu, Fan, Xu, Fu, Wen, and Zhang]{Liu2024CIF}
-Yibo Liu, Changzeng Fan, Zhefeng Xu, Ruidong Fu, Bin Wen, and Lifeng Zhang.
-\newblock Orientation relationship of the intergrowth {Al$_{13}$Fe$_3$} and
-  {Al$_{13}$Fe$_4$} intermetallics determined by single-crystal x-ray
-  diffraction.
-\newblock \emph{Metals}, 14\penalty0 (4):\penalty0 463, 2024.
-\newblock \doi{10.3390/met14040463}.
-
-\bibitem[Stukowski et~al.(2012)Stukowski, Bulatov, and
-  Arsenlis]{Stukowski2012DXA}
-Alexander Stukowski, Vasily~V. Bulatov, and Athanasios Arsenlis.
-\newblock Automated identification and indexing of dislocations in crystal
-  interfaces.
-\newblock \emph{Modelling and Simulation in Materials Science and Engineering},
-  20\penalty0 (8):\penalty0 085007, 2012.
-\newblock \doi{10.1088/0965-0393/20/8/085007}.
-
 \bibitem[Stukowski(2010)]{Stukowski2010OVITO}
 Alexander Stukowski.
 \newblock Visualization and analysis of atomistic simulation data with {OVITO}
@@ -89,13 +93,36 @@ Alexander Stukowski.
   18\penalty0 (1):\penalty0 015012, 2010.
 \newblock \doi{10.1088/0965-0393/18/1/015012}.
 
-\bibitem[Eshelby(1957)]{Eshelby1957}
-J.~D. Eshelby.
-\newblock The determination of the elastic field of an ellipsoidal inclusion,
-  and related problems.
-\newblock \emph{Proceedings of the Royal Society of London.\ Series A},
-  241\penalty0 (1226):\penalty0 376--396, 1957.
-\newblock \doi{10.1098/rspa.1957.0133}.
+\bibitem[Ju and Sun(1999)]{JuSun1999}
+J.~W. Ju and L.~Z. Sun.
+\newblock A novel formulation for the exterior-point {Eshelby}'s tensor of an
+  ellipsoidal inclusion.
+\newblock \emph{Journal of Applied Mechanics}, 66\penalty0 (2):\penalty0
+  570--574, 1999.
+
+\bibitem[Moulinec and Suquet(1998)]{MoulinecSuquet1998}
+H.~Moulinec and P.~Suquet.
+\newblock A numerical method for computing the overall response of nonlinear
+  composites with complex microstructure.
+\newblock \emph{Computer Methods in Applied Mechanics and Engineering},
+  157\penalty0 (1--2):\penalty0 69--94, 1998.
+
+\bibitem[Stoller and Zinkle(2000)]{StollerZinkle2000}
+R.~E. Stoller and S.~J. Zinkle.
+\newblock On the relationship between uniaxial yield strength and resolved
+  shear stress in polycrystalline materials.
+\newblock \emph{Journal of Nuclear Materials}, 283--287:\penalty0 349--352,
+  2000.
+
+\bibitem[Hirth and Lothe(1982)]{HirthLothe1982}
+John~P. Hirth and Jens Lothe.
+\newblock \emph{Theory of Dislocations}.
+\newblock Wiley, New York, 2nd edition, 1982.
+
+\bibitem[Kocks et~al.(1975)Kocks, Argon, and Ashby]{KocksArgonAshby1975}
+U.~F. Kocks, A.~S. Argon, and M.~F. Ashby.
+\newblock Thermodynamics and kinetics of slip.
+\newblock \emph{Progress in Materials Science}, 19:\penalty0 1--291, 1975.
 
 \bibitem[Caillard and Martin(2003)]{CaillardMartin2003}
 Daniel Caillard and Jean-Luc Martin.
@@ -110,6 +137,24 @@ A.~Soula, J.-P. Couzini{\'e}, H.~Heni, J.~Bourgon, Y.~Champion, and N.~Njah.
   processed by equal channel angular extrusion.
 \newblock \emph{Journal of Alloys and Compounds}, 899:\penalty0 163334, 2022.
 \newblock \doi{10.1016/j.jallcom.2021.163334}.
+
+\bibitem[Hall(1959)]{Hall1959}
+R.~C. Hall.
+\newblock Single crystal anisotropy and magnetostriction constants of several
+  ferromagnetic materials including alloys of {NiFe}, {SiFe}, {AlFe}, {CoNi},
+  and {CoFe}.
+\newblock \emph{Journal of Applied Physics}, 30\penalty0 (6):\penalty0
+  816--819, 1959.
+\newblock \doi{10.1063/1.1735247}.
+
+\bibitem[Bormio-Nunes et~al.(2012)Bormio-Nunes, dos Santos, de~Souza~Dias,
+  Doerr, Granovsky, and Loewenhaupt]{BormioNunes2012}
+Cristina Bormio-Nunes, Claudio~Teodoro dos Santos, Mateus~Botani de~Souza~Dias,
+  Mathias Doerr, Sergey Granovsky, and Michael Loewenhaupt.
+\newblock Magnetostriction of the polycrystalline {Fe$_{80}$Al$_{20}$} alloy
+  doped with boron.
+\newblock \emph{Journal of Alloys and Compounds}, 539:\penalty0 226--232, 2012.
+\newblock \doi{10.1016/j.jallcom.2012.06.034}.
 
 \bibitem[Albedah et~al.(2015)Albedah, Nejadsattari, Stadnik, and
   Przewo{\'z}nik]{Albedah2015Mossbauer}
