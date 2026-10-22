@@ -141,6 +141,31 @@ def shell_profile(t: np.ndarray, g: Geometry, sel: np.ndarray, dmax: float) -> l
     return rows
 
 
+GLIDE_HEIGHTS_A = (3.0, 5.0, 10.0, 15.0, 20.0)
+
+
+def glide_planes(x: np.ndarray, z: np.ndarray, sxz: np.ndarray, radius: float,
+                 lx: float, keep: np.ndarray, slab: float = 2.0, bin_a: float = 2.0) -> dict:
+    """sigma_xz averaged along y (the line of an edge dislocation) on horizontal
+    planes at height h above the top of the inclusion, against x - x_c.
+    x, z are coordinates relative to the inclusion centre (minimum image)."""
+    out = {}
+    nb = int(lx // bin_a)
+    edges = (np.arange(nb + 1) - nb / 2) * bin_a
+    for h in GLIDE_HEIGHTS_A:
+        sel = keep & (np.abs(z - (radius + h)) < slab)
+        k = np.digitize(x[sel], edges) - 1
+        ok = (k >= 0) & (k < nb)
+        cnt = np.bincount(k[ok], minlength=nb)
+        tot = np.bincount(k[ok], weights=sxz[sel][ok], minlength=nb)
+        mean = np.where(cnt > 0, tot / np.maximum(cnt, 1), np.nan)
+        out["%g" % h] = {"x_A": ((edges[:-1] + edges[1:]) / 2).tolist(),
+                         "line_average_MPa": np.where(np.isnan(mean), None, np.round(mean, 4)).tolist(),
+                         "n_atoms": cnt.tolist(),
+                         "local_max_abs_MPa": float(np.max(np.abs(sxz[sel]))) if sel.any() else None}
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--control", type=Path, required=True)
@@ -181,6 +206,9 @@ def main() -> int:
         res["profiles"][name] = shell_profile(dif, g, sel, dmax)
         res["reference_von_mises_profile"][name] = [
             {"d_A": q["d_A"], "von_mises": q["von_mises"]} for q in shell_profile(ref, g, sel, dmax)]
+
+    # line-averaged glide stress on planes above the inclusion (edge line along y)
+    res["glide_planes"] = glide_planes(g.s, g.z, dif[:, 0, 2], a.radius, box[0], matrix & (g.d > 0))
 
     # axisymmetric map on (|s|, rho)
     h = 2.0

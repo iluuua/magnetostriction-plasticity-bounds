@@ -101,7 +101,7 @@ def test_localization_preserves_every_plotted_value(name, monkeypatch):
 
 def test_manuscripts_select_their_own_figure_language():
     pattern = r"\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}"
-    base = ["fig_model.png", "fig_field.pdf", "fig_dynamics.pdf", "fig_bridge.pdf"]
+    base = ["fig_cell", "fig_map", "fig_decay", "fig_glide", "fig_creep"]
     for filename, suffix in (("main.tex", ""), ("main_ru.tex", "_ru")):
         source = (ROOT / "docs/paper" / filename).read_text(encoding="utf-8")
         expected = [f"{Path(name).stem}{suffix}{Path(name).suffix}" for name in base]

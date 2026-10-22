@@ -4,8 +4,8 @@
 #   bash scripts/queue_embedded_static.sh <control run dir> [eps]
 #
 # 1. waits for <control run dir>/done.txt (written when in.relax_control ends);
-# 2. builds the +eps and -eps cells from the relaxed reference, with the matrix
-#    started from the continuum displacement (scripts/make_strained_inclusion.py --guess);
+# 2. builds the +eps cell (matrix started from the continuum displacement) and
+#    the -eps cell (plain start) from the relaxed reference;
 # 3. runs lammps/embedded_inclusion/in.static_pair for the reference (eps = 0),
 #    +eps and -eps, one after the other, in <control run dir>/static/;
 # 4. extracts the field at both CG stages (convergence check) and the forces
@@ -30,8 +30,10 @@ mkdir -p "$OUT"
 cp "$R/lammps/embedded_inclusion/in.static_pair" "$OUT/"
 "$PY" "$R/scripts/make_strained_inclusion.py" --control "$REF" --n-al "$NAL" --eps="$EPS" --guess \
       --radius "$RAD" --out "$OUT/plus.data" > "$OUT/plus.make.log" 2>&1
-"$PY" "$R/scripts/make_strained_inclusion.py" --control "$REF" --n-al "$NAL" --eps="-$EPS" --guess \
-      --radius "$RAD" --out "$OUT/minus.data" > "$OUT/minus.make.log" 2>&1
+# -eps from the plain start (inclusion moved, matrix not): the symmetric part
+# (d(+eps) + d(-eps))/2 then bounds nonlinearity and start dependence together
+"$PY" "$R/scripts/make_strained_inclusion.py" --control "$REF" --n-al "$NAL" --eps="-$EPS" \
+      --out "$OUT/minus.data" > "$OUT/minus.make.log" 2>&1
 cp "$REF" "$OUT/ref.data"
 
 cd "$OUT"

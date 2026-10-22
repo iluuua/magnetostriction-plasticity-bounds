@@ -1,23 +1,27 @@
 #!/usr/bin/env python3
 """Continuum reference for a spherical inclusion given a magnetostrictive strain.
 
-The inclusion is given a uniform strain eps_c (elongation along the field
-direction x by eps, contraction along y and z by eps/2). Outside it the
-aluminium matrix is isotropic (mu = 26.5 GPa, nu = 0.347). The matrix field
-around a sphere whose surface is displaced as u = eps_c . x is the Eshelby
-exterior field of an equal-moduli inclusion with transformation strain
-eps* = S^-1 : eps_c; the stiffness of the inclusion itself does not enter.
+The inclusion carries a uniform strain eps_c (longer along the field x by eps,
+shorter along y and z by eps/2), exactly as the held inclusion of the MD cells.
+Outside it the matrix is aluminium. The matrix field around a sphere whose
+surface is displaced as u = eps_c . x is the Eshelby exterior field of an
+equal-moduli inclusion with transformation strain eps* = S^-1 : eps_c; the
+stiffness of the inclusion itself does not enter.
 
-Two references are computed on the same lines and the same section as the MD
-cell:
-  isolated  closed-form exterior field of one sphere in an infinite matrix
-            (Ju and Sun 1999; Mura 1987, Sect. 11)
-  periodic  the same sphere repeated with the period of the MD box, solved by
-            FFT with the homogeneous Green operator and zero mean stress, which
-            is the condition the MD box is relaxed to
+Two references:
+  isolated  closed-form exterior field of one sphere in an infinite isotropic
+            matrix (Ju and Sun 1999; Mura 1987, Sect. 11), with the isotropic
+            constants of the MEAM potential (mu = 26.9 GPa, nu = 0.344)
+  periodic  the same sphere repeated with the period of the MD box, solved by FFT
+            with the Green operator of cubic Al (C11, C12, C44 of the potential,
+            rotated to x = [1-10], y = [11-2], z = [111]) at a fixed box (zero mean
+            strain, as in the MD); the uniform eps* is adjusted until the mean
+            strain of the inclusion equals eps_c
 
-    python analysis/python/embedded_inclusion_continuum.py --box 126.0 124.0 126.3 \
-        --radius 25 --out docs/reports/embedded_continuum.json
+Profiles are averaged over the same angular windows and 2 A shells as the MD
+analysis (embedded_inclusion_field.py). Stresses in MPa, tension positive.
+
+    python analysis/python/embedded_inclusion_continuum.py --out docs/reports/embedded_continuum.json
 """
 from __future__ import annotations
 
@@ -162,6 +166,10 @@ def periodic_fft_frozen(box: np.ndarray, centre: np.ndarray, a: float, e_c: np.n
     rr = np.sqrt(dx[0] ** 2 + dx[1] ** 2 + dx[2] ** 2)
     del X, dx
     chi = np.clip(0.5 - (rr - a) / h, 0.0, 1.0)
+    # the mean inclusion strain is taken over the fully filled voxels only; the
+    # partly filled boundary voxels (chi between 0.5 and 1) lower it and would
+    # make the tuned e* about 1.5 % too large
+    inside = rr < a - h / 2
     del rr
     chi_k = np.fft.fftn(chi)
     kk = np.meshgrid(*[2 * np.pi * np.fft.fftfreq(m, d=L / m) for m, L in zip(n, box)], indexing="ij")
@@ -173,7 +181,6 @@ def periodic_fft_frozen(box: np.ndarray, centre: np.ndarray, a: float, e_c: np.n
     K[0] = np.eye(3)
     N = np.linalg.inv(K)
     del K
-    inside = chi > 0.5
 
     def solve(e_star):
         tau = np.einsum("ijkl,kl->ij", Cs, e_star)
@@ -310,6 +317,8 @@ def main() -> int:
     dmax = float(min(box) / 2 - a.radius)
     for name, sel in F.selections(g.theta, outside).items():
         res["periodic"][name] = F.shell_profile(tens, g, sel, dmax)
+    res["periodic_glide_planes"] = F.glide_planes(g.s, g.z, tens[:, 0, 2], a.radius, box[0], outside,
+                                                  slab=0.6, bin_a=2.0)
     res["periodic_mean_matrix_MPa"] = dict(zip(["xx", "yy", "zz", "xy", "xz", "yz"],
         [float(tens[outside][:, i, j].mean()) for i, j in ((0, 0), (1, 1), (2, 2), (0, 1), (0, 2), (1, 2))]))
     # section y = y_c for the map figure

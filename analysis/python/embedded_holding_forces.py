@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
-"""Forces that keep the inclusion in its given shape.
+"""Forces on the held inclusion, as a diagnostic of the static pair.
 
-in.static_pair fixes the inclusion atoms while the matrix relaxes, then
+in.static_pair keeps the inclusion atoms fixed while the matrix relaxes, then
 releases them and evaluates the forces once (run 0). In the strained cell those
-forces push the inclusion back towards its unstrained shape: they are the
-matrix pressing on it plus the inclusion's own elastic resistance. The force
-needed to hold the shape is their negative, taken relative to the reference
-cell (same atoms, eps = 0). In a magnetostrictive particle this is the role of
-the magnetic forces.
+forces push the inclusion back towards its unstrained shape; their negative,
+taken relative to the reference cell (same atoms, eps = 0), is the force needed
+to hold the given shape.
 
-Inclusion atoms are grouped by the polar angle theta from the field axis +x in
-sectors of 15 degrees over all azimuths. Summed over a sector, the internal
-forces of the inclusion cancel and the external force remains; divided by the
-area of the sphere in that sector, it is a traction (MPa). Reported per sector:
-the radial component (positive outward) and the component along theta.
+These numbers are a diagnostic, not interface tractions. The sector sums contain
+the matrix acting on the inclusion and also the inclusion's own elastic
+resistance, which belongs to the potential's Al13Fe4 held at the crystal-structure
+lattice, plus the forces between inclusion atoms across the faces of neighbouring
+sectors. What is checked: the net force on the inclusion is close to zero, and
+the pattern points outward at the ends along the field and inward across it.
+The forces the inclusion exerts on the aluminium are taken from the matrix-side
+radial stress instead (embedded_inclusion_field.py).
+
+Inclusion atoms are grouped by the polar angle theta from +x in sectors of 15
+degrees over all azimuths; each sector sum is divided by the area of the sphere
+in that sector and reported in MPa (radial component positive outward).
 
     python analysis/python/embedded_holding_forces.py --control ref.forces.lammpstrj \
         --strained plus.forces.lammpstrj --radius 25 --out holding_forces.json
@@ -76,7 +81,7 @@ def main() -> int:
     net = hold.sum(axis=0)
     res = {"control": str(a.control), "strained": str(a.strained), "radius_A": a.radius,
            "sector_deg": SECTOR_DEG, "net_force_eV_per_A": net.tolist(),
-           "convention": "force needed to keep the given shape; radial positive outward",
+           "convention": "diagnostic: force needed to keep the given shape, sector sums over area; radial positive outward",
            "sectors": rows}
     a.out.write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8")
     for q in rows:

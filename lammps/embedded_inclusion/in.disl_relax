@@ -1,0 +1,118 @@
+# Relaxation of the dislocation slab (scripts/build_embedded_dislocation.py).
+#
+# Periodic along x and y, finite along z. The bottom and top blocks are rigid
+# (zero force); the inclusion, if present, is held as in the field cells. The
+# matrix between the blocks relaxes by CG in chunks. The top block is then moved
+# along z until the mean sigma_zz of the matrix is close to zero (NZFIX passes),
+# so the slab carries no stress normal to the glide plane.
+#
+# Optional anneal of the matrix near the inclusion (ANNEAL_STEPS > 0): atoms
+# within R + 12 A of the inclusion centre at 300 K, then cooled, everything else
+# still; used for the control cell with the sphere.
+#
+# Variables (-var): DATA_FILE POT_DIR OUT_PREFIX N_AL ZBOT ZTOP
+#   ZBOT, ZTOP     z bounds of the bottom block (atoms below) and top block (above)
+#   CG_FTOL        force two-norm (default 0.001), CHUNK (2000), NCHUNK (10)
+#   NZFIX          passes of the sigma_zz correction (default 3)
+#   ANNEAL_STEPS   anneal steps near the inclusion (default 0), RANNEAL (default 37 A)
+#   C33_BAR        stiffness used for the z correction (default 1.25e6 bar)
+# Atom types: 1 Al, 2 Fe, 3 Mg, 4 Si.
+
+units           metal
+atom_style      atomic
+boundary        p p s
+
+variable        CG_FTOL index 0.001
+variable        CHUNK index 2000
+variable        NCHUNK index 10
+variable        NZFIX index 3
+variable        ANNEAL_STEPS index 0
+variable        RANNEAL index 37.0
+variable        C33_BAR index 1.25e6
+variable        SEED index 777
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+compute         st all stress/atom NULL virial
+
+region          rbot block INF INF INF INF INF ${ZBOT} units box
+region          rtop block INF INF INF INF ${ZTOP} INF units box
+group           bottom region rbot
+group           top region rtop
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+group           fixed union bottom top inclusion
+group           mobile subtract all fixed
+fix             hold fixed setforce 0.0 0.0 0.0
+
+compute         smob mobile reduce sum c_st[3]
+variable        nmob equal count(mobile)
+variable        szz equal c_smob/(v_nmob*16.6075)
+thermo          200
+thermo_style    custom step pe pxx pzz pxz fnorm v_szz
+thermo_modify   flush yes
+min_style       cg
+min_modify      dmax 0.05
+
+# --- optional anneal near the inclusion ------------------------------------
+if "${ANNEAL_STEPS} > 0" then "jump SELF anneal"
+jump            SELF cg
+label           anneal
+variable        xc equal xcm(inclusion,x)
+variable        yc equal xcm(inclusion,y)
+variable        zc equal xcm(inclusion,z)
+variable        near atom sqrt((x-v_xc)^2+(y-v_yc)^2+(z-v_zc)^2)<${RANNEAL}
+group           shell dynamic mobile var near every 1000000
+minimize        0.0 1.0 2000 20000
+neigh_modify    delay 0 every 10 check no
+timestep        0.001
+velocity        shell create 300.0 ${SEED} mom yes rot no dist gaussian
+fix             lang shell langevin 300.0 300.0 0.1 ${SEED}
+fix             nve shell nve
+run             ${ANNEAL_STEPS}
+unfix           lang
+fix             lang shell langevin 300.0 0.5 0.5 ${SEED}
+run             ${ANNEAL_STEPS}
+unfix           lang
+unfix           nve
+velocity        all set 0.0 0.0 0.0
+neigh_modify    delay 0 every 1 check no
+label           cg
+
+# --- CG and the sigma_zz correction ------------------------------------------
+variable        p loop ${NZFIX}
+label           zpass
+variable        k loop ${NCHUNK}
+label           chunk
+minimize        0.0 ${CG_FTOL} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK $p $k fnorm $(v_fn) szz_bar $(v_szz)"
+if "$(v_fn) < ${CG_FTOL}" then "jump SELF chunkdone"
+next            k
+jump            SELF chunk
+label           chunkdone
+variable        k delete
+# move the top block by dz = sigma_zz * H / C33 (tension: move it down)
+variable        hgt equal ${ZTOP}-${ZBOT}
+variable        dz equal -v_szz*v_hgt/${C33_BAR}
+print           "ZFIX $p szz_bar $(v_szz) dz_A $(v_dz)"
+displace_atoms  top move 0.0 0.0 $(v_dz) units box
+next            p
+jump            SELF zpass
+
+variable        k loop ${NCHUNK}
+label           final
+minimize        0.0 ${CG_FTOL} ${CHUNK} 60000
+variable        fn equal fnorm
+print           "CHUNK F $k fnorm $(v_fn) szz_bar $(v_szz)"
+if "$(v_fn) < ${CG_FTOL}" then "jump SELF done"
+next            k
+jump            SELF final
+label           done
+
+write_dump      all custom ${OUT_PREFIX}.relaxed.lammpstrj id type x y z c_st[1] c_st[2] c_st[3] c_st[4] c_st[5] c_st[6] modify sort id format float %.8g
+write_data      ${OUT_PREFIX}.relaxed.data

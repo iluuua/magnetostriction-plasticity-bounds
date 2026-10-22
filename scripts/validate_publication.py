@@ -64,7 +64,9 @@ def check_document(stem: str, pdf_name: str, require_pdf: bool) -> dict:
         raise ValueError(f"Missing or duplicate labels in {stem}")
     figure_names = re.findall(r"\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}", text)
     for name in figure_names:
-        if not (PAPER / name).is_file():
+        path = PAPER / name
+        candidates = [path] if path.suffix else [path.with_suffix(s) for s in (".pdf", ".png", ".jpg")]
+        if not any(c.is_file() for c in candidates):
             raise FileNotFoundError(f"Missing figure in {stem}: {name}")
     for name in re.findall(r"\\path\{([^}]+)\}", text):
         candidates = list(ROOT.glob(name)) + list(REPORTS.glob(name))
@@ -100,6 +102,9 @@ def main() -> None:
     args = parser.parse_args()
     subprocess.run(
         [sys.executable, str(ROOT / "scripts/package_publication_data.py"), "--verify"], check=True
+    )
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts/package_embedded_data.py"), "--verify"], check=True
     )
     check_profile()
     results = [

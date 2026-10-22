@@ -1,0 +1,61 @@
+{
+ "created_at": "2026-10-21T19:22:49+03:00",
+ "builder": "scripts/build_embedded_dislocation.py",
+ "box_A": [
+  126.00642840744275,
+  124.00541822839837,
+  125.47884320574381
+ ],
+ "periods": {
+  "nx": 44,
+  "ny": 25
+ },
+ "layers": {
+  "lower": 39,
+  "upper": 14,
+  "block": 3
+ },
+ "upper_compression_x": -0.022222222222222223,
+ "upper_layer_spacing_A": 2.365516706580958,
+ "z_glide_A": 91.19247501850136,
+ "x_core_initial_A": 31.50160710186069,
+ "z_bottom_block_top_A": 7.014805770653954,
+ "z_top_block_bottom_A": 117.29490313998087,
+ "burgers_A": 2.863782463805517,
+ "sphere": {
+  "centre_A": [
+   46.501607101860685,
+   62.002709114199185,
+   54.192475018501355
+  ],
+  "radius_A": 25.0,
+  "ahead_of_core_A": 15.0,
+  "source": "structures\\converted\\Al13Fe4\\al13fe4.data",
+  "cell_vectors_A": [
+   [
+    15.498,
+    0.0,
+    0.0
+   ],
+   [
+    -6.223699476362758e-16,
+    8.0814,
+    0.0
+   ],
+   [
+    -3.8154476802796933,
+    4.70831763342142e-16,
+    11.890857958913154
+   ]
+  ],
+  "n_al": 3429,
+  "n_fe": 1058,
+  "al_to_fe": 3.2410207939508506,
+  "ideal_al_to_fe": 3.25,
+  "matrix_removed": 4424
+ },
+ "n_atoms": 117363,
+ "N_AL": 112876,
+ "n_inclusion": 4487,
+ "n_upper_half_atoms": 31500
+}

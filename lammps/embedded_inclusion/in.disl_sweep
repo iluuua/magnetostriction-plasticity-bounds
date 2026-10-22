@@ -1,0 +1,88 @@
+# Quasi-static sweep of the edge dislocation (strain control, T = 0).
+#
+# Each step the rigid top block is moved along x by DELTA; since the slip of the
+# top relative to the bottom is b * (distance swept) / Lx, a step of 0.057 A moves
+# the line by about 2.5 A in a 126 A cell. The held inclusion (if any) follows the
+# homogeneous elastic shear of the slab below the glide plane, x += (tau/G)(z - ZBOT),
+# with tau from the previous step, so a held inclusion does not add a spurious field.
+# The matrix relaxes by CG to CG_FTOL. The printed tau = F_x / (Lx Ly) is the force
+# of the matrix on the top block before it is zeroed (fix setforce reaction), in MPa;
+# it is minus the applied shear stress sigma_xz (taub is the same from the bottom).
+# A sweep with DELTA > 0 therefore prints tau < 0.
+# The two (111) layers on either side of the glide plane are dumped every step.
+#
+# Variables (-var): DATA_FILE POT_DIR OUT_PREFIX N_AL ZBOT ZTOP ZGLIDE
+#   NSTEP (default 50), DELTA (0.057 A), CG_FTOL (0.001), CGMAX (6000)
+#   G_EL_BAR   shear modulus for the elastic part of the displacement (2.6e5 bar)
+#   NFULL      a full dump every NFULL steps, for DXA (default 5)
+# Atom types: 1 Al, 2 Fe, 3 Mg, 4 Si.
+
+units           metal
+atom_style      atomic
+boundary        p p s
+
+variable        NSTEP index 50
+variable        DELTA index 0.057
+variable        CG_FTOL index 0.001
+variable        CGMAX index 6000
+variable        G_EL_BAR index 2.6e5
+variable        NFULL index 5
+
+read_data       ${DATA_FILE}
+
+pair_style      meam
+pair_coeff      * * ${POT_DIR}/Jelinek_2012_meamf AlS SiS MgS CuS FeS ${POT_DIR}/Jelinek_2012_meam.alsimgcufe AlS FeS MgS SiS
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check no
+
+region          rbot block INF INF INF INF INF ${ZBOT} units box
+region          rtop block INF INF INF INF ${ZTOP} INF units box
+group           bottom region rbot
+group           top region rtop
+variable        first_incl equal v_N_AL+1
+group           inclusion id ${first_incl}:999999999
+fix             hbot bottom setforce 0.0 0.0 0.0
+fix             htop top setforce 0.0 0.0 0.0
+fix             hinc inclusion setforce 0.0 0.0 0.0
+region          rgl block INF INF INF INF $(v_ZGLIDE-2.4) $(v_ZGLIDE+2.4) units box
+group           glide region rgl
+
+variable        area equal lx*ly
+# reaction on the top block (eV/A) -> shear stress on the slab, MPa
+variable        tau equal f_htop[1]/v_area*160217.66
+variable        taub equal -f_hbot[1]/v_area*160217.66
+thermo          500
+thermo_style    custom step pe fnorm v_tau v_taub
+thermo_modify   flush yes
+min_style       cg
+min_modify      dmax 0.05
+
+minimize        0.0 ${CG_FTOL} ${CGMAX} 60000
+print           "STEP 0 tau $(v_tau) taub $(v_taub) fnorm $(fnorm)"
+write_dump      glide custom ${OUT_PREFIX}.glide.0000.lammpstrj id type x y z modify sort id format float %.6g
+write_dump      all custom ${OUT_PREFIX}.full.0000.lammpstrj id type x y z modify sort id format float %.6g
+
+# the lower half, which holds the inclusion, carries only the elastic shear
+# gamma = tau/G of the slab; the inclusion is moved with it, one step behind
+variable        gap equal 0.0
+variable        i loop ${NSTEP}
+variable        ieq equal v_i
+variable        lbl format ieq %04.0f
+variable        rem equal v_ieq-floor(v_ieq/${NFULL})*${NFULL}
+label           step
+displace_atoms  top move ${DELTA} 0.0 0.0 units box
+variable        gt equal $(-v_tau)/(${G_EL_BAR}*0.1)
+variable        dg equal $(v_gt-v_gap)
+variable        sh atom v_dg*(z-${ZBOT})
+displace_atoms  inclusion move v_sh 0.0 0.0 units box
+variable        gap delete
+variable        gap equal $(v_gt)
+variable        gt delete
+variable        dg delete
+minimize        0.0 ${CG_FTOL} ${CGMAX} 60000
+print           "STEP $i tau $(v_tau) taub $(v_taub) fnorm $(fnorm) gamma_el $(v_gap)"
+write_dump      glide custom ${OUT_PREFIX}.glide.${lbl}.lammpstrj id type x y z modify sort id format float %.6g
+if "${rem} == 0" then "write_dump all custom ${OUT_PREFIX}.full.${lbl}.lammpstrj id type x y z modify sort id format float %.6g"
+next            i
+jump            SELF step
+write_data      ${OUT_PREFIX}.sweep_end.data

@@ -9,7 +9,10 @@ u = eps . (r - r_c), where r_c is the centroid of the inclusion and
 
 is the strain of a magnetostrictive body with the field along x: it lengthens
 along x by EPS and shortens along y and z by EPS/2, so its volume is unchanged
-to first order. By default matrix atoms are not moved. With --guess the matrix
+to first order. With --inclusion-from the inclusion atoms are first put at their
+positions in another data file with the same atom IDs (the reference cell), so a
+larger strain can be applied to a matrix already relaxed at a smaller one, or the
+strain removed again (--eps 0). By default matrix atoms are not moved. With --guess the matrix
 atoms are moved by the continuum displacement of the same problem (fixed box,
 cubic Al of the potential, inclusion strain held at eps; see
 analysis/python/embedded_inclusion_continuum.py), so that conjugate gradients
@@ -51,6 +54,8 @@ def main() -> int:
     ap.add_argument("--eps", type=float, default=1.94e-3)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--guess", action="store_true", help="start the matrix from the continuum displacement")
+    ap.add_argument("--inclusion-from", type=Path, default=None,
+                    help="data file whose inclusion positions the strain is applied to")
     ap.add_argument("--radius", type=float, default=25.0, help="inclusion radius for --guess, A")
     ap.add_argument("--elastic", type=Path, default=Path(__file__).resolve().parents[1]
                     / "docs/reports/meam_elastic_constants.json")
@@ -62,6 +67,10 @@ def main() -> int:
     xyz = np.array([[float(v) for v in r[2:5]] for r in rows])
     images = [r[5:8] for r in rows]               # keep image flags if present
     inc = ids > a.n_al
+    if a.inclusion_from is not None:
+        _, atoms_b, _, _ = read_data(a.inclusion_from)
+        base = {int(r.split()[0]): [float(v) for v in r.split()[2:5]] for r in atoms_b}
+        xyz[inc] = np.array([base[i] for i in ids[inc]])
     # the inclusion sits in the middle of the box and never crosses a boundary,
     # so its centroid is the plain mean of its coordinates
     rc = xyz[inc].mean(axis=0)
@@ -101,7 +110,7 @@ def main() -> int:
             keep_tail.append(l)
     a.out.write_text("\n".join(head + out_atoms + keep_tail) + "\n", encoding="utf-8")
     disp = np.linalg.norm(new[inc] - xyz[inc], axis=1)
-    meta = {"control": str(a.control), "n_al": a.n_al, "eps": a.eps,
+    meta = {"control": str(a.control), "inclusion_from": str(a.inclusion_from), "n_al": a.n_al, "eps": a.eps,
             "strain_tensor": eps.tolist(), "inclusion_centroid_A": rc.tolist(),
             "n_inclusion_moved": int(inc.sum()), "max_displacement_A": float(disp.max()),
             "box_A": box.tolist(), "continuum_guess": guess_info}
