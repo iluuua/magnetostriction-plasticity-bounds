@@ -23,7 +23,8 @@ linearly with the strain.
 | Response of the matrix | elastic and linear: +eps and -eps give mirror responses to within 0.8 MPa; no dislocations (DXA) in any state, also at 4 and 10 times the strain |
 | Straight edge dislocation 12 A above the particle | moves 0.78 A away when the strain is applied (about half the 1.43 A valley spacing) and returns to within 0.06 A when it is removed |
 | Atomistic field against the elastic solution for the same cell | about 0.80 of it beyond 10 A from the interface (median deviation 2.5 %); the loss builds up in a compliant layer of distorted aluminium a few angstroms thick |
-| Strain at which a real particle would start local yield (elastic, single sphere) | 0.028-0.043 % for slip on {111}<110> (CRSS 13-20 MPa), 0.045-0.067 % for von Mises (40-60 MPa) |
+| Strain at which a real particle would start local yield (elastic, single sphere) | yield stress 40-60 MPa: 0.028-0.043 % for slip on {111}<110> (CRSS 13-20 MPa), 0.045-0.067 % for von Mises; yield stress 120-151 MPa: 0.084-0.105 % (CRSS 39-49 MPa) and 0.134-0.168 % |
+| Shell above the yield stress at the given strain (elastic, single sphere) | von Mises out to 1.9-2.2 R for 40-60 MPa and 1.02-1.06 R for 120-151 MPa |
 | Line-averaged shear stress on an edge dislocation 10 A above the particle | up to 5.8 MPa |
 | Stress at which a straight edge dislocation glides with this potential (0 K) | about 9 MPa, in jumps of b/2 |
 | Activation volume at which the field gives the observed +25 % creep rate | about 23 b^3 |
