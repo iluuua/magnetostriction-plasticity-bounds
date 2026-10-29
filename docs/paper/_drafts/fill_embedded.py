@@ -142,20 +142,35 @@ def values() -> dict:
     v["VSTAR_CRYSTAL"] = creep["vstar_for_target_b3"]["crystal"]
     v["VSTAR_MAX"] = creep["vstar_for_target_b3"]["max"]
     v["EPS_AT_70"] = 0.194 * v["VSTAR_GRAINS"] / 70
-    yld = load("embedded_yield.json")["threshold_strain_percent"]
-    v["EPS_SLIP_LO"], v["EPS_SLIP_HI"] = yld["rss_crystal"]
-    v["EPS_VM_LO"], v["EPS_VM_HI"] = yld["von_mises"]
-    # shells above the yield criteria at the given strain (single sphere): outer radius
-    # r/R between the high and the low limit, and the thickness for a 5 um particle
-    shells = load("embedded_yield.json")["shell_outer_r_over_R"]
-    def at_eps(k):
-        q = next(q for q in shells[k] if abs(q["eps_percent"] - 0.194) < 1e-9)
+    # yield of the alloy: two ranges in the group's papers, soft 40-60 MPa and hard
+    # 120-151 MPa (embedded_yield); thresholds at the surface and critical shear stresses
+    yfile = load("embedded_yield.json")
+    for g in ("soft", "hard"):
+        G = g.upper()
+        v["EPS_SLIP_%s_LO" % G], v["EPS_SLIP_%s_HI" % G] = yfile["threshold_strain_percent"]["rss_crystal"][g]
+        v["EPS_VM_%s_LO" % G], v["EPS_VM_%s_HI" % G] = yfile["threshold_strain_percent"]["von_mises"][g]
+        v["CRSS_" + G] = "%.0f--%.0f" % tuple(yfile["crss_MPa"][g])
+    v["CRSS_ALL"] = "%.0f--%.0f" % (yfile["crss_MPa"]["soft"][0], yfile["crss_MPa"]["hard"][1])
+    # shells above the yield criteria (single sphere): outer radius r/R between the high
+    # and the low limit of a range, and the thickness for a 5 um particle (R = 2.5 um)
+    shells = yfile["shell_outer_r_over_R"]
+    def at_eps(k, g, e):
+        q = next(q for q in shells[k][g] if abs(q["eps_percent"] - e) < 1e-6)
         return q["r_over_R_at_high_limit"], q["r_over_R_at_low_limit"]
-    vm, sl = at_eps("von_mises"), at_eps("rss_crystal")
-    v["SHELL_VM"] = "%.1f--%.1f" % vm
-    v["SHELL_SLIP"] = "%.1f--%.1f" % sl
-    v["THICK_SLIP"] = "%.1f--%.1f" % (sl[0] - 1, sl[1] - 1)
-    v["THICK_VM_UM"] = "%.1f--%.1f" % ((vm[0] - 1) * 2.5, (vm[1] - 1) * 2.5)
+    for g, f in (("soft", "%.1f--%.1f"), ("hard", "%.2f--%.2f")):
+        G = g.upper()
+        vm, sl = at_eps("von_mises", g, 0.194), at_eps("rss_crystal", g, 0.194)
+        v["SHELL_VM_" + G] = f % vm
+        v["SHELL_SLIP_" + G] = "%.1f--%.1f" % sl
+        v["THICK_VM_UM_" + G] = f % ((vm[0] - 1) * 2.5, (vm[1] - 1) * 2.5)
+        v["THICK_SLIP_UM_" + G] = "%.1f--%.1f" % ((sl[0] - 1) * 2.5, (sl[1] - 1) * 2.5)
+    # the group's larger estimates, 560 and 650 MPa (strain = stress / 75.7 GPa), hard range
+    est = sorted(yfile["estimate_strains_percent"].values())
+    v["EPS_EST"] = "%.2f--%.2f" % tuple(est)
+    v["SHELL_VM_EST"] = "%.1f--%.1f" % (at_eps("von_mises", "hard", est[0])[0],
+                                        at_eps("von_mises", "hard", est[1])[1])
+    v["SHELL_SLIP_EST"] = "%.1f--%.1f" % (at_eps("rss_crystal", "hard", est[0])[0],
+                                          at_eps("rss_crystal", "hard", est[1])[1])
     for k in ("POLE_PEAK", "EQ_PEAK", "SHEAR_PEAK"):
         v[k] = v["MD_" + k]
     return v

@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -42,6 +42,24 @@ Vladimir Nikolaev, Mounir Friha, Arkady~A. Skvortsov, Danila Pshonkin,
   aluminum alloy with ferromagnetic inclusions.
 \newblock \emph{Scientific Reports}, 15:\penalty0 30585, 2025.
 \newblock \doi{10.1038/s41598-025-16116-z}.
+
+\bibitem[Pshonkin and Koryachko(2025)]{Pshonkin2025ZL}
+D.~E. Pshonkin and M.~V. Koryachko.
+\newblock Study of the effect of pre-magnetic treatment on the thermoplastic
+  effect in aluminum alloys with ferromagnetic inclusions.
+\newblock \emph{Zavodskaya Laboratoriya. Diagnostika Materialov}, 91\penalty0
+  (10):\penalty0 42--49, 2025.
+\newblock \doi{10.26896/1028-6861-2025-91-10-42-49}.
+\newblock In Russian.
+
+\bibitem[Friha et~al.(2023)Friha, Pshonkin, Skvortsov, Nikolaev, and
+  Skvortsov]{Friha2023PSS}
+M.~Friha, D.~E. Pshonkin, P.~A. Skvortsov, V.~K. Nikolaev, and A.~A. Skvortsov.
+\newblock Influence of external influences on the creep of aluminum alloys with
+  microscopic inclusions at room temperatures.
+\newblock \emph{Physics of the Solid State}, 65\penalty0 (4):\penalty0 511,
+  2023.
+\newblock \doi{10.21883/PSS.2023.04.55988.549}.
 
 \bibitem[Liu et~al.(2024)Liu, Fan, Xu, Fu, Wen, and Zhang]{Liu2024CIF}
 Yibo Liu, Changzeng Fan, Zhefeng Xu, Ruidong Fu, Bin Wen, and Lifeng Zhang.
